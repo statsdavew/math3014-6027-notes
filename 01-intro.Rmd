@@ -23,7 +23,7 @@ People have been designing experiments for as long as they have been exploring t
 - 1980s: in-silico ([computer experiments](https://en.wikipedia.org/wiki/Computer_experiment))
 - 2000s: online ([A/B testing](https://en.wikipedia.org/wiki/A/B_testing))
 
-See @LB2020 for further history, annecdotes and examples, especially from psychology and technology.
+See @LB2020 for further history, anecdotes and examples, especially from psychology and technology.
 
 Figure \@ref(fig:broadbalk) shows the [Broadbalk](http://www.era.rothamsted.ac.uk/Broadbalk) agricultural field experiment at Rothamsted, one of the longest continuous running experiments in the world, which is testing the impact of different manures and fertilizers on the growth of winter wheat. 
 
