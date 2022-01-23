@@ -1,0 +1,23 @@
+--- 
+title: "MATH3014-6027 Design (and Analysis) of Experiments"
+author: "Dave Woods"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [math3014-6027.bib, packages.bib]
+biblio-style: apalike
+csl: american-statistical-association.csl 
+link-citations: yes
+description: "Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton"
+---
+
+# Preface {-}
+
+These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

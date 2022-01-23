@@ -1,0 +1,5 @@
+book_filename: "bookdown_math3014-6027"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
