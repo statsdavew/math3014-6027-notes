@@ -6,7 +6,7 @@ site: bookdown::bookdown_site
 documentclass: book
 bibliography: [math3014-6027.bib, packages.bib]
 biblio-style: apalike
-csl: american-statistical-association.csl 
+csl: journal-of-the-royal-statistical-society.csl 
 link-citations: yes
 description: "Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton"
 ---
