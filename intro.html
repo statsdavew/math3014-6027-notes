@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-01-23" />
+<meta name="date" content="2022-01-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -151,8 +151,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#variance-of-a-predictionfitted-value"><i class="fa fa-check"></i><b>1.5.1</b> Variance of a Prediction/Fitted Value</a></li>
 <li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#analysis-of-variance-and-r2-as-model-comparison"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
 </ul></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-comparative-experiments.html"><a href="simple-comparative-experiments.html"><i class="fa fa-check"></i><b>2</b> Simple comparative experiments</a></li>
+<li class="chapter" data-level="3" data-path="blocking-1.html"><a href="blocking-1.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
+<li class="chapter" data-level="4" data-path="factorial-experiments.html"><a href="factorial-experiments.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
+<li class="chapter" data-level="5" data-path="blocking-in-factorial-designs.html"><a href="blocking-in-factorial-designs.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
+<li class="chapter" data-level="6" data-path="fractional-factorial-designs.html"><a href="fractional-factorial-designs.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
+<li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
+<li class="chapter" data-level="8" data-path="optimal-design-of-experiments.html"><a href="optimal-design-of-experiments.html"><i class="fa fa-check"></i><b>8</b> Optimal design of experiments</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -440,7 +447,7 @@ A **design point** is an $m$-vector $\boldsymbol{x}_{j} = (x_{j1, \ldots, x_{jm}
 <p>In Example <a href="intro.html#exm:motivation">1.1</a> (comparing two treatments):</p>
 <ul>
 <li>Response <span class="math inline">\(Y\)</span>: Measured outcome, e.g. protein level or pain score in clinical trial, yield in an agricultural field trial.</li>
-<li>Factor <span class="math inline">\(x\)</span>: ``treatment’’ applied</li>
+<li>Factor <span class="math inline">\(x\)</span>: “treatment” applied</li>
 <li>Levels
 <span class="math display">\[
 \begin{array}{ll}
@@ -645,14 +652,98 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}\]</span></p>
 <p>This is a Chi-squared distribution with <span class="math inline">\(N-p\)</span> degrees of freedom (see MATH2010 notes).</p>
-
 </div>
+</div>
+<div id="exercises" class="section level2">
+<h2><span class="header-section-number">1.6</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p><span class="citation">(Adapted from Morris, <a href="#ref-Morris2011" role="doc-biblioref">2011</a>)</span> A classic and famous example of a simple hypothetical experiment was described by <span class="citation">Fisher (<a href="#ref-Fisher1935" role="doc-biblioref">1935</a>)</span>:</p>
+<blockquote>
+<p>A lady declares that by tasting a cup of tea made with milk she can discriminate whether the milk or the tea infusion was added first to the cup. We will consider the problem of designing an experiment by means of which this assertion can be tested. For this purpose let us first lay down a simple form of experiment with a view to studying its limitations and its characteristics, both those that same essential to the experimental method, when well developed, and those that are not essential but auxiliary.</p>
+<p>Our experiment consists in mixing eight cups of tea, four in one way and four in the other, and presenting them to the subject for judgement in a random order. The subject has been told in advance of what the test will consist, namely that she will be asked to taste eight cups, that these shall be four of each kind, and that they shall be presented to her in a random order, that is an order not determined arbitrarily by human choice, but by the actual manipulation of the physical appartatus used in games of chance, cards, dice, roulettes, etc., or, more expeditiously, from a published collection of random sampling numbers purporting to give the actual results of such manipulation<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Her task is to divide the 8 cups into two sets of 4, agreeing, if possible, with the treatments received.</p>
+</blockquote>
+<ol style="list-style-type: lower-alpha">
+<li>Define the treatments in this experiment.</li>
+<li>Identify the units in this experiment.</li>
+<li>How might a “physical appartatus” from a “game of chance” be used to perform the randomisation. Explain one example.</li>
+<li>Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?</li>
+</ol></li>
+<li><p>Consider the linear model</p>
+<p><span class="math display">\[\boldsymbol{Y}= X\boldsymbol{\beta}+ \boldsymbol{\varepsilon}\,,\]</span>
+with <span class="math inline">\(\boldsymbol{Y}\)</span> an <span class="math inline">\(n\times 1\)</span> vector of responses, <span class="math inline">\(X\)</span> a <span class="math inline">\(n\times p\)</span> model matrix and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> a <span class="math inline">\(n\times 1\)</span> vector of independent and identically distributed random variables with constant variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Derive the least squares estimator <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> for this multiple linear regression model, and show that this estimator is unbiased. Using the definition of (co)variance, show that</li>
+</ol>
+<p><span class="math display">\[\mbox{Var}(\hat{\boldsymbol{\beta}}) = \left(X^{\rm{T}}X\right)^{-1}\sigma^2\,.\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>If <span class="math inline">\(\boldsymbol{\varepsilon}\sim N (\boldsymbol{0},I_n\sigma^2)\)</span>, with <span class="math inline">\(I_n\)</span> being the <span class="math inline">\(n\times n\)</span> identity matrix, show that the maximum likelihood estimators for <span class="math inline">\(\boldsymbol{\beta}\)</span> coincide with the least squares estimators.</li>
+</ol></li>
+<li><p>Consider the two nested linear models</p>
+<ol style="list-style-type: lower-roman">
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{Y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\)</span>,</p></li>
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{Y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
+</ol>
+<p>with <span class="math inline">\(\varepsilon_j\sim N(0, \sigma^2)\)</span>, and <span class="math inline">\(\varepsilon_{j}\)</span>, <span class="math inline">\(\varepsilon_{k}\)</span> independent <span class="math inline">\((\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^2))\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Construct an ANOVA table to compare model (ii) with the null model <span class="math inline">\(Y_j=\beta_0 + \varepsilon_j\)</span>.</p></li>
+<li><p>Extend this ANOVA table to compare models (i) and (ii) by further decomposing the regression sum of squares for model (ii).</p></li>
+</ol>
+<p><strong>Hint:</strong> which residual sum of squares are you interested in to compare models (i) and (ii)?</p>
+<p>You should end up with an ANOVA table of the form</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Source</th>
+<th align="center">Degrees of freedom</th>
+<th align="center">Sums of squares</th>
+<th align="center">Mean square</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Model (i)</td>
+<td align="center"><span class="math inline">\(p_1\)</span></td>
+<td align="center">?</td>
+<td align="center">?</td>
+</tr>
+<tr class="even">
+<td align="left">Model (ii)</td>
+<td align="center"><span class="math inline">\(p_2\)</span></td>
+<td align="center">?</td>
+<td align="center">?</td>
+</tr>
+<tr class="odd">
+<td align="left">Residual</td>
+<td align="center"><span class="math inline">\(n-p_1-p_2-1\)</span></td>
+<td align="center">?</td>
+<td align="center">?</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="center"><span class="math inline">\(n-1\)</span></td>
+<td align="center"><span class="math inline">\(\boldsymbol{Y}^{\rm{T}}\boldsymbol{Y}- n\bar{Y}^2\)</span></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>The second row of the table gives the <strong>extra sums of squares</strong> for the additional terms in fitting model (ii), over and above those in model (i).</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Calculate the extra sum of squares for fitting the terms in model (i), over and above those terms only in model (ii), i.e. those held in <span class="math inline">\(X_2\boldsymbol{\beta}_2\)</span>. Construct an ANOVA table containing both the extra sum of squares for the terms only in model (i) and the extra sum of squares for the terms only in model (ii). Comment on the table.</li>
+</ol></li>
+</ol>
+
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-Fisher1935">
+<p>Fisher, R. A. (1935) <em>The Design of Experiments</em>. Edinburgh: Oliver and Boyd.</p>
+</div>
 <div id="ref-LB2020">
-<p>Luca, M., and Bazerman, M. H. (2020), <em>The power of experiments: Decision making in a data-driven world</em>, Cambridge, MA.: MIT Press.</p>
+<p>Luca, M. and Bazerman, M. H. (2020) <em>The Power of Experiments: Decision Making in a Data-Driven World</em>. Cambridge: MIT Press.</p>
+</div>
+<div id="ref-Morris2011">
+<p>Morris, M. D. (2011) <em>Design of Experiments: An Introduction Based on Linear Models</em>. Boca Raton: Chapman and Hall/CRC Press.</p>
 </div>
 </div>
 <div class="footnotes">
@@ -664,6 +755,7 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 <li id="fn4"><p>Check the <a href="https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf">Matrix Cookbook</a> for matrix calculus, amongst much else.<a href="intro.html#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p>Residual sum of squares for the full regression model.<a href="intro.html#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p>Residual sum of squares for the null model.<a href="intro.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Now, we would use routines such as <code>sample</code> in <code>R</code>.<a href="intro.html#fnref7" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
