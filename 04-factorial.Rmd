@@ -1,1 +1,1 @@
-# Factorial experiments
+# Factorial experiments {#factorial}

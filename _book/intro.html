@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-01-24" />
+<meta name="date" content="2022-01-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="simple-comparative-experiments.html"/>
+<link rel="next" href="crd.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -178,9 +178,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="simple-comparative-experiments.html"><a href="simple-comparative-experiments.html"><i class="fa fa-check"></i><b>2</b> Simple comparative experiments</a></li>
-<li class="chapter" data-level="3" data-path="blocking-1.html"><a href="blocking-1.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
-<li class="chapter" data-level="4" data-path="factorial-experiments.html"><a href="factorial-experiments.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
+<li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="crd.html"><a href="crd.html#a-unit-treatment-linear-model"><i class="fa fa-check"></i><b>2.1</b> A unit-treatment linear model</a></li>
+<li class="chapter" data-level="2.2" data-path="crd.html"><a href="crd.html#the-partitioned-linear-model"><i class="fa fa-check"></i><b>2.2</b> The partitioned linear model</a></li>
+<li class="chapter" data-level="2.3" data-path="crd.html"><a href="crd.html#generalised-inverses"><i class="fa fa-check"></i><b>2.3</b> Generalised inverses</a></li>
+<li class="chapter" data-level="2.4" data-path="crd.html"><a href="crd.html#solutions-to-the-reduced-normal-equations"><i class="fa fa-check"></i><b>2.4</b> Solutions to the reduced normal equations</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro.html"><a href="intro.html#blocking"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
+<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="blocking-in-factorial-designs.html"><a href="blocking-in-factorial-designs.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial-designs.html"><a href="fractional-factorial-designs.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
@@ -248,7 +254,7 @@ Before we can design an experiment, we need to know:
 <div id="motivation" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Motivation</h2>
 <div class="example">
-<p><span id="exm:motivation" class="example"><strong>Example 1.1  </strong></span>Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers, <span class="math inline">\(\dots\)</span>). We have <span class="math inline">\(N\)</span> subjects (people, mice, plots of land, <span class="math inline">\(\dots\)</span>), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, <span class="math inline">\(\dots\)</span>) is then measured.</p>
+<p><span id="exm:motivation" class="example"><strong>Example 1.1  </strong></span>Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers, <span class="math inline">\(\dots\)</span>). We have <span class="math inline">\(n\)</span> subjects (people, mice, plots of land, <span class="math inline">\(\dots\)</span>), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, <span class="math inline">\(\dots\)</span>) is then measured.</p>
 </div>
 <p><strong>Question:</strong> How many subjects should be assigned to each treatment to gain the most precise<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> inference about the difference in response from the two treatments?</p>
 <p>Consider a linear statistical model<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> for the response (see MATH2010):</p>
@@ -479,8 +485,8 @@ A **design point** is an $m$-vector $\boldsymbol{x}_{j} = (x_{j1, \ldots, x_{jm}
 \textrm{treatment 1}&amp;x =-1\\
 \textrm{treatment 2}&amp;x =+1
 \end{array}
-\]</span></li>
-<li>Design point: factor level applied to <span class="math inline">\(j\)</span>th subject; <span class="math inline">\(x_{j}=\pm 1\)</span></li>
+\]</span>
+<!--- Design point: factor level applied to $j$th subject; $x_{j}=\pm 1$--></li>
 <li>Treatment or support point: Two treatments or support points</li>
 <li>Experimental unit: Subject (person, animal, plot of land, ).</li>
 </ul>
@@ -632,14 +638,14 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 </tr>
 <tr class="even">
 <td align="left">Residual</td>
-<td align="left"><span class="math inline">\(N-p\)</span></td>
+<td align="left"><span class="math inline">\(n-p\)</span></td>
 <td align="left"><span class="math inline">\((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)</span><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></td>
-<td align="left">RSS/<span class="math inline">\((N-p)\)</span></td>
+<td align="left">RSS/<span class="math inline">\((n-p)\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left">Total</td>
-<td align="left"><span class="math inline">\(N-1\)</span></td>
-<td align="left"><span class="math inline">\(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-N\bar{Y}^{2}\)</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></td>
+<td align="left"><span class="math inline">\(n-1\)</span></td>
+<td align="left"><span class="math inline">\(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\)</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></td>
 <td align="left"></td>
 </tr>
 </tbody>
@@ -694,8 +700,8 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 <li>Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?</li>
 </ol></li>
 <li><p>Consider the linear model</p>
-<p><span class="math display">\[\boldsymbol{Y}= X\boldsymbol{\beta}+ \boldsymbol{\varepsilon}\,,\]</span>
-with <span class="math inline">\(\boldsymbol{Y}\)</span> an <span class="math inline">\(n\times 1\)</span> vector of responses, <span class="math inline">\(X\)</span> a <span class="math inline">\(n\times p\)</span> model matrix and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> a <span class="math inline">\(n\times 1\)</span> vector of independent and identically distributed random variables with constant variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><span class="math display">\[\boldsymbol{y}= X\boldsymbol{\beta}+ \boldsymbol{\varepsilon}\,,\]</span>
+with <span class="math inline">\(\boldsymbol{y}\)</span> an <span class="math inline">\(n\times 1\)</span> vector of responses, <span class="math inline">\(X\)</span> a <span class="math inline">\(n\times p\)</span> model matrix and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> a <span class="math inline">\(n\times 1\)</span> vector of independent and identically distributed random variables with constant variance <span class="math inline">\(\sigma^2\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Derive the least squares estimator <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> for this multiple linear regression model, and show that this estimator is unbiased. Using the definition of (co)variance, show that</li>
 </ol>
@@ -705,8 +711,8 @@ with <span class="math inline">\(\boldsymbol{Y}\)</span> an <span class="math in
 </ol></li>
 <li><p>Consider the two nested linear models</p>
 <ol style="list-style-type: lower-roman">
-<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{Y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\)</span>,</p></li>
-<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{Y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\)</span>,</p></li>
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
 </ol>
 <p>with <span class="math inline">\(\varepsilon_j\sim N(0, \sigma^2)\)</span>, and <span class="math inline">\(\varepsilon_{j}\)</span>, <span class="math inline">\(\varepsilon_{k}\)</span> independent <span class="math inline">\((\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^2))\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
@@ -746,7 +752,7 @@ with <span class="math inline">\(\boldsymbol{Y}\)</span> an <span class="math in
 <tr class="even">
 <td align="left">Total</td>
 <td align="center"><span class="math inline">\(n-1\)</span></td>
-<td align="center"><span class="math inline">\(\boldsymbol{Y}^{\rm{T}}\boldsymbol{Y}- n\bar{Y}^2\)</span></td>
+<td align="center"><span class="math inline">\(\boldsymbol{y}^{\rm{T}}\boldsymbol{y}- n\bar{Y}^2\)</span></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -789,7 +795,7 @@ Morris, M. D. (2011) <em>Design of Experiments: An Introduction Based on Linear 
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="simple-comparative-experiments.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="crd.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

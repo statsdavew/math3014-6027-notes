@@ -5,7 +5,8 @@
 \newcommand{\by}{\boldsymbol{y}}
 \newcommand{\rT}{\mathrm{T}}
 \newcommand{\Var}{\operatorname{Var}}
-\newcommand{\bY}{\boldsymbol{Y}}
+\newcommand{\bY}{\boldsymbol{y}}
+\newcommand{\btau}{\boldsymbol{\tau}}
 
 # Motivation, introduction and revision {#intro}
 
@@ -51,7 +52,7 @@ Before we can design an experiment, we need to know:
 ## Motivation
 
 ::: {.example #motivation}
-Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers, $\dots$).  We have $N$ subjects (people, mice, plots of land, $\dots$), each of which can be assigned one of the two treatments.  A response (protein measurement, weight, yield, $\dots$) is then measured.
+Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers, $\dots$).  We have $n$ subjects (people, mice, plots of land, $\dots$), each of which can be assigned one of the two treatments.  A response (protein measurement, weight, yield, $\dots$) is then measured.
 :::
 
 **Question:** How many subjects should be assigned to each treatment to gain the most precise^[Smallest variance.] inference about the difference in response from the two treatments?
@@ -313,7 +314,7 @@ $$
 \textrm{treatment 2}&x =+1
 \end{array}
 $$
-- Design point: factor level applied to $j$th subject; $x_{j}=\pm 1$
+<!--- Design point: factor level applied to $j$th subject; $x_{j}=\pm 1$-->
 - Treatment or support point: Two treatments or support points
 - Experimental unit: Subject (person, animal, plot of land, \ldots).
 
@@ -467,8 +468,8 @@ Table: (\#tab:anova) A standard ANOVA table.
 | Source      | Degress of Freedom  | (Sequential) Sum of Squares                                                                                | Mean Square    |
 | :---        | :---                | :---                                                                                                       | :---           |   
 | Regression  | $p-1$               | By subtraction; see \@ref(eq:SSS)                                                                          | Reg SS/$(p-1)$ |
-| Residual    | $N-p$               | $(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})$^[Residual sum of squares for the full regression model.] | RSS/$(N-p)$ |
-| Total       | $N-1$               | $\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-N\bar{Y}^{2}$^[Residual sum of squares for the null model.]     |             |
+| Residual    | $n-p$               | $(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})$^[Residual sum of squares for the full regression model.] | RSS/$(n-p)$ |
+| Total       | $n-1$               | $\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}$^[Residual sum of squares for the null model.]     |             |
 
 
 In row 1 of Table \@ref(tab:anova) above, 

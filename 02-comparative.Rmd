@@ -1,1 +1,188 @@
-# Simple comparative experiments
+# Completely randomised designs {#crd}
+
+The simplest form of experiment we will consider compares $t$ different **unstructured** treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter \@ref(factorial)). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter \@ref(blocking) on blocking). A designs for such an experiment is therefore called a **completely randomised design** (CRD).
+
+::: {.example #one-way}
+Pulp experiment [@WH2009, ch. 2]
+
+In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by $t=4$ operators. The data are given in Table \@ref(tab:pulp-expt-data) below.
+
+```{r pulp-expt-data}
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+                   repetition = rep(1:5, rep(4, 5)), 
+                   reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8, 
+                                    60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+                     )
+knitr::kable(
+ tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)[, -1],
+ col.names = paste("Operator", 1:4),
+ caption = "Pulp experiment: reflectance values (unitless) from four different operators."
+)
+```
+
+The experiment has one factor (operator) with four levels (sometimes called a one-way layout). The CRD employed has equal replication of each treatment (operator).
+
+We can informally compare the responses from these four treatments graphically.
+
+```{r pulp-boxplot, fig.align = 'center', fig.cap = 'Pulp experiments: distributions of reflectance from the four operators.'}
+boxplot(reflectance ~ operator, data = pulp)
+```
+Figure \@ref(fig:pulp-boxplot) shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
+:::
+
+Throughout this chapter we will assume the $i$th treatment is applied to $n_i$ experimental unit, with total number of runs $n = \sum_{i=1}^t n_i$ in the experiment.
+
+## A unit-treatment linear model
+
+An appropriate, and common, model to describe data from such experiments when the response is continuous is given by
+
+\begin{equation}
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, 
+(\#eq:utm)
+\end{equation}
+
+where $y_{ij}$ is the response from the $j$th application of treatment $i$, $\mu$ is a constant parameter, $\tau_i$ is the effect of the $i$th treatment, and $\varepsilon_{ij}$ is the random individual effect from each experimental unit with $E(\varepsilon_{ij})$ and $\mathrm{Var}(\varepsilon_{ij}) = \sigma^2$. All random errors are assumed independent and here we also assume $\varepsilon_{ij} \sim N(0, \sigma^2)$.
+
+Model \@ref(eq:utm) assumes that each treatment can be randomly allocated to one of the $n$ experimental units, and that this allocation is independent of the allocation of all the other treatments.
+
+Why is this model appropriate and commonly used? The expected response from the application of the $i$th treatment is
+
+$$
+E(y_{ij}) = \mu + \tau_i\,.
+$$
+The parameter $\mu$ can be thought of as representing the impact of many different features particular to **this** experiment, and $\tau_i$ is the deviation due to applying treatment $i$. From the applicable of two different hypothetical experiments, A and B, the expected response from treatment $i$ may be different due to a different overall mean. From experiment A:
+
+$$
+E(y_{ij}) = \mu_{\mathrm{A}} + \tau_i\,.
+$$
+From experiment B:
+$$
+E(y_{ij}) = \mu_{\mathrm{B}} + \tau_i\,.
+$$
+But the **difference** between treatments $k$ and $l$ ($k, l = 1,\ldots, t$)
+
+\begin{align*}
+E(y_{kj}) - E(y_{lj}) & = \mu_A + \tau_k - \mu_A - \tau_l \\
+& = \tau_k - \tau_l\,,
+\end{align*}
+
+is constant across different experiments. This concept of **comparison** underpins most design of experiments, and will be applied throughout this module.
+
+## The partitioned linear model
+
+In matrix form, we can write model \@ref(eq:utm) as
+
+$$
+\by = X_1\mu + X_2\btau + \bvarepsilon\,,
+$$
+where $X_1 = \boldsymbol{1}_n$, the $n$-vector with every entry equal to one, 
+
+$$
+X_2 = \begin{bmatrix}
+\boldsymbol{1}_{n_1} & \boldsymbol{0}_{n_1} & \cdots &  \boldsymbol{0}_{n_1} \\
+\boldsymbol{0}_{n_2} & \boldsymbol{1}_{n_2} & \cdots &  \boldsymbol{0}_{n_2} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{n_t} & \boldsymbol{0}_{n_t} & \cdots &  \boldsymbol{1}_{n_t} \\
+\end{bmatrix}\,,
+$$
+with $\boldsymbol{0}_{n_i}$ is the $n_i$-vector with every entry equal to zero, $\btau = [\tau_1, \ldots, \tau_t]^{\mathrm{T}}$ and $\bvarepsilon = [\varepsilon_{11}, \ldots, \varepsilon_{tn_t}]^{\mathrm{T}}$.
+
+Why are we partitioning the model? Going back to our discussion of the role of $\mu$ and $\tau_i$, it is clear that we not interested in estimating $\mu$, which represents an experiment-specific contribution to the expected mean. Our only interest is in estimating the (differences between the) $\tau_i$. Hence, we can treat $\mu$ as a nuisance parameter.
+
+If we define $X = [X_1\, \vert\, X_2]$ and $\bbeta^{\mathrm{T}} = [\mu \vert \btau^{\mathrm{T}}]$, we can write the usual least squares equations
+
+\begin{equation}
+X^{\mathrm{T}}X\hat{\bbeta} = X^{\mathrm{T}}\by
+(\#eq:crd-ls)
+\end{equation}
+as a system of two matrix equations
+
+\begin{align*}
+X_1^{\mathrm{T}}X_1\hat{\mu} + X_1^{\mathrm{T}}X_2\hat{\btau} & = X_1^{\mathrm{T}}\by \\
+X_2^{\mathrm{T}}X_1\hat{\mu} + X_2^{\mathrm{T}}X_2\hat{\btau} & = X_2^{\mathrm{T}}\by\,. \\
+\end{align*}
+
+Assuming $(X_1^{\mathrm{T}}X_1)^{-1}$ exists, which it does in this case, we can pre-multiply the first of these equations by $X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}$ and subtract it from the second equation to obtain
+
+\begin{align*}
+X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_1\hat{\mu} 
+& + X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_2\hat{\btau} \\
+& = X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]\by\,.
+\end{align*}
+
+Writing $H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}$, we obtain
+
+\begin{equation}
+X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
+(\#eq:almost-reduced)
+\end{equation}
+The matrix $H_1$ is a "hat" matrix for a linear model containing only the term $\mu$, and hence $H_1X_1 = X_1$ (see MATH2010). Hence the first term in \@ref(eq:almost-reduced) is zero, and we obtain the **reduced normal equations** for $\btau$:
+
+\begin{equation}
+X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
+(\#eq:crd-red-normal)
+\end{equation}
+
+Note that the solutions from \@ref(eq:crd-red-normal) are not different from the solution to $\hat{\btau}$ that would be obtained from solving \@ref(eq:crd-ls); equation \@ref(eq:crd-red-normal) is simply a re-expression, where we have eliminated the nuisance parameter $\mu$. This fact means that we rarely need to solve \@ref(eq:crd-red-normal) explicitly.
+
+Recalling that for a hat matrix, $I_n - H_1$ is idempotent and symmetric (see MATH2010), if we define 
+
+$$
+X_{2|1} = (I_n - H_1)X_2\,,
+$$
+then we can rewrite equation \@ref(eq:crd-red-normal) as
+
+\begin{equation}
+X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\btau} = X_{2|1}^{\mathrm{T}}\by\,, 
+(\#eq:rne)
+\end{equation}
+
+which are the normal equations for a linear model with expectation $E(\by) = X_{2|1}\btau$.
+
+For the CRD discussed in this chapter, $X_1^{\mathrm{T}}X_1 = n$, the total number of runs in the experiment^[In later chapters we will see examples where $X_1$ has $>1$ columns, and hence $X_1^{\mathrm{T}}X_1$ is a matrix.]. Hence $(X_1^{\mathrm{T}}X_1)^{-1} = 1/n$ and $H_1 = \frac{1}{n}J_n$, with $J_n$ the $n\times n$ matrix with all entries equal to 1. 
+
+The adjusted model matrix then has the form
+
+\begin{align*}
+X_{2|1} & = (I_n - H_1)X_2 \\
+& = X_2 - \frac{1}{n}J_nX_2 \\
+& = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
+\end{align*}
+
+That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution^[If we recalled the material on "dummy" variables from MATH2010 chapter 5, we would already have realised this.].
+
+In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \@ref(eq:utm) are estimable, and in particular which linear combinations of the treatment parameters $\tau_i$ we can estimate. We start with a short digression to discuss the concept of a generalised inverse.
+
+## Generalised inverses
+
+A generalised inverse of a square, symmetric matrix $A$ is any matrix $A^{-}$ that satisfies
+
+$$
+AA^{-}A = A\,.
+$$
+
+If matrix $A$ is of full column rank, then there is a single generalised inverse $A^{-} = A^{-1}$, the usual inverse matrix. In other cases, there may be infinitely many choices for $A^{-}$.
+
+## Solutions to the reduced normal equations
+
+We can use a generalised inverse to generate solutions to \@ref(eq:rne) of the form:
+
+$$
+\hat{\btau} = (X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\by\,.
+$$
+Substituting this expression into \@ref(eq:rne), we obtain
+
+\begin{align*}
+X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\by & = X_{2|1}^{\mathrm{T}}H_{2|1}\by \\ 
+& = X_{2|1}^{\mathrm{T}}\by\,,
+\end{align*}
+
+where $H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}$ and $X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}$^[This equality follows from $H$ being the projection matrix for the column space of $X$.].
+
+<!--
+The reduced normal equations therefore take the form  
+
+$$
+X_2^{\mathrm{T}}\left[I_n - \frac{1}{n}J_n\right]X_2\hat{\btau} = X_2^{\mathrm{T}}\left[I_n - \frac{1}{n}J_n\right]\by\,.
+$$
+-->
