@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-01-24}
+\date{2022-01-30}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -156,7 +156,8 @@ These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and 
 \newcommand{\by}{\boldsymbol{y}}
 \newcommand{\rT}{\mathrm{T}}
 \newcommand{\Var}{\operatorname{Var}}
-\newcommand{\bY}{\boldsymbol{Y}}
+\newcommand{\bY}{\boldsymbol{y}}
+\newcommand{\btau}{\boldsymbol{\tau}}
 
 \hypertarget{intro}{%
 \chapter{Motivation, introduction and revision}\label{intro}}
@@ -226,7 +227,7 @@ Figure \ref{fig:broadbalk} shows the \href{http://www.era.rothamsted.ac.uk/Broad
 \begin{example}
 \protect\hypertarget{exm:motivation}{}\label{exm:motivation}
 
-Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(N\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
+Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
 
 \end{example}
 
@@ -577,8 +578,6 @@ In Example \ref{exm:motivation} (comparing two treatments):
   \end{array}
   \]
 \item
-  Design point: factor level applied to \(j\)th subject; \(x_{j}=\pm 1\)
-\item
   Treatment or support point: Two treatments or support points
 \item
   Experimental unit: Subject (person, animal, plot of land, \ldots).
@@ -801,8 +800,8 @@ Mean Square
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
-Residual & \(N-p\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)\footnote{Residual sum of squares for the full regression model.} & RSS/\((N-p)\) \\
-Total & \(N-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-N\bar{Y}^{2}\)\footnote{Residual sum of squares for the null model.} & \\
+Residual & \(n-p\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)\footnote{Residual sum of squares for the full regression model.} & RSS/\((n-p)\) \\
+Total & \(n-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\)\footnote{Residual sum of squares for the null model.} & \\
 \bottomrule
 \end{longtable}
 
@@ -881,8 +880,8 @@ This is a Chi-squared distribution with \(N-p\) degrees of freedom (see MATH2010
 \item
   Consider the linear model
 
-  \[\boldsymbol{Y}= X\boldsymbol{\beta}+ \boldsymbol{\varepsilon}\,,\]
-  with \(\boldsymbol{Y}\) an \(n\times 1\) vector of responses, \(X\) a \(n\times p\) model matrix and \(\boldsymbol{\varepsilon}\) a \(n\times 1\) vector of independent and identically distributed random variables with constant variance \(\sigma^2\).
+  \[\boldsymbol{y}= X\boldsymbol{\beta}+ \boldsymbol{\varepsilon}\,,\]
+  with \(\boldsymbol{y}\) an \(n\times 1\) vector of responses, \(X\) a \(n\times p\) model matrix and \(\boldsymbol{\varepsilon}\) a \(n\times 1\) vector of independent and identically distributed random variables with constant variance \(\sigma^2\).
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
@@ -906,9 +905,9 @@ This is a Chi-squared distribution with \(N-p\) degrees of freedom (see MATH2010
   \begin{enumerate}
   \def\labelenumii{(\roman{enumii})}
   \item
-    \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\), or \(\boldsymbol{Y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\),
+    \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\), or \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\),
   \item
-    \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\), or \(\boldsymbol{Y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)
+    \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\), or \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)
   \end{enumerate}
 
   with \(\varepsilon_j\sim N(0, \sigma^2)\), and \(\varepsilon_{j}\), \(\varepsilon_{k}\) independent \((\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^2))\).
@@ -933,7 +932,7 @@ This is a Chi-squared distribution with \(N-p\) degrees of freedom (see MATH2010
   Model (i) & \(p_1\) & ? & ? \\
   Model (ii) & \(p_2\) & ? & ? \\
   Residual & \(n-p_1-p_2-1\) & ? & ? \\
-  Total & \(n-1\) & \(\boldsymbol{Y}^{\rm{T}}\boldsymbol{Y}- n\bar{Y}^2\) & \\
+  Total & \(n-1\) & \(\boldsymbol{y}^{\rm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
   \bottomrule
   \end{longtable}
 
@@ -948,14 +947,245 @@ This is a Chi-squared distribution with \(N-p\) degrees of freedom (see MATH2010
   \end{enumerate}
 \end{enumerate}
 
-\hypertarget{simple-comparative-experiments}{%
-\chapter{Simple comparative experiments}\label{simple-comparative-experiments}}
+\hypertarget{crd}{%
+\chapter{Completely randomised designs}\label{crd}}
 
-\hypertarget{blocking-1}{%
-\chapter{Blocking}\label{blocking-1}}
+The simplest form of experiment we will consider compares \(t\) different \textbf{unstructured} treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter \ref{factorial}). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter \ref{blocking} on blocking). A designs for such an experiment is therefore called a \textbf{completely randomised design} (CRD).
 
-\hypertarget{factorial-experiments}{%
-\chapter{Factorial experiments}\label{factorial-experiments}}
+\begin{example}
+\protect\hypertarget{exm:one-way}{}\label{exm:one-way}
+
+Pulp experiment \citep[ch.~2]{WH2009}
+
+In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by \(t=4\) operators. The data are given in Table \ref{tab:pulp-expt-data} below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pulp }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{operator =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\DecValTok{5}\NormalTok{),}
+                   \AttributeTok{repetition =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)), }
+                   \AttributeTok{reflectance =} \FunctionTok{c}\NormalTok{(}\FloatTok{59.8}\NormalTok{, }\FloatTok{59.8}\NormalTok{, }\FloatTok{60.7}\NormalTok{, }\FloatTok{61.0}\NormalTok{, }\FloatTok{60.0}\NormalTok{, }\FloatTok{60.2}\NormalTok{, }\FloatTok{60.7}\NormalTok{, }\FloatTok{60.8}\NormalTok{, }
+                                    \FloatTok{60.8}\NormalTok{, }\FloatTok{60.4}\NormalTok{, }\FloatTok{60.5}\NormalTok{, }\FloatTok{60.6}\NormalTok{, }\FloatTok{60.8}\NormalTok{, }\FloatTok{59.9}\NormalTok{, }\FloatTok{60.9}\NormalTok{, }\FloatTok{60.5}\NormalTok{, }\FloatTok{59.8}\NormalTok{, }\FloatTok{60.0}\NormalTok{, }\FloatTok{60.3}\NormalTok{, }\FloatTok{60.5}\NormalTok{)}
+\NormalTok{                     )}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(pulp, }\AttributeTok{names\_from =}\NormalTok{ operator, }\AttributeTok{values\_from =}\NormalTok{ reflectance)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
+ \AttributeTok{col.names =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Operator"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{),}
+ \AttributeTok{caption =} \StringTok{"Pulp experiment: reflectance values (unitless) from four different operators."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: replacing previous import 'lifecycle::last_warnings' by
+## 'rlang::last_warnings' when loading 'pillar'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: replacing previous import 'lifecycle::last_warnings' by
+## 'rlang::last_warnings' when loading 'tibble'
+\end{verbatim}
+
+\begin{table}
+
+\caption{\label{tab:pulp-expt-data}Pulp experiment: reflectance values (unitless) from four different operators.}
+\centering
+\begin{tabular}[t]{r|r|r|r}
+\hline
+Operator 1 & Operator 2 & Operator 3 & Operator 4\\
+\hline
+59.8 & 59.8 & 60.7 & 61.0\\
+\hline
+60.0 & 60.2 & 60.7 & 60.8\\
+\hline
+60.8 & 60.4 & 60.5 & 60.6\\
+\hline
+60.8 & 59.9 & 60.9 & 60.5\\
+\hline
+59.8 & 60.0 & 60.3 & 60.5\\
+\hline
+\end{tabular}
+\end{table}
+
+The experiment has one factor (operator) with four levels (sometimes called a one-way layout). The CRD employed has equal replication of each treatment (operator).
+
+We can informally compare the responses from these four treatments graphically.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(reflectance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator, }\AttributeTok{data =}\NormalTok{ pulp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/pulp-boxplot-1} 
+
+}
+
+\caption{Pulp experiments: distributions of reflectance from the four operators.}\label{fig:pulp-boxplot}
+\end{figure}
+
+Figure \ref{fig:pulp-boxplot} shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
+
+\end{example}
+
+Throughout this chapter we will assume the \(i\)th treatment is applied to \(n_i\) experimental unit, with total number of runs \(n = \sum_{i=1}^t n_i\) in the experiment.
+
+\hypertarget{a-unit-treatment-linear-model}{%
+\section{A unit-treatment linear model}\label{a-unit-treatment-linear-model}}
+
+An appropriate, and common, model to describe data from such experiments when the response is continuous is given by
+
+\begin{equation}
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, 
+\label{eq:utm}
+\end{equation}
+
+where \(y_{ij}\) is the response from the \(j\)th application of treatment \(i\), \(\mu\) is a constant parameter, \(\tau_i\) is the effect of the \(i\)th treatment, and \(\varepsilon_{ij}\) is the random individual effect from each experimental unit with \(E(\varepsilon_{ij})\) and \(\mathrm{Var}(\varepsilon_{ij}) = \sigma^2\). All random errors are assumed independent and here we also assume \(\varepsilon_{ij} \sim N(0, \sigma^2)\).
+
+Model \eqref{eq:utm} assumes that each treatment can be randomly allocated to one of the \(n\) experimental units, and that this allocation is independent of the allocation of all the other treatments.
+
+Why is this model appropriate and commonly used? The expected response from the application of the \(i\)th treatment is
+
+\[
+E(y_{ij}) = \mu + \tau_i\,.
+\]
+The parameter \(\mu\) can be thought of as representing the impact of many different features particular to \textbf{this} experiment, and \(\tau_i\) is the deviation due to applying treatment \(i\). From the applicable of two different hypothetical experiments, A and B, the expected response from treatment \(i\) may be different due to a different overall mean. From experiment A:
+
+\[
+E(y_{ij}) = \mu_{\mathrm{A}} + \tau_i\,.
+\]
+From experiment B:
+\[
+E(y_{ij}) = \mu_{\mathrm{B}} + \tau_i\,.
+\]
+But the \textbf{difference} between treatments \(k\) and \(l\) (\(k, l = 1,\ldots, t\))
+
+\begin{align*}
+E(y_{kj}) - E(y_{lj}) & = \mu_A + \tau_k - \mu_A - \tau_l \\
+& = \tau_k - \tau_l\,,
+\end{align*}
+
+is constant across different experiments. This concept of \textbf{comparison} underpins most design of experiments, and will be applied throughout this module.
+
+\hypertarget{the-partitioned-linear-model}{%
+\section{The partitioned linear model}\label{the-partitioned-linear-model}}
+
+In matrix form, we can write model \eqref{eq:utm} as
+
+\[
+\boldsymbol{y}= X_1\mu + X_2\boldsymbol{\tau}+ \boldsymbol{\varepsilon}\,,
+\]
+where \(X_1 = \boldsymbol{1}_n\), the \(n\)-vector with every entry equal to one,
+
+\[
+X_2 = \begin{bmatrix}
+\boldsymbol{1}_{n_1} & \boldsymbol{0}_{n_1} & \cdots &  \boldsymbol{0}_{n_1} \\
+\boldsymbol{0}_{n_2} & \boldsymbol{1}_{n_2} & \cdots &  \boldsymbol{0}_{n_2} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{n_t} & \boldsymbol{0}_{n_t} & \cdots &  \boldsymbol{1}_{n_t} \\
+\end{bmatrix}\,,
+\]
+with \(\boldsymbol{0}_{n_i}\) is the \(n_i\)-vector with every entry equal to zero, \(\boldsymbol{\tau}= [\tau_1, \ldots, \tau_t]^{\mathrm{T}}\) and \(\boldsymbol{\varepsilon}= [\varepsilon_{11}, \ldots, \varepsilon_{tn_t}]^{\mathrm{T}}\).
+
+Why are we partitioning the model? Going back to our discussion of the role of \(\mu\) and \(\tau_i\), it is clear that we not interested in estimating \(\mu\), which represents an experiment-specific contribution to the expected mean. Our only interest is in estimating the (differences between the) \(\tau_i\). Hence, we can treat \(\mu\) as a nuisance parameter.
+
+If we define \(X = [X_1\, \vert\, X_2]\) and \(\boldsymbol{\beta}^{\mathrm{T}} = [\mu \vert \boldsymbol{\tau}^{\mathrm{T}}]\), we can write the usual least squares equations
+
+\begin{equation}
+X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\boldsymbol{y}
+\label{eq:crd-ls}
+\end{equation}
+as a system of two matrix equations
+
+\begin{align*}
+X_1^{\mathrm{T}}X_1\hat{\mu} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\boldsymbol{y}\\
+X_2^{\mathrm{T}}X_1\hat{\mu} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\boldsymbol{y}\,. \\
+\end{align*}
+
+Assuming \((X_1^{\mathrm{T}}X_1)^{-1}\) exists, which it does in this case, we can pre-multiply the first of these equations by \(X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}\) and subtract it from the second equation to obtain
+
+\begin{align*}
+X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_1\hat{\mu} 
+& + X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_2\hat{\boldsymbol{\tau}} \\
+& = X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]\boldsymbol{y}\,.
+\end{align*}
+
+Writing \(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\), we obtain
+
+\begin{equation}
+X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
+\label{eq:almost-reduced}
+\end{equation}
+The matrix \(H_1\) is a ``hat'' matrix for a linear model containing only the term \(\mu\), and hence \(H_1X_1 = X_1\) (see MATH2010). Hence the first term in \eqref{eq:almost-reduced} is zero, and we obtain the \textbf{reduced normal equations} for \(\boldsymbol{\tau}\):
+
+\begin{equation}
+X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
+\label{eq:crd-red-normal}
+\end{equation}
+
+Note that the solutions from \eqref{eq:crd-red-normal} are not different from the solution to \(\hat{\boldsymbol{\tau}}\) that would be obtained from solving \eqref{eq:crd-ls}; equation \eqref{eq:crd-red-normal} is simply a re-expression, where we have eliminated the nuisance parameter \(\mu\). This fact means that we rarely need to solve \eqref{eq:crd-red-normal} explicitly.
+
+Recalling that for a hat matrix, \(I_n - H_1\) is idempotent and symmetric (see MATH2010), if we define
+
+\[
+X_{2|1} = (I_n - H_1)X_2\,,
+\]
+then we can rewrite equation \eqref{eq:crd-red-normal} as
+
+\begin{equation}
+X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,, 
+\label{eq:rne}
+\end{equation}
+
+which are the normal equations for a linear model with expectation \(E(\boldsymbol{y}) = X_{2|1}\boldsymbol{\tau}\).
+
+For the CRD discussed in this chapter, \(X_1^{\mathrm{T}}X_1 = n\), the total number of runs in the experiment\footnote{In later chapters we will see examples where \(X_1\) has \(>1\) columns, and hence \(X_1^{\mathrm{T}}X_1\) is a matrix.}. Hence \((X_1^{\mathrm{T}}X_1)^{-1} = 1/n\) and \(H_1 = \frac{1}{n}J_n\), with \(J_n\) the \(n\times n\) matrix with all entries equal to 1.
+
+The adjusted model matrix then has the form
+
+\begin{align*}
+X_{2|1} & = (I_n - H_1)X_2 \\
+& = X_2 - \frac{1}{n}J_nX_2 \\
+& = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
+\end{align*}
+
+That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution\footnote{If we recalled the material on ``dummy'' variables from MATH2010 chapter 5, we would already have realised this.}.
+
+In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate. We start with a short digression to discuss the concept of a generalised inverse.
+
+\hypertarget{generalised-inverses}{%
+\section{Generalised inverses}\label{generalised-inverses}}
+
+A generalised inverse of a square, symmetric matrix \(A\) is any matrix \(A^{-}\) that satisfies
+
+\[
+AA^{-}A = A\,.
+\]
+
+If matrix \(A\) is of full column rank, then there is a single generalised inverse \(A^{-} = A^{-1}\), the usual inverse matrix. In other cases, there may be infinitely many choices for \(A^{-}\).
+
+\hypertarget{solutions-to-the-reduced-normal-equations}{%
+\section{Solutions to the reduced normal equations}\label{solutions-to-the-reduced-normal-equations}}
+
+We can use a generalised inverse to generate solutions to \eqref{eq:rne} of the form:
+
+\[
+\hat{\boldsymbol{\tau}} = (X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,.
+\]
+Substituting this expression into \eqref{eq:rne}, we obtain
+
+\begin{align*}
+X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}& = X_{2|1}^{\mathrm{T}}H_{2|1}\boldsymbol{y}\\ 
+& = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
+\end{align*}
+
+where \(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\) and \(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\)\footnote{This equality follows from \(H\) being the projection matrix for the column space of \(X\).}.
+
+\hypertarget{blocking}{%
+\chapter{Blocking}\label{blocking}}
+
+\hypertarget{factorial}{%
+\chapter{Factorial experiments}\label{factorial}}
 
 \hypertarget{blocking-in-factorial-designs}{%
 \chapter{Blocking in factorial designs}\label{blocking-in-factorial-designs}}
