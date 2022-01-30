@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-01-27" />
+<meta name="date" content="2022-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -228,6 +228,10 @@ div.csl-indent {
 <span id="cb2-8"><a href="crd.html#cb2-8" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
 <span id="cb2-9"><a href="crd.html#cb2-9" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
 <span id="cb2-10"><a href="crd.html#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Warning: replacing previous import &#39;lifecycle::last_warnings&#39; by
+## &#39;rlang::last_warnings&#39; when loading &#39;pillar&#39;</code></pre>
+<pre><code>## Warning: replacing previous import &#39;lifecycle::last_warnings&#39; by
+## &#39;rlang::last_warnings&#39; when loading &#39;tibble&#39;</code></pre>
 <table>
 <caption><span id="tab:pulp-expt-data">Table 2.1: </span>Pulp experiment: reflectance values (unitless) from four different operators.</caption>
 <thead>
@@ -273,7 +277,7 @@ div.csl-indent {
 </table>
 <p>The experiment has one factor (operator) with four levels (sometimes called a one-way layout). The CRD employed has equal replication of each treatment (operator).</p>
 <p>We can informally compare the responses from these four treatments graphically.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="crd.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="crd.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pulp-boxplot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/pulp-boxplot-1.png" alt="Pulp experiments: distributions of reflectance from the four operators." width="672" />
 <p class="caption">
@@ -394,7 +398,7 @@ Substituting this expression into <a href="crd.html#eq:rne">(2.5)</a>, we obtain
 X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}&amp; = X_{2|1}^{\mathrm{T}}H_{2|1}\boldsymbol{y}\\ 
 &amp; = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \end{align*}\]</span></p>
-<p>where <span class="math inline">\(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\)</span> and <span class="math inline">\(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\)</span>.</p>
+<p>where <span class="math inline">\(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\)</span> and <span class="math inline">\(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\)</span><a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
 <!--
 The reduced normal equations therefore take the form  
 
@@ -417,6 +421,7 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
 <li id="fn8"><p>In later chapters we will see examples where <span class="math inline">\(X_1\)</span> has <span class="math inline">\(&gt;1\)</span> columns, and hence <span class="math inline">\(X_1^{\mathrm{T}}X_1\)</span> is a matrix.<a href="crd.html#fnref8" class="footnote-back">↩︎</a></p></li>
 <li id="fn9"><p>Often called “column centred”<a href="crd.html#fnref9" class="footnote-back">↩︎</a></p></li>
 <li id="fn10"><p>If we recalled the material on “dummy” variables from MATH2010 chapter 5, we would already have realised this.<a href="crd.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>This equality follows from <span class="math inline">\(H\)</span> being the projection matrix for the column space of <span class="math inline">\(X\)</span>.<a href="crd.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

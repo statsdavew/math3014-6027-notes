@@ -35,12 +35,3 @@ blocking-in-factorial-designs
 fractional-factorial-designs
 response-surface-methodology
 optimal-design-of-experiments
-def:exp
-def:design
-exm:motivation
-def:simple-efficiency
-def:response
-def:factor-variable
-def:treatment
-def:unit
-eq:SSS

@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-01-27}
+\date{2022-01-30}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -227,7 +227,7 @@ Figure \ref{fig:broadbalk} shows the \href{http://www.era.rothamsted.ac.uk/Broad
 \begin{example}
 \protect\hypertarget{exm:motivation}{}\label{exm:motivation}
 
-Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(N\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
+Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
 
 \end{example}
 
@@ -578,8 +578,6 @@ In Example \ref{exm:motivation} (comparing two treatments):
   \end{array}
   \]
 \item
-  Design point: factor level applied to \(j\)th subject; \(x_{j}=\pm 1\)
-\item
   Treatment or support point: Two treatments or support points
 \item
   Experimental unit: Subject (person, animal, plot of land, \ldots).
@@ -802,8 +800,8 @@ Mean Square
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
-Residual & \(N-p\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)\footnote{Residual sum of squares for the full regression model.} & RSS/\((N-p)\) \\
-Total & \(N-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-N\bar{Y}^{2}\)\footnote{Residual sum of squares for the null model.} & \\
+Residual & \(n-p\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)\footnote{Residual sum of squares for the full regression model.} & RSS/\((n-p)\) \\
+Total & \(n-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\)\footnote{Residual sum of squares for the null model.} & \\
 \bottomrule
 \end{longtable}
 
@@ -975,6 +973,16 @@ In a paper pulping mill, an experiment was run to examine differences between th
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: replacing previous import 'lifecycle::last_warnings' by
+## 'rlang::last_warnings' when loading 'pillar'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: replacing previous import 'lifecycle::last_warnings' by
+## 'rlang::last_warnings' when loading 'tibble'
+\end{verbatim}
 
 \begin{table}
 
@@ -1171,7 +1179,7 @@ X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}
 & = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \end{align*}
 
-where \(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\) and \(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\).
+where \(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\) and \(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\)\footnote{This equality follows from \(H\) being the projection matrix for the column space of \(X\).}.
 
 \hypertarget{blocking}{%
 \chapter{Blocking}\label{blocking}}
