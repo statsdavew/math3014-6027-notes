@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{book}
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-02-05}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -109,15 +113,11 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-02-01}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -163,13 +163,19 @@ These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and 
 \chapter{Motivation, introduction and revision}\label{intro}}
 
 \begin{definition}
-\protect\hypertarget{def:exp}{}\label{def:exp}An \textbf{experiment} is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science \(\dots\)) by \textbf{deliberately} varying some features of the process under study in order to understand the impact of these changes on measureable responses.
+\protect\hypertarget{def:exp}{}\label{def:exp}
+
+An \textbf{experiment} is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science \(\dots\)) by \textbf{deliberately} varying some features of the process under study in order to understand the impact of these changes on measureable responses.
 
 In this course we consider only \emph{intervention} experiments, in which some aspects of the process are under the experimenters' control. We do not consider \emph{surveys} or \emph{observational} studies.
+
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:design}{}\label{def:design}\textbf{Design of experiments} is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
+\protect\hypertarget{def:design}{}\label{def:design}
+
+\textbf{Design of experiments} is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
+
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Some notable milestones in the history of the design of experiments include:
@@ -219,7 +225,10 @@ Figure \ref{fig:broadbalk} shows the \href{http://www.era.rothamsted.ac.uk/Broad
 \section{Motivation}\label{motivation}}
 
 \begin{example}
-\protect\hypertarget{exm:motivation}{}\label{exm:motivation}Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
+\protect\hypertarget{exm:motivation}{}\label{exm:motivation}
+
+Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
+
 \end{example}
 
 \textbf{Question:} How many subjects should be assigned to each treatment to gain the most precise\footnote{Smallest variance.} inference about the difference in response from the two treatments?
@@ -415,13 +424,16 @@ It is obvious that \(\sum x_j = 0\) if and only if \(n_1=n_2\). Therefore, assum
 For \(n\) odd, we choose \(n_{1}=\frac{n+1}{2}\), \(n_{2}=\frac{n-1}{2}\), or vice versa.
 
 \begin{definition}
-\protect\hypertarget{def:simple-efficiency}{}\label{def:simple-efficiency}We can assess different designs using their \textbf{efficiency}:
+\protect\hypertarget{def:simple-efficiency}{}\label{def:simple-efficiency}
+
+We can assess different designs using their \textbf{efficiency}:
 \begin{equation}
 \textrm{Eff}=\frac{\textrm{Var}(\hat{\beta}_{1}\, |\, d^{*})}{\textrm{Var}(\hat{\beta}_{1}\, |\, d_{1})}
 \label{eq:simple-efficiency}
 \end{equation}
 
 where \(d_{1}\) is a design we want to assess and \(d^{*}\) is the optimal design with smallest variance. Note that \(0\leq\textrm{Eff}\leq 1\).
+
 \end{definition}
 
 In Figure \ref{fig:simple-efficiency} below, we plot this efficiency for Example \ref{exm:motivation}, using different choices of \(n_1\). The total number of runs is fixed at \(n = 100\), and the function \texttt{eff} calculates the efficiency from Definition \ref{def:simple-efficiency} for a design with \(n_1\) subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when \(n_1 = n_2\) (equal allocation of treatments 1 and 2). If \(n_1=0\) or \(n_1 = 1\), the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.
@@ -522,19 +534,31 @@ Some reasons experiments are performed:
 \section{Some definitions}\label{some-definitions}}
 
 \begin{definition}
-\protect\hypertarget{def:response}{}\label{def:response}The \textbf{response} \(Y\) is the outcome measured in an experiment; e.g.~yield from a chemical process. The response from the \(n\) observations are denoted \(Y_{1},\dots,Y_{n}\).
+\protect\hypertarget{def:response}{}\label{def:response}
+
+The \textbf{response} \(Y\) is the outcome measured in an experiment; e.g.~yield from a chemical process. The response from the \(n\) observations are denoted \(Y_{1},\dots,Y_{n}\).
+
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:factor-variable}{}\label{def:factor-variable}\textbf{Factors} (discrete) or \textbf{variables} (continuous) are features which can be set or controlled in an experiment; \(m\) denotes the number of factors or variables under investigation. For discrete factors, we call the possible settings of the factor its \textbf{levels}. We denote by \(x_{ij}\) the value taken by factor or variable \(i\) in the \(j\)th run of the experiment (\(i = 1, \ldots, m\); \(j = 1, \ldots, n\)).
+\protect\hypertarget{def:factor-variable}{}\label{def:factor-variable}
+
+\textbf{Factors} (discrete) or \textbf{variables} (continuous) are features which can be set or controlled in an experiment; \(m\) denotes the number of factors or variables under investigation. For discrete factors, we call the possible settings of the factor its \textbf{levels}. We denote by \(x_{ij}\) the value taken by factor or variable \(i\) in the \(j\)th run of the experiment (\(i = 1, \ldots, m\); \(j = 1, \ldots, n\)).
+
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:treatment}{}\label{def:treatment}The \textbf{treatments} or \textbf{support points} are the \emph{distinct} combinations of factor or variable values in the experiment.
+\protect\hypertarget{def:treatment}{}\label{def:treatment}
+
+The \textbf{treatments} or \textbf{support points} are the \emph{distinct} combinations of factor or variable values in the experiment.
+
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:unit}{}\label{def:unit}An experimental \textbf{unit} is the basic element (material, animal, person, time unit, \ldots) to which a treatment can be applied to produce a response.
+\protect\hypertarget{def:unit}{}\label{def:unit}
+
+An experimental \textbf{unit} is the basic element (material, animal, person, time unit, \ldots) to which a treatment can be applied to produce a response.
+
 \end{definition}
 
 In Example \ref{exm:motivation} (comparing two treatments):
@@ -752,11 +776,27 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -913,7 +953,9 @@ This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010
 The simplest form of experiment we will consider compares \(t\) different \textbf{unstructured} treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter \ref{factorial}). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter \ref{blocking} on blocking). A designs for such an experiment is therefore called a \textbf{completely randomised design} (CRD).
 
 \begin{example}
-\protect\hypertarget{exm:one-way}{}\label{exm:one-way}Pulp experiment \citep[ch.~2]{WH2009}
+\protect\hypertarget{exm:one-way}{}\label{exm:one-way}
+
+Pulp experiment \citep[ch.~2]{WH2009}
 
 In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by \(t=4\) operators. The data are given in Table \ref{tab:pulp-expt-data} below.
 
@@ -973,6 +1015,7 @@ We can informally compare the responses from these four treatments graphically.
 \end{figure}
 
 Figure \ref{fig:pulp-boxplot} shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
+
 \end{example}
 
 Throughout this chapter we will assume the \(i\)th treatment is applied to \(n_i\) experimental unit, with total number of runs \(n = \sum_{i=1}^t n_i\) in the experiment.
@@ -1086,6 +1129,9 @@ X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsy
 
 which are the normal equations for a linear model with expectation \(E(\boldsymbol{y}) = X_{2|1}\boldsymbol{\tau}\).
 
+\hypertarget{reduced-normal-equations-for-the-crd}{%
+\section{Reduced normal equations for the CRD}\label{reduced-normal-equations-for-the-crd}}
+
 For the CRD discussed in this chapter, \(X_1^{\mathrm{T}}X_1 = n\), the total number of runs in the experiment\footnote{In later chapters we will see examples where \(X_1\) has \(>1\) columns, and hence \(X_1^{\mathrm{T}}X_1\) is a matrix.}. Hence \((X_1^{\mathrm{T}}X_1)^{-1} = 1/n\) and \(H_1 = \frac{1}{n}J_n\), with \(J_n\) the \(n\times n\) matrix with all entries equal to 1.
 
 The adjusted model matrix then has the form
@@ -1096,37 +1142,88 @@ X_{2|1} & = (I_n - H_1)X_2 \\
 & = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
 \end{align*}
 
-That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution\footnote{If we recalled the material on ``dummy'' variables from MATH2010 chapter 5, we would already have realised this.}.
+That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution.
 
-In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate. We start with a short digression to discuss the concept of a generalised inverse.
+In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate.
 
-\hypertarget{generalised-inverses}{%
-\section{Generalised inverses}\label{generalised-inverses}}
-
-A generalised inverse of a square, symmetric matrix \(A\) is any matrix \(A^{-}\) that satisfies
-
-\[
-AA^{-}A = A\,.
-\]
-
-If matrix \(A\) is of full column rank, then there is a single generalised inverse \(A^{-} = A^{-1}\), the usual inverse matrix. In other cases, there may be infinitely many choices for \(A^{-}\).
-
-\hypertarget{solutions-to-the-reduced-normal-equations}{%
-\section{Solutions to the reduced normal equations}\label{solutions-to-the-reduced-normal-equations}}
-
-We can use a generalised inverse to generate solutions to \eqref{eq:rne} of the form:
-
-\[
-\hat{\boldsymbol{\tau}} = (X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,.
-\]
-Substituting this expression into \eqref{eq:rne}, we obtain
+Let's study equation \eqref{eq:rne} in more detail. We have
 
 \begin{align*}
-X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}& = X_{2|1}^{\mathrm{T}}H_{2|1}\boldsymbol{y}\\ 
-& = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
+X^{\mathrm{T}}_{2|1}X_{2|1} & = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
+ & = X_2^{\mathrm{T}}X_2 - X_2^{\mathrm{T}}H_1X_2 \\
+ & = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}X_2^{\mathrm{T}}J_nX_2 \\
+ & = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\,,
 \end{align*}
 
-where \(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\) and \(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\)\footnote{This equality follows from \(H\) being the projection matrix for the column space of \(X\).}.
+where \(\boldsymbol{n}^{\mathrm{T}} = (n_1, \ldots, n_t)\). Hence, the reduced normal equations become
+
+\begin{align}
+\left[\mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}^{\mathrm{T}}\boldsymbol{n}\right]\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{n}X_2^{\mathrm{T}}J_n\boldsymbol{y}\\
+& = X_2^{\mathrm{T}}\boldsymbol{y}- \boldsymbol{n}\bar{y}_{..}\,,
+\label{eq:crd-rne}
+\end{align}
+
+where \(\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}\), i.e.~the overall average of the observations from the experiment.
+
+From \eqref{eq:crd-rne} we obtain a system of \(t\) equations, each having the form
+
+\[
+n_i\hat{\tau}_i - n_i\hat{\tau}_w = n_i\bar{y}_{i.} - n_i\bar{y}_{..}\,,
+\]
+where \(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\) and \(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\) \((i = 1, \ldots, t)\).
+
+These \(t\) equations are not independent; they sum to zero due to the linear dependency between the columns of \(X_{2|1}\). Hence, there is no unique solution to \(\hat{\boldsymbol{\tau}}\) from equation \ref{crd-rne}. However, we can estimate certain linear combinations of the \(\tau_i\), called \emph{contrasts}.
+
+\hypertarget{contrasts}{%
+\section{Contrasts}\label{contrasts}}
+
+\begin{definition}
+\protect\hypertarget{def:contrast}{}\label{def:contrast}
+
+A treatment \emph{contrast} is a linear combination \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) with coefficient vector \(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\) such that \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\); that is, \(\sum_{i = 1}^t c_i = 0\).
+
+\end{definition}
+
+For example, assume we have \(t = 3\) treatments, then the following vectors \(\boldsymbol{c}\) all define contrasts:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (1, -1, 0)\),
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (1, 0, -1)\),
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (0, 1, -1)\).
+\end{enumerate}
+
+In fact, they define all \({3\choose 2} = 3\) pairwise comparisons between treatments. The following are also contrasts:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (2, -1, -1)\),
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (0.5, -1, 0.5)\),
+\end{enumerate}
+
+each comparing the sum, or average, of expected responses from two treatments to the expected response from the remaining treatment.
+
+The following are not contrasts, as \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} \ne 0\):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (2, -1, 0)\),
+\item
+  \(\boldsymbol{c}^{\mathrm{T}} = (1, 0, 0)\),
+\end{enumerate}
+
+with the final example once again demonstrating that we cannot estimate the individual \(\tau_i\).
 
 \hypertarget{blocking}{%
 \chapter{Blocking}\label{blocking}}

@@ -7,7 +7,7 @@ Pulp experiment [@WH2009, ch. 2]
 
 In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by $t=4$ operators. The data are given in Table \@ref(tab:pulp-expt-data) below.
 
-```{r pulp-expt-data}
+```{r pulp-expt-data, warning = F}
 pulp <- data.frame(operator = rep(factor(1:4), 5),
                    repetition = rep(1:5, rep(4, 5)), 
                    reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8, 
@@ -139,6 +139,8 @@ X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\btau} = X_{2|1}^{\mathrm{T}}\by\,,
 
 which are the normal equations for a linear model with expectation $E(\by) = X_{2|1}\btau$.
 
+## Reduced normal equations for the CRD
+
 For the CRD discussed in this chapter, $X_1^{\mathrm{T}}X_1 = n$, the total number of runs in the experiment^[In later chapters we will see examples where $X_1$ has $>1$ columns, and hence $X_1^{\mathrm{T}}X_1$ is a matrix.]. Hence $(X_1^{\mathrm{T}}X_1)^{-1} = 1/n$ and $H_1 = \frac{1}{n}J_n$, with $J_n$ the $n\times n$ matrix with all entries equal to 1. 
 
 The adjusted model matrix then has the form
@@ -149,9 +151,72 @@ X_{2|1} & = (I_n - H_1)X_2 \\
 & = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
 \end{align*}
 
-That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution^[If we recalled the material on "dummy" variables from MATH2010 chapter 5, we would already have realised this.].
+That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution.
+<!--
+^[If we recalled the material on "dummy" variables from MATH2010 chapter 5, we would already have realised this.].
+-->
 
-In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \@ref(eq:utm) are estimable, and in particular which linear combinations of the treatment parameters $\tau_i$ we can estimate. We start with a short digression to discuss the concept of a generalised inverse.
+In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \@ref(eq:utm) are estimable, and in particular which linear combinations of the treatment parameters $\tau_i$ we can estimate. 
+
+Let's study equation \@ref(eq:rne) in more detail. We have
+
+\begin{align*}
+X^{\mathrm{T}}_{2|1}X_{2|1} & = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
+ & = X_2^{\mathrm{T}}X_2 - X_2^{\mathrm{T}}H_1X_2 \\
+ & = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}X_2^{\mathrm{T}}J_nX_2 \\
+ & = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\,,
+\end{align*}
+
+where $\boldsymbol{n}^{\mathrm{T}} = (n_1, \ldots, n_t)$. Hence, the reduced normal equations become
+
+\begin{align}
+\left[\mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}^{\mathrm{T}}\boldsymbol{n}\right]\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\by - \frac{1}{n}X_2^{\mathrm{T}}J_n\by \\
+& = X_2^{\mathrm{T}}\by - \boldsymbol{n}\bar{y}_{..}\,,
+(\#eq:crd-rne)
+\end{align}
+
+where $\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}$, i.e. the overall average of the observations from the experiment.
+
+From \@ref(eq:crd-rne) we obtain a system of $t$ equations, each having the form
+
+$$
+n_i\hat{\tau}_i - n_i\hat{\tau}_w = n_i\bar{y}_{i.} - n_i\bar{y}_{..}\,,
+$$
+where $\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i$ and $\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}$ $(i = 1, \ldots, t)$.
+
+These $t$ equations are not independent; they sum to zero due to the linear dependency between the columns of $X_{2|1}$. Hence, there is no unique solution to $\hat{\boldsymbol{\tau}}$ from equation \@ref(crd-rne). However, we can estimate certain linear combinations of the $\tau_i$, called *contrasts*.
+
+## Contrasts
+
+::: {.definition #contrast}
+A treatment **contrast** is a linear combination $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ with coefficient vector $\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)$ such that $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0$; that is, $\sum_{i = 1}^t c_i = 0$.
+:::
+
+For example, assume we have $t = 3$ treatments, then the following vectors $\boldsymbol{c}$ all define contrasts:
+
+1. $\boldsymbol{c}^{\mathrm{T}} = (1, -1, 0)$,
+2. $\boldsymbol{c}^{\mathrm{T}} = (1, 0, -1)$,
+3. $\boldsymbol{c}^{\mathrm{T}} = (0, 1, -1)$.
+
+In fact, they define all ${3\choose 2} = 3$ pairwise comparisons between treatments. The following are also contrasts:
+
+4. $\boldsymbol{c}^{\mathrm{T}} = (2, -1, -1)$,
+5. $\boldsymbol{c}^{\mathrm{T}} = (0.5, -1, 0.5)$,
+
+each comparing the sum, or average, of expected responses from two treatments to the expected response from the remaining treatment.
+
+The following are not contrasts, as $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} \ne 0$:
+
+6. $\boldsymbol{c}^{\mathrm{T}} = (2, -1, 0)$,
+7. $\boldsymbol{c}^{\mathrm{T}} = (1, 0, 0)$,
+
+with the final example once again demonstrating that we cannot estimate the individual $\tau_i$.
+
+## Contrast estimators in the CRD
+
+
+<!--
+We start with a short digression to discuss the concept of a generalised inverse.
 
 ## Generalised inverses
 
@@ -179,7 +244,6 @@ X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}
 
 where $H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}$ and $X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}$^[This equality follows from $H$ being the projection matrix for the column space of $X$.].
 
-<!--
 The reduced normal equations therefore take the form  
 
 $$

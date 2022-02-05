@@ -3,7 +3,6 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
-eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -13,6 +12,7 @@ eq:crd-ls
 eq:almost-reduced
 eq:crd-red-normal
 eq:rne
+eq:crd-rne
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -28,8 +28,8 @@ exercises
 crd
 a-unit-treatment-linear-model
 the-partitioned-linear-model
-generalised-inverses
-solutions-to-the-reduced-normal-equations
+reduced-normal-equations-for-the-crd
+contrasts
 factorial
 blocking-in-factorial-designs
 fractional-factorial-designs
