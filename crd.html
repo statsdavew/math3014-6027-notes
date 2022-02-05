@@ -158,8 +158,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="crd.html"><a href="crd.html#the-partitioned-linear-model"><i class="fa fa-check"></i><b>2.2</b> The partitioned linear model</a></li>
 <li class="chapter" data-level="2.3" data-path="crd.html"><a href="crd.html#reduced-normal-equations-for-the-crd"><i class="fa fa-check"></i><b>2.3</b> Reduced normal equations for the CRD</a></li>
 <li class="chapter" data-level="2.4" data-path="crd.html"><a href="crd.html#contrasts"><i class="fa fa-check"></i><b>2.4</b> Contrasts</a></li>
-<li class="chapter" data-level="2.5" data-path="crd.html"><a href="crd.html#treatment-contrast-estimators-in-the-crd"><i class="fa fa-check"></i><b>2.5</b> Treatment contrast estimators in the CRD</a></li>
-<li class="chapter" data-level="2.6" data-path="crd.html"><a href="crd.html#analysing-crds-in-r"><i class="fa fa-check"></i><b>2.6</b> Analysing CRDs in R</a></li>
+<li class="chapter" data-level="2.5" data-path="crd.html"><a href="crd.html#contrast-crd"><i class="fa fa-check"></i><b>2.5</b> Treatment contrast estimators in the CRD</a></li>
+<li class="chapter" data-level="2.6" data-path="crd.html"><a href="crd.html#r-crd"><i class="fa fa-check"></i><b>2.6</b> Analysing CRDs in R</a></li>
+<li class="chapter" data-level="2.7" data-path="crd.html"><a href="crd.html#exercises-1"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
@@ -399,7 +400,7 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 </ol>
 <p>with the final example once again demonstrating that we cannot estimate the individual <span class="math inline">\(\tau_i\)</span>.</p>
 </div>
-<div id="treatment-contrast-estimators-in-the-crd" class="section level2">
+<div id="contrast-crd" class="section level2">
 <h2><span class="header-section-number">2.5</span> Treatment contrast estimators in the CRD</h2>
 <p>We estimate a treatment contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> in the CRD via linear combinations of equations <a href="crd.html#eq:crd-irne">(2.7)</a>:</p>
 <p><span class="math display">\[\begin{align*}
@@ -436,7 +437,7 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
  \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} &gt; t_{n-t, 1-\frac{\alpha}{2}}\,.
  \]</span></p>
 </div>
-<div id="analysing-crds-in-r" class="section level2">
+<div id="r-crd" class="section level2">
 <h2><span class="header-section-number">2.6</span> Analysing CRDs in R</h2>
 <p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="crd.html#cb4-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
@@ -506,8 +507,17 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
 <p>This function performs hypothesis tests for all pairwise treatment comparisons (with a default confidence level of 0.95). Here we can see that operators 1 and 4, 2 and 3, and 2 and 4 have statistically significant differences.</p></li>
 <li><p>Using <code>lm</code> and the <code>emmeans</code> package.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="crd.html#cb7-1"></a>pulp.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(reflectance <span class="op">~</span><span class="st"> </span>operator, <span class="dt">data =</span> pulp)</span>
-<span id="cb7-2"><a href="crd.html#cb7-2"></a>pulp.emm &lt;-<span class="st"> </span>emmeans<span class="op">::</span><span class="kw">emmeans</span>(pulp.lm, <span class="op">~</span><span class="st"> </span>operator)</span>
-<span id="cb7-3"><a href="crd.html#cb7-3"></a><span class="kw">pairs</span>(pulp.emm, <span class="dt">adjust =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
+<span id="cb7-2"><a href="crd.html#cb7-2"></a><span class="kw">anova</span>(pulp.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: reflectance
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## operator   3   1.34 0.44667  4.2039 0.02261 *
+## Residuals 16   1.70 0.10625                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1"></a>pulp.emm &lt;-<span class="st"> </span>emmeans<span class="op">::</span><span class="kw">emmeans</span>(pulp.lm, <span class="op">~</span><span class="st"> </span>operator)</span>
+<span id="cb9-2"><a href="crd.html#cb9-2"></a><span class="kw">pairs</span>(pulp.emm, <span class="dt">adjust =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast estimate    SE df t.ratio p.value
 ##  1 - 2        0.18 0.206 16   0.873  0.3955
 ##  1 - 3       -0.38 0.206 16  -1.843  0.0839
@@ -515,13 +525,14 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
 ##  2 - 3       -0.56 0.206 16  -2.716  0.0153
 ##  2 - 4       -0.62 0.206 16  -3.007  0.0083
 ##  3 - 4       -0.06 0.206 16  -0.291  0.7748</code></pre>
-<p>Here, we have first fitted the linear model object. The <code>lm</code> function, by default, will have set up dummy variables with the first treatment (operator) as a basline (se MATH2010 or STAT6123). This is unimportant; any set of dummy variables could be used, as in the next line we use the <code>emmeans</code> function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor <code>operator</code> (which specifies our treatments in this experiment). Finally, the <code>pairs</code> command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using <code>pairwise.t.test</code>.</p></li>
+<p>Here, we have first fitted the linear model object. The <code>lm</code> function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5% significance level,</p>
+<p>The choice of dummy variables in the linear model is unimportant; any set could be used<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>, as in the next line we use the <code>emmeans</code> function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor <code>operator</code> (which specifies our treatments in this experiment). Finally, the <code>pairs</code> command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using <code>pairwise.t.test</code>.</p></li>
 </ol>
 <p>Our preferred approach is using method 2 (<code>lm</code> and <code>emmeans</code>), for four main reasons:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>The function <code>contrasts</code> in the <code>emmeans</code> package can be used to estimate arbitrary treatment contrasts (see <code>help("contrast-methods")</code>).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1"></a><span class="co"># same as `pairs` above</span></span>
-<span id="cb9-2"><a href="crd.html#cb9-2"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(pulp.emm, <span class="st">&quot;pairwise&quot;</span>, <span class="dt">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="crd.html#cb11-1"></a><span class="co"># same as `pairs` above</span></span>
+<span id="cb11-2"><a href="crd.html#cb11-2"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(pulp.emm, <span class="st">&quot;pairwise&quot;</span>, <span class="dt">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast estimate    SE df t.ratio p.value
 ##  1 - 2        0.18 0.206 16   0.873  0.3955
 ##  1 - 3       -0.38 0.206 16  -1.843  0.0839
@@ -529,17 +540,62 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
 ##  2 - 3       -0.56 0.206 16  -2.716  0.0153
 ##  2 - 4       -0.62 0.206 16  -3.007  0.0083
 ##  3 - 4       -0.06 0.206 16  -0.291  0.7748</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="crd.html#cb11-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
-<span id="cb11-2"><a href="crd.html#cb11-2"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
-<span id="cb11-3"><a href="crd.html#cb11-3"></a>contrast1v23.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) </span>
-<span id="cb11-4"><a href="crd.html#cb11-4"></a>  <span class="kw">data.frame</span>(<span class="st">&#39;t1 v avg t2 t3&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">-.5</span>, <span class="fl">-.5</span>, <span class="dv">0</span>))</span>
-<span id="cb11-5"><a href="crd.html#cb11-5"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(pulp.emm, <span class="st">&#39;contrast1v23&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="crd.html#cb13-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
+<span id="cb13-2"><a href="crd.html#cb13-2"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
+<span id="cb13-3"><a href="crd.html#cb13-3"></a>contrast1v23.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) </span>
+<span id="cb13-4"><a href="crd.html#cb13-4"></a>  <span class="kw">data.frame</span>(<span class="st">&#39;t1 v avg t2 t3&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">-.5</span>, <span class="fl">-.5</span>, <span class="dv">0</span>))</span>
+<span id="cb13-5"><a href="crd.html#cb13-5"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(pulp.emm, <span class="st">&#39;contrast1v23&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast       estimate    SE df t.ratio p.value
 ##  t1.v.avg.t2.t3     -0.1 0.179 16  -0.560  0.5832</code></pre></li>
 <li><p>It more easily generalises to the more complicated models we will see in Chapter <a href="blocking.html#blocking">3</a>.</p></li>
 <li><p>It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions.</p></li>
 <li><p>It is straightfoward to apply adjustments for multiple comparisons.</p></li>
 </ol>
+</div>
+<div id="exercises-1" class="section level2">
+<h2><span class="header-section-number">2.7</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>For Example <a href="crd.html#exm:one-way">2.1</a>, calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section <a href="crd.html#contrast-crd">2.5</a> are the same as those found in Section <a href="crd.html#r-crd">2.6</a> using <code>pairwise.t.test</code>, and <code>emmeans</code>.</p></li>
+<li><p> <span class="citation">(Adapted from Wu and Hamada, <a href="#ref-WH2009" role="doc-biblioref">2009</a>)</span> The bioactivity of four different drugs <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> for treating a particular illness was compared in a study and the following ANOVA table was given for the data:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Source</th>
+<th align="center">Degrees of freedom</th>
+<th align="center">Sums of squares</th>
+<th align="center">Mean square</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Treatment</td>
+<td align="center">3</td>
+<td align="center">64.42</td>
+<td align="center">21.47</td>
+</tr>
+<tr class="even">
+<td align="left">Residual</td>
+<td align="center">26</td>
+<td align="center">62.12</td>
+<td align="center">2.39</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="center">29</td>
+<td align="center">126.54</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: lower-roman">
+<li><p>What considerations should be made when assigning drugs to patients, and why?</p></li>
+<li><p>Use an <span class="math inline">\(F\)</span>-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.</p></li>
+<li><p>The average response from each treatment is as follows: <span class="math inline">\(\bar{Y}_A=66.10\)</span> (<span class="math inline">\(r_A=7\)</span> patients), <span class="math inline">\(\bar{Y}_B=65.75\)</span> (<span class="math inline">\(r_B=8\)</span>), <span class="math inline">\(\bar{Y}_C = 62.63\)</span> (<span class="math inline">\(r_C=9\)</span>), and <span class="math inline">\(\bar{Y}_D=63.85\)</span> (<span class="math inline">\(r_D=6\)</span>). Conduct hypothesis tests for all pairwise comparisons.</p></li>
+<li><p>In fact, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are brand-name drugs and <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.</p></li>
+</ol></li>
+</ol>
+<!--    Use both the Bonferroni and Tukey methods to perform multiple comparisons of the four treatments at the 0.01 experiment-wise level.
+-->
 <!--
 We start with a short digression to discuss the concept of a generalised inverse.
 
@@ -590,6 +646,7 @@ $$
 <li id="fn8"><p>In later chapters we will see examples where <span class="math inline">\(X_1\)</span> has <span class="math inline">\(&gt;1\)</span> columns, and hence <span class="math inline">\(X_1^{\mathrm{T}}X_1\)</span> is a matrix.<a href="crd.html#fnref8" class="footnote-back">↩︎</a></p></li>
 <li id="fn9"><p>Often called “column centred”<a href="crd.html#fnref9" class="footnote-back">↩︎</a></p></li>
 <li id="fn10"><p>If we recalled the material on “dummy” variables from MATH2010 or STAT6123, we would already have realised this.<a href="crd.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Although <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\boldsymbol{\tau}\)</span> are not uniquely estimable, fitted values <span class="math inline">\(\hat{y}_i = \hat{\mu} + \hat{\tau}_i\)</span> <strong>are</strong>, and hence it does not matter which dummy variables we use in <code>lm</code>.<a href="crd.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

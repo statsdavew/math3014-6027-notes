@@ -44,8 +44,9 @@ a-unit-treatment-linear-model
 the-partitioned-linear-model
 reduced-normal-equations-for-the-crd
 contrasts
-treatment-contrast-estimators-in-the-crd
-analysing-crds-in-r
+contrast-crd
+r-crd
+exercises-1
 blocking
 factorial
 blocking-in-factorial-designs
