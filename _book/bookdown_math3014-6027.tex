@@ -149,6 +149,8 @@
 
 These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.
 
+Southampton prerequisites for this module are MATH2010 or MATH6174 and STAT6123 (or equivalent modules on linear modelling).
+
 \newcommand{\bx}{\boldsymbol{x}}
 \newcommand{\btheta}{\boldsymbol{\theta}}
 \newcommand{\bbeta}{\boldsymbol{\beta}}
@@ -178,7 +180,9 @@ In this course we consider only \emph{intervention} experiments, in which some a
 
 \end{definition}
 
-People have been designing experiments for as long as they have been exploring the natural world. Some notable milestones in the history of the design of experiments include:
+People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
+
+Some notable milestones in the history of the design of experiments include:
 
 \begin{itemize}
 \tightlist
@@ -233,7 +237,7 @@ Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers
 
 \textbf{Question:} How many subjects should be assigned to each treatment to gain the most precise\footnote{Smallest variance.} inference about the difference in response from the two treatments?
 
-Consider a linear statistical model\footnote{In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.} for the response (see MATH2010):
+Consider a linear statistical model\footnote{In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.} for the response (see MATH2010 or MATH6174/STAT6123):
 
 \begin{equation}
 Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
@@ -264,7 +268,7 @@ The difference in expected response from treatments 1 and 2 is
 
 Therefore, we require the the most precise estimator of \(\beta_{1}\) possible. That is, we wish to make the variance of our estimator of \(\beta_1\) as small as possible.
 
-Parameters \(\beta_{0}\) and \(\beta_{1}\) can be estimated using least squares (see MATH2010). For \(Y_1,\dots,Y_n\), we can write the model down in matrix form:
+Parameters \(\beta_{0}\) and \(\beta_{1}\) can be estimated using least squares (see MATH2010 or MATH6174/STAT6123). For \(Y_1,\dots,Y_n\), we can write the model down in matrix form:
 
 \begin{equation*}
 \left[ \begin{array}{c}
@@ -624,8 +628,8 @@ For example, in a clinical trial to compare a new drug and a control random allo
 
 Clinical trials are usually also \emph{double-blinded}, i.e.~neither the healthcare professional nor the patient knows which treatment the patient is receiving.
 
-\hypertarget{blocking}{%
-\subsection{Stratification (or blocking)}\label{blocking}}
+\hypertarget{intro-blocking}{%
+\subsection{Stratification (or blocking)}\label{intro-blocking}}
 
 We would like to use a wide variety of experimental units (e.g.~people or plots of land) to ensure \textbf{coverage} of our results, i.e.~validity of our conclusions across the population of interest. However, if the sample of units from the population is too heterogenous, then this will induce too much random variability, i.e.~increase \(\sigma^{2}\) in \(\varepsilon_{j}\sim N(0,\sigma^{2})\), and hence increase the variance of our parameter estimators.
 
@@ -849,7 +853,7 @@ is an unbiased estimator for \(\sigma^{2}\), and
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}
 
-This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010 notes).
+This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010 or MATH6174 notes).
 
 \hypertarget{exercises}{%
 \section{Exercises}\label{exercises}}
@@ -1106,7 +1110,7 @@ Writing \(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\), we obtain
 X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
 \label{eq:almost-reduced}
 \end{equation}
-The matrix \(H_1\) is a ``hat'' matrix for a linear model containing only the term \(\mu\), and hence \(H_1X_1 = X_1\) (see MATH2010). Hence the first term in \eqref{eq:almost-reduced} is zero, and we obtain the \textbf{reduced normal equations} for \(\boldsymbol{\tau}\):
+The matrix \(H_1\) is a ``hat'' matrix for a linear model containing only the term \(\mu\), and hence \(H_1X_1 = X_1\) (see MATH2010 or STAT6123). Hence the first term in \eqref{eq:almost-reduced} is zero, and we obtain the \textbf{reduced normal equations} for \(\boldsymbol{\tau}\):
 
 \begin{equation}
 X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
@@ -1115,7 +1119,7 @@ X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H
 
 Note that the solutions from \eqref{eq:crd-red-normal} are not different from the solution to \(\hat{\boldsymbol{\tau}}\) that would be obtained from solving \eqref{eq:crd-ls}; equation \eqref{eq:crd-red-normal} is simply a re-expression, where we have eliminated the nuisance parameter \(\mu\). This fact means that we rarely need to solve \eqref{eq:crd-red-normal} explicitly.
 
-Recalling that for a hat matrix, \(I_n - H_1\) is idempotent and symmetric (see MATH2010), if we define
+Recalling that for a hat matrix, \(I_n - H_1\) is idempotent and symmetric (see MATH2010 or MATH6174), if we define
 
 \[
 X_{2|1} = (I_n - H_1)X_2\,,
@@ -1142,9 +1146,9 @@ X_{2|1} & = (I_n - H_1)X_2 \\
 & = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
 \end{align*}
 
-That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution.
+That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution\footnote{If we recalled the material on ``dummy'' variables from MATH2010 or STAT6123, we would already have realised this.}.
 
-In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate.
+In MATH2010 and STAT6123 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate.
 
 Let's study equation \eqref{eq:rne} in more detail. We have
 
@@ -1167,12 +1171,14 @@ where \(\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}\), i.e
 
 From \eqref{eq:crd-rne} we obtain a system of \(t\) equations, each having the form
 
-\[
-n_i\hat{\tau}_i - n_i\hat{\tau}_w = n_i\bar{y}_{i.} - n_i\bar{y}_{..}\,,
-\]
+\begin{equation}
+\hat{\tau}_i - \hat{\tau}_w = \bar{y}_{i.} - \bar{y}_{..}\,,
+\label{eq:crd-irne}
+\end{equation}
+
 where \(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\) and \(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\) \((i = 1, \ldots, t)\).
 
-These \(t\) equations are not independent; they sum to zero due to the linear dependency between the columns of \(X_{2|1}\). Hence, there is no unique solution to \(\hat{\boldsymbol{\tau}}\) from equation \ref{crd-rne}. However, we can estimate certain linear combinations of the \(\tau_i\), called \emph{contrasts}.
+These \(t\) equations are not independent; they sum to zero due to the linear dependency between the columns of \(X_{2|1}\). Hence, there is no unique solution to \(\hat{\boldsymbol{\tau}}\) from equation \eqref{eq:crd-rne}. However, we can estimate certain linear combinations of the \(\tau_i\), called \emph{contrasts}.
 
 \hypertarget{contrasts}{%
 \section{Contrasts}\label{contrasts}}
@@ -1180,7 +1186,7 @@ These \(t\) equations are not independent; they sum to zero due to the linear de
 \begin{definition}
 \protect\hypertarget{def:contrast}{}\label{def:contrast}
 
-A treatment \emph{contrast} is a linear combination \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) with coefficient vector \(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\) such that \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\); that is, \(\sum_{i = 1}^t c_i = 0\).
+A treatment \textbf{contrast} is a linear combination \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) with coefficient vector \(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\) such that \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\); that is, \(\sum_{i = 1}^t c_i = 0\).
 
 \end{definition}
 
@@ -1224,6 +1230,194 @@ The following are not contrasts, as \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} 
 \end{enumerate}
 
 with the final example once again demonstrating that we cannot estimate the individual \(\tau_i\).
+
+\hypertarget{treatment-contrast-estimators-in-the-crd}{%
+\section{Treatment contrast estimators in the CRD}\label{treatment-contrast-estimators-in-the-crd}}
+
+We estimate a treatment contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) in the CRD via linear combinations of equations \eqref{eq:crd-irne}:
+
+\begin{align*}
+& \sum_{i=1}^t c_i\hat{\tau}_i - \sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{i.} - \sum_{i=1}^tc_i\bar{y}_{..} \\
+\Rightarrow & \sum_{i=1}^t c_i\hat{\tau}_i = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
+\end{align*}
+
+as \(\sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{..} = 0\), as \(\sum_{i=1}^tc_i = 0\). Hence, the unique estimator of the contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) has the form
+
+\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,.
+\]
+That is, we estimate the contrast in the treatment effects by the corresponding contrast in the treatment means.
+
+The variance of this estimator is straightforward to obtain:
+
+\begin{align*}
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
+& = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
+& = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+\end{align*}
+
+as, under our model assumptions, each \(\bar{y}_{i.}\) is an average of independent observations with variance \(\sigma^2\). Similarly, from model \eqref{eq:utm} we can derive the distribution of \(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\) as
+
+\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \sigma^2\sum_{i=1}^tc_i^2/n_i\right)\,.
+\]
+Confidence intervals and hypothesis tests for \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) can be constructed/conducted using this distribution, e.g.
+
+\begin{itemize}
+\tightlist
+\item
+  a \(100(1-\frac{alpha}{2})\)\% confidence interval:
+  \[
+   \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
+   \]
+\end{itemize}
+
+where \(t_{n-t, 1-\frac{\alpha}{2}}\) is the \(1-\frac{\alpha}{2}\) quantile of a \(t\)-distribution with \(n-t\) degrees of freedom and \(s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2\) is the estimate of \(\sigma^2\).
+
+\begin{itemize}
+\tightlist
+\item
+  the hypothesis \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\) against the two-sided alternative \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\) is rejected using a test of with confidence level \(1-\alpha/2\) if
+\end{itemize}
+
+\[
+ \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
+ \]
+
+\hypertarget{analysing-crds-in-r}{%
+\section{Analysing CRDs in R}\label{analysing-crds-in-r}}
+
+Let's return to Example \ref{exm:one-way}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(pulp, }\AttributeTok{names\_from =}\NormalTok{ operator, }\AttributeTok{values\_from =}\NormalTok{ reflectance)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
+ \AttributeTok{col.names =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Operator"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{),}
+ \AttributeTok{caption =} \StringTok{"Pulp experiment: reflectance values (unitless) from four different operators."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:one-way-analysis}Pulp experiment: reflectance values (unitless) from four different operators.}
+\centering
+\begin{tabular}[t]{r|r|r|r}
+\hline
+Operator 1 & Operator 2 & Operator 3 & Operator 4\\
+\hline
+59.8 & 59.8 & 60.7 & 61.0\\
+\hline
+60.0 & 60.2 & 60.7 & 60.8\\
+\hline
+60.8 & 60.4 & 60.5 & 60.6\\
+\hline
+60.8 & 59.9 & 60.9 & 60.5\\
+\hline
+59.8 & 60.0 & 60.3 & 60.5\\
+\hline
+\end{tabular}
+\end{table}
+
+Clearly, we could directly calculate, and then compare, mean responses for each operator. However, there are (at least) two other ways we can proceed which use the fact we are fitting a linear model. These will be useful when we consider more complex models.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Using \texttt{pairwise.t.test}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(pulp, }
+ \FunctionTok{pairwise.t.test}\NormalTok{(reflectance, operator, }\AttributeTok{p.adjust.method =} \StringTok{\textquotesingle{}none\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  reflectance and operator 
+## 
+##   1      2      3     
+## 2 0.3955 -      -     
+## 3 0.0839 0.0153 -     
+## 4 0.0486 0.0083 0.7748
+## 
+## P value adjustment method: none
+\end{verbatim}
+
+  This function performs hypothesis tests for all pairwise treatment comparisons (with a default confidence level of 0.95). Here we can see that operators 1 and 4, 2 and 3, and 2 and 4 have statistically significant differences.
+\item
+  Using \texttt{lm} and the \texttt{emmeans} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pulp.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(reflectance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator, }\AttributeTok{data =}\NormalTok{ pulp)}
+\NormalTok{pulp.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(pulp.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator)}
+\FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}none\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate    SE df t.ratio p.value
+##  1 - 2        0.18 0.206 16   0.873  0.3955
+##  1 - 3       -0.38 0.206 16  -1.843  0.0839
+##  1 - 4       -0.44 0.206 16  -2.134  0.0486
+##  2 - 3       -0.56 0.206 16  -2.716  0.0153
+##  2 - 4       -0.62 0.206 16  -3.007  0.0083
+##  3 - 4       -0.06 0.206 16  -0.291  0.7748
+\end{verbatim}
+
+  Here, we have first fitted the linear model object. The \texttt{lm} function, by default, will have set up dummy variables with the first treatment (operator) as a basline (se MATH2010 or STAT6123). This is unimportant; any set of dummy variables could be used, as in the next line we use the \texttt{emmeans} function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor \texttt{operator} (which specifies our treatments in this experiment). Finally, the \texttt{pairs} command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using \texttt{pairwise.t.test}.
+\end{enumerate}
+
+Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for four main reasons:
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  The function \texttt{contrasts} in the \texttt{emmeans} package can be used to estimate arbitrary treatment contrasts (see \texttt{help("contrast-methods")}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# same as \textasciigrave{}pairs\textasciigrave{} above}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(pulp.emm, }\StringTok{"pairwise"}\NormalTok{, }\AttributeTok{adjust =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate    SE df t.ratio p.value
+##  1 - 2        0.18 0.206 16   0.873  0.3955
+##  1 - 3       -0.38 0.206 16  -1.843  0.0839
+##  1 - 4       -0.44 0.206 16  -2.134  0.0486
+##  2 - 3       -0.56 0.206 16  -2.716  0.0153
+##  2 - 4       -0.62 0.206 16  -3.007  0.0083
+##  3 - 4       -0.06 0.206 16  -0.291  0.7748
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# estimating single contrast c = (1, {-}.5, {-}.5)}
+\CommentTok{\# comparing operator 1 with operators 2 and 3}
+\NormalTok{contrast1v23.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }
+  \FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}t1 v avg t2 t3\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(pulp.emm, }\StringTok{\textquotesingle{}contrast1v23\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast       estimate    SE df t.ratio p.value
+##  t1.v.avg.t2.t3     -0.1 0.179 16  -0.560  0.5832
+\end{verbatim}
+\item
+  It more easily generalises to the more complicated models we will see in Chapter \ref{blocking}.
+\item
+  It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions.
+\item
+  It is straightfoward to apply adjustments for multiple comparisons.
+\end{enumerate}
 
 \hypertarget{blocking}{%
 \chapter{Blocking}\label{blocking}}

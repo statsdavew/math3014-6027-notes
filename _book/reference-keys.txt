@@ -3,6 +3,7 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
+eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -13,6 +14,8 @@ eq:almost-reduced
 eq:crd-red-normal
 eq:rne
 eq:crd-rne
+eq:crd-irne
+tab:one-way-analysis
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -20,7 +23,7 @@ some-definitions
 principles
 replication
 randomisation
-blocking
+intro-blocking
 lin-model-rev
 variance-of-a-predictionfitted-value
 analysis-of-variance-and-r2-as-model-comparison
@@ -30,6 +33,9 @@ a-unit-treatment-linear-model
 the-partitioned-linear-model
 reduced-normal-equations-for-the-crd
 contrasts
+treatment-contrast-estimators-in-the-crd
+analysing-crds-in-r
+blocking
 factorial
 blocking-in-factorial-designs
 fractional-factorial-designs

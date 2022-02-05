@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  5 FEB 2022 12:10
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  5 FEB 2022 15:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -941,11 +941,7 @@ Package: amsthm 2017/10/31 v2.20.4
 \c@example=\count300
 \c@exercise=\count301
 \c@hypothesis=\count302
-(./bookdown_math3014-6027.aux
-
-LaTeX Warning: Label `blocking' multiply defined.
-
-)
+(./bookdown_math3014-6027.aux)
 \openout1 = `bookdown_math3014-6027.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 139.
@@ -1317,38 +1313,38 @@ Chapter 1.
 File: figures/broadbalk.jpg Graphic file (type bmp)
 <figures/broadbalk.jpg>
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 234.
+(Font)              scaled to size 5.0pt on input line 238.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00008pt on input line 234.
+(Font)              scaled to size 5.00008pt on input line 238.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99992pt on input line 234.
+(Font)              scaled to size 4.99992pt on input line 238.
 [8]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 10.0pt on input line 290.
+(Font)              scaled to size 10.0pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 7.01236pt on input line 290.
+(Font)              scaled to size 7.01236pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 4.98074pt on input line 290.
+(Font)              scaled to size 4.98074pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 10.00015pt on input line 290.
+(Font)              scaled to size 10.00015pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 7.01247pt on input line 290.
+(Font)              scaled to size 7.01247pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 4.9808pt on input line 290.
+(Font)              scaled to size 4.9808pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 9.99985pt on input line 290.
+(Font)              scaled to size 9.99985pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 7.01224pt on input line 290.
+(Font)              scaled to size 7.01224pt on input line 294.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 4.98067pt on input line 290.
+(Font)              scaled to size 4.98067pt on input line 294.
 [9]
-Overfull \hbox (5.3631pt too wide) detected at line 357
+Overfull \hbox (5.3631pt too wide) detected at line 361
 [][][][][][] [] [] []  []  [][][] [] []  []
  []
 
 [10] [11]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 446.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 450.
 File: bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf Graphic
  file (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf>
@@ -1363,64 +1359,54 @@ File: bookdown_math3014-6027_files/figure-latex/pulp-boxplot-1.pdf Graphic file
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22] [23] [24] [25]
-
-LaTeX Warning: Reference `crd-rne' on page 26 undefined on input line 1175.
-
-[26]
+[22] [23] [24] [25] [26]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 1200.
+(amsmath)                 on input line 1206.
 
-[27] [28
-
-]
+[27] [28] [29] [30]
 Chapter 3.
-[29] [30
+[31
+
+] [32
 
 ]
 Chapter 4.
-[31] [32
-
-]
-Chapter 5.
 [33] [34
 
 ]
-Chapter 6.
+Chapter 5.
 [35] [36
 
 ]
-Chapter 7.
+Chapter 6.
 [37] [38
 
 ]
+Chapter 7.
+[39] [40
+
+]
 Chapter 8.
-(./bookdown_math3014-6027.bbl [39] [40
+(./bookdown_math3014-6027.bbl [41] [42
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1248.
-[41]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1248.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1442.
+[43]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1442.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1248.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1248.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1248.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1442.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1442.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1442.
  ) 
 Here is how much of TeX's memory you used:
- 26705 strings out of 492970
- 486316 string characters out of 6133939
- 710751 words of memory out of 5000000
- 30393 multiletter control sequences out of 15000+600000
- 542969 words of font info for 123 fonts, out of 8000000 for 9000
+ 26715 strings out of 492970
+ 486508 string characters out of 6133939
+ 712059 words of memory out of 5000000
+ 30401 multiletter control sequences out of 15000+600000
+ 542977 words of font info for 124 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 58i,17n,117p,10417b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 58i,17n,117p,10417b,538s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown_math3014-6027.pdf (41 pages).
+Output written on bookdown_math3014-6027.pdf (43 pages).

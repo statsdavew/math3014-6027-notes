@@ -20,6 +20,8 @@ library(knitr)
 
 These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.
 
+Southampton prerequisites for this module are MATH2010 or MATH6174 and STAT6123 (or equivalent modules on linear modelling).
+
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(

@@ -116,7 +116,7 @@ Writing $H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}$, we obtain
 X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
 (\#eq:almost-reduced)
 \end{equation}
-The matrix $H_1$ is a "hat" matrix for a linear model containing only the term $\mu$, and hence $H_1X_1 = X_1$ (see MATH2010). Hence the first term in \@ref(eq:almost-reduced) is zero, and we obtain the **reduced normal equations** for $\btau$:
+The matrix $H_1$ is a "hat" matrix for a linear model containing only the term $\mu$, and hence $H_1X_1 = X_1$ (see MATH2010 or STAT6123). Hence the first term in \@ref(eq:almost-reduced) is zero, and we obtain the **reduced normal equations** for $\btau$:
 
 \begin{equation}
 X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
@@ -125,7 +125,7 @@ X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
 
 Note that the solutions from \@ref(eq:crd-red-normal) are not different from the solution to $\hat{\btau}$ that would be obtained from solving \@ref(eq:crd-ls); equation \@ref(eq:crd-red-normal) is simply a re-expression, where we have eliminated the nuisance parameter $\mu$. This fact means that we rarely need to solve \@ref(eq:crd-red-normal) explicitly.
 
-Recalling that for a hat matrix, $I_n - H_1$ is idempotent and symmetric (see MATH2010), if we define 
+Recalling that for a hat matrix, $I_n - H_1$ is idempotent and symmetric (see MATH2010 or MATH6174), if we define 
 
 $$
 X_{2|1} = (I_n - H_1)X_2\,,
@@ -151,12 +151,10 @@ X_{2|1} & = (I_n - H_1)X_2 \\
 & = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
 \end{align*}
 
-That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution.
-<!--
-^[If we recalled the material on "dummy" variables from MATH2010 chapter 5, we would already have realised this.].
--->
+That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution^[If we recalled the material on "dummy" variables from MATH2010 or STAT6123, we would already have realised this.].
 
-In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \@ref(eq:utm) are estimable, and in particular which linear combinations of the treatment parameters $\tau_i$ we can estimate. 
+
+In MATH2010 and STAT6123 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \@ref(eq:utm) are estimable, and in particular which linear combinations of the treatment parameters $\tau_i$ we can estimate. 
 
 Let's study equation \@ref(eq:rne) in more detail. We have
 
@@ -179,12 +177,14 @@ where $\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}$, i.e. 
 
 From \@ref(eq:crd-rne) we obtain a system of $t$ equations, each having the form
 
-$$
-n_i\hat{\tau}_i - n_i\hat{\tau}_w = n_i\bar{y}_{i.} - n_i\bar{y}_{..}\,,
-$$
+\begin{equation}
+\hat{\tau}_i - \hat{\tau}_w = \bar{y}_{i.} - \bar{y}_{..}\,,
+(\#eq:crd-irne)
+\end{equation}
+
 where $\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i$ and $\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}$ $(i = 1, \ldots, t)$.
 
-These $t$ equations are not independent; they sum to zero due to the linear dependency between the columns of $X_{2|1}$. Hence, there is no unique solution to $\hat{\boldsymbol{\tau}}$ from equation \@ref(crd-rne). However, we can estimate certain linear combinations of the $\tau_i$, called *contrasts*.
+These $t$ equations are not independent; they sum to zero due to the linear dependency between the columns of $X_{2|1}$. Hence, there is no unique solution to $\hat{\boldsymbol{\tau}}$ from equation \@ref(eq:crd-rne). However, we can estimate certain linear combinations of the $\tau_i$, called *contrasts*.
 
 ## Contrasts
 
@@ -212,9 +212,100 @@ The following are not contrasts, as $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} \
 
 with the final example once again demonstrating that we cannot estimate the individual $\tau_i$.
 
-## Contrast estimators in the CRD
+## Treatment contrast estimators in the CRD
+
+We estimate a treatment contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ in the CRD via linear combinations of equations \@ref(eq:crd-irne):
+
+\begin{align*}
+& \sum_{i=1}^t c_i\hat{\tau}_i - \sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{i.} - \sum_{i=1}^tc_i\bar{y}_{..} \\
+\Rightarrow & \sum_{i=1}^t c_i\hat{\tau}_i = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
+\end{align*}
+
+as $\sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{..} = 0$, as $\sum_{i=1}^tc_i = 0$. Hence, the unique estimator of the contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ has the form
+
+$$
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,.
+$$
+That is, we estimate the contrast in the treatment effects by the corresponding contrast in the treatment means.
+
+The variance of this estimator is straightforward to obtain:
+
+\begin{align*}
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
+& = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
+& = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+\end{align*}
+
+as, under our model assumptions, each $\bar{y}_{i.}$ is an average of independent observations with variance $\sigma^2$. Similarly, from model \@ref(eq:utm) we can derive the distribution of $\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}$ as
+
+$$
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \sigma^2\sum_{i=1}^tc_i^2/n_i\right)\,.
+$$
+Confidence intervals and hypothesis tests for $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ can be constructed/conducted using this distribution, e.g.
+
+ - a $100(1-\frac{alpha}{2})$% confidence interval:
+ $$
+ \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
+ $$
+ 
+ where $t_{n-t, 1-\frac{\alpha}{2}}$ is the $1-\frac{\alpha}{2}$ quantile of a $t$-distribution with $n-t$ degrees of freedom and $s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2$ is the estimate of $\sigma^2$.
+ 
+ - the hypothesis $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$ against the two-sided alternative $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0$ is rejected using a test of with confidence level $1-\alpha/2$ if 
+ 
+ $$
+ \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
+ $$
+ 
+## Analysing CRDs in R
+
+Let's return to Example \@ref(exm:one-way).
+
+```{r one-way-analysis}
+knitr::kable(
+ tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)[, -1],
+ col.names = paste("Operator", 1:4),
+ caption = "Pulp experiment: reflectance values (unitless) from four different operators."
+)
+```
+Clearly, we could directly calculate, and then compare, mean responses for each operator. However, there are (at least) two other ways we can proceed which use the fact we are fitting a linear model. These will be useful when we consider more complex models.
+
+1. Using `pairwise.t.test`.
+    ```{r one-way-t-test}
+    with(pulp, 
+     pairwise.t.test(reflectance, operator, p.adjust.method = 'none'))
+    ```
+    This function performs hypothesis tests for all pairwise treatment comparisons (with a default confidence level of 0.95). Here we can see that operators 1 and 4, 2 and 3, and 2 and 4 have statistically significant differences.
+
+2. Using `lm` and the `emmeans` package.
+    ```{r one-way-emmeans}
+    pulp.lm <- lm(reflectance ~ operator, data = pulp)
+    pulp.emm <- emmeans::emmeans(pulp.lm, ~ operator)
+    pairs(pulp.emm, adjust = 'none')
+    ```
+Here, we have first fitted the linear model object. The `lm` function, by default, will have set up dummy variables with the first treatment (operator) as a basline (se MATH2010 or STAT6123). This is unimportant; any set of dummy variables could be used, as in the next line we use the `emmeans` function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor `operator` (which specifies our treatments in this experiment). Finally, the `pairs` command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using `pairwise.t.test`.
+
+Our preferred approach is using method 2 (`lm` and `emmeans`), for four main reasons:
+
+a. The function `contrasts` in the `emmeans` package can be used to estimate arbitrary treatment contrasts (see `help("contrast-methods")`).
+
+    ```{r one-way-contrasts}
+    # same as `pairs` above
+    emmeans::contrast(pulp.emm, "pairwise", adjust = "none")
+    # estimating single contrast c = (1, -.5, -.5)
+    # comparing operator 1 with operators 2 and 3
+    contrast1v23.emmc <- function(levs) 
+      data.frame('t1 v avg t2 t3' = c(1, -.5, -.5, 0))
+    emmeans::contrast(pulp.emm, 'contrast1v23')
+    ```
+
+a. It more easily generalises to the more complicated models we will see in Chapter \@ref(blocking).
+
+a. It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions.
+
+a. It is straightfoward to apply adjustments for multiple comparisons.
 
 
+ 
 <!--
 We start with a short digression to discuss the concept of a generalised inverse.
 

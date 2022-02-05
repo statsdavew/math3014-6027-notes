@@ -169,7 +169,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#replication"><i class="fa fa-check"></i><b>1.4.1</b> Replication</a></li>
 <li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#randomisation"><i class="fa fa-check"></i><b>1.4.2</b> Randomisation</a></li>
-<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#blocking"><i class="fa fa-check"></i><b>1.4.3</b> Stratification (or blocking)</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#intro-blocking"><i class="fa fa-check"></i><b>1.4.3</b> Stratification (or blocking)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
 <ul>
@@ -184,8 +184,10 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="crd.html"><a href="crd.html#the-partitioned-linear-model"><i class="fa fa-check"></i><b>2.2</b> The partitioned linear model</a></li>
 <li class="chapter" data-level="2.3" data-path="crd.html"><a href="crd.html#reduced-normal-equations-for-the-crd"><i class="fa fa-check"></i><b>2.3</b> Reduced normal equations for the CRD</a></li>
 <li class="chapter" data-level="2.4" data-path="crd.html"><a href="crd.html#contrasts"><i class="fa fa-check"></i><b>2.4</b> Contrasts</a></li>
+<li class="chapter" data-level="2.5" data-path="crd.html"><a href="crd.html#treatment-contrast-estimators-in-the-crd"><i class="fa fa-check"></i><b>2.5</b> Treatment contrast estimators in the CRD</a></li>
+<li class="chapter" data-level="2.6" data-path="crd.html"><a href="crd.html#analysing-crds-in-r"><i class="fa fa-check"></i><b>2.6</b> Analysing CRDs in R</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="intro.html"><a href="intro.html#blocking"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
+<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="blocking-in-factorial-designs.html"><a href="blocking-in-factorial-designs.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial-designs.html"><a href="fractional-factorial-designs.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
@@ -214,7 +216,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="crd" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Completely randomised designs</h1>
-<p>The simplest form of experiment we will consider compares <span class="math inline">\(t\)</span> different <strong>unstructured</strong> treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter <a href="factorial.html#factorial">4</a>). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter <a href="intro.html#blocking">1.4.3</a> on blocking). A designs for such an experiment is therefore called a <strong>completely randomised design</strong> (CRD).</p>
+<p>The simplest form of experiment we will consider compares <span class="math inline">\(t\)</span> different <strong>unstructured</strong> treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter <a href="factorial.html#factorial">4</a>). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter <a href="blocking.html#blocking">3</a> on blocking). A designs for such an experiment is therefore called a <strong>completely randomised design</strong> (CRD).</p>
 <div class="example">
 <p><span id="exm:one-way" class="example"><strong>Example 2.1  </strong></span>Pulp experiment <span class="citation">(<a href="#ref-WH2009" role="doc-biblioref">Wu and Hamada, 2009</a>, ch. 2)</span></p>
 <p>In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by <span class="math inline">\(t=4\)</span> operators. The data are given in Table <a href="crd.html#tab:pulp-expt-data">2.1</a> below.</p>
@@ -349,13 +351,13 @@ X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_1\hat{\mu
 X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
 \tag{2.3}
 \end{equation}\]</span>
-The matrix <span class="math inline">\(H_1\)</span> is a “hat” matrix for a linear model containing only the term <span class="math inline">\(\mu\)</span>, and hence <span class="math inline">\(H_1X_1 = X_1\)</span> (see MATH2010). Hence the first term in <a href="crd.html#eq:almost-reduced">(2.3)</a> is zero, and we obtain the <strong>reduced normal equations</strong> for <span class="math inline">\(\boldsymbol{\tau}\)</span>:</p>
+The matrix <span class="math inline">\(H_1\)</span> is a “hat” matrix for a linear model containing only the term <span class="math inline">\(\mu\)</span>, and hence <span class="math inline">\(H_1X_1 = X_1\)</span> (see MATH2010 or STAT6123). Hence the first term in <a href="crd.html#eq:almost-reduced">(2.3)</a> is zero, and we obtain the <strong>reduced normal equations</strong> for <span class="math inline">\(\boldsymbol{\tau}\)</span>:</p>
 <p><span class="math display" id="eq:crd-red-normal">\[\begin{equation}
 X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
 \tag{2.4}
 \end{equation}\]</span></p>
 <p>Note that the solutions from <a href="crd.html#eq:crd-red-normal">(2.4)</a> are not different from the solution to <span class="math inline">\(\hat{\boldsymbol{\tau}}\)</span> that would be obtained from solving <a href="crd.html#eq:crd-ls">(2.2)</a>; equation <a href="crd.html#eq:crd-red-normal">(2.4)</a> is simply a re-expression, where we have eliminated the nuisance parameter <span class="math inline">\(\mu\)</span>. This fact means that we rarely need to solve <a href="crd.html#eq:crd-red-normal">(2.4)</a> explicitly.</p>
-<p>Recalling that for a hat matrix, <span class="math inline">\(I_n - H_1\)</span> is idempotent and symmetric (see MATH2010), if we define</p>
+<p>Recalling that for a hat matrix, <span class="math inline">\(I_n - H_1\)</span> is idempotent and symmetric (see MATH2010 or MATH6174), if we define</p>
 <p><span class="math display">\[
 X_{2|1} = (I_n - H_1)X_2\,,
 \]</span>
@@ -375,11 +377,8 @@ X_{2|1} &amp; = (I_n - H_1)X_2 \\
 &amp; = X_2 - \frac{1}{n}J_nX_2 \\
 &amp; = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
 \end{align*}\]</span></p>
-<p>That is, every column of <span class="math inline">\(X_2\)</span> has been adjusted by the subtraction of the column mean from each entry<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. Also notice that each row of <span class="math inline">\(X_{2|1}\)</span> has a row-sum equal to zero (<span class="math inline">\(= 1 - \sum_{i=1}^tn_t/n\)</span>). Hence, <span class="math inline">\(X_{2|1}\)</span> is not of full column rank, and so the reduced normal equations do not have a unique solution.
-<!--
-^[If we recalled the material on "dummy" variables from MATH2010 chapter 5, we would already have realised this.].
---></p>
-<p>In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from <a href="crd.html#eq:utm">(2.1)</a> are estimable, and in particular which linear combinations of the treatment parameters <span class="math inline">\(\tau_i\)</span> we can estimate.</p>
+<p>That is, every column of <span class="math inline">\(X_2\)</span> has been adjusted by the subtraction of the column mean from each entry<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. Also notice that each row of <span class="math inline">\(X_{2|1}\)</span> has a row-sum equal to zero (<span class="math inline">\(= 1 - \sum_{i=1}^tn_t/n\)</span>). Hence, <span class="math inline">\(X_{2|1}\)</span> is not of full column rank, and so the reduced normal equations do not have a unique solution<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
+<p>In MATH2010 and STAT6123 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from <a href="crd.html#eq:utm">(2.1)</a> are estimable, and in particular which linear combinations of the treatment parameters <span class="math inline">\(\tau_i\)</span> we can estimate.</p>
 <p>Let’s study equation <a href="crd.html#eq:rne">(2.5)</a> in more detail. We have</p>
 <p><span class="math display">\[\begin{align*}
 X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
@@ -395,16 +394,17 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 \end{align}\]</span></p>
 <p>where <span class="math inline">\(\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}\)</span>, i.e. the overall average of the observations from the experiment.</p>
 <p>From <a href="crd.html#eq:crd-rne">(2.6)</a> we obtain a system of <span class="math inline">\(t\)</span> equations, each having the form</p>
-<p><span class="math display">\[
-n_i\hat{\tau}_i - n_i\hat{\tau}_w = n_i\bar{y}_{i.} - n_i\bar{y}_{..}\,,
-\]</span>
-where <span class="math inline">\(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\)</span> and <span class="math inline">\(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\)</span> <span class="math inline">\((i = 1, \ldots, t)\)</span>.</p>
-<p>These <span class="math inline">\(t\)</span> equations are not independent; they sum to zero due to the linear dependency between the columns of <span class="math inline">\(X_{2|1}\)</span>. Hence, there is no unique solution to <span class="math inline">\(\hat{\boldsymbol{\tau}}\)</span> from equation <a href="#crd-rne"><strong>??</strong></a>. However, we can estimate certain linear combinations of the <span class="math inline">\(\tau_i\)</span>, called <em>contrasts</em>.</p>
+<p><span class="math display" id="eq:crd-irne">\[\begin{equation}
+\hat{\tau}_i - \hat{\tau}_w = \bar{y}_{i.} - \bar{y}_{..}\,,
+\tag{2.7}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\)</span> and <span class="math inline">\(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\)</span> <span class="math inline">\((i = 1, \ldots, t)\)</span>.</p>
+<p>These <span class="math inline">\(t\)</span> equations are not independent; they sum to zero due to the linear dependency between the columns of <span class="math inline">\(X_{2|1}\)</span>. Hence, there is no unique solution to <span class="math inline">\(\hat{\boldsymbol{\tau}}\)</span> from equation <a href="crd.html#eq:crd-rne">(2.6)</a>. However, we can estimate certain linear combinations of the <span class="math inline">\(\tau_i\)</span>, called <em>contrasts</em>.</p>
 </div>
 <div id="contrasts" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Contrasts</h2>
 <div class="definition">
-<p><span id="def:contrast" class="definition"><strong>Definition 2.1  </strong></span>A treatment <em>contrast</em> is a linear combination <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> with coefficient vector <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\)</span> such that <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\)</span>; that is, <span class="math inline">\(\sum_{i = 1}^t c_i = 0\)</span>.</p>
+<p><span id="def:contrast" class="definition"><strong>Definition 2.1  </strong></span>A treatment <strong>contrast</strong> is a linear combination <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> with coefficient vector <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\)</span> such that <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\)</span>; that is, <span class="math inline">\(\sum_{i = 1}^t c_i = 0\)</span>.</p>
 </div>
 <p>For example, assume we have <span class="math inline">\(t = 3\)</span> treatments, then the following vectors <span class="math inline">\(\boldsymbol{c}\)</span> all define contrasts:</p>
 <ol style="list-style-type: decimal">
@@ -424,6 +424,148 @@ where <span class="math inline">\(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{
 <li><span class="math inline">\(\boldsymbol{c}^{\mathrm{T}} = (1, 0, 0)\)</span>,</li>
 </ol>
 <p>with the final example once again demonstrating that we cannot estimate the individual <span class="math inline">\(\tau_i\)</span>.</p>
+</div>
+<div id="treatment-contrast-estimators-in-the-crd" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Treatment contrast estimators in the CRD</h2>
+<p>We estimate a treatment contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> in the CRD via linear combinations of equations <a href="crd.html#eq:crd-irne">(2.7)</a>:</p>
+<p><span class="math display">\[\begin{align*}
+&amp; \sum_{i=1}^t c_i\hat{\tau}_i - \sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{i.} - \sum_{i=1}^tc_i\bar{y}_{..} \\
+\Rightarrow &amp; \sum_{i=1}^t c_i\hat{\tau}_i = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
+\end{align*}\]</span></p>
+<p>as <span class="math inline">\(\sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{..} = 0\)</span>, as <span class="math inline">\(\sum_{i=1}^tc_i = 0\)</span>. Hence, the unique estimator of the contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> has the form</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,.
+\]</span>
+That is, we estimate the contrast in the treatment effects by the corresponding contrast in the treatment means.</p>
+<p>The variance of this estimator is straightforward to obtain:</p>
+<p><span class="math display">\[\begin{align*}
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
+&amp; = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
+&amp; = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+\end{align*}\]</span></p>
+<p>as, under our model assumptions, each <span class="math inline">\(\bar{y}_{i.}\)</span> is an average of independent observations with variance <span class="math inline">\(\sigma^2\)</span>. Similarly, from model <a href="crd.html#eq:utm">(2.1)</a> we can derive the distribution of <span class="math inline">\(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\)</span> as</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \sigma^2\sum_{i=1}^tc_i^2/n_i\right)\,.
+\]</span>
+Confidence intervals and hypothesis tests for <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> can be constructed/conducted using this distribution, e.g.</p>
+<ul>
+<li>a <span class="math inline">\(100(1-\frac{alpha}{2})\)</span>% confidence interval:
+<span class="math display">\[
+ \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
+ \]</span></li>
+</ul>
+<p>where <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2}}\)</span> is the <span class="math inline">\(1-\frac{\alpha}{2}\)</span> quantile of a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-t\)</span> degrees of freedom and <span class="math inline">\(s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2\)</span> is the estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
+<ul>
+<li>the hypothesis <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\)</span> against the two-sided alternative <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\)</span> is rejected using a test of with confidence level <span class="math inline">\(1-\alpha/2\)</span> if</li>
+</ul>
+<p><span class="math display">\[
+ \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} &gt; t_{n-t, 1-\frac{\alpha}{2}}\,.
+ \]</span></p>
+</div>
+<div id="analysing-crds-in-r" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Analysing CRDs in R</h2>
+<p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="crd.html#cb4-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb4-2"><a href="crd.html#cb4-2" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(pulp, <span class="at">names_from =</span> operator, <span class="at">values_from =</span> reflectance)[, <span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb4-3"><a href="crd.html#cb4-3" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb4-4"><a href="crd.html#cb4-4" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
+<span id="cb4-5"><a href="crd.html#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:one-way-analysis">Table 2.2: </span>Pulp experiment: reflectance values (unitless) from four different operators.</caption>
+<thead>
+<tr class="header">
+<th align="right">Operator 1</th>
+<th align="right">Operator 2</th>
+<th align="right">Operator 3</th>
+<th align="right">Operator 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">59.8</td>
+<td align="right">59.8</td>
+<td align="right">60.7</td>
+<td align="right">61.0</td>
+</tr>
+<tr class="even">
+<td align="right">60.0</td>
+<td align="right">60.2</td>
+<td align="right">60.7</td>
+<td align="right">60.8</td>
+</tr>
+<tr class="odd">
+<td align="right">60.8</td>
+<td align="right">60.4</td>
+<td align="right">60.5</td>
+<td align="right">60.6</td>
+</tr>
+<tr class="even">
+<td align="right">60.8</td>
+<td align="right">59.9</td>
+<td align="right">60.9</td>
+<td align="right">60.5</td>
+</tr>
+<tr class="odd">
+<td align="right">59.8</td>
+<td align="right">60.0</td>
+<td align="right">60.3</td>
+<td align="right">60.5</td>
+</tr>
+</tbody>
+</table>
+<p>Clearly, we could directly calculate, and then compare, mean responses for each operator. However, there are (at least) two other ways we can proceed which use the fact we are fitting a linear model. These will be useful when we consider more complex models.</p>
+<ol style="list-style-type: decimal">
+<li><p>Using <code>pairwise.t.test</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="crd.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(pulp, </span>
+<span id="cb5-2"><a href="crd.html#cb5-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">pairwise.t.test</span>(reflectance, operator, <span class="at">p.adjust.method =</span> <span class="st">&#39;none&#39;</span>))</span></code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  reflectance and operator 
+## 
+##   1      2      3     
+## 2 0.3955 -      -     
+## 3 0.0839 0.0153 -     
+## 4 0.0486 0.0083 0.7748
+## 
+## P value adjustment method: none</code></pre>
+<p>This function performs hypothesis tests for all pairwise treatment comparisons (with a default confidence level of 0.95). Here we can see that operators 1 and 4, 2 and 3, and 2 and 4 have statistically significant differences.</p></li>
+<li><p>Using <code>lm</code> and the <code>emmeans</code> package.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="crd.html#cb7-1" aria-hidden="true" tabindex="-1"></a>pulp.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span>
+<span id="cb7-2"><a href="crd.html#cb7-2" aria-hidden="true" tabindex="-1"></a>pulp.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(pulp.lm, <span class="sc">~</span> operator)</span>
+<span id="cb7-3"><a href="crd.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate    SE df t.ratio p.value
+##  1 - 2        0.18 0.206 16   0.873  0.3955
+##  1 - 3       -0.38 0.206 16  -1.843  0.0839
+##  1 - 4       -0.44 0.206 16  -2.134  0.0486
+##  2 - 3       -0.56 0.206 16  -2.716  0.0153
+##  2 - 4       -0.62 0.206 16  -3.007  0.0083
+##  3 - 4       -0.06 0.206 16  -0.291  0.7748</code></pre>
+<p>Here, we have first fitted the linear model object. The <code>lm</code> function, by default, will have set up dummy variables with the first treatment (operator) as a basline (se MATH2010 or STAT6123). This is unimportant; any set of dummy variables could be used, as in the next line we use the <code>emmeans</code> function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor <code>operator</code> (which specifies our treatments in this experiment). Finally, the <code>pairs</code> command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using <code>pairwise.t.test</code>.</p></li>
+</ol>
+<p>Our preferred approach is using method 2 (<code>lm</code> and <code>emmeans</code>), for four main reasons:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The function <code>contrasts</code> in the <code>emmeans</code> package can be used to estimate arbitrary treatment contrasts (see <code>help("contrast-methods")</code>).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as `pairs` above</span></span>
+<span id="cb9-2"><a href="crd.html#cb9-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate    SE df t.ratio p.value
+##  1 - 2        0.18 0.206 16   0.873  0.3955
+##  1 - 3       -0.38 0.206 16  -1.843  0.0839
+##  1 - 4       -0.44 0.206 16  -2.134  0.0486
+##  2 - 3       -0.56 0.206 16  -2.716  0.0153
+##  2 - 4       -0.62 0.206 16  -3.007  0.0083
+##  3 - 4       -0.06 0.206 16  -0.291  0.7748</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="crd.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
+<span id="cb11-2"><a href="crd.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
+<span id="cb11-3"><a href="crd.html#cb11-3" aria-hidden="true" tabindex="-1"></a>contrast1v23.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs) </span>
+<span id="cb11-4"><a href="crd.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&#39;t1 v avg t2 t3&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>))</span>
+<span id="cb11-5"><a href="crd.html#cb11-5" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&#39;contrast1v23&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast       estimate    SE df t.ratio p.value
+##  t1.v.avg.t2.t3     -0.1 0.179 16  -0.560  0.5832</code></pre></li>
+<li><p>It more easily generalises to the more complicated models we will see in Chapter <a href="blocking.html#blocking">3</a>.</p></li>
+<li><p>It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions.</p></li>
+<li><p>It is straightfoward to apply adjustments for multiple comparisons.</p></li>
+</ol>
 <!--
 We start with a short digression to discuss the concept of a generalised inverse.
 
@@ -473,6 +615,7 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
 <ol start="8">
 <li id="fn8"><p>In later chapters we will see examples where <span class="math inline">\(X_1\)</span> has <span class="math inline">\(&gt;1\)</span> columns, and hence <span class="math inline">\(X_1^{\mathrm{T}}X_1\)</span> is a matrix.<a href="crd.html#fnref8" class="footnote-back">↩︎</a></p></li>
 <li id="fn9"><p>Often called “column centred”<a href="crd.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>If we recalled the material on “dummy” variables from MATH2010 or STAT6123, we would already have realised this.<a href="crd.html#fnref10" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -526,7 +669,7 @@ gitbook.start({
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

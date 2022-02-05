@@ -169,7 +169,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#replication"><i class="fa fa-check"></i><b>1.4.1</b> Replication</a></li>
 <li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#randomisation"><i class="fa fa-check"></i><b>1.4.2</b> Randomisation</a></li>
-<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#blocking"><i class="fa fa-check"></i><b>1.4.3</b> Stratification (or blocking)</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#intro-blocking"><i class="fa fa-check"></i><b>1.4.3</b> Stratification (or blocking)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
 <ul>
@@ -184,8 +184,10 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="crd.html"><a href="crd.html#the-partitioned-linear-model"><i class="fa fa-check"></i><b>2.2</b> The partitioned linear model</a></li>
 <li class="chapter" data-level="2.3" data-path="crd.html"><a href="crd.html#reduced-normal-equations-for-the-crd"><i class="fa fa-check"></i><b>2.3</b> Reduced normal equations for the CRD</a></li>
 <li class="chapter" data-level="2.4" data-path="crd.html"><a href="crd.html#contrasts"><i class="fa fa-check"></i><b>2.4</b> Contrasts</a></li>
+<li class="chapter" data-level="2.5" data-path="crd.html"><a href="crd.html#treatment-contrast-estimators-in-the-crd"><i class="fa fa-check"></i><b>2.5</b> Treatment contrast estimators in the CRD</a></li>
+<li class="chapter" data-level="2.6" data-path="crd.html"><a href="crd.html#analysing-crds-in-r"><i class="fa fa-check"></i><b>2.6</b> Analysing CRDs in R</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="intro.html"><a href="intro.html#blocking"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
+<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="blocking-in-factorial-designs.html"><a href="blocking-in-factorial-designs.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial-designs.html"><a href="fractional-factorial-designs.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
@@ -221,7 +223,9 @@ div.csl-indent {
 <div class="definition">
 <p><span id="def:design" class="definition"><strong>Definition 1.2  </strong></span><strong>Design of experiments</strong> is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.</p>
 </div>
-<p>People have been designing experiments for as long as they have been exploring the natural world. Some notable milestones in the history of the design of experiments include:</p>
+<p>People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by <a href="https://xkcd.com/2530/">xkcd</a>:</p>
+<p><img src="https://imgs.xkcd.com/comics/clinical_trials.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>Some notable milestones in the history of the design of experiments include:</p>
 <ul>
 <li>prior to the 20th century:
 <ul>
@@ -257,7 +261,7 @@ Before we can design an experiment, we need to know:
 <p><span id="exm:motivation" class="example"><strong>Example 1.1  </strong></span>Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers, <span class="math inline">\(\dots\)</span>). We have <span class="math inline">\(n\)</span> subjects (people, mice, plots of land, <span class="math inline">\(\dots\)</span>), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, <span class="math inline">\(\dots\)</span>) is then measured.</p>
 </div>
 <p><strong>Question:</strong> How many subjects should be assigned to each treatment to gain the most precise<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> inference about the difference in response from the two treatments?</p>
-<p>Consider a linear statistical model<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> for the response (see MATH2010):</p>
+<p>Consider a linear statistical model<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> for the response (see MATH2010 or MATH6174/STAT6123):</p>
 <p><span class="math display" id="eq:slr">\[\begin{equation}
 Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
 \tag{1.1}
@@ -281,7 +285,7 @@ for <span class="math inline">\(j=1,\dots,n\)</span>.<a href="#fn3" class="footn
 \tag{1.2}
 \end{equation}\]</span></p>
 <p>Therefore, we require the the most precise estimator of <span class="math inline">\(\beta_{1}\)</span> possible. That is, we wish to make the variance of our estimator of <span class="math inline">\(\beta_1\)</span> as small as possible.</p>
-<p>Parameters <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> can be estimated using least squares (see MATH2010). For <span class="math inline">\(Y_1,\dots,Y_n\)</span>, we can write the model down in matrix form:</p>
+<p>Parameters <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> can be estimated using least squares (see MATH2010 or MATH6174/STAT6123). For <span class="math inline">\(Y_1,\dots,Y_n\)</span>, we can write the model down in matrix form:</p>
 <p><span class="math display">\[\begin{equation*}
 \left[ \begin{array}{c}
 Y_1\\
@@ -517,7 +521,7 @@ for inference and statistical testing.</p>
 </ul>
 <p>Clinical trials are usually also <em>double-blinded</em>, i.e. neither the healthcare professional nor the patient knows which treatment the patient is receiving.</p>
 </div>
-<div id="blocking" class="section level3" number="1.4.3">
+<div id="intro-blocking" class="section level3" number="1.4.3">
 <h3><span class="header-section-number">1.4.3</span> Stratification (or blocking)</h3>
 <p>We would like to use a wide variety of experimental units (e.g. people or plots of land) to ensure <strong>coverage</strong> of our results, i.e. validity of our conclusions across the population of interest. However, if the sample of units from the population is too heterogenous, then this will induce too much random variability, i.e. increase <span class="math inline">\(\sigma^{2}\)</span> in <span class="math inline">\(\varepsilon_{j}\sim N(0,\sigma^{2})\)</span>, and hence increase the variance of our parameter estimators.</p>
 <p>We can reduce this extraneous variation by splitting our units into homogenous sets, or <strong>blocks</strong>, and including a blocking term in the model. The simplest blocked experiment is a <strong>randomised complete block design</strong>, where each block contains enough units for all treatments to be applied. Comparisons can then be made <em>within</em> each block.</p>
@@ -682,7 +686,7 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 <p><span class="math display">\[\begin{equation*}
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}\]</span></p>
-<p>This is a Chi-squared distribution with <span class="math inline">\(n-p\)</span> degrees of freedom (see MATH2010 notes).</p>
+<p>This is a Chi-squared distribution with <span class="math inline">\(n-p\)</span> degrees of freedom (see MATH2010 or MATH6174 notes).</p>
 </div>
 </div>
 <div id="exercises" class="section level2" number="1.6">
@@ -840,7 +844,7 @@ gitbook.start({
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

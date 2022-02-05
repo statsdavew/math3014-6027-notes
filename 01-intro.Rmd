@@ -20,7 +20,19 @@ In this course we consider only *intervention* experiments, in which some aspect
 **Design of experiments** is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
 :::
 
-People have been designing experiments for as long as they have been exploring the natural world. Some notable milestones in the history of the design of experiments include:
+People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by [xkcd](https://xkcd.com/2530/):
+
+
+ ```{r xkcd-clinical-trials, echo = F, out.width = '75%', fig.align = 'center'}
+ if (knitr::is_html_output())
+ {
+   knitr::include_graphics("https://imgs.xkcd.com/comics/clinical_trials.png")
+ } else {
+   knitr::include_url("https://imgs.xkcd.com/comics/clinical_trials.png")
+ }
+  ```
+ 
+Some notable milestones in the history of the design of experiments include:
 
 - prior to the 20th century: 
     - [Francis Bacon](https://en.wikipedia.org/wiki/Baconian_method) (17th century; pioneer of the experimental methods)
@@ -57,7 +69,7 @@ Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers
 
 **Question:** How many subjects should be assigned to each treatment to gain the most precise^[Smallest variance.] inference about the difference in response from the two treatments?
 
-Consider a linear statistical model^[In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.] for the response (see MATH2010):
+Consider a linear statistical model^[In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.] for the response (see MATH2010 or MATH6174/STAT6123):
 
 \begin{equation}
 Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
@@ -88,7 +100,7 @@ The difference in expected response from treatments 1 and 2 is
 
 Therefore, we require the the most precise estimator of $\beta_{1}$ possible. That is, we wish to make the variance of our estimator of $\beta_1$ as small as possible.
 
-Parameters $\beta_{0}$ and $\beta_{1}$ can be estimated using least squares (see MATH2010). For $Y_1,\dots,Y_n$, we can write the model down in matrix form:
+Parameters $\beta_{0}$ and $\beta_{1}$ can be estimated using least squares (see MATH2010 or MATH6174/STAT6123). For $Y_1,\dots,Y_n$, we can write the model down in matrix form:
 
 \begin{equation*}
 \left[ \begin{array}{c}
@@ -343,7 +355,7 @@ For example, in a clinical trial to compare a new drug and a control random allo
 
 Clinical trials are usually also *double-blinded*, i.e. neither the healthcare professional nor the patient knows which treatment the patient is receiving.
 
-### Stratification (or blocking) {#blocking}
+### Stratification (or blocking) {#intro-blocking}
 We would like to use a wide variety of experimental units (e.g. people or plots of land) to ensure **coverage** of our results, i.e. validity of our conclusions across the population of interest. However, if the sample of units from the population is too heterogenous, then this will induce too much random variability, i.e. increase $\sigma^{2}$ in $\varepsilon_{j}\sim N(0,\sigma^{2})$, and hence increase the variance of our parameter estimators.
 
 We can reduce this extraneous variation by splitting our units into homogenous sets, or **blocks**, and including a blocking term in the model. The simplest blocked experiment is a **randomised complete block design**, where each block contains enough units for all treatments to be applied. Comparisons can then be made *within* each block.
@@ -516,7 +528,7 @@ is an unbiased estimator for $\sigma^{2}$, and
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}
 
-This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 notes).
+This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 or MATH6174 notes).
 
 ## Exercises
 
