@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-01-30" />
+<meta name="date" content="2022-02-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="intro.html"/>
 <link rel="next" href="blocking.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -228,10 +228,6 @@ div.csl-indent {
 <span id="cb2-8"><a href="crd.html#cb2-8" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
 <span id="cb2-9"><a href="crd.html#cb2-9" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
 <span id="cb2-10"><a href="crd.html#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## Warning: replacing previous import &#39;lifecycle::last_warnings&#39; by
-## &#39;rlang::last_warnings&#39; when loading &#39;pillar&#39;</code></pre>
-<pre><code>## Warning: replacing previous import &#39;lifecycle::last_warnings&#39; by
-## &#39;rlang::last_warnings&#39; when loading &#39;tibble&#39;</code></pre>
 <table>
 <caption><span id="tab:pulp-expt-data">Table 2.1: </span>Pulp experiment: reflectance values (unitless) from four different operators.</caption>
 <thead>
@@ -277,8 +273,8 @@ div.csl-indent {
 </table>
 <p>The experiment has one factor (operator) with four levels (sometimes called a one-way layout). The CRD employed has equal replication of each treatment (operator).</p>
 <p>We can informally compare the responses from these four treatments graphically.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="crd.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:pulp-boxplot"></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="crd.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pulp-boxplot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/pulp-boxplot-1.png" alt="Pulp experiments: distributions of reflectance from the four operators." width="672" />
 <p class="caption">
 Figure 2.1: Pulp experiments: distributions of reflectance from the four operators.
@@ -434,7 +430,6 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -474,6 +469,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

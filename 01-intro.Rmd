@@ -218,17 +218,17 @@ For estimating the difference between treatments, we are interested in
 \end{align*}
 as $x_j=\pm 1$, therefore $x_j^2=1$ for all $j=1,\ldots,n$, and hence $\sum x_j^2=n$.
 
-To achieve the most precise estimator, we need to minimise $\textrm{Var}(\hat{\beta}_{1})$ or equivalently minimise $|\sum x_j|$. This goal can achieve this through the choice of $x_{1},\dots,x_{N}$:
+To achieve the most precise estimator, we need to minimise $\textrm{Var}(\hat{\beta}_{1})$ or equivalently minimise $|\sum x_j|$. This goal can achieve this through the choice of $x_{1},\dots,x_{n}$:
 
 - as each $x_j$ can only take one of two values, -1 or +1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
-- call these $n_{1}$ and $n_{2}$ respectively, with $n_{1}+n_{2}=N$
+- call these $n_{1}$ and $n_{2}$ respectively, with $n_{1}+n_{2}=n$
 
-It is obvious that $\sum x_j = 0$ if and only if $n_1=n_2$. Therefore, assuming $N$ is even, the **optimal design** has
+It is obvious that $\sum x_j = 0$ if and only if $n_1=n_2$. Therefore, assuming $n$ is even, the **optimal design** has
 
 - $n_{1}=\frac{n}{2}$ subjects assigned to treatment 1 and
 - $n_{2}=\frac{n}{2}$ subjects assigned to treatment 2.
 
-For $N$ odd, we choose $n_{1}=\frac{n+1}{2}$, $n_{2}=\frac{n-1}{2}$, or vice versa.
+For $n$ odd, we choose $n_{1}=\frac{n+1}{2}$, $n_{2}=\frac{n-1}{2}$, or vice versa.
 
 ::: {.definition #simple-efficiency}
 We can assess different designs using their **efficiency**:
@@ -498,7 +498,7 @@ Hypothesis testing is performed using the mean square:
 Under $\textrm{H}_{0}: \beta_{1}=\dots=\beta_{p-1}=0$
 
 \begin{align*}
-\frac{\textrm{Regression SS}/(p-1)}{\textrm{RSS}/(N-p)} & = \frac{(\hat{\boldsymbol{\beta}}^{\textrm{T}}(X^{\textrm{T}}X)\hat{\boldsymbol{\beta}} - n\bar{Y}^{2})/(p-1)}{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})/(n-p)}\nonumber\\
+\frac{\textrm{Regression SS}/(p-1)}{\textrm{RSS}/(n-p)} & = \frac{(\hat{\boldsymbol{\beta}}^{\textrm{T}}(X^{\textrm{T}}X)\hat{\boldsymbol{\beta}} - n\bar{Y}^{2})/(p-1)}{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})/(n-p)}\nonumber\\
 & \sim F_{p-1,n-p}\,,
 \end{align*}
 
@@ -516,7 +516,7 @@ is an unbiased estimator for $\sigma^{2}$, and
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}
 
-This is a Chi-squared distribution with $N-p$ degrees of freedom (see MATH2010 notes).
+This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 notes).
 
 ## Exercises
 
