@@ -1231,8 +1231,8 @@ The following are not contrasts, as \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} 
 
 with the final example once again demonstrating that we cannot estimate the individual \(\tau_i\).
 
-\hypertarget{treatment-contrast-estimators-in-the-crd}{%
-\section{Treatment contrast estimators in the CRD}\label{treatment-contrast-estimators-in-the-crd}}
+\hypertarget{contrast-crd}{%
+\section{Treatment contrast estimators in the CRD}\label{contrast-crd}}
 
 We estimate a treatment contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) in the CRD via linear combinations of equations \eqref{eq:crd-irne}:
 
@@ -1284,8 +1284,8 @@ where \(t_{n-t, 1-\frac{\alpha}{2}}\) is the \(1-\frac{\alpha}{2}\) quantile of 
  \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
  \]
 
-\hypertarget{analysing-crds-in-r}{%
-\section{Analysing CRDs in R}\label{analysing-crds-in-r}}
+\hypertarget{r-crd}{%
+\section{Analysing CRDs in R}\label{r-crd}}
 
 Let's return to Example \ref{exm:one-way}.
 
@@ -1355,6 +1355,23 @@ Clearly, we could directly calculate, and then compare, mean responses for each 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pulp.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(reflectance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator, }\AttributeTok{data =}\NormalTok{ pulp)}
+\FunctionTok{anova}\NormalTok{(pulp.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: reflectance
+##           Df Sum Sq Mean Sq F value  Pr(>F)  
+## operator   3   1.34 0.44667  4.2039 0.02261 *
+## Residuals 16   1.70 0.10625                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{pulp.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(pulp.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator)}
 \FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}none\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
@@ -1370,7 +1387,9 @@ Clearly, we could directly calculate, and then compare, mean responses for each 
 ##  3 - 4       -0.06 0.206 16  -0.291  0.7748
 \end{verbatim}
 
-  Here, we have first fitted the linear model object. The \texttt{lm} function, by default, will have set up dummy variables with the first treatment (operator) as a basline (se MATH2010 or STAT6123). This is unimportant; any set of dummy variables could be used, as in the next line we use the \texttt{emmeans} function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor \texttt{operator} (which specifies our treatments in this experiment). Finally, the \texttt{pairs} command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using \texttt{pairwise.t.test}.
+  Here, we have first fitted the linear model object. The \texttt{lm} function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5\% significance level,
+
+  The choice of dummy variables in the linear model is unimportant; any set could be used\footnote{Although \(\mu\) and \(\boldsymbol{\tau}\) are not uniquely estimable, fitted values \(\hat{y}_i = \hat{\mu} + \hat{\tau}_i\) \textbf{are}, and hence it does not matter which dummy variables we use in \texttt{lm}.}, as in the next line we use the \texttt{emmeans} function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor \texttt{operator} (which specifies our treatments in this experiment). Finally, the \texttt{pairs} command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using \texttt{pairwise.t.test}.
 \end{enumerate}
 
 Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for four main reasons:
@@ -1417,6 +1436,40 @@ Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for
   It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions.
 \item
   It is straightfoward to apply adjustments for multiple comparisons.
+\end{enumerate}
+
+\hypertarget{exercises-1}{%
+\section{Exercises}\label{exercises-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  For Example \ref{exm:one-way}, calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section \ref{contrast-crd} are the same as those found in Section \ref{r-crd} using \texttt{pairwise.t.test}, and \texttt{emmeans}.
+\item
+  ~\citep[Adapted from][]{WH2009} The bioactivity of four different drugs \(A\), \(B\), \(C\) and \(D\) for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
+
+  \begin{longtable}[]{@{}lccc@{}}
+  \toprule
+  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \midrule
+  \endhead
+  Treatment & 3 & 64.42 & 21.47 \\
+  Residual & 26 & 62.12 & 2.39 \\
+  Total & 29 & 126.54 & \\
+  \bottomrule
+  \end{longtable}
+
+  \begin{enumerate}
+  \def\labelenumii{\roman{enumii}.}
+  \item
+    What considerations should be made when assigning drugs to patients, and why?
+  \item
+    Use an \(F\)-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
+  \item
+    The average response from each treatment is as follows: \(\bar{Y}_A=66.10\) (\(r_A=7\) patients), \(\bar{Y}_B=65.75\) (\(r_B=8\)), \(\bar{Y}_C = 62.63\) (\(r_C=9\)), and \(\bar{Y}_D=63.85\) (\(r_D=6\)). Conduct hypothesis tests for all pairwise comparisons.
+  \item
+    In fact, \(A\) and \(B\) are brand-name drugs and \(C\) and \(D\) are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
+  \end{enumerate}
 \end{enumerate}
 
 \hypertarget{blocking}{%

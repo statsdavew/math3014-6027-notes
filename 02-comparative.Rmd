@@ -212,7 +212,7 @@ The following are not contrasts, as $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} \
 
 with the final example once again demonstrating that we cannot estimate the individual $\tau_i$.
 
-## Treatment contrast estimators in the CRD
+## Treatment contrast estimators in the CRD {#contrast-crd}
 
 We estimate a treatment contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ in the CRD via linear combinations of equations \@ref(eq:crd-irne):
 
@@ -256,7 +256,7 @@ Confidence intervals and hypothesis tests for $\boldsymbol{c}^{\mathrm{T}}\bolds
  \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
  $$
  
-## Analysing CRDs in R
+## Analysing CRDs in R {#r-crd}
 
 Let's return to Example \@ref(exm:one-way).
 
@@ -279,10 +279,13 @@ Clearly, we could directly calculate, and then compare, mean responses for each 
 2. Using `lm` and the `emmeans` package.
     ```{r one-way-emmeans}
     pulp.lm <- lm(reflectance ~ operator, data = pulp)
+    anova(pulp.lm)
     pulp.emm <- emmeans::emmeans(pulp.lm, ~ operator)
     pairs(pulp.emm, adjust = 'none')
     ```
-Here, we have first fitted the linear model object. The `lm` function, by default, will have set up dummy variables with the first treatment (operator) as a basline (se MATH2010 or STAT6123). This is unimportant; any set of dummy variables could be used, as in the next line we use the `emmeans` function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor `operator` (which specifies our treatments in this experiment). Finally, the `pairs` command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using `pairwise.t.test`.
+Here, we have first fitted the linear model object. The `lm` function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5% significance level,  
+
+    The choice of dummy variables in the linear model is unimportant; any set could be used^[Although $\mu$ and $\boldsymbol{\tau}$ are not uniquely estimable, fitted values $\hat{y}_i = \hat{\mu} + \hat{\tau}_i$ **are**, and hence it does not matter which dummy variables we use in `lm`.], as in the next line we use the `emmeans` function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor `operator` (which specifies our treatments in this experiment). Finally, the `pairs` command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using `pairwise.t.test`.
 
 Our preferred approach is using method 2 (`lm` and `emmeans`), for four main reasons:
 
@@ -304,6 +307,29 @@ a. It explicitly acknowledges that we have fitted a linear model, and so encoura
 
 a. It is straightfoward to apply adjustments for multiple comparisons.
 
+## Exercises
+
+1. For Example \@ref(exm:one-way), calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section \@ref(contrast-crd) are the same as those found in Section \@ref(r-crd) using `pairwise.t.test`, and `emmeans`.
+
+1. \ [Adapted from @WH2009] The bioactivity of four different drugs $A$, $B$, $C$ and $D$ for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
+
+    | Source | Degrees of freedom | Sums of squares | Mean square |
+    | :----- | :----------------: | :-------------: | :---------: |
+    | Treatment | 3 | 64.42 | 21.47 |
+    | Residual | 26 | 62.12 | 2.39 |
+    | Total | 29 | 126.54 | 
+
+    i. What considerations should be made when assigning drugs to patients, and why?
+
+    i. Use an $F$-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
+
+    i. The average response from each treatment is as follows: $\bar{Y}_A=66.10$ ($r_A=7$ patients), $\bar{Y}_B=65.75$ ($r_B=8$), $\bar{Y}_C = 62.63$ ($r_C=9$), and $\bar{Y}_D=63.85$ ($r_D=6$). Conduct hypothesis tests for all pairwise comparisons.
+    
+
+    i. In fact, $A$ and $B$ are brand-name drugs and $C$ and $D$ are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
+
+<!--    Use both the Bonferroni and Tukey methods to perform multiple comparisons of the four treatments at the 0.01 experiment-wise level.
+-->
 
  
 <!--
