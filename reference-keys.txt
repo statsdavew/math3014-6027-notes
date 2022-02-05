@@ -23,6 +23,8 @@ eq:crd-ls
 eq:almost-reduced
 eq:crd-red-normal
 eq:rne
+eq:crd-rne
+def:contrast
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -38,8 +40,9 @@ exercises
 crd
 a-unit-treatment-linear-model
 the-partitioned-linear-model
-generalised-inverses
-solutions-to-the-reduced-normal-equations
+reduced-normal-equations-for-the-crd
+contrasts
+contrast-estimators-in-the-crd
 factorial
 blocking-in-factorial-designs
 fractional-factorial-designs
