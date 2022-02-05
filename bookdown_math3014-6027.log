@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  5 FEB 2022 16:16
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  5 FEB 2022 18:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1348,9 +1348,83 @@ LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
 File: bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf Graphic
  file (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf>
-[12] [13] [14] [15] [16] [17] [18] [19] [20]
+[12] [13] [14] [15] [16] [17] [18]
+Overfull \hbox (47.5pt too wide) in paragraph at lines 908--908
+ []\TU/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "
+Tea first"[] 
+ []
+
+[19] [20]
+Overfull \hbox (66.86795pt too wide) detected at line 1001
+[]
+ []
+
+[21]
+Overfull \hbox (9.30151pt too wide) in paragraph at lines 1093--1093
+[]|\TU/lmr/m/n/10 Regression|  
+ []
+
+
+Overfull \hbox (45.84302pt too wide) in paragraph at lines 1093--1094
+ []|$[] [][][][] [] 
+ []
+
+[22]
+Overfull \hbox (82.2202pt too wide) detected at line 1121
+[]
+ []
+
+
+Overfull \hbox (9.30151pt too wide) in paragraph at lines 1140--1140
+[]|\TU/lmr/m/n/10 Regression|  
+ []
+
+
+Overfull \hbox (36.8069pt too wide) in paragraph at lines 1140--1141
+ []|$[] [][][][] [] 
+ []
+
+
+Overfull \hbox (42.6431pt too wide) in paragraph at lines 1141--1142
+ []|$[] [][][]$| 
+ []
+
+
+Overfull \hbox (66.34526pt too wide) in paragraph at lines 1142--1143
+ []|$[] [][][]$| 
+ []
+
+
+Overfull \hbox (92.2202pt too wide) detected at line 1166
+[]
+ []
+
+
+Underfull \vbox (badness 2529) has occurred while \output is active []
+
+[23]
+Overfull \hbox (9.30151pt too wide) in paragraph at lines 1187--1187
+ []|\TU/lmr/m/n/10 Regression| 
+ []
+
+
+Overfull \hbox (36.8069pt too wide) in paragraph at lines 1187--1188
+ []|$[] [][][][] [] 
+ []
+
+
+Overfull \hbox (66.34526pt too wide) in paragraph at lines 1188--1189
+ []|$[] [][][]$| 
+ []
+
+
+Overfull \hbox (66.34526pt too wide) in paragraph at lines 1189--1190
+ []|$[] [][][]$| 
+ []
+
+[24]
 Chapter 2.
-[21
+[25
 
 ]
 File: bookdown_math3014-6027_files/figure-latex/pulp-boxplot-1.pdf Graphic file
@@ -1359,78 +1433,78 @@ File: bookdown_math3014-6027_files/figure-latex/pulp-boxplot-1.pdf Graphic file
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22] [23] [24] [25] [26]
+[26] [27] [28] [29] [30]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 1206.
+(amsmath)                 on input line 1450.
 
-[27] [28] [29]
-Overfull \hbox (21.25pt too wide) in paragraph at lines 1371--1371
+[31] [32] [33]
+Overfull \hbox (21.25pt too wide) in paragraph at lines 1615--1615
  []\TU/lmtt/m/n/10 ## Signif. codes:  0 []***[] 0.001 []**[] 0.01 []*[] 0.05 []
 .[] 0.1 [] [] 1[] 
  []
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 8.0pt on input line 1392.
+(Font)              scaled to size 8.0pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 6.0pt on input line 1392.
+(Font)              scaled to size 6.0pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 5.0pt on input line 1392.
+(Font)              scaled to size 5.0pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 8.00012pt on input line 1392.
+(Font)              scaled to size 8.00012pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 6.00009pt on input line 1392.
+(Font)              scaled to size 6.00009pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 5.00008pt on input line 1392.
+(Font)              scaled to size 5.00008pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 7.99988pt on input line 1392.
+(Font)              scaled to size 7.99988pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 5.99991pt on input line 1392.
+(Font)              scaled to size 5.99991pt on input line 1636.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 4.99992pt on input line 1392.
-[30] [31] [32]
+(Font)              scaled to size 4.99992pt on input line 1636.
+[34] [35] [36]
 Chapter 3.
-[33
+[37
 
-] [34
+] [38
 
 ]
 Chapter 4.
-[35] [36
-
-]
-Chapter 5.
-[37] [38
-
-]
-Chapter 6.
 [39] [40
 
 ]
-Chapter 7.
+Chapter 5.
 [41] [42
 
 ]
+Chapter 6.
+[43] [44
+
+]
+Chapter 7.
+[45] [46
+
+]
 Chapter 8.
-(./bookdown_math3014-6027.bbl [43] [44
+(./bookdown_math3014-6027.bbl [47] [48
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1495.
-[45]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1495.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1739.
+[49]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1739.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1495.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1495.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1495.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1739.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1739.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1739.
  ) 
 Here is how much of TeX's memory you used:
- 26755 strings out of 492970
- 487846 string characters out of 6133939
- 712156 words of memory out of 5000000
- 30430 multiletter control sequences out of 15000+600000
+ 26758 strings out of 492970
+ 487860 string characters out of 6133939
+ 717360 words of memory out of 5000000
+ 30433 multiletter control sequences out of 15000+600000
  544633 words of font info for 137 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,17n,117p,10417b,538s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown_math3014-6027.pdf (45 pages).
+Output written on bookdown_math3014-6027.pdf (49 pages).

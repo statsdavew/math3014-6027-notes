@@ -543,6 +543,32 @@ This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 o
     c. How might a "physical appartatus" from a "game of chance" be used to perform the randomisation. Explain one example.
     d. Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?
 
+<details>
+<summary><b>Solution</b></summary>
+
+a. There are two treatments in the experiment - the two ingredients "milk first" and "tea first".
+
+b. The experimental units are the "cups of tea", made up from the tea and milk used and also the cup itself.
+
+c. The simplest method here might be to select four black playing cards and four red playing cards, assign one treatment to each colour, shuffle the cards, and then draw them in order. The colour drawn indicates the treatment that should be used to make the next cup of tea. This operation would give one possible randomisation.
+
+    We could of course also use `R`.
+
+    ```{r tea-randomise}
+    sample(rep(c("Milk first", "Tea first"), c(4, 4)), size = 8, replace = F)
+    ```
+
+d. Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
+
+    ```{r tea-blocks}
+    # block 1
+    sample(rep(c("Milk first", "Tea first"), c(2, 2)), size = 4, replace = F)
+    # block 2
+    sample(rep(c("Milk first", "Tea first"), c(2, 2)), size = 4, replace = F)
+    ```
+
+</details>
+
 2. Consider the linear model
 
     $$\bY = X\bbeta + \bvarepsilon\,,$$
@@ -554,6 +580,61 @@ This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 o
     $$\mbox{Var}(\hat{\bbeta}) = \left(X^{\rm{T}}X\right)^{-1}\sigma^2\,.$$
 
     b. If $\bvarepsilon\sim N (\boldsymbol{0},I_n\sigma^2)$, with $I_n$ being the $n\times n$ identity matrix, show that the maximum likelihood estimators for $\bbeta$ coincide with the least squares estimators.
+
+<details>
+<summary><b>Solution</b></summary>
+
+a. The method of least squares minimises the sum of squared differences between the responses and the expected values, that is, minimises the expression
+
+    $$
+    (\bY-X\bbeta)^{\rm{T}}(\bY-X\bbeta) = \bY^{\rm{T}}\bY - 2\bbeta^{\rm{T}}X^{\rm{T}}\bY + \bbeta^{\rm{T}}X^{\rm{T}}X\bbeta\,.
+    $$
+    Differentiating with respect to the vector $\bbeta$, we obtain
+
+    $$
+    \frac{\partial}{\partial\bbeta} = -2X^{\rm{T}}\bY + 2X^{\rm{T}}X\bbeta\,.
+    $$
+
+    Set equal to $\boldsymbol{0}$ and solve:
+
+    $$
+    X^{\rm{T}}X\hat{\bbeta} = X^{\rm{T}}\bY \Rightarrow \hat{\bbeta} = \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}\bY\,.
+    $$
+
+    The estimator $\hat{\bbeta}$ is unbiased:
+
+    $$
+    E(\hat{\bbeta}) = \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}E(\bY) = \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}X\bbeta = \bbeta\,,
+    $$
+    
+    and has variance:
+
+    \begin{align*}
+\mbox{Var}(\hat{\bbeta}) & =E\left\{ \left[\hat{\bbeta} - E(\hat{\bbeta})\right] \left[\hat{\bbeta} - E(\hat{\bbeta})\right]^{\rm{T}} \right\}\\
+ & =  E\left\{ \left[\hat{\bbeta} - \bbeta\right] \left[\hat{\bbeta} - \bbeta\right]^{\rm{T}} \right\}\\
+ & = E\left\{ \hat{\bbeta}\hat{\bbeta}^{\rm{T}} - 2\bbeta\hat{\bbeta}^{\rm{T}} + \bbeta\bbeta^{\rm{T}} \right\}\\
+ & = E\left\{ \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}\bY\bY^{\rm{T}}X\left(X^{\rm{T}}X\right)^{-1}  - 2\bbeta \bY^{\rm{T}}X\left(X^{\rm{T}}X\right)^{-1} + \bbeta\bbeta^{\rm{T}}\right\}\\
+ & = \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}E(\bY\bY^{\rm{T}})X\left(X^{\rm{T}}X\right)^{-1} - 2\bbeta E(\bY^{\rm{T}})X\left(X^{\rm{T}}X\right)^{-1} + \bbeta\bbeta^{\rm{T}}\\
+ & = \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}\left[\mbox{Var}(\bY) + E(\bY)E(\bY^{\rm{T}})\right]X\left(X^{\rm{T}}X\right)^{-1} - 2\bbeta\bbeta^{\rm{T}}X^{\rm{T}}X\left(X^{\rm{T}}X\right)^{-1} + \bbeta\bbeta^{\rm{T}}\\
+ & = \left(X^{\rm{T}}X\right)^{-1}X^{\rm{T}}\left[I_N\sigma^2 + X\bbeta\bbeta^{\rm{T}}X^{\rm{T}}\right]X\left(X^{\rm{T}}X\right)^{-1} - \bbeta\bbeta^{\rm{T}}\\
+ & = \left(X^{\rm{T}}X\right)^{-1}\sigma^2\,. 
+    \end{align*}
+
+a. As $\bY\sim N\left(X\bbeta, I_N\sigma^2\right)$, the likelihood is given by
+
+    $$
+    L(\bbeta\,; \bY) = \left(2\pi\sigma^2\right)^{-N/2}\exp\left\{-\frac{1}{2\sigma^2}(\bY - X\bbeta)^{\rm{T}}(\bY - X\bbeta)\right\}\,.
+    $$
+
+    The log-likelihood is given by
+
+    $$
+    l(\bbeta\,;\bY) = -\frac{1}{2\sigma^2}(\bY - X\bbeta)^{\rm{T}}(\bY - X\bbeta) + \mbox{constant}\,.
+    $$
+
+    Up to a constant, this expression is $-1\times$ the least squares equations; hence maximising the log-likelihood is equivalent to minimising the least squares equation.
+
+</details>
 
 3. Consider the two nested linear models
 
@@ -582,3 +663,77 @@ This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 o
     The second row of the table gives the **extra sums of squares** for the additional terms in fitting model (ii), over and above those in model (i). 
 
     c. Calculate the extra sum of squares for fitting the terms in model (i), over and above those terms only in model (ii), i.e. those held in $X_2\bbeta_2$. Construct an ANOVA table containing both the extra sum of squares for the terms only in model (i) and the extra sum of squares for the terms only in model (ii). Comment on the table.
+    
+<details>
+<summary><b>Solution</b></summary>
+
+a. From lectures
+
+    | Source | Degrees of freedom | Sums of squares | Mean square |
+    | :----- | :----------------: | :-------------: | :---------: |
+    | Regression | $p_1+p_2$ | $\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2$ | $\left(\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2\right)/(p_1+p_2)$ |
+    | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\rm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
+    | Total | $n-1$ | $\bY^{\rm{T}}\bY - n\bar{Y}^2$ | | 
+
+    where 
+
+    \begin{align*}
+\mbox{RSS(null) - RSS(ii)} & = \bY^{\rm{T}}\bY - n\bar{Y}^2 - (\bY - X\hat{\bbeta})^{\rm{T}}(\bY - X\hat{\bbeta})\\
+& = \bY^{\rm{T}}\bY - n\bar{Y}^2 - \bY^{\rm{T}}\bY + 2\bY^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta}\\
+& = 2\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2\\
+& = \hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2\,.
+    \end{align*}
+
+a. To compare model (i) with the null model, we compute
+
+    \begin{align*}
+    \mbox{RSS(null) - RSS(i)} & = \bY^{\rm{T}}\bY - N\bar{Y}^2 - (\bY - X_1\hat{\bbeta}_1)^{\rm{T}}(\bY - X_1\hat{\bbeta}_1)\\
+    & = \hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1 - n\bar{Y}^2\,.
+    \end{align*}
+
+    To compare models (i) and (ii), we compare them both to the null model, and look at the difference between these comparisons:
+
+    \begin{align*}
+    \mbox{[RSS(null) - RSS(ii)] - [RSS(null) - RSS(i)]} & = \mbox{RSS(i) - RSS(ii)}\\
+    & = (\bY - X_1\hat{\bbeta}_1)^{\rm{T}}(\bY - X_1\hat{\bbeta}_1) - (\bY - X\hat{\bbeta})^{\rm{T}}(\bY - X\hat{\bbeta})\\
+    & = \hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1\,.
+    \end{align*}
+
+    | Source | Degrees of freedom | Sums of squares | Mean square |
+    | :----- | :----------------: | :-------------: | :---------: |
+    | Regression | $p_1+p_2$ | $\hat{\bbeta}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2$ | $\left(\hat{\bbeta}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2\right)/(p_1+p_2)$ |
+    | Model (i) | $p_1$ | $\hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1 - n\bar{Y}^2$ | $\left(\hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1 - n\bar{Y}^2\right)/p_1$ |
+    | Extra due to Model (ii) | $p_2$ | $\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1$ | $\left(\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1\right)/p_2$ |
+    | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\rm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
+    | Total | $n-1$ | $\bY^{\rm{T}}\bY - n\bar{Y}^2$ | | 
+
+By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regression SS.
+
+a. The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
+
+    ia. $\bY = X_2\bbeta_2 + \bvarepsilon$,  
+
+    iia. $\bY = X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon = X\bbeta + \varepsilon$
+
+    Extra sum of squares for model (iia):
+
+    \begin{align*}
+\mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} & = \mbox{RSS(ia) - RSS(iia)}\\
+& = (\bY - X_2\hat{\bbeta}_2)^{\rm{T}}(\bY - X_2\hat{\bbeta}_2) - (\bY - X\hat{\bbeta})^{\rm{T}}(\bY - X\hat{\bbeta})\\
+& = \hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_2^{\rm{T}}X_2^{\rm{T}}X_2\hat{\bbeta}_2\,.
+    \end{align*}
+
+    Hence, an ANOVA table for the extra sums of squares is given by
+
+    | Source | Degrees of freedom | Sums of squares | Mean square |
+    | :----: | :----------------: | :-------------: | :---------: |
+    | Regression | $p_1+p_2$ | $\hat{\bbeta}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2$ | $\left(\hat{\bbeta}X^{\rm{T}}X\hat{\bbeta} - n\bar{Y}^2\right)/(p_1+p_2)$ |
+    | Extra Model (i) | $p_1$ | $\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_2^{\rm{T}}X_2^{\rm{T}}X_2\hat{\bbeta}_2$ | $\left(\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_2^{\rm{T}}X_2^{\rm{T}}X_2\hat{\bbeta}_2\right)/p_1$ |
+    | Extra Model (ii) | $p_2$ | $\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1$ | $\left(\hat{\bbeta}^{\rm{T}}X^{\rm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\rm{T}}X_1^{\rm{T}}X_1\hat{\bbeta}_1\right)/p_2$ |
+    | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\rm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
+    | Total | $n-1$ | $\bY^{\rm{T}}\bY - n\bar{Y}^2$ | |
+
+Note that for these *adjusted* sums of squares, in general the extra sum of squares for model (i) and (ii) do not sum to the regression sum of squares. This will only be the case if the columns of $X_1$ and $X_2$ are mutually orthogonal, i.e. $X_1^{\rm{T}}X_2 = \boldsymbol{0}$.
+
+
+</details>
