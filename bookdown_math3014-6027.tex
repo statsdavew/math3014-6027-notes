@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-01-30}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-02-01}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -163,19 +163,13 @@ These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and 
 \chapter{Motivation, introduction and revision}\label{intro}}
 
 \begin{definition}
-\protect\hypertarget{def:exp}{}\label{def:exp}
-
-An \textbf{experiment} is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science \(\dots\)) by \textbf{deliberately} varying some features of the process under study in order to understand the impact of these changes on measureable responses.
+\protect\hypertarget{def:exp}{}\label{def:exp}An \textbf{experiment} is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science \(\dots\)) by \textbf{deliberately} varying some features of the process under study in order to understand the impact of these changes on measureable responses.
 
 In this course we consider only \emph{intervention} experiments, in which some aspects of the process are under the experimenters' control. We do not consider \emph{surveys} or \emph{observational} studies.
-
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:design}{}\label{def:design}
-
-\textbf{Design of experiments} is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
-
+\protect\hypertarget{def:design}{}\label{def:design}\textbf{Design of experiments} is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Some notable milestones in the history of the design of experiments include:
@@ -225,10 +219,7 @@ Figure \ref{fig:broadbalk} shows the \href{http://www.era.rothamsted.ac.uk/Broad
 \section{Motivation}\label{motivation}}
 
 \begin{example}
-\protect\hypertarget{exm:motivation}{}\label{exm:motivation}
-
-Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
-
+\protect\hypertarget{exm:motivation}{}\label{exm:motivation}Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
 \end{example}
 
 \textbf{Question:} How many subjects should be assigned to each treatment to gain the most precise\footnote{Smallest variance.} inference about the difference in response from the two treatments?
@@ -401,17 +392,17 @@ For estimating the difference between treatments, we are interested in
 \end{align*}
 as \(x_j=\pm 1\), therefore \(x_j^2=1\) for all \(j=1,\ldots,n\), and hence \(\sum x_j^2=n\).
 
-To achieve the most precise estimator, we need to minimise \(\textrm{Var}(\hat{\beta}_{1})\) or equivalently minimise \(|\sum x_j|\). This goal can achieve this through the choice of \(x_{1},\dots,x_{N}\):
+To achieve the most precise estimator, we need to minimise \(\textrm{Var}(\hat{\beta}_{1})\) or equivalently minimise \(|\sum x_j|\). This goal can achieve this through the choice of \(x_{1},\dots,x_{n}\):
 
 \begin{itemize}
 \tightlist
 \item
   as each \(x_j\) can only take one of two values, -1 or +1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
 \item
-  call these \(n_{1}\) and \(n_{2}\) respectively, with \(n_{1}+n_{2}=N\)
+  call these \(n_{1}\) and \(n_{2}\) respectively, with \(n_{1}+n_{2}=n\)
 \end{itemize}
 
-It is obvious that \(\sum x_j = 0\) if and only if \(n_1=n_2\). Therefore, assuming \(N\) is even, the \textbf{optimal design} has
+It is obvious that \(\sum x_j = 0\) if and only if \(n_1=n_2\). Therefore, assuming \(n\) is even, the \textbf{optimal design} has
 
 \begin{itemize}
 \tightlist
@@ -421,19 +412,16 @@ It is obvious that \(\sum x_j = 0\) if and only if \(n_1=n_2\). Therefore, assum
   \(n_{2}=\frac{n}{2}\) subjects assigned to treatment 2.
 \end{itemize}
 
-For \(N\) odd, we choose \(n_{1}=\frac{n+1}{2}\), \(n_{2}=\frac{n-1}{2}\), or vice versa.
+For \(n\) odd, we choose \(n_{1}=\frac{n+1}{2}\), \(n_{2}=\frac{n-1}{2}\), or vice versa.
 
 \begin{definition}
-\protect\hypertarget{def:simple-efficiency}{}\label{def:simple-efficiency}
-
-We can assess different designs using their \textbf{efficiency}:
+\protect\hypertarget{def:simple-efficiency}{}\label{def:simple-efficiency}We can assess different designs using their \textbf{efficiency}:
 \begin{equation}
 \textrm{Eff}=\frac{\textrm{Var}(\hat{\beta}_{1}\, |\, d^{*})}{\textrm{Var}(\hat{\beta}_{1}\, |\, d_{1})}
 \label{eq:simple-efficiency}
 \end{equation}
 
 where \(d_{1}\) is a design we want to assess and \(d^{*}\) is the optimal design with smallest variance. Note that \(0\leq\textrm{Eff}\leq 1\).
-
 \end{definition}
 
 In Figure \ref{fig:simple-efficiency} below, we plot this efficiency for Example \ref{exm:motivation}, using different choices of \(n_1\). The total number of runs is fixed at \(n = 100\), and the function \texttt{eff} calculates the efficiency from Definition \ref{def:simple-efficiency} for a design with \(n_1\) subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when \(n_1 = n_2\) (equal allocation of treatments 1 and 2). If \(n_1=0\) or \(n_1 = 1\), the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.
@@ -534,31 +522,19 @@ Some reasons experiments are performed:
 \section{Some definitions}\label{some-definitions}}
 
 \begin{definition}
-\protect\hypertarget{def:response}{}\label{def:response}
-
-The \textbf{response} \(Y\) is the outcome measured in an experiment; e.g.~yield from a chemical process. The response from the \(n\) observations are denoted \(Y_{1},\dots,Y_{n}\).
-
+\protect\hypertarget{def:response}{}\label{def:response}The \textbf{response} \(Y\) is the outcome measured in an experiment; e.g.~yield from a chemical process. The response from the \(n\) observations are denoted \(Y_{1},\dots,Y_{n}\).
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:factor-variable}{}\label{def:factor-variable}
-
-\textbf{Factors} (discrete) or \textbf{variables} (continuous) are features which can be set or controlled in an experiment; \(m\) denotes the number of factors or variables under investigation. For discrete factors, we call the possible settings of the factor its \textbf{levels}. We denote by \(x_{ij}\) the value taken by factor or variable \(i\) in the \(j\)th run of the experiment (\(i = 1, \ldots, m\); \(j = 1, \ldots, n\)).
-
+\protect\hypertarget{def:factor-variable}{}\label{def:factor-variable}\textbf{Factors} (discrete) or \textbf{variables} (continuous) are features which can be set or controlled in an experiment; \(m\) denotes the number of factors or variables under investigation. For discrete factors, we call the possible settings of the factor its \textbf{levels}. We denote by \(x_{ij}\) the value taken by factor or variable \(i\) in the \(j\)th run of the experiment (\(i = 1, \ldots, m\); \(j = 1, \ldots, n\)).
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:treatment}{}\label{def:treatment}
-
-The \textbf{treatments} or \textbf{support points} are the \emph{distinct} combinations of factor or variable values in the experiment.
-
+\protect\hypertarget{def:treatment}{}\label{def:treatment}The \textbf{treatments} or \textbf{support points} are the \emph{distinct} combinations of factor or variable values in the experiment.
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:unit}{}\label{def:unit}
-
-An experimental \textbf{unit} is the basic element (material, animal, person, time unit, \ldots) to which a treatment can be applied to produce a response.
-
+\protect\hypertarget{def:unit}{}\label{def:unit}An experimental \textbf{unit} is the basic element (material, animal, person, time unit, \ldots) to which a treatment can be applied to produce a response.
 \end{definition}
 
 In Example \ref{exm:motivation} (comparing two treatments):
@@ -776,27 +752,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -831,7 +791,7 @@ Hypothesis testing is performed using the mean square:
 Under \(\textrm{H}_{0}: \beta_{1}=\dots=\beta_{p-1}=0\)
 
 \begin{align*}
-\frac{\textrm{Regression SS}/(p-1)}{\textrm{RSS}/(N-p)} & = \frac{(\hat{\boldsymbol{\beta}}^{\textrm{T}}(X^{\textrm{T}}X)\hat{\boldsymbol{\beta}} - n\bar{Y}^{2})/(p-1)}{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})/(n-p)}\nonumber\\
+\frac{\textrm{Regression SS}/(p-1)}{\textrm{RSS}/(n-p)} & = \frac{(\hat{\boldsymbol{\beta}}^{\textrm{T}}(X^{\textrm{T}}X)\hat{\boldsymbol{\beta}} - n\bar{Y}^{2})/(p-1)}{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})/(n-p)}\nonumber\\
 & \sim F_{p-1,n-p}\,,
 \end{align*}
 
@@ -849,7 +809,7 @@ is an unbiased estimator for \(\sigma^{2}\), and
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}
 
-This is a Chi-squared distribution with \(N-p\) degrees of freedom (see MATH2010 notes).
+This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010 notes).
 
 \hypertarget{exercises}{%
 \section{Exercises}\label{exercises}}
@@ -953,9 +913,7 @@ This is a Chi-squared distribution with \(N-p\) degrees of freedom (see MATH2010
 The simplest form of experiment we will consider compares \(t\) different \textbf{unstructured} treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter \ref{factorial}). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter \ref{blocking} on blocking). A designs for such an experiment is therefore called a \textbf{completely randomised design} (CRD).
 
 \begin{example}
-\protect\hypertarget{exm:one-way}{}\label{exm:one-way}
-
-Pulp experiment \citep[ch.~2]{WH2009}
+\protect\hypertarget{exm:one-way}{}\label{exm:one-way}Pulp experiment \citep[ch.~2]{WH2009}
 
 In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by \(t=4\) operators. The data are given in Table \ref{tab:pulp-expt-data} below.
 
@@ -973,16 +931,6 @@ In a paper pulping mill, an experiment was run to examine differences between th
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: replacing previous import 'lifecycle::last_warnings' by
-## 'rlang::last_warnings' when loading 'pillar'
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: replacing previous import 'lifecycle::last_warnings' by
-## 'rlang::last_warnings' when loading 'tibble'
-\end{verbatim}
 
 \begin{table}
 
@@ -1025,7 +973,6 @@ We can informally compare the responses from these four treatments graphically.
 \end{figure}
 
 Figure \ref{fig:pulp-boxplot} shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
-
 \end{example}
 
 Throughout this chapter we will assume the \(i\)th treatment is applied to \(n_i\) experimental unit, with total number of runs \(n = \sum_{i=1}^t n_i\) in the experiment.
