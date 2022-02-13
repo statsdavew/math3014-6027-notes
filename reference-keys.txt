@@ -27,6 +27,7 @@ eq:crd-rne
 eq:crd-irne
 def:contrast
 tab:one-way-analysis
+tab:nap-black
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -46,6 +47,7 @@ reduced-normal-equations-for-the-crd
 contrasts
 contrast-crd
 r-crd
+multiple-comp
 exercises-1
 blocking
 factorial
