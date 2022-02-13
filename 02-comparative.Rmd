@@ -415,7 +415,7 @@ Although the decision on which hypotheses to reject (comparson 2 - 4)  is the sa
 
     a. exploratory data analysis;
     a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
-    a. usual linear model diagnostics
+    a. usual linear model diagnostics;
     b. multiple comparisons of all pairwise differences between treatments.
  
 <!--
