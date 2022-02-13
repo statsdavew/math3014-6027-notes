@@ -184,7 +184,7 @@ From \@ref(eq:crd-rne) we obtain a system of $t$ equations, each having the form
 
 where $\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i$ and $\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}$ $(i = 1, \ldots, t)$.
 
-These $t$ equations are not independent; they sum to zero due to the linear dependency between the columns of $X_{2|1}$. Hence, there is no unique solution to $\hat{\boldsymbol{\tau}}$ from equation \@ref(eq:crd-rne). However, we can estimate certain linear combinations of the $\tau_i$, called *contrasts*.
+These $t$ equations are not independent; when multiplied by the $n_i$, they sum to zero due to the linear dependency between the columns of $X_{2|1}$. Hence, there is no unique solution to $\hat{\boldsymbol{\tau}}$ from equation \@ref(eq:crd-rne). However, we can estimate certain linear combinations of the $\tau_i$, called *contrasts*.
 
 ## Contrasts
 
@@ -243,7 +243,7 @@ $$
 $$
 Confidence intervals and hypothesis tests for $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ can be constructed/conducted using this distribution, e.g.
 
- - a $100(1-\frac{alpha}{2})$% confidence interval:
+ - a $100(1-\frac{\alpha}{2})$% confidence interval:
  $$
  \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
  $$
@@ -303,14 +303,81 @@ a. The function `contrasts` in the `emmeans` package can be used to estimate arb
 
 a. It more easily generalises to the more complicated models we will see in Chapter \@ref(blocking).
 
-a. It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions.
+a. It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions (see [Exercise 3](#nap-black-ex)).
 
-a. It is straightfoward to apply adjustments for multiple comparisons.
+a. It is straightfoward to apply adjustments for [multiple comparisons](#multiple-comp).
 
+## Multiple comparisons {#multiple-comp}
+
+When we perform hypothesis testing, we choose the critical region (i.e. the rule that decides if we reject $H_0$) to control the probability of a type I error; that is, we control the probability of incorrectly rejecting $H_0$. If we need to test multiple hypotheses, e.g. to test all pairwise differences, we need to consider the overall probability of incorrectly rejecting **one or more** null hypothesis. This is called the **experiment-wise** or **family-wise** error rate.
+
+For Example \@ref(exm:one-way), there are ${4 \choose 2} = 6$ pairwise comparisons. Under the assumption that all tests are independent^[They aren't, but it simplifies the maths!], assuming each individual test has type I error 0.05, the experiment-wise type I error rate is given by:
+
+```{r type-I}
+alpha <- 0.05
+1 - (1 - alpha)^6
+```
+
+An experiment-wise error rate of `r 1 - (1 - alpha)^6` is substantially greater than 0.05. Hence, we would expect to make many more type I errors than may be desirable. [xkcd](https://xkcd.com/882) has a fun example:
+
+```{r xkcd-jelly-beans, echo = F, out.width = '75%', fig.align = 'center'}
+ if (knitr::is_html_output())
+ {
+   knitr::include_graphics("https://imgs.xkcd.com/comics/significant.png")
+ } else {
+   knitr::include_url("https://imgs.xkcd.com/comics/significant.png")
+ }
+  ```
+```{r type-I-jb}
+alpha <- 0.05
+1 - (1 - alpha)^20
+```
+
+Therefore it is usually desirable to maintain some control of the experiment-wise type I error rate. We will consider two methods.
+
+1. The **Bonferroni method**. An upper bound on the experiment-wise type I error rate for testing $k$ hypotheses can be shown to be
+
+    \begin{align*}
+P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &    P\left(\bigcup_{i=1}^{k}\{\mbox{wrongly reject } H_{0}^i\}\right) \\
+& \leq \sum_{i=1}^{k}\underbrace{P(\mbox{wrongly reject } H_{0}^i)}_{\leq \alpha} \\ 
+& \leq k\alpha\,.
+\end{align*}
+
+    Hence a *conservative*^[So the experiment-wise type I error will actually be less than the prescribed $\alpha$] adjustment for multiple comparisons is to test each hypothesis at size $\alpha / k$, i.e. for the CRD compare to the quantile $t_{n-t, 1-\frac{\alpha}{2k}}$ (or multiply each individual p-value by $k$).
+
+    For Example \@ref(exm:one-way), we can test all pairwise comparisons, each at size $\alpha/k$ using the `adjustment` argument in `pairs`.
+
+    ```{r bonferroni}
+    pairs(pulp.emm, adjust = 'bonferroni')
+    ```
+
+    Now, only one comparison is significant at an experiment-wise type I error rate of $\alpha = 0.05$ (operators 2 and 4).
+
+1. **Tukey's method**. An alternative approach that gives an exact experiment-wise error rate of $100\alpha$% compares the $t$ statistic to a critical value from the studentised range distribution^[Given two independent samples $u_1, \ldots, u_l$ and $v_1,\ldots,v_m$ from the same distribution, the studentised range distribution is the distribution of $\frac{R}{\sqrt{2}S}$, where $R = u_{max}-u_{min}$ is the range of the first sample, and $S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}$ be the sample standard deviation of the second sample.], given by $\frac{1}{\sqrt{2}}q_{t, n-t, 1-\frac{\alpha}{2}}$ with $q_{t, n-t, 1-\frac{\alpha}{2}}$ the $1-\frac{\alpha}{2}$ quantile from the studentised range distribution (available in `R` as `qtukey`). 
+
+    For Example \@ref(exm:one-way):
+
+    ```{r tukey}
+    pairs(pulp.emm)
+    ```
+
+The default adjustment in the `pairs` function is the Tukey method. Comparing the p-values for each comparison using the Boneferroni and Tukey methods:
+
+```{r bonf-tukey}
+pairs.b <- pairs(pulp.emm, adjust = 'bonferroni')
+pairs.t <- pairs(pulp.emm)
+data.frame(transform(pairs.b)[, 1:5], Bonf.p.value = transform(pairs.b)[, 6], Tukey.p.value = transform(pairs.t)[, 6])
+```
+
+Although the decision on which hypotheses to reject (comparson 2 - 4)  is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.
+  
 ## Exercises
 
-1. For Example \@ref(exm:one-way), calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section \@ref(contrast-crd) are the same as those found in Section \@ref(r-crd) using `pairwise.t.test`, and `emmeans`.
+1. 
+    a. For Example \@ref(exm:one-way), calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section \@ref(contrast-crd) are the same as those found in Section \@ref(r-crd) using `pairwise.t.test`, and `emmeans`.
 
+    a. Also check the results in Section \@ref(multiple-comp) by (i) adjusting individual p-values (for Bonferroni) and (ii) using the `qtukey` command.
+    
 1. \ [Adapted from @WH2009] The bioactivity of four different drugs $A$, $B$, $C$ and $D$ for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
 
     | Source | Degrees of freedom | Sums of squares | Mean square |
@@ -323,14 +390,33 @@ a. It is straightfoward to apply adjustments for multiple comparisons.
 
     i. Use an $F$-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
 
-    i. The average response from each treatment is as follows: $\bar{Y}_A=66.10$ ($r_A=7$ patients), $\bar{Y}_B=65.75$ ($r_B=8$), $\bar{Y}_C = 62.63$ ($r_C=9$), and $\bar{Y}_D=63.85$ ($r_D=6$). Conduct hypothesis tests for all pairwise comparisons.
+    i. The average response from each treatment is as follows: $\bar{Y}_A=66.10$ ($r_A=7$ patients), $\bar{Y}_B=65.75$ ($r_B=8$), $\bar{Y}_C = 62.63$ ($r_C=9$), and $\bar{Y}_D=63.85$ ($r_D=6$). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
     
 
     i. In fact, $A$ and $B$ are brand-name drugs and $C$ and $D$ are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
 
-<!--    Use both the Bonferroni and Tukey methods to perform multiple comparisons of the four treatments at the 0.01 experiment-wise level.
--->
+1. <a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
 
+```{r nap-black}
+napblack <- data.frame(batch = rep(factor(1:6), rep(5, 6)),
+                   repetition = rep(1:5, 6), 
+                   yield = c(145, 40, 40, 120, 180, 140, 155, 90, 160, 95,
+                                   195, 150, 205, 110, 160, 45, 40, 195, 65, 145,
+                                   195, 230, 115, 235, 225, 120, 55, 50, 80, 45)
+                     )
+knitr::kable(
+ tidyr::pivot_wider(napblack, names_from = batch, values_from = yield)[, -1],
+ col.names = paste("Batch", 1:6),
+ caption = "Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid."
+)
+```
+
+Conduct a full analysis of this experiment, including
+
+    a. exploratory data analysis;
+    a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
+    a. usual linear model diagnostics
+    b. multiple comparisons of all pairwise differences between treatments.
  
 <!--
 We start with a short digression to discuss the concept of a generalised inverse.

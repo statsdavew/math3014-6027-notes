@@ -15,7 +15,7 @@ description: "Lecture notes for the modules MATH3014 and MATH6027 at the Univers
 
 ```{r include = FALSE}
 library(knitr)
-
+options(digits = 3, scipen = 8)
 ```
 
 These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.

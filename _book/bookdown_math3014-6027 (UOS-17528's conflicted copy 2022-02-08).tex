@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-02-13}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-02-01}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -149,8 +149,6 @@
 
 These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.
 
-Southampton prerequisites for this module are MATH2010 or MATH6174 and STAT6123 (or equivalent modules on linear modelling).
-
 \newcommand{\bx}{\boldsymbol{x}}
 \newcommand{\btheta}{\boldsymbol{\theta}}
 \newcommand{\bbeta}{\boldsymbol{\beta}}
@@ -180,9 +178,7 @@ In this course we consider only \emph{intervention} experiments, in which some a
 
 \end{definition}
 
-People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
-
-Some notable milestones in the history of the design of experiments include:
+People have been designing experiments for as long as they have been exploring the natural world. Some notable milestones in the history of the design of experiments include:
 
 \begin{itemize}
 \tightlist
@@ -237,7 +233,7 @@ Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers
 
 \textbf{Question:} How many subjects should be assigned to each treatment to gain the most precise\footnote{Smallest variance.} inference about the difference in response from the two treatments?
 
-Consider a linear statistical model\footnote{In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.} for the response (see MATH2010 or MATH6174/STAT6123):
+Consider a linear statistical model\footnote{In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.} for the response (see MATH2010):
 
 \begin{equation}
 Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
@@ -268,7 +264,7 @@ The difference in expected response from treatments 1 and 2 is
 
 Therefore, we require the the most precise estimator of \(\beta_{1}\) possible. That is, we wish to make the variance of our estimator of \(\beta_1\) as small as possible.
 
-Parameters \(\beta_{0}\) and \(\beta_{1}\) can be estimated using least squares (see MATH2010 or MATH6174/STAT6123). For \(Y_1,\dots,Y_n\), we can write the model down in matrix form:
+Parameters \(\beta_{0}\) and \(\beta_{1}\) can be estimated using least squares (see MATH2010). For \(Y_1,\dots,Y_n\), we can write the model down in matrix form:
 
 \begin{equation*}
 \left[ \begin{array}{c}
@@ -628,8 +624,8 @@ For example, in a clinical trial to compare a new drug and a control random allo
 
 Clinical trials are usually also \emph{double-blinded}, i.e.~neither the healthcare professional nor the patient knows which treatment the patient is receiving.
 
-\hypertarget{intro-blocking}{%
-\subsection{Stratification (or blocking)}\label{intro-blocking}}
+\hypertarget{blocking}{%
+\subsection{Stratification (or blocking)}\label{blocking}}
 
 We would like to use a wide variety of experimental units (e.g.~people or plots of land) to ensure \textbf{coverage} of our results, i.e.~validity of our conclusions across the population of interest. However, if the sample of units from the population is too heterogenous, then this will induce too much random variability, i.e.~increase \(\sigma^{2}\) in \(\varepsilon_{j}\sim N(0,\sigma^{2})\), and hence increase the variance of our parameter estimators.
 
@@ -780,27 +776,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -853,7 +833,7 @@ is an unbiased estimator for \(\sigma^{2}\), and
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}
 
-This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010 or MATH6174 notes).
+This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010 notes).
 
 \hypertarget{exercises}{%
 \section{Exercises}\label{exercises}}
@@ -881,60 +861,6 @@ This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010
   \item
     Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?
   \end{enumerate}
-\end{enumerate}
-
-Solution
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  There are two treatments in the experiment - the two ingredients ``milk first'' and ``tea first''.
-\item
-  The experimental units are the ``cups of tea'', made up from the tea and milk used and also the cup itself.
-\item
-  The simplest method here might be to select four black playing cards and four red playing cards, assign one treatment to each colour, shuffle the cards, and then draw them in order. The colour drawn indicates the treatment that should be used to make the next cup of tea. This operation would give one possible randomisation.
-
-  We could of course also use \texttt{R}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{)), }\AttributeTok{size =} \DecValTok{8}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Milk first" "Milk first"
-\end{verbatim}
-\item
-  Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# block 1}
-\FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# block 2}
-\FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
-\end{verbatim}
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
 \item
   Consider the linear model
 
@@ -948,7 +874,7 @@ Solution
     Derive the least squares estimator \(\hat{\boldsymbol{\beta}}\) for this multiple linear regression model, and show that this estimator is unbiased. Using the definition of (co)variance, show that
   \end{enumerate}
 
-  \[\mbox{Var}(\hat{\boldsymbol{\beta}}) = \left(X^{\mathrm{T}}X\right)^{-1}\sigma^2\,.\]
+  \[\mbox{Var}(\hat{\boldsymbol{\beta}}) = \left(X^{\rm{T}}X\right)^{-1}\sigma^2\,.\]
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
@@ -957,67 +883,6 @@ Solution
   \item
     If \(\boldsymbol{\varepsilon}\sim N (\boldsymbol{0},I_n\sigma^2)\), with \(I_n\) being the \(n\times n\) identity matrix, show that the maximum likelihood estimators for \(\boldsymbol{\beta}\) coincide with the least squares estimators.
   \end{enumerate}
-\end{enumerate}
-
-Solution
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  The method of least squares minimises the sum of squared differences between the responses and the expected values, that is, minimises the expression
-
-  \[
-   (\boldsymbol{y}-X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}-X\boldsymbol{\beta}) = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}\boldsymbol{y}+ \boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}X\boldsymbol{\beta}\,.
-   \]
-  Differentiating with respect to the vector \(\boldsymbol{\beta}\), we obtain
-
-  \[
-   \frac{\partial}{\partial\boldsymbol{\beta}} = -2X^{\mathrm{T}}\boldsymbol{y}+ 2X^{\mathrm{T}}X\boldsymbol{\beta}\,.
-   \]
-
-  Set equal to \(\boldsymbol{0}\) and solve:
-
-  \[
-   X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\boldsymbol{y}\Rightarrow \hat{\boldsymbol{\beta}} = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}\,.
-   \]
-
-  The estimator \(\hat{\boldsymbol{\beta}}\) is unbiased:
-
-  \[
-   E(\hat{\boldsymbol{\beta}}) = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}E(\boldsymbol{y}) = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}X\boldsymbol{\beta}= \boldsymbol{\beta}\,,
-   \]
-
-  and has variance:
-
-  \begin{align*}
-  \mbox{Var}(\hat{\boldsymbol{\beta}}) & =E\left\{ \left[\hat{\boldsymbol{\beta}} - E(\hat{\boldsymbol{\beta}})\right] \left[\hat{\boldsymbol{\beta}} - E(\hat{\boldsymbol{\beta}})\right]^{\mathrm{T}} \right\}\\
-   & =  E\left\{ \left[\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}\right] \left[\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}\right]^{\mathrm{T}} \right\}\\
-   & = E\left\{ \hat{\boldsymbol{\beta}}\hat{\boldsymbol{\beta}}^{\mathrm{T}} - 2\boldsymbol{\beta}\hat{\boldsymbol{\beta}}^{\mathrm{T}} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}} \right\}\\
-   & = E\left\{ \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}\boldsymbol{y}^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1}  - 2\boldsymbol{\beta}\boldsymbol{y}^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\right\}\\
-   & = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}E(\boldsymbol{y}\boldsymbol{y}^{\mathrm{T}})X\left(X^{\mathrm{T}}X\right)^{-1} - 2\boldsymbol{\beta}E(\boldsymbol{y}^{\mathrm{T}})X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
-   & = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\left[\mbox{Var}(\boldsymbol{y}) + E(\boldsymbol{y})E(\boldsymbol{y}^{\mathrm{T}})\right]X\left(X^{\mathrm{T}}X\right)^{-1} - 2\boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
-   & = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\left[I_N\sigma^2 + X\boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}\right]X\left(X^{\mathrm{T}}X\right)^{-1} - \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
-   & = \left(X^{\mathrm{T}}X\right)^{-1}\sigma^2\,. 
-   \end{align*}
-\item
-  As \(\boldsymbol{y}\sim N\left(X\boldsymbol{\beta}, I_N\sigma^2\right)\), the likelihood is given by
-
-  \[
-   L(\boldsymbol{\beta}\,; \boldsymbol{y}) = \left(2\pi\sigma^2\right)^{-N/2}\exp\left\{-\frac{1}{2\sigma^2}(\boldsymbol{y}- X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}- X\boldsymbol{\beta})\right\}\,.
-   \]
-
-  The log-likelihood is given by
-
-  \[
-   l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}- X\boldsymbol{\beta}) + \mbox{constant}\,.
-   \]
-
-  Up to a constant, this expression is \(-1\times\) the least squares equations; hence maximising the log-likelihood is equivalent to minimising the least squares equation.
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
 \item
   Consider the two nested linear models
 
@@ -1051,7 +916,7 @@ Solution
   Model (i) & \(p_1\) & ? & ? \\
   Model (ii) & \(p_2\) & ? & ? \\
   Residual & \(n-p_1-p_2-1\) & ? & ? \\
-  Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
+  Total & \(n-1\) & \(\boldsymbol{y}^{\rm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
   \bottomrule
   \end{longtable}
 
@@ -1065,135 +930,6 @@ Solution
     Calculate the extra sum of squares for fitting the terms in model (i), over and above those terms only in model (ii), i.e.~those held in \(X_2\boldsymbol{\beta}_2\). Construct an ANOVA table containing both the extra sum of squares for the terms only in model (i) and the extra sum of squares for the terms only in model (ii). Comment on the table.
   \end{enumerate}
 \end{enumerate}
-
-Solution
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  From lectures
-
-  \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-  \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
-  \midrule
-  \endhead
-  Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
-  Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
-  Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
-  \end{longtable}
-
-  where
-
-  \begin{align*}
-  \mbox{RSS(null) - RSS(ii)} & = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2 - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
-  & = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2 - \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}+ 2\boldsymbol{y}^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}}\\
-  & = 2\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\\
-  & = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\,.
-   \end{align*}
-\item
-  To compare model (i) with the null model, we compute
-
-  \begin{align*}
-   \mbox{RSS(null) - RSS(i)} & = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- N\bar{Y}^2 - (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)\\
-   & = \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\,.
-   \end{align*}
-
-  To compare models (i) and (ii), we compare them both to the null model, and look at the difference between these comparisons:
-
-  \begin{align*}
-   \mbox{[RSS(null) - RSS(ii)] - [RSS(null) - RSS(i)]} & = \mbox{RSS(i) - RSS(ii)}\\
-   & = (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
-   & = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\,.
-   \end{align*}
-
-  \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-  \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
-  \midrule
-  \endhead
-  Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
-  Model (i) & \(p_1\) & \(\hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\right)/p_1\) \\
-  Extra due to Model (ii) & \(p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\) \\
-  Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
-  Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
-  \end{longtable}
-\end{enumerate}
-
-By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regression SS.
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
-
-  ia. \(\boldsymbol{y}= X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\),
-
-  iia. \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}= X\boldsymbol{\beta}+ \varepsilon\)
-
-  Extra sum of squares for model (iia):
-
-  \begin{align*}
-  \mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} & = \mbox{RSS(ia) - RSS(iia)}\\
-  & = (\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2)^{\mathrm{T}}(\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
-  & = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\,.
-   \end{align*}
-
-  Hence, an ANOVA table for the extra sums of squares is given by
-
-  \begin{longtable}[]{@{}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-  \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
-  \midrule
-  \endhead
-  Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
-  Extra Model (i) & \(p_1\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\right)/p_1\) \\
-  Extra Model (ii) & \(p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\) \\
-  Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
-  Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
-  \end{longtable}
-\end{enumerate}
-
-Note that for these \emph{adjusted} sums of squares, in general the extra sum of squares for model (i) and (ii) do not sum to the regression sum of squares. This will only be the case if the columns of \(X_1\) and \(X_2\) are mutually orthogonal, i.e.~\(X_1^{\mathrm{T}}X_2 = \boldsymbol{0}\).
 
 \hypertarget{crd}{%
 \chapter{Completely randomised designs}\label{crd}}
@@ -1221,6 +957,16 @@ In a paper pulping mill, an experiment was run to examine differences between th
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: replacing previous import 'lifecycle::last_warnings' by
+## 'rlang::last_warnings' when loading 'pillar'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: replacing previous import 'lifecycle::last_warnings' by
+## 'rlang::last_warnings' when loading 'tibble'
+\end{verbatim}
 
 \begin{table}
 
@@ -1354,7 +1100,7 @@ Writing \(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\), we obtain
 X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
 \label{eq:almost-reduced}
 \end{equation}
-The matrix \(H_1\) is a ``hat'' matrix for a linear model containing only the term \(\mu\), and hence \(H_1X_1 = X_1\) (see MATH2010 or STAT6123). Hence the first term in \eqref{eq:almost-reduced} is zero, and we obtain the \textbf{reduced normal equations} for \(\boldsymbol{\tau}\):
+The matrix \(H_1\) is a ``hat'' matrix for a linear model containing only the term \(\mu\), and hence \(H_1X_1 = X_1\) (see MATH2010). Hence the first term in \eqref{eq:almost-reduced} is zero, and we obtain the \textbf{reduced normal equations} for \(\boldsymbol{\tau}\):
 
 \begin{equation}
 X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H_1]\boldsymbol{y}\,.
@@ -1363,7 +1109,7 @@ X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}[I_n - H
 
 Note that the solutions from \eqref{eq:crd-red-normal} are not different from the solution to \(\hat{\boldsymbol{\tau}}\) that would be obtained from solving \eqref{eq:crd-ls}; equation \eqref{eq:crd-red-normal} is simply a re-expression, where we have eliminated the nuisance parameter \(\mu\). This fact means that we rarely need to solve \eqref{eq:crd-red-normal} explicitly.
 
-Recalling that for a hat matrix, \(I_n - H_1\) is idempotent and symmetric (see MATH2010 or MATH6174), if we define
+Recalling that for a hat matrix, \(I_n - H_1\) is idempotent and symmetric (see MATH2010), if we define
 
 \[
 X_{2|1} = (I_n - H_1)X_2\,,
@@ -1377,9 +1123,6 @@ X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsy
 
 which are the normal equations for a linear model with expectation \(E(\boldsymbol{y}) = X_{2|1}\boldsymbol{\tau}\).
 
-\hypertarget{reduced-normal-equations-for-the-crd}{%
-\section{Reduced normal equations for the CRD}\label{reduced-normal-equations-for-the-crd}}
-
 For the CRD discussed in this chapter, \(X_1^{\mathrm{T}}X_1 = n\), the total number of runs in the experiment\footnote{In later chapters we will see examples where \(X_1\) has \(>1\) columns, and hence \(X_1^{\mathrm{T}}X_1\) is a matrix.}. Hence \((X_1^{\mathrm{T}}X_1)^{-1} = 1/n\) and \(H_1 = \frac{1}{n}J_n\), with \(J_n\) the \(n\times n\) matrix with all entries equal to 1.
 
 The adjusted model matrix then has the form
@@ -1390,498 +1133,37 @@ X_{2|1} & = (I_n - H_1)X_2 \\
 & = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
 \end{align*}
 
-That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution\footnote{If we recalled the material on ``dummy'' variables from MATH2010 or STAT6123, we would already have realised this.}.
+That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution\footnote{If we recalled the material on ``dummy'' variables from MATH2010 chapter 5, we would already have realised this.}.
 
-In MATH2010 and STAT6123 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate.
+In MATH2010 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \eqref{eq:utm} are estimable, and in particular which linear combinations of the treatment parameters \(\tau_i\) we can estimate. We start with a short digression to discuss the concept of a generalised inverse.
 
-Let's study equation \eqref{eq:rne} in more detail. We have
+\hypertarget{generalised-inverses}{%
+\section{Generalised inverses}\label{generalised-inverses}}
 
-\begin{align*}
-X^{\mathrm{T}}_{2|1}X_{2|1} & = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
- & = X_2^{\mathrm{T}}X_2 - X_2^{\mathrm{T}}H_1X_2 \\
- & = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}X_2^{\mathrm{T}}J_nX_2 \\
- & = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\,,
-\end{align*}
-
-where \(\boldsymbol{n}^{\mathrm{T}} = (n_1, \ldots, n_t)\). Hence, the reduced normal equations become
-
-\begin{align}
-\left[\mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}^{\mathrm{T}}\boldsymbol{n}\right]\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{n}X_2^{\mathrm{T}}J_n\boldsymbol{y}\\
-& = X_2^{\mathrm{T}}\boldsymbol{y}- \boldsymbol{n}\bar{y}_{..}\,,
-\label{eq:crd-rne}
-\end{align}
-
-where \(\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}\), i.e.~the overall average of the observations from the experiment.
-
-From \eqref{eq:crd-rne} we obtain a system of \(t\) equations, each having the form
-
-\begin{equation}
-\hat{\tau}_i - \hat{\tau}_w = \bar{y}_{i.} - \bar{y}_{..}\,,
-\label{eq:crd-irne}
-\end{equation}
-
-where \(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\) and \(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\) \((i = 1, \ldots, t)\).
-
-These \(t\) equations are not independent; when multiplied by the \(n_i\), they sum to zero due to the linear dependency between the columns of \(X_{2|1}\). Hence, there is no unique solution to \(\hat{\boldsymbol{\tau}}\) from equation \eqref{eq:crd-rne}. However, we can estimate certain linear combinations of the \(\tau_i\), called \emph{contrasts}.
-
-\hypertarget{contrasts}{%
-\section{Contrasts}\label{contrasts}}
-
-\begin{definition}
-\protect\hypertarget{def:contrast}{}\label{def:contrast}
-
-A treatment \textbf{contrast} is a linear combination \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) with coefficient vector \(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\) such that \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\); that is, \(\sum_{i = 1}^t c_i = 0\).
-
-\end{definition}
-
-For example, assume we have \(t = 3\) treatments, then the following vectors \(\boldsymbol{c}\) all define contrasts:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (1, -1, 0)\),
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (1, 0, -1)\),
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (0, 1, -1)\).
-\end{enumerate}
-
-In fact, they define all \({3\choose 2} = 3\) pairwise comparisons between treatments. The following are also contrasts:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
-\tightlist
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (2, -1, -1)\),
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (0.5, -1, 0.5)\),
-\end{enumerate}
-
-each comparing the sum, or average, of expected responses from two treatments to the expected response from the remaining treatment.
-
-The following are not contrasts, as \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} \ne 0\):
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{5}
-\tightlist
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (2, -1, 0)\),
-\item
-  \(\boldsymbol{c}^{\mathrm{T}} = (1, 0, 0)\),
-\end{enumerate}
-
-with the final example once again demonstrating that we cannot estimate the individual \(\tau_i\).
-
-\hypertarget{contrast-crd}{%
-\section{Treatment contrast estimators in the CRD}\label{contrast-crd}}
-
-We estimate a treatment contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) in the CRD via linear combinations of equations \eqref{eq:crd-irne}:
-
-\begin{align*}
-& \sum_{i=1}^t c_i\hat{\tau}_i - \sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{i.} - \sum_{i=1}^tc_i\bar{y}_{..} \\
-\Rightarrow & \sum_{i=1}^t c_i\hat{\tau}_i = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
-\end{align*}
-
-as \(\sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{..} = 0\), as \(\sum_{i=1}^tc_i = 0\). Hence, the unique estimator of the contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) has the form
+A generalised inverse of a square, symmetric matrix \(A\) is any matrix \(A^{-}\) that satisfies
 
 \[
-\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,.
+AA^{-}A = A\,.
 \]
-That is, we estimate the contrast in the treatment effects by the corresponding contrast in the treatment means.
 
-The variance of this estimator is straightforward to obtain:
+If matrix \(A\) is of full column rank, then there is a single generalised inverse \(A^{-} = A^{-1}\), the usual inverse matrix. In other cases, there may be infinitely many choices for \(A^{-}\).
+
+\hypertarget{solutions-to-the-reduced-normal-equations}{%
+\section{Solutions to the reduced normal equations}\label{solutions-to-the-reduced-normal-equations}}
+
+We can use a generalised inverse to generate solutions to \eqref{eq:rne} of the form:
+
+\[
+\hat{\boldsymbol{\tau}} = (X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,.
+\]
+Substituting this expression into \eqref{eq:rne}, we obtain
 
 \begin{align*}
-\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
-& = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
-& = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\boldsymbol{y}& = X_{2|1}^{\mathrm{T}}H_{2|1}\boldsymbol{y}\\ 
+& = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \end{align*}
 
-as, under our model assumptions, each \(\bar{y}_{i.}\) is an average of independent observations with variance \(\sigma^2\). Similarly, from model \eqref{eq:utm} we can derive the distribution of \(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\) as
-
-\[
-\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \sigma^2\sum_{i=1}^tc_i^2/n_i\right)\,.
-\]
-Confidence intervals and hypothesis tests for \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) can be constructed/conducted using this distribution, e.g.
-
-\begin{itemize}
-\tightlist
-\item
-  a \(100(1-\frac{\alpha}{2})\)\% confidence interval:
-  \[
-   \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
-   \]
-\end{itemize}
-
-where \(t_{n-t, 1-\frac{\alpha}{2}}\) is the \(1-\frac{\alpha}{2}\) quantile of a \(t\)-distribution with \(n-t\) degrees of freedom and \(s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2\) is the estimate of \(\sigma^2\).
-
-\begin{itemize}
-\tightlist
-\item
-  the hypothesis \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\) against the two-sided alternative \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\) is rejected using a test of with confidence level \(1-\alpha/2\) if
-\end{itemize}
-
-\[
- \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
- \]
-
-\hypertarget{r-crd}{%
-\section{Analysing CRDs in R}\label{r-crd}}
-
-Let's return to Example \ref{exm:one-way}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
-\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(pulp, }\AttributeTok{names\_from =}\NormalTok{ operator, }\AttributeTok{values\_from =}\NormalTok{ reflectance)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
- \AttributeTok{col.names =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Operator"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{),}
- \AttributeTok{caption =} \StringTok{"Pulp experiment: reflectance values (unitless) from four different operators."}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}
-
-\caption{\label{tab:one-way-analysis}Pulp experiment: reflectance values (unitless) from four different operators.}
-\centering
-\begin{tabular}[t]{r|r|r|r}
-\hline
-Operator 1 & Operator 2 & Operator 3 & Operator 4\\
-\hline
-59.8 & 59.8 & 60.7 & 61.0\\
-\hline
-60.0 & 60.2 & 60.7 & 60.8\\
-\hline
-60.8 & 60.4 & 60.5 & 60.6\\
-\hline
-60.8 & 59.9 & 60.9 & 60.5\\
-\hline
-59.8 & 60.0 & 60.3 & 60.5\\
-\hline
-\end{tabular}
-\end{table}
-
-Clearly, we could directly calculate, and then compare, mean responses for each operator. However, there are (at least) two other ways we can proceed which use the fact we are fitting a linear model. These will be useful when we consider more complex models.
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Using \texttt{pairwise.t.test}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{with}\NormalTok{(pulp, }
- \FunctionTok{pairwise.t.test}\NormalTok{(reflectance, operator, }\AttributeTok{p.adjust.method =} \StringTok{\textquotesingle{}none\textquotesingle{}}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Pairwise comparisons using t tests with pooled SD 
-## 
-## data:  reflectance and operator 
-## 
-##   1     2     3    
-## 2 0.396 -     -    
-## 3 0.084 0.015 -    
-## 4 0.049 0.008 0.775
-## 
-## P value adjustment method: none
-\end{verbatim}
-
-  This function performs hypothesis tests for all pairwise treatment comparisons (with a default confidence level of 0.95). Here we can see that operators 1 and 4, 2 and 3, and 2 and 4 have statistically significant differences.
-\item
-  Using \texttt{lm} and the \texttt{emmeans} package.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pulp.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(reflectance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator, }\AttributeTok{data =}\NormalTok{ pulp)}
-\FunctionTok{anova}\NormalTok{(pulp.lm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Analysis of Variance Table
-## 
-## Response: reflectance
-##           Df Sum Sq Mean Sq F value Pr(>F)  
-## operator   3   1.34   0.447     4.2  0.023 *
-## Residuals 16   1.70   0.106                 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pulp.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(pulp.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ operator)}
-\FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}none\textquotesingle{}}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3960
-##  1 - 3       -0.38 0.206 16  -1.843  0.0840
-##  1 - 4       -0.44 0.206 16  -2.134  0.0490
-##  2 - 3       -0.56 0.206 16  -2.716  0.0150
-##  2 - 4       -0.62 0.206 16  -3.007  0.0080
-##  3 - 4       -0.06 0.206 16  -0.291  0.7750
-\end{verbatim}
-
-  Here, we have first fitted the linear model object. The \texttt{lm} function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5\% significance level,
-
-  The choice of dummy variables in the linear model is unimportant; any set could be used\footnote{Although \(\mu\) and \(\boldsymbol{\tau}\) are not uniquely estimable, fitted values \(\hat{y}_i = \hat{\mu} + \hat{\tau}_i\) \textbf{are}, and hence it does not matter which dummy variables we use in \texttt{lm}.}, as in the next line we use the \texttt{emmeans} function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor \texttt{operator} (which specifies our treatments in this experiment). Finally, the \texttt{pairs} command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using \texttt{pairwise.t.test}.
-\end{enumerate}
-
-Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for four main reasons:
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  The function \texttt{contrasts} in the \texttt{emmeans} package can be used to estimate arbitrary treatment contrasts (see \texttt{help("contrast-methods")}).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# same as \textasciigrave{}pairs\textasciigrave{} above}
-\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(pulp.emm, }\StringTok{"pairwise"}\NormalTok{, }\AttributeTok{adjust =} \StringTok{"none"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3960
-##  1 - 3       -0.38 0.206 16  -1.843  0.0840
-##  1 - 4       -0.44 0.206 16  -2.134  0.0490
-##  2 - 3       -0.56 0.206 16  -2.716  0.0150
-##  2 - 4       -0.62 0.206 16  -3.007  0.0080
-##  3 - 4       -0.06 0.206 16  -0.291  0.7750
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# estimating single contrast c = (1, {-}.5, {-}.5)}
-\CommentTok{\# comparing operator 1 with operators 2 and 3}
-\NormalTok{contrast1v23.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }
-  \FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}t1 v avg t2 t3\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{))}
-\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(pulp.emm, }\StringTok{\textquotesingle{}contrast1v23\textquotesingle{}}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  contrast       estimate    SE df t.ratio p.value
-##  t1.v.avg.t2.t3     -0.1 0.178 16  -0.560  0.5830
-\end{verbatim}
-\item
-  It more easily generalises to the more complicated models we will see in Chapter \ref{blocking}.
-\item
-  It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions (see \protect\hyperlink{nap-black-ex}{Exercise 3}).
-\item
-  It is straightfoward to apply adjustments for \protect\hyperlink{multiple-comp}{multiple comparisons}.
-\end{enumerate}
-
-\hypertarget{multiple-comp}{%
-\section{Multiple comparisons}\label{multiple-comp}}
-
-When we perform hypothesis testing, we choose the critical region (i.e.~the rule that decides if we reject \(H_0\)) to control the probability of a type I error; that is, we control the probability of incorrectly rejecting \(H_0\). If we need to test multiple hypotheses, e.g.~to test all pairwise differences, we need to consider the overall probability of incorrectly rejecting \textbf{one or more} null hypothesis. This is called the \textbf{experiment-wise} or \textbf{family-wise} error rate.
-
-For Example \ref{exm:one-way}, there are \({4 \choose 2} = 6\) pairwise comparisons. Under the assumption that all tests are independent\footnote{They aren't, but it simplifies the maths!}, assuming each individual test has type I error 0.05, the experiment-wise type I error rate is given by:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
-\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha)}\SpecialCharTok{\^{}}\DecValTok{6}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.265
-\end{verbatim}
-
-An experiment-wise error rate of 0.265 is substantially greater than 0.05. Hence, we would expect to make many more type I errors than may be desirable. \href{https://xkcd.com/882}{xkcd} has a fun example:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
-\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha)}\SpecialCharTok{\^{}}\DecValTok{20}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.642
-\end{verbatim}
-
-Therefore it is usually desirable to maintain some control of the experiment-wise type I error rate. We will consider two methods.
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  The \textbf{Bonferroni method}. An upper bound on the experiment-wise type I error rate for testing \(k\) hypotheses can be shown to be
-
-  \begin{align*}
-  P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &    P\left(\bigcup_{i=1}^{k}\{\mbox{wrongly reject } H_{0}^i\}\right) \\
-  & \leq \sum_{i=1}^{k}\underbrace{P(\mbox{wrongly reject } H_{0}^i)}_{\leq \alpha} \\ 
-  & \leq k\alpha\,.
-  \end{align*}
-
-  Hence a \emph{conservative}\footnote{So the experiment-wise type I error will actually be less than the prescribed \(\alpha\)} adjustment for multiple comparisons is to test each hypothesis at size \(\alpha / k\), i.e.~for the CRD compare to the quantile \(t_{n-t, 1-\frac{\alpha}{2k}}\) (or multiply each individual p-value by \(k\)).
-
-  For Example \ref{exm:one-way}, we can test all pairwise comparisons, each at size \(\alpha/k\) using the \texttt{adjustment} argument in \texttt{pairs}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}bonferroni\textquotesingle{}}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  1.0000
-##  1 - 3       -0.38 0.206 16  -1.843  0.5030
-##  1 - 4       -0.44 0.206 16  -2.134  0.2920
-##  2 - 3       -0.56 0.206 16  -2.716  0.0920
-##  2 - 4       -0.62 0.206 16  -3.007  0.0500
-##  3 - 4       -0.06 0.206 16  -0.291  1.0000
-## 
-## P value adjustment: bonferroni method for 6 tests
-\end{verbatim}
-
-  Now, only one comparison is significant at an experiment-wise type I error rate of \(\alpha = 0.05\) (operators 2 and 4).
-\item
-  \textbf{Tukey's method}. An alternative approach that gives an exact experiment-wise error rate of \(100\alpha\)\% compares the \(t\) statistic to a critical value from the studentised range distribution\footnote{Given two independent samples \(u_1, \ldots, u_l\) and \(v_1,\ldots,v_m\) from the same distribution, the studentised range distribution is the distribution of \(\frac{R}{\sqrt{2}S}\), where \(R = u_{max}-u_{min}\) is the range of the first sample, and \(S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}\) be the sample standard deviation of the second sample.}, given by \(\frac{1}{\sqrt{2}}q_{t, n-t, 1-\frac{\alpha}{2}}\) with \(q_{t, n-t, 1-\frac{\alpha}{2}}\) the \(1-\frac{\alpha}{2}\) quantile from the studentised range distribution (available in \texttt{R} as \texttt{qtukey}).
-
-  For Example \ref{exm:one-way}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{pairs}\NormalTok{(pulp.emm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.8190
-##  1 - 3       -0.38 0.206 16  -1.843  0.2900
-##  1 - 4       -0.44 0.206 16  -2.134  0.1840
-##  2 - 3       -0.56 0.206 16  -2.716  0.0660
-##  2 - 4       -0.62 0.206 16  -3.007  0.0380
-##  3 - 4       -0.06 0.206 16  -0.291  0.9910
-## 
-## P value adjustment: tukey method for comparing a family of 4 estimates
-\end{verbatim}
-\end{enumerate}
-
-The default adjustment in the \texttt{pairs} function is the Tukey method. Comparing the p-values for each comparison using the Boneferroni and Tukey methods:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pairs.b }\OtherTok{\textless{}{-}} \FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}bonferroni\textquotesingle{}}\NormalTok{)}
-\NormalTok{pairs.t }\OtherTok{\textless{}{-}} \FunctionTok{pairs}\NormalTok{(pulp.emm)}
-\FunctionTok{data.frame}\NormalTok{(}\FunctionTok{transform}\NormalTok{(pairs.b)[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{Bonf.p.value =} \FunctionTok{transform}\NormalTok{(pairs.b)[, }\DecValTok{6}\NormalTok{], }\AttributeTok{Tukey.p.value =} \FunctionTok{transform}\NormalTok{(pairs.t)[, }\DecValTok{6}\NormalTok{])}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   contrast estimate    SE df t.ratio Bonf.p.value Tukey.p.value
-## 1    1 - 2     0.18 0.206 16   0.873       1.0000        0.8185
-## 2    1 - 3    -0.38 0.206 16  -1.843       0.5034        0.2903
-## 3    1 - 4    -0.44 0.206 16  -2.134       0.2918        0.1845
-## 4    2 - 3    -0.56 0.206 16  -2.716       0.0915        0.0658
-## 5    2 - 4    -0.62 0.206 16  -3.007       0.0501        0.0377
-## 6    3 - 4    -0.06 0.206 16  -0.291       1.0000        0.9911
-\end{verbatim}
-
-Although the decision on which hypotheses to reject (comparson 2 - 4) is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.
-
-\hypertarget{exercises-1}{%
-\section{Exercises}\label{exercises-1}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \begin{enumerate}
-  \def\labelenumii{\alph{enumii}.}
-  \item
-    For Example \ref{exm:one-way}, calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section \ref{contrast-crd} are the same as those found in Section \ref{r-crd} using \texttt{pairwise.t.test}, and \texttt{emmeans}.
-  \item
-    Also check the results in Section \ref{multiple-comp} by (i) adjusting individual p-values (for Bonferroni) and (ii) using the \texttt{qtukey} command.
-  \end{enumerate}
-\item
-  ~\citep[Adapted from][]{WH2009} The bioactivity of four different drugs \(A\), \(B\), \(C\) and \(D\) for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
-
-  \begin{longtable}[]{@{}lccc@{}}
-  \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
-  \midrule
-  \endhead
-  Treatment & 3 & 64.42 & 21.47 \\
-  Residual & 26 & 62.12 & 2.39 \\
-  Total & 29 & 126.54 & \\
-  \bottomrule
-  \end{longtable}
-
-  \begin{enumerate}
-  \def\labelenumii{\roman{enumii}.}
-  \item
-    What considerations should be made when assigning drugs to patients, and why?
-  \item
-    Use an \(F\)-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
-  \item
-    The average response from each treatment is as follows: \(\bar{Y}_A=66.10\) (\(r_A=7\) patients), \(\bar{Y}_B=65.75\) (\(r_B=8\)), \(\bar{Y}_C = 62.63\) (\(r_C=9\)), and \(\bar{Y}_D=63.85\) (\(r_D=6\)). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
-  \item
-    In fact, \(A\) and \(B\) are brand-name drugs and \(C\) and \(D\) are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
-  \end{enumerate}
-\item
-  The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{napblack }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{batch =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{)),}
-                   \AttributeTok{repetition =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{), }
-                   \AttributeTok{yield =} \FunctionTok{c}\NormalTok{(}\DecValTok{145}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{180}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{155}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{95}\NormalTok{,}
-                                   \DecValTok{195}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{205}\NormalTok{, }\DecValTok{110}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{195}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DecValTok{145}\NormalTok{,}
-                                   \DecValTok{195}\NormalTok{, }\DecValTok{230}\NormalTok{, }\DecValTok{115}\NormalTok{, }\DecValTok{235}\NormalTok{, }\DecValTok{225}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{45}\NormalTok{)}
-\NormalTok{                     )}
-\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
-\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(napblack, }\AttributeTok{names\_from =}\NormalTok{ batch, }\AttributeTok{values\_from =}\NormalTok{ yield)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
- \AttributeTok{col.names =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Batch"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{),}
- \AttributeTok{caption =} \StringTok{"Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid."}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}
-
-\caption{\label{tab:nap-black}Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.}
-\centering
-\begin{tabular}[t]{r|r|r|r|r|r}
-\hline
-Batch 1 & Batch 2 & Batch 3 & Batch 4 & Batch 5 & Batch 6\\
-\hline
-145 & 140 & 195 & 45 & 195 & 120\\
-\hline
-40 & 155 & 150 & 40 & 230 & 55\\
-\hline
-40 & 90 & 205 & 195 & 115 & 50\\
-\hline
-120 & 160 & 110 & 65 & 235 & 80\\
-\hline
-180 & 95 & 160 & 145 & 225 & 45\\
-\hline
-\end{tabular}
-\end{table}
-
-Conduct a full analysis of this experiment, including
-
-\begin{verbatim}
-a. exploratory data analysis;
-a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
-a. usual linear model diagnostics
-b. multiple comparisons of all pairwise differences between treatments.
-\end{verbatim}
+where \(H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\) and \(X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}\)\footnote{This equality follows from \(H\) being the projection matrix for the column space of \(X\).}.
 
 \hypertarget{blocking}{%
 \chapter{Blocking}\label{blocking}}

@@ -1,0 +1,428 @@
+.packages()
+knitr::opts_chunk$set(echo = TRUE)
+rm(list = ls(all = TRUE))
+library(lhs)
+library(plgp, quietly=TRUE) # distance
+eps <- sqrt(.Machine$double.eps)
+sdx1 <- 0.5
+sdx2 <- 0.5
+sdy <- 1
+sigma2.x1 <- sdx1^2
+sigma2.x2 <- sdx2^2
+sigma2.y <- sdy^2
+nl <- function(par, D, Y)
+{
+theta <- par[1]
+g <- par[2]
+n <- length(Y)
+K <- exp(-D/theta) + diag(g, n)
+Ki <- solve(K)
+ldetK <- determinant(K, logarithm=TRUE)$modulus
+ll <- - (n/2)*log(t(Y) %*% Ki %*% Y) - (1/2)*ldetK
+counter <<- counter + 1
+return(-ll)
+}
+set.seed(1)
+n <- 40
+d <- 2
+X <- randomLHS(n, d)
+X[,1] <- (X[,1] - 0.5)*6 + 1
+X[,2] <- (X[,2] - 0.5)*6 + 1
+xlow <- -2
+xupp <- 4 # for both dimensions
+Xtilde <- X # n x d = 40 x 2
+Xtilde2 <-  rbind(Xtilde, Xtilde) # replication #
+X <- Xtilde2[, 1] + rnorm(nrow(Xtilde2), sd=sdx1)
+X <- cbind(X, Xtilde2[, 2] + rnorm(nrow(Xtilde2), sd=sdx2))
+n <-  nrow(X) # 80 # set.seed(1)
+y <- X[,1]*exp(-X[,1]^2 - X[,2]^2) + rnorm(n, sd=sdy)
+D <-  distance(X)
+counter <- 0
+out <- optim(par=c(1, 0.1*var(y)), nl, method="L-BFGS-B", lower=eps,
+upper=c(20, var(y)), D=D, Y=y) # p. 169 #
+out$par # 0.4175349 1.1439083
+thetahat <- out$par[1]
+ghat <- out$par[2]
+K <- exp(-D/thetahat) + diag(ghat, n) # Khat
+Ki <- solve(K)
+print(tau2hat <- drop(t(y) %*% Ki %*% y / n)) # 0.5294089 #
+c(tau=sqrt(tau2hat), sigma=sqrt(tau2hat*ghat)) #0.7276049 0.7782000
+xx <- seq(-2, 4, length=40) # 40 # n' = 1600
+XX <- expand.grid(xx, xx) # n' x 2
+DXX <- distance(XX) # n' x n'
+KXX <- exp(-DXX/thetahat) + diag(ghat, nrow(DXX)) # n' x n'
+DX <- distance(XX, X) # n' x n=1600x80
+KX <- exp(-DX/thetahat) # n' x n = 1600*80
+mup <- KX %*% Ki %*% y
+Sigmap <-  tau2hat*(KXX - KX %*% Ki %*% t(KX))
+q1 <- mup+ qnorm(0.05, 0, sqrt(diag(Sigmap))) # 1600 #
+q2 <- mup+ qnorm(0.95, 0, sqrt(diag(Sigmap)))
+diff <- q2-q1
+sdp <- sqrt(diag(Sigmap))
+# Image plots of the posterior mean of the GP, and the posterior
+# standard deviation
+# points, and 5%, 95% confidence bands #
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(mup, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(sdp, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+YY <- XX[,1]*exp(-X[,1]^2 - X[,2]^2) # true function
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+YY
+matrix(YY, ncol=length(xx))
+XX[,1]*exp(-X[,1]^2 - X[,2]^2)
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+YY
+XX
+YY
+matrix(YY, ncol=length(xx))
+XX
+matrix(YY, ncol=length(xx))
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+matrix(YY, ncol=length(xx), byrow =T)
+image(xx, xx, matrix(YY, ncol=length(xx), byrow =T), xlab="x1", ylab="x2")
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+xx
+xx <- seq(-2, 4, length=40) # 40 # n' = 1600
+XX <- expand.grid(xx, xx) # n' x 2
+DXX <- distance(XX) # n' x n'
+KXX <- exp(-DXX/thetahat) + diag(ghat, nrow(DXX)) # n' x n'
+DX <- distance(XX, X) # n' x n=1600x80
+KX <- exp(-DX/thetahat) # n' x n = 1600*80
+mup <- KX %*% Ki %*% y
+Sigmap <-  tau2hat*(KXX - KX %*% Ki %*% t(KX))
+q1 <- mup+ qnorm(0.05, 0, sqrt(diag(Sigmap))) # 1600 #
+q2 <- mup+ qnorm(0.95, 0, sqrt(diag(Sigmap)))
+diff <- q2-q1
+sdp <- sqrt(diag(Sigmap))
+# Image plots of the posterior mean of the GP, and the posterior
+# standard deviation
+# points, and 5%, 95% confidence bands #
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(mup, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(sdp, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+YY <- XX[,1]*exp(-X[,1]^2 - X[,2]^2) # true function
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+points(X[, 1], X[, 2])
+mup
+y
+YY
+cbind(X, y)
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+points(X[, 1], X[, 2])
+YY
+matrix(YY, ncol=length(xx))
+matrix(YY, ncol=length(xx))[1, ]
+cbind(X, y)
+YY <- XX[,1]*exp(-XX[,1]^2 - XX[,2]^2) # true function
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+xx <- seq(-2, 4, length=40) # 40 # n' = 1600
+XX <- expand.grid(xx, xx) # n' x 2
+DXX <- distance(XX) # n' x n'
+KXX <- exp(-DXX/thetahat) + diag(ghat, nrow(DXX)) # n' x n'
+DX <- distance(XX, X) # n' x n=1600x80
+KX <- exp(-DX/thetahat) # n' x n = 1600*80
+mup <- KX %*% Ki %*% y
+Sigmap <-  tau2hat*(KXX - KX %*% Ki %*% t(KX))
+q1 <- mup+ qnorm(0.05, 0, sqrt(diag(Sigmap))) # 1600 #
+q2 <- mup+ qnorm(0.95, 0, sqrt(diag(Sigmap)))
+diff <- q2-q1
+sdp <- sqrt(diag(Sigmap))
+# Image plots of the posterior mean of the GP, and the posterior
+# standard deviation
+# points, and 5%, 95% confidence bands #
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(mup, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(sdp, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+YY <- XX[,1]*exp(-XX[,1]^2 - XX[,2]^2) # true function
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+points(X[, 1], X[, 2])
+rm(list = ls(all = TRUE))
+library(lhs)
+library(plgp, quietly=TRUE) # distance
+eps <- sqrt(.Machine$double.eps)
+sdx1 <- 0.5
+sdx2 <- 0.5
+sdy <- 0
+sigma2.x1 <- sdx1^2
+sigma2.x2 <- sdx2^2
+sigma2.y <- sdy^2
+nl <- function(par, D, Y)
+{
+theta <- par[1]
+g <- par[2]
+n <- length(Y)
+K <- exp(-D/theta) + diag(g, n)
+Ki <- solve(K)
+ldetK <- determinant(K, logarithm=TRUE)$modulus
+ll <- - (n/2)*log(t(Y) %*% Ki %*% Y) - (1/2)*ldetK
+counter <<- counter + 1
+return(-ll)
+}
+set.seed(1)
+n <- 40
+d <- 2
+X <- randomLHS(n, d)
+X[,1] <- (X[,1] - 0.5)*6 + 1
+X[,2] <- (X[,2] - 0.5)*6 + 1
+xlow <- -2
+xupp <- 4 # for both dimensions
+Xtilde <- X # n x d = 40 x 2
+Xtilde2 <-  rbind(Xtilde, Xtilde) # replication #
+X <- Xtilde2[, 1] + rnorm(nrow(Xtilde2), sd=sdx1)
+X <- cbind(X, Xtilde2[, 2] + rnorm(nrow(Xtilde2), sd=sdx2))
+n <-  nrow(X) # 80 # set.seed(1)
+y <- X[,1]*exp(-X[,1]^2 - X[,2]^2) + rnorm(n, sd=sdy)
+D <-  distance(X)
+counter <- 0
+out <- optim(par=c(1, 0.1*var(y)), nl, method="L-BFGS-B", lower=eps,
+upper=c(20, var(y)), D=D, Y=y) # p. 169 #
+out$par # 0.4175349 1.1439083
+thetahat <- out$par[1]
+ghat <- out$par[2]
+K <- exp(-D/thetahat) + diag(ghat, n) # Khat
+Ki <- solve(K)
+print(tau2hat <- drop(t(y) %*% Ki %*% y / n)) # 0.5294089 #
+c(tau=sqrt(tau2hat), sigma=sqrt(tau2hat*ghat)) #0.7276049 0.7782000
+xx <- seq(-2, 4, length=40) # 40 # n' = 1600
+XX <- expand.grid(xx, xx) # n' x 2
+DXX <- distance(XX) # n' x n'
+KXX <- exp(-DXX/thetahat) + diag(ghat, nrow(DXX)) # n' x n'
+DX <- distance(XX, X) # n' x n=1600x80
+KX <- exp(-DX/thetahat) # n' x n = 1600*80
+mup <- KX %*% Ki %*% y
+Sigmap <-  tau2hat*(KXX - KX %*% Ki %*% t(KX))
+q1 <- mup+ qnorm(0.05, 0, sqrt(diag(Sigmap))) # 1600 #
+q2 <- mup+ qnorm(0.95, 0, sqrt(diag(Sigmap)))
+diff <- q2-q1
+sdp <- sqrt(diag(Sigmap))
+# Image plots of the posterior mean of the GP, and the posterior
+# standard deviation
+# points, and 5%, 95% confidence bands #
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(mup, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(sdp, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+YY <- XX[,1]*exp(-XX[,1]^2 - XX[,2]^2) # true function
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(YY, ncol=length(xx)), xlab="x1", ylab="x2")
+points(X[, 1], X[, 2])
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128)
+image(xx, xx, matrix(q1, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(q2, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+image(xx, xx, matrix(diff, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+# NI Fitted Model: 2d
+# ############################### #
+Lambda <- thetahat/2
+alphavec <- (Ki %*% y)/tau2hat
+Delta.fbar.mat <- matrix(NA, nrow=n, ncol=d) # n=80
+for(l in 1:n) # l <- 1
+{
+xstar <- X[l, , drop=FALSE] # 1 x d
+kxstar.X <- tau2hat*K[l, , drop=FALSE] # 1 x n
+Xtilde.star.tras <- t(matrix(xstar, nrow=n, ncol=d, byrow=TRUE)-X) # d x n
+Delta.fbar.mat[l, ] <- (-1/Lambda) * Xtilde.star.tras %*% (t(kxstar.X) * alphavec)
+}
+# Posterior mean and posterior variance-covariance function.
+K.ni <- tau2hat*K + diag(sigma2.y, n) + diag(diag(Delta.fbar.mat %*% diag(c(sigma2.x1, sigma2.x2), 2) %*% t(Delta.fbar.mat)), n)
+K.ni.i <- solve(K.ni)
+mup.ni <-  tau2hat*KX %*% K.ni.i %*% y
+Sigmap.ni <- (tau2hat*KXX - tau2hat*KX %*% K.ni.i %*% t(tau2hat*KX)) # 100 100
+q1.ni <- mup.ni + qnorm(0.05, 0, sqrt(diag(Sigmap.ni))) # 100
+q2.ni <- mup.ni + qnorm(0.95, 0, sqrt(diag(Sigmap.ni)))
+diff.grad <- q2.ni-q1.ni
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+par(mgp=c(1.5, 0.8, 0), mar=c(8, 2, 1, 2)+0.1)
+cols <- heat.colors(128) # white: highest, red: lowest
+image(xx, xx, matrix(mup.ni, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+sdp.ni <- sqrt(diag(Sigmap.ni))
+image(xx, xx, matrix(sdp.ni, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+par(mfrow=c(1, 2))
+par(las=1, cex.axis=2, cex.lab=2)
+cols <- heat.colors(128)
+image(xx, xx, matrix(q1.ni, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+image(xx, xx, matrix(q2.ni, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+image(xx, xx, matrix(diff.grad, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+par(mfrow=c(1, 1))
+par(las=1, cex.axis=2, cex.lab=2)
+image(xx, xx, matrix(diff.grad-diff, ncol=length(xx)), xlab="x1", ylab="x2", col=cols)
+points(X[, 1], X[, 2])
+usethis::create_github_token()
+gitcreds::gitcreds_set()
+usethis::use_github_action(url = "https://raw.githubusercontent.com/ropenscilabs/actions_sandbox/master/.github/workflows/deploy_bookdown.yml")
+usethis::use_github_action(url = "https://raw.githubusercontent.com/ropenscilabs/actions_sandbox/master/.github/workflows/deploy_bookdown.yml")
+usethis::use_github_action(url = "https://raw.githubusercontent.com/ropenscilabs/actions_sandbox/master/.github/workflows/deploy_bookdown.yml")
+renv::snapshot()
+usethis::use_github_action("bookdown")
+?bookdown::render_book
+16/70
+factor(4)
+factor(1:4)
+rep(factor(1:4), 5)
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)
+pulp <- data.frame(run = 1:20, operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)
+pulp <- data.frame(repetition = rep(1:4, rep(5, 5)), operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+pulp <- data.frame(repetition = rep(1:4, rep(5, 4)), operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)
+pulp <- data.frame(repetition = rep(1:4, rep(5, 4)), operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)
+rep(1:4, rep(5, 4)
+rep(1:4, rep(5, 4))
+pulp <- data.frame(run = 1:20, repetition = rep(1:4, rep(5, 4)), operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, id_col = run, names_from = operator, values_from = reflectance)
+pulp <- data.frame(run = 1:20, repetition = rep(1:4, rep(5, 4)), operator = rep(factor(1:4), 5),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+pulp
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+repetition = rep(1:4, rep(5, 4)),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+pulp
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+repetition = rep(1:4, rep(5, 4)),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+repetition = rep(1:5, rep(4, 5)),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)
+?knitr::kable
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+repetition = rep(1:5, rep(4, 5)),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+knitr::kable(
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance),
+col.names = paste("Operator", 1:4),
+caption = "Pulp experiment: reflectance values from four different operators."
+)
+paste("Operator", 1:4)
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+repetition = rep(1:5, rep(4, 5)),
+reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8,
+60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+)
+knitr::kable(
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)[, -1],
+col.names = paste("Operator", 1:4),
+caption = "Pulp experiment: reflectance values from four different operators."
+)
+?boxplot
+boxplot(reflectance ~ operator)
+boxplot(reflectance ~ operator, data = pulp)
+getwd()
+?purl
+purl("01-intro.Rmd", documentation = 0, output = "../R")
+knitr::purl("01-intro.Rmd", documentation = 0, output = "../R")
+knitr::purl("01-intro.Rmd", documentation = 0, output = "../R/01-intro.R")
+renv::activate()
+renv::restore()
+renv::snapshot()
+renv::snapshot()
+renv::snapshot()
+renv::snapshot()
+renev:deactivate()
+renv:deactivate()
+renv::deactivate()
+renv::snapshot()
+renv::snapshot()
+renv::dependencies()
+?renv::dependencies()
+renv::snapshot()
+renv::settings$snapshot.type("all")
+renv::snapshot()
+renv::deactivate()
+renv::activate()
+renv::snapshot()
+?renv::settings
+renv::settings$snapshot.type("implicit")
+renv::init()
+renv::snapshot()
+install.packages("bookdown")
+renev::status()
+install.packages(c("renev", "tidyr"))
+install.packages(c("renv", "tidyr"))
+install.packages(c("renv", "tidyr"))
+install.packages(c("renv", "tidyr"))
+install.packages(c("generics"))
+install.packages("generics")
+?install.packages
+install.packages("generics", type = "mac.binary")
+install.packages("pillar", type = "mac.binary")
+renv::status()
+renv::restore()
+warnings()
