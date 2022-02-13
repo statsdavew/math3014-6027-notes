@@ -656,16 +656,15 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 <li><p>The average response from each treatment is as follows: <span class="math inline">\(\bar{Y}_A=66.10\)</span> (<span class="math inline">\(r_A=7\)</span> patients), <span class="math inline">\(\bar{Y}_B=65.75\)</span> (<span class="math inline">\(r_B=8\)</span>), <span class="math inline">\(\bar{Y}_C = 62.63\)</span> (<span class="math inline">\(r_C=9\)</span>), and <span class="math inline">\(\bar{Y}_D=63.85\)</span> (<span class="math inline">\(r_D=6\)</span>). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.</p></li>
 <li><p>In fact, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are brand-name drugs and <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.</p></li>
 </ol></li>
-<li><p><a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).</p></li>
-</ol>
+<li><p><a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="crd.html#cb31-1"></a>napblack &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">batch =</span> <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>), <span class="kw">rep</span>(<span class="dv">5</span>, <span class="dv">6</span>)),</span>
-<span id="cb31-2"><a href="crd.html#cb31-2"></a>                   <span class="dt">repetition =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">6</span>), </span>
-<span id="cb31-3"><a href="crd.html#cb31-3"></a>                   <span class="dt">yield =</span> <span class="kw">c</span>(<span class="dv">145</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">120</span>, <span class="dv">180</span>, <span class="dv">140</span>, <span class="dv">155</span>, <span class="dv">90</span>, <span class="dv">160</span>, <span class="dv">95</span>,</span>
-<span id="cb31-4"><a href="crd.html#cb31-4"></a>                                   <span class="dv">195</span>, <span class="dv">150</span>, <span class="dv">205</span>, <span class="dv">110</span>, <span class="dv">160</span>, <span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">195</span>, <span class="dv">65</span>, <span class="dv">145</span>,</span>
-<span id="cb31-5"><a href="crd.html#cb31-5"></a>                                   <span class="dv">195</span>, <span class="dv">230</span>, <span class="dv">115</span>, <span class="dv">235</span>, <span class="dv">225</span>, <span class="dv">120</span>, <span class="dv">55</span>, <span class="dv">50</span>, <span class="dv">80</span>, <span class="dv">45</span>)</span>
-<span id="cb31-6"><a href="crd.html#cb31-6"></a>                     )</span>
+<span id="cb31-2"><a href="crd.html#cb31-2"></a>               <span class="dt">repetition =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">6</span>), </span>
+<span id="cb31-3"><a href="crd.html#cb31-3"></a>               <span class="dt">yield =</span> <span class="kw">c</span>(<span class="dv">145</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">120</span>, <span class="dv">180</span>, <span class="dv">140</span>, <span class="dv">155</span>, <span class="dv">90</span>, <span class="dv">160</span>, <span class="dv">95</span>,</span>
+<span id="cb31-4"><a href="crd.html#cb31-4"></a>                               <span class="dv">195</span>, <span class="dv">150</span>, <span class="dv">205</span>, <span class="dv">110</span>, <span class="dv">160</span>, <span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">195</span>, <span class="dv">65</span>, <span class="dv">145</span>,</span>
+<span id="cb31-5"><a href="crd.html#cb31-5"></a>                               <span class="dv">195</span>, <span class="dv">230</span>, <span class="dv">115</span>, <span class="dv">235</span>, <span class="dv">225</span>, <span class="dv">120</span>, <span class="dv">55</span>, <span class="dv">50</span>, <span class="dv">80</span>, <span class="dv">45</span>)</span>
+<span id="cb31-6"><a href="crd.html#cb31-6"></a>                 )</span>
 <span id="cb31-7"><a href="crd.html#cb31-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb31-8"><a href="crd.html#cb31-8"></a> tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(napblack, <span class="dt">names_from =</span> batch, <span class="dt">values_from =</span> yield)[, <span class="dv">-1</span>],</span>
+<span id="cb31-8"><a href="crd.html#cb31-8"></a>tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(napblack, <span class="dt">names_from =</span> batch, <span class="dt">values_from =</span> yield)[, <span class="dv">-1</span>],</span>
 <span id="cb31-9"><a href="crd.html#cb31-9"></a> <span class="dt">col.names =</span> <span class="kw">paste</span>(<span class="st">&quot;Batch&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),</span>
 <span id="cb31-10"><a href="crd.html#cb31-10"></a> <span class="dt">caption =</span> <span class="st">&quot;Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.&quot;</span></span>
 <span id="cb31-11"><a href="crd.html#cb31-11"></a>)</span></code></pre></div>
@@ -725,10 +724,13 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 </tbody>
 </table>
 <p>Conduct a full analysis of this experiment, including</p>
-<pre><code>a. exploratory data analysis;
-a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
-a. usual linear model diagnostics
-b. multiple comparisons of all pairwise differences between treatments.</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>exploratory data analysis;</li>
+<li>fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;</li>
+<li>usual linear model diagnostics</li>
+<li>multiple comparisons of all pairwise differences between treatments.</li>
+</ol></li>
+</ol>
 <!--
 We start with a short digression to discuss the concept of a generalised inverse.
 

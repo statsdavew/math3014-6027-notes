@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "Tea first" 
+## [6] "Milk first" "Milk first" "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1835,53 +1835,59 @@ Although the decision on which hypotheses to reject (comparson 2 - 4) is the sam
   \end{enumerate}
 \item
   The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
-\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{napblack }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{batch =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{)),}
-                   \AttributeTok{repetition =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{), }
-                   \AttributeTok{yield =} \FunctionTok{c}\NormalTok{(}\DecValTok{145}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{180}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{155}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{95}\NormalTok{,}
-                                   \DecValTok{195}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{205}\NormalTok{, }\DecValTok{110}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{195}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DecValTok{145}\NormalTok{,}
-                                   \DecValTok{195}\NormalTok{, }\DecValTok{230}\NormalTok{, }\DecValTok{115}\NormalTok{, }\DecValTok{235}\NormalTok{, }\DecValTok{225}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{45}\NormalTok{)}
-\NormalTok{                     )}
+               \AttributeTok{repetition =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{), }
+               \AttributeTok{yield =} \FunctionTok{c}\NormalTok{(}\DecValTok{145}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{180}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{155}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{95}\NormalTok{,}
+                               \DecValTok{195}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{205}\NormalTok{, }\DecValTok{110}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{195}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DecValTok{145}\NormalTok{,}
+                               \DecValTok{195}\NormalTok{, }\DecValTok{230}\NormalTok{, }\DecValTok{115}\NormalTok{, }\DecValTok{235}\NormalTok{, }\DecValTok{225}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{45}\NormalTok{)}
+\NormalTok{                 )}
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
-\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(napblack, }\AttributeTok{names\_from =}\NormalTok{ batch, }\AttributeTok{values\_from =}\NormalTok{ yield)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
+\NormalTok{tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(napblack, }\AttributeTok{names\_from =}\NormalTok{ batch, }\AttributeTok{values\_from =}\NormalTok{ yield)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}
  \AttributeTok{col.names =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Batch"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{),}
  \AttributeTok{caption =} \StringTok{"Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid."}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+  \begin{table}
 
-\caption{\label{tab:nap-black}Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.}
-\centering
-\begin{tabular}[t]{r|r|r|r|r|r}
-\hline
-Batch 1 & Batch 2 & Batch 3 & Batch 4 & Batch 5 & Batch 6\\
-\hline
-145 & 140 & 195 & 45 & 195 & 120\\
-\hline
-40 & 155 & 150 & 40 & 230 & 55\\
-\hline
-40 & 90 & 205 & 195 & 115 & 50\\
-\hline
-120 & 160 & 110 & 65 & 235 & 80\\
-\hline
-180 & 95 & 160 & 145 & 225 & 45\\
-\hline
-\end{tabular}
-\end{table}
+   \caption{\label{tab:nap-black}Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.}
+   \centering
+   \begin{tabular}[t]{r|r|r|r|r|r}
+   \hline
+   Batch 1 & Batch 2 & Batch 3 & Batch 4 & Batch 5 & Batch 6\\
+   \hline
+   145 & 140 & 195 & 45 & 195 & 120\\
+   \hline
+   40 & 155 & 150 & 40 & 230 & 55\\
+   \hline
+   40 & 90 & 205 & 195 & 115 & 50\\
+   \hline
+   120 & 160 & 110 & 65 & 235 & 80\\
+   \hline
+   180 & 95 & 160 & 145 & 225 & 45\\
+   \hline
+   \end{tabular}
+   \end{table}
 
-Conduct a full analysis of this experiment, including
+  Conduct a full analysis of this experiment, including
 
-\begin{verbatim}
-a. exploratory data analysis;
-a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
-a. usual linear model diagnostics
-b. multiple comparisons of all pairwise differences between treatments.
-\end{verbatim}
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    exploratory data analysis;
+  \item
+    fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
+  \item
+    usual linear model diagnostics
+  \item
+    multiple comparisons of all pairwise differences between treatments.
+  \end{enumerate}
+\end{enumerate}
 
 \hypertarget{blocking}{%
 \chapter{Blocking}\label{blocking}}
