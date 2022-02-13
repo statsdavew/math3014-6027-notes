@@ -397,21 +397,21 @@ Although the decision on which hypotheses to reject (comparson 2 - 4)  is the sa
 
 1. <a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
 
-```{r nap-black}
-napblack <- data.frame(batch = rep(factor(1:6), rep(5, 6)),
+    ```{r nap-black}
+    napblack <- data.frame(batch = rep(factor(1:6), rep(5, 6)),
                    repetition = rep(1:5, 6), 
                    yield = c(145, 40, 40, 120, 180, 140, 155, 90, 160, 95,
                                    195, 150, 205, 110, 160, 45, 40, 195, 65, 145,
                                    195, 230, 115, 235, 225, 120, 55, 50, 80, 45)
                      )
-knitr::kable(
- tidyr::pivot_wider(napblack, names_from = batch, values_from = yield)[, -1],
- col.names = paste("Batch", 1:6),
- caption = "Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid."
-)
-```
+    knitr::kable(
+    tidyr::pivot_wider(napblack, names_from = batch, values_from = yield)[, -1],
+     col.names = paste("Batch", 1:6),
+     caption = "Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid."
+    )
+    ```
 
-Conduct a full analysis of this experiment, including
+    Conduct a full analysis of this experiment, including
 
     a. exploratory data analysis;
     a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
