@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-02-13" />
+<meta name="date" content="2022-02-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -456,7 +456,12 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
  \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
  \]</span></li>
 </ul>
-<p>where <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2}}\)</span> is the <span class="math inline">\(1-\frac{\alpha}{2}\)</span> quantile of a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-t\)</span> degrees of freedom and <span class="math inline">\(s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2\)</span> is the estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>where <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2}}\)</span> is the <span class="math inline">\(1-\frac{\alpha}{2}\)</span> quantile of a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-t\)</span> degrees of freedom and</p>
+<p><span class="math display" id="eq:crd-s2">\[\begin{equation} 
+s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
+\tag{2.8}
+\end{equation}\]</span></p>
+<p>is the estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <ul>
 <li>the hypothesis <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\)</span> against the two-sided alternative <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\)</span> is rejected using a test of with confidence level <span class="math inline">\(1-\alpha/2\)</span> if</li>
 </ul>
@@ -625,17 +630,25 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre></li>
 </ol>
-<p>The default adjustment in the <code>pairs</code> function is the Tukey method. Comparing the p-values for each comparison using the Boneferroni and Tukey methods:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="crd.html#cb29-1" aria-hidden="true" tabindex="-1"></a>pairs.b <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span>
-<span id="cb29-2"><a href="crd.html#cb29-2" aria-hidden="true" tabindex="-1"></a>pairs.t <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm)</span>
-<span id="cb29-3"><a href="crd.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">transform</span>(pairs.b)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">Bonf.p.value =</span> <span class="fu">transform</span>(pairs.b)[, <span class="dv">6</span>], <span class="at">Tukey.p.value =</span> <span class="fu">transform</span>(pairs.t)[, <span class="dv">6</span>])</span></code></pre></div>
+<p>The default adjustment in the <code>pairs</code> function is the Tukey method. Comparing the p-values for each comparison using unadjusted t-tests, the Boneferroni and Tukey methods:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="crd.html#cb29-1" aria-hidden="true" tabindex="-1"></a>pairs.u <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span>
+<span id="cb29-2"><a href="crd.html#cb29-2" aria-hidden="true" tabindex="-1"></a>pairs.b <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span>
+<span id="cb29-3"><a href="crd.html#cb29-3" aria-hidden="true" tabindex="-1"></a>pairs.t <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm)</span>
+<span id="cb29-4"><a href="crd.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">transform</span>(pairs.b)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">Bonf.p.value =</span> <span class="fu">transform</span>(pairs.b)[, <span class="dv">6</span>], <span class="at">Tukey.p.value =</span> <span class="fu">transform</span>(pairs.t)[, <span class="dv">6</span>], <span class="at">unadjust.p.value =</span> <span class="fu">transform</span>(pairs.u)[, <span class="dv">6</span>])</span></code></pre></div>
 <pre><code>##   contrast estimate    SE df t.ratio Bonf.p.value Tukey.p.value
 ## 1    1 - 2     0.18 0.206 16   0.873       1.0000        0.8185
 ## 2    1 - 3    -0.38 0.206 16  -1.843       0.5034        0.2903
 ## 3    1 - 4    -0.44 0.206 16  -2.134       0.2918        0.1845
 ## 4    2 - 3    -0.56 0.206 16  -2.716       0.0915        0.0658
 ## 5    2 - 4    -0.62 0.206 16  -3.007       0.0501        0.0377
-## 6    3 - 4    -0.06 0.206 16  -0.291       1.0000        0.9911</code></pre>
+## 6    3 - 4    -0.06 0.206 16  -0.291       1.0000        0.9911
+##   unadjust.p.value
+## 1          0.39551
+## 2          0.08389
+## 3          0.04864
+## 4          0.01525
+## 5          0.00835
+## 6          0.77476</code></pre>
 <p>Although the decision on which hypotheses to reject (comparson 2 - 4) is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.</p>
 </div>
 <div id="exercises-1" class="section level2" number="2.8">
@@ -645,6 +658,172 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 <li><p>For Example <a href="crd.html#exm:one-way">2.1</a>, calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section <a href="crd.html#contrast-crd">2.5</a> are the same as those found in Section <a href="crd.html#r-crd">2.6</a> using <code>pairwise.t.test</code>, and <code>emmeans</code>.</p></li>
 <li><p>Also check the results in Section <a href="crd.html#multiple-comp">2.7</a> by (i) adjusting individual p-values (for Bonferroni) and (ii) using the <code>qtukey</code> command.</p></li>
 </ol></li>
+</ol>
+<details>
+<summary>
+<b>Solution</b>
+</summary>
+<p>As a reminder, the data from the experiment is as follows.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Operator 1</th>
+<th align="right">Operator 2</th>
+<th align="right">Operator 3</th>
+<th align="right">Operator 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">59.8</td>
+<td align="right">59.8</td>
+<td align="right">60.7</td>
+<td align="right">61.0</td>
+</tr>
+<tr class="even">
+<td align="right">60.0</td>
+<td align="right">60.2</td>
+<td align="right">60.7</td>
+<td align="right">60.8</td>
+</tr>
+<tr class="odd">
+<td align="right">60.8</td>
+<td align="right">60.4</td>
+<td align="right">60.5</td>
+<td align="right">60.6</td>
+</tr>
+<tr class="even">
+<td align="right">60.8</td>
+<td align="right">59.9</td>
+<td align="right">60.9</td>
+<td align="right">60.5</td>
+</tr>
+<tr class="odd">
+<td align="right">59.8</td>
+<td align="right">60.0</td>
+<td align="right">60.3</td>
+<td align="right">60.5</td>
+</tr>
+</tbody>
+</table>
+<p>The mean response from each treatment is given by</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">operator</th>
+<th align="right">n_i</th>
+<th align="right">mean</th>
+<th align="right">variance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">5</td>
+<td align="right">60.2</td>
+<td align="right">0.268</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">5</td>
+<td align="right">60.1</td>
+<td align="right">0.058</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">5</td>
+<td align="right">60.6</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">5</td>
+<td align="right">60.7</td>
+<td align="right">0.047</td>
+</tr>
+</tbody>
+</table>
+<p>The sample variance, <span class="math inline">\(s^2 = 0.106\)</span>, from <a href="crd.html#eq:crd-s2">(2.8)</a>. As <span class="math inline">\(\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}\)</span> for contrast vectors <span class="math inline">\(\boldsymbol{c}\)</span> corresponding to pairwise differences, the standard error of each pairwise difference is given by <span class="math inline">\(\sqrt{\frac{2s^2}{5}} = 0.206\)</span>. Hence, we can create a table of pairwise differences, standard errors and test statistics.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">contrast</th>
+<th align="right">estimate</th>
+<th align="right">SE</th>
+<th align="right">df</th>
+<th align="right">t.ratio</th>
+<th align="right">unadjust.p.value</th>
+<th align="right">Bonferroni</th>
+<th align="right">Tukey</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1 - 2</td>
+<td align="right">0.18</td>
+<td align="right">0.206</td>
+<td align="right">16</td>
+<td align="right">0.873</td>
+<td align="right">0.396</td>
+<td align="right">1.000</td>
+<td align="right">0.819</td>
+</tr>
+<tr class="even">
+<td align="left">1 - 3</td>
+<td align="right">-0.38</td>
+<td align="right">0.206</td>
+<td align="right">16</td>
+<td align="right">-1.843</td>
+<td align="right">0.084</td>
+<td align="right">0.503</td>
+<td align="right">0.290</td>
+</tr>
+<tr class="odd">
+<td align="left">1 - 4</td>
+<td align="right">-0.44</td>
+<td align="right">0.206</td>
+<td align="right">16</td>
+<td align="right">-2.134</td>
+<td align="right">0.049</td>
+<td align="right">0.292</td>
+<td align="right">0.184</td>
+</tr>
+<tr class="even">
+<td align="left">2 - 3</td>
+<td align="right">-0.56</td>
+<td align="right">0.206</td>
+<td align="right">16</td>
+<td align="right">-2.716</td>
+<td align="right">0.015</td>
+<td align="right">0.092</td>
+<td align="right">0.066</td>
+</tr>
+<tr class="odd">
+<td align="left">2 - 4</td>
+<td align="right">-0.62</td>
+<td align="right">0.206</td>
+<td align="right">16</td>
+<td align="right">-3.007</td>
+<td align="right">0.008</td>
+<td align="right">0.050</td>
+<td align="right">0.038</td>
+</tr>
+<tr class="even">
+<td align="left">3 - 4</td>
+<td align="right">-0.06</td>
+<td align="right">0.206</td>
+<td align="right">16</td>
+<td align="right">-0.291</td>
+<td align="right">0.775</td>
+<td align="right">1.000</td>
+<td align="right">0.991</td>
+</tr>
+</tbody>
+</table>
+<p>Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (<code>2 * (1 - pt(abs(t.ratio), 16))</code>). For Bonferroni, we simply multiply these p-values by <span class="math inline">\({t \choose 2} = 6\)</span>, and then take the minimum of this value and 1. For the Tukey method, we use <code>ptukey(abs(t.ratio) * sqrt(2), 4, 16)</code> (see <code>?ptukey</code>).</p>
+Alternatively, to test each hypothesis at the 5% level, we can compare each t.ratio to (i) <code>qt(0.975, 16) = 2.12</code> (unadjusted); (ii) <code>qt(1 - 0.025/6, 16) = 3.008</code> (Bonferroni); or (iii) <code>qtukey(0.95, 4, 16) / sqrt(2) = 2.861</code>.
+</details>
+<ol start="2" style="list-style-type: decimal">
 <li><p> <span class="citation">(Adapted from <a href="#ref-WH2009" role="doc-biblioref">Wu and Hamada, 2009</a>)</span> The bioactivity of four different drugs <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> for treating a particular illness was compared in a study and the following ANOVA table was given for the data:</p>
 <table>
 <thead>
@@ -679,9 +858,67 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 <ol style="list-style-type: lower-roman">
 <li><p>What considerations should be made when assigning drugs to patients, and why?</p></li>
 <li><p>Use an <span class="math inline">\(F\)</span>-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.</p></li>
-<li><p>The average response from each treatment is as follows: <span class="math inline">\(\bar{Y}_A=66.10\)</span> (<span class="math inline">\(r_A=7\)</span> patients), <span class="math inline">\(\bar{Y}_B=65.75\)</span> (<span class="math inline">\(r_B=8\)</span>), <span class="math inline">\(\bar{Y}_C = 62.63\)</span> (<span class="math inline">\(r_C=9\)</span>), and <span class="math inline">\(\bar{Y}_D=63.85\)</span> (<span class="math inline">\(r_D=6\)</span>). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.</p></li>
+<li><p>The average response from each treatment is as follows: <span class="math inline">\(\bar{y}_{A.}=66.10\)</span> (<span class="math inline">\(n_A=7\)</span> patients), <span class="math inline">\(\bar{y}_{B.}=65.75\)</span> (<span class="math inline">\(n_B=8\)</span>), <span class="math inline">\(\bar{y}_{C.} = 62.63\)</span> (<span class="math inline">\(n_C=9\)</span>), and <span class="math inline">\(\bar{y}_{D.}=63.85\)</span> (<span class="math inline">\(n_D=6\)</span>). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.</p></li>
 <li><p>In fact, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are brand-name drugs and <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.</p></li>
 </ol></li>
+</ol>
+<details>
+<summary>
+<b>Solution</b>
+</summary>
+<ol style="list-style-type: lower-roman">
+<li><p>Each patient should be randomly allocated to one of the drugs. This is to protect against possible bias from lurking variables, e.g. demographic variables or subjective bias from the study administrator (blinding the study can also help to protect against this).</p></li>
+<li><p>Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under <span class="math inline">\(H_0\)</span>: no difference in bioactivity between the drugs, the test statistic follows an <span class="math inline">\(F_{3,26}\)</span> distribution, which has a 1% critical value of <code>qf(0.99, 3, 26) = 4.637</code>. Hence, we can reject <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>For each difference, the test statistic has the form</p>
+<p><span class="math display">\[
+ \frac{|\bar{y}_{i.}-\bar{y}_{j.}|}{s\sqrt{\frac{1}{n_i}+\frac{1}{n_j}}}\,,
+ \]</span></p>
+<p>for <span class="math inline">\(i, j = A, B, C, D;\, i\ne j\)</span>. The treatment means and repetitions are given in the question (note that not all <span class="math inline">\(n_i\)</span> are equal). From the ANOVA table, we get <span class="math inline">\(s^2 = 62.12/26 = 2.389\)</span>. The following table summarises the differences between drugs:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left"><span class="math inline">\(A-B\)</span></th>
+<th align="left"><span class="math inline">\(A-C\)</span></th>
+<th align="left"><span class="math inline">\(A-D\)</span></th>
+<th align="left"><span class="math inline">\(B-C\)</span></th>
+<th align="left"><span class="math inline">\(B-D\)</span></th>
+<th align="left"><span class="math inline">\(C-D\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Abs. difference</td>
+<td align="left">0.35</td>
+<td align="left">3.47</td>
+<td align="left">2.25</td>
+<td align="left">3.12</td>
+<td align="left">1.9</td>
+<td align="left">1.22</td>
+</tr>
+<tr class="even">
+<td align="left">Test statistic</td>
+<td align="left">0.44</td>
+<td align="left">4.45</td>
+<td align="left">2.62</td>
+<td align="left">4.15</td>
+<td align="left">2.28</td>
+<td align="left">1.50</td>
+</tr>
+</tbody>
+</table>
+<p>The Bonferroni critical value is <span class="math inline">\(t_{26, 0.01/12} = 3.507\)</span>. The Tukey critical value is <span class="math inline">\(q_{4,26}/\sqrt{2} = 0.304\)</span> (available <code>R</code> as <code>qtukey(0.01, 4, 26) / sqrt(2)</code>). Hence under both methods, bioactivity of drugs <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>, and <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, are significantly different.</p></li>
+<li><p>A suitable contrast has <span class="math inline">\(\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)\)</span>, with <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = (\tau_A + \tau_B) / 2 - (\tau_C + \tau_D) / 2\)</span> (the difference in average treatment effects).</p>
+<p>An estimate for this contrast is given by <span class="math inline">\((\bar{y}_{A.} + \bar{y}_{B.}) / 2 - \bar{y}_{C.} + \bar{y}_{D.}) / 2\)</span>, with variance</p>
+<p><span class="math display">\[\mbox{Var}\left(\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{Y}_{D.})\right) = \frac{\sigma^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)\,.\]</span></p>
+<p>Hence, a test statistic for <span class="math inline">\(H_0:\, \frac{1}{2}(\tau_A+\tau_B) - \frac{1}{2}(\tau_C+\tau_D)=0\)</span> is given by</p>
+<p><span class="math display">\[
+\frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
+\]</span></p>
+<p>The critical value is <span class="math inline">\(t_{26, 0.01/2} = 2.78\)</span>. Hence, we can reject <span class="math inline">\(H_0\)</span> and conclude there is a difference between brand-name and generic drugs.</p></li>
+</ol>
+</details>
+<ol start="3" style="list-style-type: decimal">
 <li><p><a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="crd.html#cb31-1" aria-hidden="true" tabindex="-1"></a>napblack <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">batch =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">6</span>)),</span>
 <span id="cb31-2"><a href="crd.html#cb31-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">repetition =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">6</span>), </span>
@@ -753,7 +990,7 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 <ol style="list-style-type: lower-alpha">
 <li>exploratory data analysis;</li>
 <li>fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;</li>
-<li>usual linear model diagnostics</li>
+<li>usual linear model diagnostics;</li>
 <li>multiple comparisons of all pairwise differences between treatments.</li>
 </ol></li>
 </ol>

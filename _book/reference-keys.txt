@@ -15,6 +15,7 @@ eq:crd-red-normal
 eq:rne
 eq:crd-rne
 eq:crd-irne
+eq:crd-s2
 tab:one-way-analysis
 tab:nap-black
 intro

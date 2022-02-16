@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-02-13}
+\date{2022-02-16}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -903,7 +903,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "Tea first" 
+## [1] "Tea first"  "Tea first"  "Tea first"  "Milk first" "Tea first" 
 ## [6] "Milk first" "Milk first" "Milk first"
 \end{verbatim}
 \item
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1516,7 +1516,14 @@ Confidence intervals and hypothesis tests for \(\boldsymbol{c}^{\mathrm{T}}\bold
    \]
 \end{itemize}
 
-where \(t_{n-t, 1-\frac{\alpha}{2}}\) is the \(1-\frac{\alpha}{2}\) quantile of a \(t\)-distribution with \(n-t\) degrees of freedom and \(s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2\) is the estimate of \(\sigma^2\).
+where \(t_{n-t, 1-\frac{\alpha}{2}}\) is the \(1-\frac{\alpha}{2}\) quantile of a \(t\)-distribution with \(n-t\) degrees of freedom and
+
+\begin{equation} 
+s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
+\label{eq:crd-s2}
+\end{equation}
+
+is the estimate of \(\sigma^2\).
 
 \begin{itemize}
 \tightlist
@@ -1773,13 +1780,14 @@ Therefore it is usually desirable to maintain some control of the experiment-wis
 \end{verbatim}
 \end{enumerate}
 
-The default adjustment in the \texttt{pairs} function is the Tukey method. Comparing the p-values for each comparison using the Boneferroni and Tukey methods:
+The default adjustment in the \texttt{pairs} function is the Tukey method. Comparing the p-values for each comparison using unadjusted t-tests, the Boneferroni and Tukey methods:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{pairs.u }\OtherTok{\textless{}{-}} \FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}none\textquotesingle{}}\NormalTok{)}
 \NormalTok{pairs.b }\OtherTok{\textless{}{-}} \FunctionTok{pairs}\NormalTok{(pulp.emm, }\AttributeTok{adjust =} \StringTok{\textquotesingle{}bonferroni\textquotesingle{}}\NormalTok{)}
 \NormalTok{pairs.t }\OtherTok{\textless{}{-}} \FunctionTok{pairs}\NormalTok{(pulp.emm)}
-\FunctionTok{data.frame}\NormalTok{(}\FunctionTok{transform}\NormalTok{(pairs.b)[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{Bonf.p.value =} \FunctionTok{transform}\NormalTok{(pairs.b)[, }\DecValTok{6}\NormalTok{], }\AttributeTok{Tukey.p.value =} \FunctionTok{transform}\NormalTok{(pairs.t)[, }\DecValTok{6}\NormalTok{])}
+\FunctionTok{data.frame}\NormalTok{(}\FunctionTok{transform}\NormalTok{(pairs.b)[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{Bonf.p.value =} \FunctionTok{transform}\NormalTok{(pairs.b)[, }\DecValTok{6}\NormalTok{], }\AttributeTok{Tukey.p.value =} \FunctionTok{transform}\NormalTok{(pairs.t)[, }\DecValTok{6}\NormalTok{], }\AttributeTok{unadjust.p.value =} \FunctionTok{transform}\NormalTok{(pairs.u)[, }\DecValTok{6}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1791,6 +1799,13 @@ The default adjustment in the \texttt{pairs} function is the Tukey method. Compa
 ## 4    2 - 3    -0.56 0.206 16  -2.716       0.0915        0.0658
 ## 5    2 - 4    -0.62 0.206 16  -3.007       0.0501        0.0377
 ## 6    3 - 4    -0.06 0.206 16  -0.291       1.0000        0.9911
+##   unadjust.p.value
+## 1          0.39551
+## 2          0.08389
+## 3          0.04864
+## 4          0.01525
+## 5          0.00835
+## 6          0.77476
 \end{verbatim}
 
 Although the decision on which hypotheses to reject (comparson 2 - 4) is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.
@@ -1808,6 +1823,71 @@ Although the decision on which hypotheses to reject (comparson 2 - 4) is the sam
   \item
     Also check the results in Section \ref{multiple-comp} by (i) adjusting individual p-values (for Bonferroni) and (ii) using the \texttt{qtukey} command.
   \end{enumerate}
+\end{enumerate}
+
+Solution
+
+As a reminder, the data from the experiment is as follows.
+
+\begin{tabular}{r|r|r|r}
+\hline
+Operator 1 & Operator 2 & Operator 3 & Operator 4\\
+\hline
+59.8 & 59.8 & 60.7 & 61.0\\
+\hline
+60.0 & 60.2 & 60.7 & 60.8\\
+\hline
+60.8 & 60.4 & 60.5 & 60.6\\
+\hline
+60.8 & 59.9 & 60.9 & 60.5\\
+\hline
+59.8 & 60.0 & 60.3 & 60.5\\
+\hline
+\end{tabular}
+
+The mean response from each treatment is given by
+
+\begin{tabular}{l|r|r|r}
+\hline
+operator & n\_i & mean & variance\\
+\hline
+1 & 5 & 60.2 & 0.268\\
+\hline
+2 & 5 & 60.1 & 0.058\\
+\hline
+3 & 5 & 60.6 & 0.052\\
+\hline
+4 & 5 & 60.7 & 0.047\\
+\hline
+\end{tabular}
+
+The sample variance, \(s^2 = 0.106\), from \eqref{eq:crd-s2}. As \(\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}\) for contrast vectors \(\boldsymbol{c}\) corresponding to pairwise differences, the standard error of each pairwise difference is given by \(\sqrt{\frac{2s^2}{5}} = 0.206\). Hence, we can create a table of pairwise differences, standard errors and test statistics.
+
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+contrast & estimate & SE & df & t.ratio & unadjust.p.value & Bonferroni & Tukey\\
+\hline
+1 - 2 & 0.18 & 0.206 & 16 & 0.873 & 0.396 & 1.000 & 0.819\\
+\hline
+1 - 3 & -0.38 & 0.206 & 16 & -1.843 & 0.084 & 0.503 & 0.290\\
+\hline
+1 - 4 & -0.44 & 0.206 & 16 & -2.134 & 0.049 & 0.292 & 0.184\\
+\hline
+2 - 3 & -0.56 & 0.206 & 16 & -2.716 & 0.015 & 0.092 & 0.066\\
+\hline
+2 - 4 & -0.62 & 0.206 & 16 & -3.007 & 0.008 & 0.050 & 0.038\\
+\hline
+3 - 4 & -0.06 & 0.206 & 16 & -0.291 & 0.775 & 1.000 & 0.991\\
+\hline
+\end{tabular}
+
+Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (\texttt{2\ *\ (1\ -\ pt(abs(t.ratio),\ 16))}). For Bonferroni, we simply multiply these p-values by \({t \choose 2} = 6\), and then take the minimum of this value and 1. For the Tukey method, we use \texttt{ptukey(abs(t.ratio)\ *\ sqrt(2),\ 4,\ 16)} (see \texttt{?ptukey}).
+
+Alternatively, to test each hypothesis at the 5\% level, we can compare each t.ratio to (i) \texttt{qt(0.975,\ 16)\ =\ 2.12} (unadjusted); (ii) \texttt{qt(1\ -\ 0.025/6,\ 16)\ =\ 3.008} (Bonferroni); or (iii) \texttt{qtukey(0.95,\ 4,\ 16)\ /\ sqrt(2)\ =\ 2.861}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
 \item
   ~\citep[Adapted from][]{WH2009} The bioactivity of four different drugs \(A\), \(B\), \(C\) and \(D\) for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
 
@@ -1829,10 +1909,59 @@ Although the decision on which hypotheses to reject (comparson 2 - 4) is the sam
   \item
     Use an \(F\)-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
   \item
-    The average response from each treatment is as follows: \(\bar{Y}_A=66.10\) (\(r_A=7\) patients), \(\bar{Y}_B=65.75\) (\(r_B=8\)), \(\bar{Y}_C = 62.63\) (\(r_C=9\)), and \(\bar{Y}_D=63.85\) (\(r_D=6\)). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
+    The average response from each treatment is as follows: \(\bar{y}_{A.}=66.10\) (\(n_A=7\) patients), \(\bar{y}_{B.}=65.75\) (\(n_B=8\)), \(\bar{y}_{C.} = 62.63\) (\(n_C=9\)), and \(\bar{y}_{D.}=63.85\) (\(n_D=6\)). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
   \item
     In fact, \(A\) and \(B\) are brand-name drugs and \(C\) and \(D\) are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
   \end{enumerate}
+\end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\item
+  Each patient should be randomly allocated to one of the drugs. This is to protect against possible bias from lurking variables, e.g.~demographic variables or subjective bias from the study administrator (blinding the study can also help to protect against this).
+\item
+  Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under \(H_0\): no difference in bioactivity between the drugs, the test statistic follows an \(F_{3,26}\) distribution, which has a 1\% critical value of \texttt{qf(0.99,\ 3,\ 26)\ =\ 4.637}. Hence, we can reject \(H_0\).
+\item
+  For each difference, the test statistic has the form
+
+  \[
+   \frac{|\bar{y}_{i.}-\bar{y}_{j.}|}{s\sqrt{\frac{1}{n_i}+\frac{1}{n_j}}}\,,
+   \]
+
+  for \(i, j = A, B, C, D;\, i\ne j\). The treatment means and repetitions are given in the question (note that not all \(n_i\) are equal). From the ANOVA table, we get \(s^2 = 62.12/26 = 2.389\). The following table summarises the differences between drugs:
+
+  \begin{longtable}[]{@{}lllllll@{}}
+  \toprule
+  & \(A-B\) & \(A-C\) & \(A-D\) & \(B-C\) & \(B-D\) & \(C-D\) \\
+  \midrule
+  \endhead
+  Abs. difference & 0.35 & 3.47 & 2.25 & 3.12 & 1.9 & 1.22 \\
+  Test statistic & 0.44 & 4.45 & 2.62 & 4.15 & 2.28 & 1.50 \\
+  \bottomrule
+  \end{longtable}
+
+  The Bonferroni critical value is \(t_{26, 0.01/12} = 3.507\). The Tukey critical value is \(q_{4,26}/\sqrt{2} = 0.304\) (available \texttt{R} as \texttt{qtukey(0.01,\ 4,\ 26)\ /\ sqrt(2)}). Hence under both methods, bioactivity of drugs \(A\) and \(C\), and \(B\) and \(C\), are significantly different.
+\item
+  A suitable contrast has \(\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)\), with \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = (\tau_A + \tau_B) / 2 - (\tau_C + \tau_D) / 2\) (the difference in average treatment effects).
+
+  An estimate for this contrast is given by \((\bar{y}_{A.} + \bar{y}_{B.}) / 2 - \bar{y}_{C.} + \bar{y}_{D.}) / 2\), with variance
+
+  \[\mbox{Var}\left(\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{Y}_{D.})\right) = \frac{\sigma^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)\,.\]
+
+  Hence, a test statistic for \(H_0:\, \frac{1}{2}(\tau_A+\tau_B) - \frac{1}{2}(\tau_C+\tau_D)=0\) is given by
+
+  \[
+  \frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
+  \]
+
+  The critical value is \(t_{26, 0.01/2} = 2.78\). Hence, we can reject \(H_0\) and conclude there is a difference between brand-name and generic drugs.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
 \item
   The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
 
@@ -1883,7 +2012,7 @@ Although the decision on which hypotheses to reject (comparson 2 - 4) is the sam
   \item
     fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
   \item
-    usual linear model diagnostics
+    usual linear model diagnostics;
   \item
     multiple comparisons of all pairwise differences between treatments.
   \end{enumerate}

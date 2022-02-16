@@ -248,7 +248,14 @@ Confidence intervals and hypothesis tests for $\boldsymbol{c}^{\mathrm{T}}\bolds
  \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
  $$
  
- where $t_{n-t, 1-\frac{\alpha}{2}}$ is the $1-\frac{\alpha}{2}$ quantile of a $t$-distribution with $n-t$ degrees of freedom and $s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2$ is the estimate of $\sigma^2$.
+ where $t_{n-t, 1-\frac{\alpha}{2}}$ is the $1-\frac{\alpha}{2}$ quantile of a $t$-distribution with $n-t$ degrees of freedom and 
+
+\begin{equation} 
+s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
+(\#eq:crd-s2)
+\end{equation}
+
+is the estimate of $\sigma^2$.
  
  - the hypothesis $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$ against the two-sided alternative $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0$ is rejected using a test of with confidence level $1-\alpha/2$ if 
  
@@ -361,12 +368,13 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &    P\left
     pairs(pulp.emm)
     ```
 
-The default adjustment in the `pairs` function is the Tukey method. Comparing the p-values for each comparison using the Boneferroni and Tukey methods:
+The default adjustment in the `pairs` function is the Tukey method. Comparing the p-values for each comparison using unadjusted t-tests, the Boneferroni and Tukey methods:
 
 ```{r bonf-tukey}
+pairs.u <- pairs(pulp.emm, adjust = 'none')
 pairs.b <- pairs(pulp.emm, adjust = 'bonferroni')
 pairs.t <- pairs(pulp.emm)
-data.frame(transform(pairs.b)[, 1:5], Bonf.p.value = transform(pairs.b)[, 6], Tukey.p.value = transform(pairs.t)[, 6])
+data.frame(transform(pairs.b)[, 1:5], Bonf.p.value = transform(pairs.b)[, 6], Tukey.p.value = transform(pairs.t)[, 6], unadjust.p.value = transform(pairs.u)[, 6])
 ```
 
 Although the decision on which hypotheses to reject (comparson 2 - 4)  is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.
@@ -378,7 +386,47 @@ Although the decision on which hypotheses to reject (comparson 2 - 4)  is the sa
 
     a. Also check the results in Section \@ref(multiple-comp) by (i) adjusting individual p-values (for Bonferroni) and (ii) using the `qtukey` command.
     
-1. \ [Adapted from @WH2009] The bioactivity of four different drugs $A$, $B$, $C$ and $D$ for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
+<details>
+<summary><b>Solution</b></summary>
+As a reminder, the data from the experiment is as follows.
+
+```{r exercise-1-data, echo = F}
+knitr::kable(
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)[, -1], col.names = paste("Operator", 1:4),
+)
+```
+
+The mean response from each treatment is given by
+
+```{r exercise-1-means, echo = F}
+ybars2 <- pulp |> 
+    dplyr::group_by(operator) |> 
+    dplyr::summarise(n_i = dplyr::n(), mean = mean(reflectance), 
+                       variance = var(reflectance))
+knitr::kable(ybars2)
+s2 <- (1 / (nrow(pulp) - nrow(ybars2))) * sum(ybars2$variance 
+                                                  * (ybars2$n_i - 1))
+```
+
+The sample variance, $s^2 = `r round(s2, 3)`$, from \@ref(eq:crd-s2). As $\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}$ for contrast vectors $\boldsymbol{c}$ corresponding to pairwise differences, the standard error of each pairwise difference is given by $\sqrt{\frac{2s^2}{5}} = `r round(sqrt(2 * s2 / 5), 3)`$. Hence, we can create a table of pairwise differences, standard errors and test statistics.
+
+```{r exercise-1-results, echo = F}
+res.tab <- transform(pairs.b)
+t.pvalue <- 2*(1 - pt(abs(res.tab[, 5]), res.tab[, 4]))
+pulp.results <- data.frame(res.tab[, 1:5], 
+                               unadjust.p.value = t.pvalue, 
+                               Bonferroni = pmin(1, 6 * t.pvalue),
+                               Tukey = 1 - ptukey(abs(res.tab[, 5]) * sqrt(2), 
+                                                  4, res.tab[, 4]))
+knitr::kable(pulp.results, digits = 3)
+```
+
+Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (`2 * (1 - pt(abs(t.ratio), 16))`). For Bonferroni, we simply multiply these p-values by ${t \choose 2} = 6$, and then take the minimum of this value and 1. For the Tukey method, we use `ptukey(abs(t.ratio) * sqrt(2), 4, 16)` (see `?ptukey`).
+
+Alternatively, to test each hypothesis at the 5% level, we can compare each t.ratio to (i) `qt(0.975, 16) = `r round(qt(0.975, 16), 3)`` (unadjusted); (ii) `qt(1 - 0.025/6, 16) = `r round(qt(1 - 0.025/6, 16), 3)`` (Bonferroni); or (iii) `qtukey(0.95, 4, 16) / sqrt(2) = `r round(qtukey(0.95, 4, 16) / sqrt(2), 3)``. 
+</details>
+    
+2. \ [Adapted from @WH2009] The bioactivity of four different drugs $A$, $B$, $C$ and $D$ for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
 
     | Source | Degrees of freedom | Sums of squares | Mean square |
     | :----- | :----------------: | :-------------: | :---------: |
@@ -390,12 +438,51 @@ Although the decision on which hypotheses to reject (comparson 2 - 4)  is the sa
 
     i. Use an $F$-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
 
-    i. The average response from each treatment is as follows: $\bar{Y}_A=66.10$ ($r_A=7$ patients), $\bar{Y}_B=65.75$ ($r_B=8$), $\bar{Y}_C = 62.63$ ($r_C=9$), and $\bar{Y}_D=63.85$ ($r_D=6$). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
+    i. The average response from each treatment is as follows: $\bar{y}_{A.}=66.10$ ($n_A=7$ patients), $\bar{y}_{B.}=65.75$ ($n_B=8$), $\bar{y}_{C.} = 62.63$ ($n_C=9$), and $\bar{y}_{D.}=63.85$ ($n_D=6$). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
     
 
     i. In fact, $A$ and $B$ are brand-name drugs and $C$ and $D$ are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
+    
+<details>
+<summary><b>Solution</b></summary>
 
-1. <a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
+i. Each patient should be randomly allocated to one of the drugs. This is to protect against possible bias from lurking variables, e.g. demographic variables or subjective bias from the study administrator (blinding the study can also help to protect against this).
+
+i. Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under $H_0$: no difference in bioactivity between the drugs, the test statistic follows an $F_{3,26}$ distribution, which has a 1\% critical value of `qf(0.99, 3, 26) = `r qf(0.99, 3, 26)``. Hence, we can reject $H_0$.
+
+i. For each difference, the test statistic has the form
+
+    $$
+    \frac{|\bar{y}_{i.}-\bar{y}_{j.}|}{s\sqrt{\frac{1}{n_i}+\frac{1}{n_j}}}\,,
+    $$
+
+    for $i, j = A, B, C, D;\, i\ne j$. The treatment means and repetitions are given in the question (note that not all $n_i$ are equal). From the ANOVA table, we get $s^2 = 62.12/26 = 2.389$. The following table summarises the differences between drugs:
+
+    |   | $A-B$ | $A-C$ | $A-D$ | $B-C$ | $B-D$ | $C-D$ |
+    |:- | :---- | :---- | :---- | :---- | :---- | :---- |  
+    | Abs. difference |  0.35 | 3.47 | 2.25 | 3.12 | 1.9 | 1.22 |
+    | Test statistic | 0.44 | 4.45 | 2.62 | 4.15 | 2.28 | 1.50 |
+
+    The Bonferroni critical value is $t_{26, 0.01/12} = `r qt(1 - 0.01/12, 26)`$. The Tukey critical value is $q_{4,26}/\sqrt{2} = `r qtukey(0.01, 4, 26) / sqrt(2)`$ (available `R` as `qtukey(0.01, 4, 26) / sqrt(2)`). Hence under both methods, bioactivity of drugs $A$ and $C$, and $B$ and $C$, are significantly different.
+
+i. A suitable contrast has $\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)$, with $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = (\tau_A + \tau_B) / 2 - (\tau_C + \tau_D) / 2$ (the difference in average treatment effects). 
+
+    An estimate for this contrast is given by $(\bar{y}_{A.} + \bar{y}_{B.}) / 2 - \bar{y}_{C.} + \bar{y}_{D.}) / 2$, with variance
+
+    $$\mbox{Var}\left(\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{Y}_{D.})\right) = \frac{\sigma^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)\,.$$
+
+    Hence, a test statistic for $H_0:\, \frac{1}{2}(\tau_A+\tau_B) - \frac{1}{2}(\tau_C+\tau_D)=0$ is given by
+
+    $$
+\frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
+$$
+
+    The critical value is $t_{26, 0.01/2} = 2.78$. Hence, we can reject $H_0$ and conclude there is a difference between brand-name and generic drugs.
+
+</details>
+
+
+3. <a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
 
     ```{r nap-black}
     napblack <- data.frame(batch = rep(factor(1:6), rep(5, 6)),

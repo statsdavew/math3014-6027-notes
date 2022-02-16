@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  13 FEB 2022 17:40
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  16 FEB 2022 18:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1350,7 +1350,7 @@ File: bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf Graphic
 <use bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf>
 [12] [13] [14] [15] [16] [17] [18]
 Overfull \hbox (47.5pt too wide) in paragraph at lines 908--908
- []\TU/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "
+ []\TU/lmtt/m/n/10 ## [1] "Tea first"  "Tea first"  "Tea first"  "Milk first" "
 Tea first"[] 
  []
 
@@ -1440,130 +1440,135 @@ Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                 on input line 1450.
 
 [31] [32] [33]
-Overfull \hbox (21.25pt too wide) in paragraph at lines 1615--1615
+Overfull \hbox (21.25pt too wide) in paragraph at lines 1622--1622
  []\TU/lmtt/m/n/10 ## Signif. codes:  0 []***[] 0.001 []**[] 0.01 []*[] 0.05 []
 .[] 0.1 [] [] 1[] 
  []
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 8.0pt on input line 1636.
+(Font)              scaled to size 8.0pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 6.0pt on input line 1636.
+(Font)              scaled to size 6.0pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/bx/n' will be
-(Font)              scaled to size 5.0pt on input line 1636.
+(Font)              scaled to size 5.0pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 8.00012pt on input line 1636.
+(Font)              scaled to size 8.00012pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 6.00009pt on input line 1636.
+(Font)              scaled to size 6.00009pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/bx/n' will be
-(Font)              scaled to size 5.00008pt on input line 1636.
+(Font)              scaled to size 5.00008pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 7.99988pt on input line 1636.
+(Font)              scaled to size 7.99988pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 5.99991pt on input line 1636.
+(Font)              scaled to size 5.99991pt on input line 1643.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/bx/n' will be
-(Font)              scaled to size 4.99992pt on input line 1636.
+(Font)              scaled to size 4.99992pt on input line 1643.
 [34] [35]
-Overfull \hbox (11.11966pt too wide) detected at line 1727
+Overfull \hbox (11.11966pt too wide) detected at line 1734
 []
  []
 
 
-Underfull \hbox (badness 1342) in paragraph at lines 1753--1754
+Underfull \hbox (badness 1342) in paragraph at lines 1760--1761
 []\TU/lmr/bx/n/10 Tukey’s method\TU/lmr/m/n/10 . An alternative approach that g
 ives an exact
  []
 
 [36]
-Overfull \hbox (63.25pt too wide) in paragraph at lines 1773--1773
+Overfull \hbox (63.25pt too wide) in paragraph at lines 1780--1780
  []\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family o
 f 4 estimates[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ##   contrast estimate    SE df t.ratio Bonf.p.value Tukey.p.
 value[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ## 1    1 - 2     0.18 0.206 16   0.873       1.0000        0
 .8185[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ## 2    1 - 3    -0.38 0.206 16  -1.843       0.5034        0
 .2903[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ## 3    1 - 4    -0.44 0.206 16  -2.134       0.2918        0
 .1845[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ## 4    2 - 3    -0.56 0.206 16  -2.716       0.0915        0
 .0658[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ## 5    2 - 4    -0.62 0.206 16  -3.007       0.0501        0
 .0377[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 1794--1794
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1809--1809
 []\TU/lmtt/m/n/10 ## 6    3 - 4    -0.06 0.206 16  -0.291       1.0000        0
 .9911[] 
  []
 
-[37] [38] [39] [40
+[37]
+Overfull \hbox (30.65009pt too wide) in paragraph at lines 1866--1883
+[][] 
+ []
+
+[38] [39] [40] [41] [42
 
 ]
 Chapter 3.
-[41] [42
-
-]
-Chapter 4.
 [43] [44
 
 ]
-Chapter 5.
+Chapter 4.
 [45] [46
 
 ]
-Chapter 6.
+Chapter 5.
 [47] [48
 
 ]
-Chapter 7.
+Chapter 6.
 [49] [50
 
 ]
+Chapter 7.
+[51] [52
+
+]
 Chapter 8.
-(./bookdown_math3014-6027.bbl [51] [52
+(./bookdown_math3014-6027.bbl [53] [54
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1912.
-[53]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1912.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2041.
+[55]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2041.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1912.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1912.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1912.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2041.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2041.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2041.
  ) 
 Here is how much of TeX's memory you used:
- 26761 strings out of 492970
- 487896 string characters out of 6133939
- 715545 words of memory out of 5000000
- 30436 multiletter control sequences out of 15000+600000
+ 26763 strings out of 492970
+ 487913 string characters out of 6133939
+ 717730 words of memory out of 5000000
+ 30438 multiletter control sequences out of 15000+600000
  544633 words of font info for 137 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 58i,17n,117p,10417b,538s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 58i,17n,117p,10417b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown_math3014-6027.pdf (53 pages).
+Output written on bookdown_math3014-6027.pdf (55 pages).
