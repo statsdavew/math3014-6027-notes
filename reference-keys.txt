@@ -26,6 +26,7 @@ eq:rne
 eq:crd-rne
 eq:crd-irne
 def:contrast
+eq:crd-s2
 tab:one-way-analysis
 tab:nap-black
 intro
