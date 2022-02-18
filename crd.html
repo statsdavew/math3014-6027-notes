@@ -932,7 +932,7 @@ As a reminder, the data from the experiment is as follows.</p>
 </tr>
 </tbody>
 </table>
-<p>Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (<code>2 * (1 - pt(abs(t.ratio), 16))</code>). For Bonferroni, we simply multiply these p-values by <span class="math inline">\({t \choose 2} = 6\)</span>, and then take the minimum of this value and 1. For the Tukey method, we use <code>ptukey(abs(t.ratio) * sqrt(2), 4, 16)</code> (see <code>?ptukey</code>).</p>
+<p>Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (<code>2 * (1 - pt(abs(t.ratio), 16))</code>). For Bonferroni, we simply multiply these p-values by <span class="math inline">\({t \choose 2} = 6\)</span>, and then take the minimum of this value and 1. For the Tukey method, we use <code>1 - ptukey(abs(t.ratio) * sqrt(2), 4, 16)</code> (see <code>?ptukey</code>).</p>
 Alternatively, to test each hypothesis at the 5% level, we can compare each t.ratio to (i) <code>qt(0.975, 16) = 2.12</code> (unadjusted); (ii) <code>qt(1 - 0.025/6, 16) = 3.008</code> (Bonferroni); or (iii) <code>qtukey(0.95, 4, 16) / sqrt(2) = 2.861</code>.
 </details>
 <ol start="2" style="list-style-type: decimal">
