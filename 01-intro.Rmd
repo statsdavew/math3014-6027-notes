@@ -230,7 +230,7 @@ For estimating the difference between treatments, we are interested in
 \end{align*}
 as $x_j=\pm 1$, therefore $x_j^2=1$ for all $j=1,\ldots,n$, and hence $\sum x_j^2=n$.
 
-To achieve the most precise estimator, we need to minimise $\textrm{Var}(\hat{\beta}_{1})$ or equivalently minimise $|\sum x_j|$. This goal can achieve this through the choice of $x_{1},\dots,x_{n}$:
+To achieve the most precise estimator, we need to minimise $\textrm{Var}(\hat{\beta}_{1})$ or equivalently minimise $|\sum x_j|$. This goal can be achieved through the choice of $x_{1},\dots,x_{n}$:
 
 - as each $x_j$ can only take one of two values, -1 or +1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
 - call these $n_{1}$ and $n_{2}$ respectively, with $n_{1}+n_{2}=n$

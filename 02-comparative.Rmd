@@ -43,14 +43,14 @@ y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldot
 
 where $y_{ij}$ is the response from the $j$th application of treatment $i$, $\mu$ is a constant parameter, $\tau_i$ is the effect of the $i$th treatment, and $\varepsilon_{ij}$ is the random individual effect from each experimental unit with $E(\varepsilon_{ij})$ and $\mathrm{Var}(\varepsilon_{ij}) = \sigma^2$. All random errors are assumed independent and here we also assume $\varepsilon_{ij} \sim N(0, \sigma^2)$.
 
-Model \@ref(eq:utm) assumes that each treatment can be randomly allocated to one of the $n$ experimental units, and that this allocation is independent of the allocation of all the other treatments.
+Model \@ref(eq:utm) assumes that each treatment can be randomly allocated to one of the $n$ experimental units, and that the response observed is independent of the allocation of all the other treatments (the stable unit treatment value assumption or SUTVA).
 
 Why is this model appropriate and commonly used? The expected response from the application of the $i$th treatment is
 
 $$
 E(y_{ij}) = \mu + \tau_i\,.
 $$
-The parameter $\mu$ can be thought of as representing the impact of many different features particular to **this** experiment, and $\tau_i$ is the deviation due to applying treatment $i$. From the applicable of two different hypothetical experiments, A and B, the expected response from treatment $i$ may be different due to a different overall mean. From experiment A:
+The parameter $\mu$ can be thought of as representing the impact of many different features particular to **this** experiment but common to all units, and $\tau_i$ is the deviation due to applying treatment $i$. From the applicable of two different hypothetical experiments, A and B, the expected response from treatment $i$ may be different due to a different overall mean. From experiment A:
 
 $$
 E(y_{ij}) = \mu_{\mathrm{A}} + \tau_i\,.
@@ -73,33 +73,33 @@ is constant across different experiments. This concept of **comparison** underpi
 In matrix form, we can write model \@ref(eq:utm) as
 
 $$
-\by = X_1\mu + X_2\btau + \bvarepsilon\,,
+\bY = X_1\mu + X_2\btau + \bvarepsilon\,,
 $$
 where $X_1 = \boldsymbol{1}_n$, the $n$-vector with every entry equal to one, 
 
 $$
-X_2 = \begin{bmatrix}
+X_2 = \bigoplus_{i = 1}^t \boldsymbol{1}_{n_i} = \begin{bmatrix}
 \boldsymbol{1}_{n_1} & \boldsymbol{0}_{n_1} & \cdots &  \boldsymbol{0}_{n_1} \\
 \boldsymbol{0}_{n_2} & \boldsymbol{1}_{n_2} & \cdots &  \boldsymbol{0}_{n_2} \\
 \vdots & & \ddots & \vdots \\
 \boldsymbol{0}_{n_t} & \boldsymbol{0}_{n_t} & \cdots &  \boldsymbol{1}_{n_t} \\
 \end{bmatrix}\,,
 $$
-with $\boldsymbol{0}_{n_i}$ is the $n_i$-vector with every entry equal to zero, $\btau = [\tau_1, \ldots, \tau_t]^{\mathrm{T}}$ and $\bvarepsilon = [\varepsilon_{11}, \ldots, \varepsilon_{tn_t}]^{\mathrm{T}}$.
+with $\bigoplus$ denoting "direct sum", $\boldsymbol{0}_{n_i}$ is the $n_i$-vector with every entry equal to zero, $\btau = [\tau_1, \ldots, \tau_t]^{\mathrm{T}}$ and $\bvarepsilon = [\varepsilon_{11}, \ldots, \varepsilon_{tn_t}]^{\mathrm{T}}$.
 
 Why are we partitioning the model? Going back to our discussion of the role of $\mu$ and $\tau_i$, it is clear that we not interested in estimating $\mu$, which represents an experiment-specific contribution to the expected mean. Our only interest is in estimating the (differences between the) $\tau_i$. Hence, we can treat $\mu$ as a nuisance parameter.
 
 If we define $X = [X_1\, \vert\, X_2]$ and $\bbeta^{\mathrm{T}} = [\mu \vert \btau^{\mathrm{T}}]$, we can write the usual least squares equations
 
 \begin{equation}
-X^{\mathrm{T}}X\hat{\bbeta} = X^{\mathrm{T}}\by
+X^{\mathrm{T}}X\hat{\bbeta} = X^{\mathrm{T}}\bY
 (\#eq:crd-ls)
 \end{equation}
 as a system of two matrix equations
 
 \begin{align*}
-X_1^{\mathrm{T}}X_1\hat{\mu} + X_1^{\mathrm{T}}X_2\hat{\btau} & = X_1^{\mathrm{T}}\by \\
-X_2^{\mathrm{T}}X_1\hat{\mu} + X_2^{\mathrm{T}}X_2\hat{\btau} & = X_2^{\mathrm{T}}\by\,. \\
+X_1^{\mathrm{T}}X_1\hat{\mu} + X_1^{\mathrm{T}}X_2\hat{\btau} & = X_1^{\mathrm{T}}\bY \\
+X_2^{\mathrm{T}}X_1\hat{\mu} + X_2^{\mathrm{T}}X_2\hat{\btau} & = X_2^{\mathrm{T}}\bY\,. \\
 \end{align*}
 
 Assuming $(X_1^{\mathrm{T}}X_1)^{-1}$ exists, which it does in this case, we can pre-multiply the first of these equations by $X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}$ and subtract it from the second equation to obtain
@@ -107,19 +107,19 @@ Assuming $(X_1^{\mathrm{T}}X_1)^{-1}$ exists, which it does in this case, we can
 \begin{align*}
 X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_1\hat{\mu} 
 & + X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_2\hat{\btau} \\
-& = X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]\by\,.
+& = X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]\bY\,.
 \end{align*}
 
 Writing $H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}$, we obtain
 
 \begin{equation}
-X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
+X_2^{\mathrm{T}}[I_n - H_1]X_1\hat{\mu} + X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\bY\,.
 (\#eq:almost-reduced)
 \end{equation}
 The matrix $H_1$ is a "hat" matrix for a linear model containing only the term $\mu$, and hence $H_1X_1 = X_1$ (see MATH2010 or STAT6123). Hence the first term in \@ref(eq:almost-reduced) is zero, and we obtain the **reduced normal equations** for $\btau$:
 
 \begin{equation}
-X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\by\,.
+X_2^{\mathrm{T}}[I_n - H_1]X_2\hat{\btau} = X_2^{\mathrm{T}}[I_n - H_1]\bY\,.
 (\#eq:crd-red-normal)
 \end{equation}
 
@@ -133,11 +133,11 @@ $$
 then we can rewrite equation \@ref(eq:crd-red-normal) as
 
 \begin{equation}
-X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\btau} = X_{2|1}^{\mathrm{T}}\by\,, 
+X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\btau} = X_{2|1}^{\mathrm{T}}\bY\,, 
 (\#eq:rne)
 \end{equation}
 
-which are the normal equations for a linear model with expectation $E(\by) = X_{2|1}\btau$.
+which are the normal equations for a linear model with expectation $E(\bY) = X_{2|1}\btau$.
 
 ## Reduced normal equations for the CRD
 
@@ -153,6 +153,12 @@ X_{2|1} & = (I_n - H_1)X_2 \\
 
 That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution^[If we recalled the material on "dummy" variables from MATH2010 or STAT6123, we would already have realised this.].
 
+Although \@ref(eq:rne), and hence, \@ref(eq:crd-ls), have no unique solution^[That is, for any two solutions $\tilde{\boldsymbol{\beta}}_1$ and $\tilde{\boldsymbol{\beta}}_2$, $X\tilde{\boldsymbol{\beta}}_1 = \tilde{\boldsymbol{\beta}}_1$.], it can be shown that both $\widehat{X_{2|1}\boldsymbol{\tau}}$ and $\widehat{X\boldsymbol{\beta}}$ have unique solutions. Hence fitted values $\hat{\bY} = \widehat{X\boldsymbol{\beta}}$ and the residual sum of squares
+
+$$
+RSS = \left(\bY - \widehat{X\boldsymbol{\beta}}\right)^{\mathrm{T}}\left(\bY - \widehat{X\boldsymbol{\beta}}\right)
+$$
+are both uniquely defined for any solution to \@ref(eq:crd-ls). That is, every solution to the normal equations leads to the same fitted values and residual sum of squares.
 
 In MATH2010 and STAT6123 we fitted models with categorical variables by defining a set of dummy variables and estimating a reduced model. Here, we will take a slightly different approach and study which combinations of parameters from \@ref(eq:utm) are estimable, and in particular which linear combinations of the treatment parameters $\tau_i$ we can estimate. 
 
@@ -168,7 +174,7 @@ X^{\mathrm{T}}_{2|1}X_{2|1} & = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 where $\boldsymbol{n}^{\mathrm{T}} = (n_1, \ldots, n_t)$. Hence, the reduced normal equations become
 
 \begin{align}
-\left[\mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}^{\mathrm{T}}\boldsymbol{n}\right]\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\by - \frac{1}{n}X_2^{\mathrm{T}}J_n\by \\
+\left[\mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\right]\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\by - \frac{1}{n}X_2^{\mathrm{T}}J_n\bY \\
 & = X_2^{\mathrm{T}}\by - \boldsymbol{n}\bar{y}_{..}\,,
 (\#eq:crd-rne)
 \end{align}
@@ -257,7 +263,7 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 
 is the estimate of $\sigma^2$.
  
- - the hypothesis $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$ against the two-sided alternative $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0$ is rejected using a test of with confidence level $1-\alpha/2$ if 
+ - the hypothesis $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$ against the two-sided alternative $H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0$ is rejected using a test of with confidence level $1-\alpha/2$ if 
  
  $$
  \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
@@ -292,7 +298,7 @@ Clearly, we could directly calculate, and then compare, mean responses for each 
     ```
 Here, we have first fitted the linear model object. The `lm` function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5% significance level,  
 
-    The choice of dummy variables in the linear model is unimportant; any set could be used^[Although $\mu$ and $\boldsymbol{\tau}$ are not uniquely estimable, fitted values $\hat{y}_i = \hat{\mu} + \hat{\tau}_i$ **are**, and hence it does not matter which dummy variables we use in `lm`.], as in the next line we use the `emmeans` function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor `operator` (which specifies our treatments in this experiment). Finally, the `pairs` command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using `pairwise.t.test`.
+    The choice of dummy variables in the linear model is unimportant; any set could be used^[Recall that although $\mu$ and $\boldsymbol{\tau}$ are not uniquely estimable, fitted values $\hat{y}_i = \hat{\mu} + \hat{\tau}_i$ **are**, and hence it does not matter which dummy variables we use in `lm`.], as in the next line we use the `emmeans` function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor `operator` (which specifies our treatments in this experiment). Finally, the `pairs` command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using `pairwise.t.test`.
 
 Our preferred approach is using method 2 (`lm` and `emmeans`), for four main reasons:
 
@@ -360,7 +366,7 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &    P\left
 
     Now, only one comparison is significant at an experiment-wise type I error rate of $\alpha = 0.05$ (operators 2 and 4).
 
-1. **Tukey's method**. An alternative approach that gives an exact experiment-wise error rate of $100\alpha$% compares the $t$ statistic to a critical value from the studentised range distribution^[Given two independent samples $u_1, \ldots, u_l$ and $v_1,\ldots,v_m$ from the same distribution, the studentised range distribution is the distribution of $\frac{R}{\sqrt{2}S}$, where $R = u_{max}-u_{min}$ is the range of the first sample, and $S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}$ be the sample standard deviation of the second sample.], given by $\frac{1}{\sqrt{2}}q_{t, n-t, 1-\frac{\alpha}{2}}$ with $q_{t, n-t, 1-\frac{\alpha}{2}}$ the $1-\frac{\alpha}{2}$ quantile from the studentised range distribution (available in `R` as `qtukey`). 
+1. **Tukey's method**. An alternative approach that gives an exact experiment-wise error rate of $100\alpha$% compares the $t$ statistic to a critical value from the studentised range distribution^[Given two independent samples $u_1, \ldots, u_l$ and $v_1,\ldots,v_m$ from the same distribution, the studentised range distribution is the distribution of $\frac{R}{\sqrt{2}S}$, where $R = u_{max}-u_{min}$ is the range of the first sample, and $S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}$ be the sample standard deviation of the second sample.], given by $\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}$ with $q_{t, n-t, 1-\alpha}$ the $1-\alpha$ quantile from the studentised range distribution (available in `R` as `qtukey`). 
 
     For Example \@ref(exm:one-way):
 
@@ -378,7 +384,164 @@ data.frame(transform(pairs.b)[, 1:5], Bonf.p.value = transform(pairs.b)[, 6], Tu
 ```
 
 Although the decision on which hypotheses to reject (comparson 2 - 4)  is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.
-  
+
+## Impact of design choices on estimation
+
+Recall from Section \@ref(contrast-crd) that the width of a confidence interval for a contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ is given by $2t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}$. The expectation of the square of this quantity is given by
+
+$$
+4t^2_{n-t, 1-\frac{\alpha}{2}}\sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+$$
+as $E(s^2) = \sigma^2$. It is intuitive that a good design should have small values of the square root of this quantity (divided by $2\sigma$),
+
+$$
+t_{n-t, 1-\frac{\alpha}{2}}\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
+$$
+which can be achieved either by increasing $n$, and hence reducing the size of the $t$-quantile, or for choice of the $n_i$ for a fixed $n$, i.e. through choice of replication of each treatment. 
+
+### Optimal treatment allocation
+
+It is quite common that although the total number, $n$, of runs in the experiment may be fixed, the number1 $n_1, n_2, \ldots, n_t$ applied to the different treatments is under the experimenter's control. Choosing $n_1, n_2$ subject to $n_1+n_2 = n$ was the first **optimal design** problem we encountered in Chapter \@ref(intro).
+
+Assume interest lies in estimating the set of $p$ contrasts $\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}$, with $\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})$. One useful measure of the overall quality of the estimators of these $p$ contrasts is the average variance, given by
+
+$$
+\sigma^2\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+$$
+So we will minimise this variance by allocating larger values of $n_i$ to the treatments with correspondingly larger values of the contrast coefficients $c_{li}$. Therefore an approach to optimal allocation is to choose $\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}$ so as to
+
+\begin{equation}
+\mbox{minimise} \quad \phi(\boldsymbol{n}) = \sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,\qquad \mbox{subject to} \quad \sum_{i=1}^tn_i = n\,.
+(\#eq:opt-all)
+\end{equation}
+
+This is a discrete optimisation problem (the $n_i$ are integers). It is usually easier to solve the relaxed problem, where we allow continuous $0\le n_i \le n$, and round the resulting solution to obtain integers. There is no guarantee that such a rounded allocation will actually be the optimal integer-valued solution, but it is usually fairly close.
+
+To solve the continuous version of \@ref(eq:opt-all) we will use the method of Lagrange mutliplers, where we define the function
+
+$$
+h(\boldsymbol{n}, \lambda) = \phi(\boldsymbol{n}) + \lambda\left(\sum_{i=1}^tn_i - n\right)\,,
+$$
+introducing the new scalar variable $\lambda$, and solve the set of $t+1$ equations:
+
+\begin{align*}
+\frac{\partial h}{\partial n_1} & = 0 \\
+\vdots & \\
+\frac{\partial h}{\partial n_t} & = 0 \\
+\frac{\partial h}{\partial \lambda} & = 0\,.
+\end{align*}
+
+In this case, we have
+
+\begin{equation}
+\frac{\partial h}{\partial n_i} = -\sum_{l=1}^pc_{li}^2/n_i^2 + \lambda = 0\,,\quad i=1,\ldots t,
+(\#eq:lm-ni)
+\end{equation}
+and
+$$
+\frac{\partial h}{\partial \lambda} = \sum_{i=1}^t n_i - n = 0\,.
+$$
+This last equation ensures $\sum_{i=1}^tn_i = n$. From the $t$ equations described by \@ref(eq:lm-ni), we get
+
+$$
+n_i \propto \sqrt{\sum_{l=1}^pc_{li}^2}
+$$
+We don't need to explicitly solve for $\lambda$ to find the normalising constant for each $n_i$. As we know $\sum_{i=1}^tn_i = n$, we obtain,
+
+\begin{equation}
+n_i = \frac{\sqrt{\sum_{l=1}^pc_{li}^2}}{\sum_{i=1}^t\sqrt{\sum_{l=1}^pc_{li}^2}}n\,.
+(\#eq:opt-ni)
+\end{equation}
+
+Let's return to Example \@ref(exm:one-way) and calculate the optimal allocations under two different sets of contrasts. First, we define an `R` function for calculating \@ref(eq:opt-ni).
+
+```{r opt-ni}
+opt_ni <- function(C, n) {
+  CtC <- t(C) %*% C
+  n * sqrt(diag(CtC)) / sum(sqrt(diag(CtC)))
+} 
+```
+Checking that the function `opt-ni` matches \@ref(eq:opt-ni) as left as an exercise.
+
+Consider two sets of contrasts:
+
+1. All pairwise comparisons between the four treatments
+\begin{align*}
+c_1 & = (-1, 1, 0, 0) \\
+c_2 & = (-1, 0, 1, 0) \\
+c_3 & = (-1, 0, 0, 1) \\
+c_4 & = (0, -1, 1, 0) \\
+c_5 & = (0, -1, 0, 1) \\
+c_6 & = (0, 0, -1, 1)\,.
+\end{align*}
+
+    Calculating \@ref(eq:opt-ni), we obtain
+
+    ```{r opt-pairwise}
+C <- matrix(
+  c(
+    -1, 1, 0, 0,
+    -1, 0, 1, 0,
+    -1, 0, 0, 1,
+    0, -1, 1, 0,
+    0, -1, 0, 1,
+    0, 0, -1, 1),
+  nrow = 6, byrow = T
+)
+opt_ni(C, 20)
+    ```
+    Hence confirming that equal replication of the treatments is optimal for minimising the average variance of estimators of the pairwise treatment differences.
+
+1. If operator 4 is new to the mill, it may be desired to test their output to the average output from the other three operators, using a contrast with coefficients $c = (1/3, 1/3, 1/3, -1)$. The allocation to minimise the variance of the corresponding estimator is given by:
+
+    ```{r opt-op4}
+    C <- matrix(
+      c(1/3, 1/3, 1/3, -1),
+      nrow = 1
+    )
+    opt_ni(C, 20)
+    ```
+
+    So the optimal allocation splits 10 units between operators 1-3, and allocates 10 units to operator 4. There is no exact integer rounding possible, so we will use $n_1 = 4$, $n_2=n_3 = 3$, $n_4 = 10$ and calculate the efficiency by comparing the variance of this allocation to that from the equally allocated design.
+
+    ```{r compare-allocations}
+    crd_var <- function(C, n) {
+      CtC <- t(C) %*% C
+      sum(diag(CtC) / n)
+    } 
+    n_equal <- rep(5, 4)
+    n_opt <- c(4, 3, 3, 10)
+    crd_var(C, n_opt) / crd_var(C, n_equal)
+    ```
+    So the efficiency of the equally allocated design for estimating this contrast is `r 100 * round(crd_var(C, n_opt) / crd_var(C, n_equal), 4)` %.
+
+### Overall size of the experiment
+
+We can also consider the complementary question: suppose the proportion of runs that is to be allocated to each treatment has been fixed in advance, what size of experiment should be performed to meet the objectives? That is, given a fixed proportion, $p_i$, of resource to be allocated to the $i$th treatment, so that $n_i = np_i$ units will be allocated to that treatment, what value of $n$ should be chosen?  
+
+One way of thinking about this question is to consider the ratio
+
+\begin{align*}
+\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}} & = \frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\frac{\sigma^2}{n} \sum_{i=1}^tc_i^2/p_i}} \\
+& = \sqrt{n}\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma}{\sqrt{\sum_{i=1}^tc_i^2/p_i}}\,,
+\end{align*}
+
+which is analogous to the test statistic for $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$. For a given value of the signal-to-noise ratio $d = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma$, we can choose $n$ to result in a specified value of $T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}$:
+
+$$
+n = T^2\frac{\sum_{i=1}^t c_i^2/p_i}{d^2}\,.
+$$
+Returning to Example \@ref(exm:one-way), assume are testing a single pairwise comparison and that we require $T = 3$, so that the null hypothesis would be comfortably rejected at the 5% level (cf 1.96 for a standard z-test). For equal allocation of the units to each treatment ($p_1 = \cdots = p_4 = 1/4$) and a variety of different values of the signal-to-noise ratio $d$, we obtained the following optimal experiment sizes: 
+
+```{r exp-size}
+opt_n <- function(cv, prop, snr, target) target ^ 2 * c(t(cv) %*% diag( 1 / prop) %*% cv) / snr ^ 2
+cv <- c(-1, 1, 0, 0)
+p <- rep(1/4, 4)
+snr <- c(0.5, 1, 1.5, 2, 2.5, 3)
+cbind('Signal-to-noise' = snr, 'n' = opt_n(cv, p, snr, 3))
+```
+So, for example,  to achieve $T = 3$ with a signal-to-noise ratio of $d=0.5$ requires $n=288$ runs. As would be expected, the number of runs required to achieve this value of $T$ decreases as the signal-to-noise ration increases. For $d=3$, only a very small experiment with $n=8$ runs is needed.
+
 ## Exercises
 
 1. 
@@ -441,7 +604,7 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
     i. The average response from each treatment is as follows: $\bar{y}_{A.}=66.10$ ($n_A=7$ patients), $\bar{y}_{B.}=65.75$ ($n_B=8$), $\bar{y}_{C.} = 62.63$ ($n_C=9$), and $\bar{y}_{D.}=63.85$ ($n_D=6$). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
     
 
-    i. In fact, $A$ and $B$ are brand-name drugs and $C$ and $D$ are generic drugs. Test the null hypothesis that brand-name and generic drugs have the same bioactivity.
+    i. In fact, $A$ and $B$ are brand-name drugs and $C$ and $D$ are generic drugs. Test the null hypothesis at the 5% level that brand-name and generic drugs have the same bioactivity.
     
 <details>
 <summary><b>Solution</b></summary>
@@ -463,11 +626,11 @@ i. For each difference, the test statistic has the form
     | Abs. difference |  0.35 | 3.47 | 2.25 | 3.12 | 1.9 | 1.22 |
     | Test statistic | 0.44 | 4.45 | 2.62 | 4.15 | 2.28 | 1.50 |
 
-    The Bonferroni critical value is $t_{26, 0.01/12} = `r qt(1 - 0.01/12, 26)`$. The Tukey critical value is $q_{4,26}/\sqrt{2} = `r qtukey(0.01, 4, 26) / sqrt(2)`$ (available `R` as `qtukey(0.01, 4, 26) / sqrt(2)`). Hence under both methods, bioactivity of drugs $A$ and $C$, and $B$ and $C$, are significantly different.
+    The Bonferroni critical value is $t_{26, 1-0.05/12} = `r qt(1 - 0.01/12, 26)`$. The Tukey critical value is $q_{4,26, 0.95}/\sqrt{2} = `r qtukey(0.95, 4, 26) / sqrt(2)`$ (available `R` as `qtukey(0.95, 4, 26) / sqrt(2)`). Hence under both methods, bioactivity of drugs $A$ and $C$, and $B$ and $C$, are significantly different.
 
 i. A suitable contrast has $\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)$, with $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = (\tau_A + \tau_B) / 2 - (\tau_C + \tau_D) / 2$ (the difference in average treatment effects). 
 
-    An estimate for this contrast is given by $(\bar{y}_{A.} + \bar{y}_{B.}) / 2 - \bar{y}_{C.} + \bar{y}_{D.}) / 2$, with variance
+    An estimate for this contrast is given by $(\bar{y}_{A.} + \bar{y}_{B.}) / 2 - (\bar{y}_{C.} + \bar{y}_{D.}) / 2$, with variance
 
     $$\mbox{Var}\left(\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{Y}_{D.})\right) = \frac{\sigma^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)\,.$$
 
@@ -475,9 +638,9 @@ i. A suitable contrast has $\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)$, with $\bol
 
     $$
 \frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
-$$
+    $$
 
-    The critical value is $t_{26, 0.01/2} = 2.78$. Hence, we can reject $H_0$ and conclude there is a difference between brand-name and generic drugs.
+    The critical value is $t_{26, 1-0.05/2} = `r qt(0.975, 26)`$. Hence, we can reject $H_0$ and conclude there is a difference between brand-name and generic drugs.
 
 </details>
 

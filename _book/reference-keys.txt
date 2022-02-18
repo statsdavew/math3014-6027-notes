@@ -17,6 +17,9 @@ eq:crd-rne
 eq:crd-irne
 eq:crd-s2
 tab:one-way-analysis
+eq:opt-all
+eq:lm-ni
+eq:opt-ni
 tab:nap-black
 intro
 motivation
@@ -38,6 +41,9 @@ contrasts
 contrast-crd
 r-crd
 multiple-comp
+impact-of-design-choices-on-estimation
+optimal-treatment-allocation
+overall-size-of-the-experiment
 exercises-1
 blocking
 factorial
