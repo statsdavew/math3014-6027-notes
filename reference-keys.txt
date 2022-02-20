@@ -32,6 +32,10 @@ eq:opt-all
 eq:lm-ni
 eq:opt-ni
 tab:nap-black
+fig:napblack-summary
+eq:linmod
+fig:residuals
+fig:normalplot
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -53,8 +57,8 @@ contrast-crd
 r-crd
 multiple-comp
 impact-of-design-choices-on-estimation
-optimal-treatment-allocation
-overall-size-of-the-experiment
+crd-opt-all
+crd-size
 exercises-1
 blocking
 factorial
