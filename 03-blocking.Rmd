@@ -1,1 +1,62 @@
 # Blocking {#blocking}
+
+The completely randomised design (CRD) works well when there is sufficient homogeneous experimental units to perform the whole experiment under the same, or very similar, conditions and there are no restrictions on the randomisation of treatments to units. The only systematic (non-random) differences in the observed responses result from differences between the treatments. While such designs are commonly and successfully used, especially in smaller experiments, their application can often be unrealistic or impractical in many settings.
+
+A common way in which the CRD fails is a lack of sufficiently similar experimental units. If there are systemtic differences between different batches, or **blocks** of units, these differences should be taken into account in both the allocation of treatments to units and the modelling of the resultant data. Otherwise, block-to-block differences may bias treatment comparisons and/or inflate our estimate of the background variability and hence reduce our ability to detect important treatment effects.
+
+::: {.example #blocks-bars}
+Steel bar experiment [@Morris2011, ch. 4]
+
+@KSN2005 described an experiment to assess the strength of steel reinforcement bars from $t=4$ coatings^[Thr four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.] (treatments). In total $n=32$ different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g. environmental or operational), these different test sets were assumed to form $b=8$ blocks of size $k=4$. The data are shown in Table \@ref(tab:bar-expt-data) below.
+
+```{r bar-expt-data, warning = F}
+bar <- data.frame(coating = rep(factor(1:4), 8),
+                   block = rep(factor(1:8), rep(4, 8)), 
+                   strength = c(136, 147, 138, 149, 136, 143, 122, 153, 150, 142, 131, 136,
+                                   155, 148, 130, 129, 145, 149, 136, 139, 150, 149, 147, 144,
+                                   147, 150, 125, 140, 148, 149, 118, 145)
+                     )
+knitr::kable(
+ tidyr::pivot_wider(bar, names_from = coating, values_from = strength),
+ col.names = c("Block", paste("Coating", 1:4)),
+ caption = "Steel bar experiment: tensile strength values (kliograms per square inch, ksi) from steel bars with four different coatings."
+)
+```
+Here, each block has size 4, which is equal to the number of treatments in the experiment, and each treatment is applied in each block. This is an example of a **randomised complete block design**.
+
+We can study the data graphically, plotting by treatment and by block.
+
+```{r bar-expt-boxplots, fig.show = 'hold', fig.align = 'center', fig.cap = 'Steel bar experiment: distributions of tensile strength (ksi) from the eight blocks (top) and the four coatings (bottom).'}
+boxplot(strength ~ block, data = bar)
+boxplot(strength ~ coating, data = bar)
+```
+The box plots within each plot in Figure \@ref(fig:bar-expt-boxplots) are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This **balance** makes our analysis more straighforward. By eye, it appears here there may be differences between both coating 3 and the other three coatings.
+:::
+
+::: {.example #blocks-tyres}
+Tyre experiment [@WH2009, ch. 3]
+
+@Davies1954, p.200, examined the effect of $t=4$ different rubber compounds (treatments) on the lifetime of a tyre. Each tyre is only large enough to split into $k=3$ segments whilst still containing a representative amount of each compound. When tested, each tyre is subjected to the same road conditions, and hence is treated as a block. A design with $b=4$ blocks was used, as displayed in Table \@ref(tab:tyre-expt-data).
+
+```{r tyre-expt-data, warning = F}
+tyre <- data.frame(compound = as.factor(c(1, 2, 3, 1, 2, 4, 1, 3, 4, 2, 3, 4)),
+                   block = rep(factor(1:4), rep(3, 4)), 
+                   wear = c(238, 238, 279, 196, 213, 308, 254, 334, 367, 312, 421, 412)
+                     )
+options(knitr.kable.NA = '')
+knitr::kable(
+ tidyr::pivot_wider(tyre, names_from = compound, values_from = wear),
+ col.names = c("Block", paste("Compound", 1:4)),
+ caption = "Tyre experiment: wear measurements from tires made with four different rubber compounds."
+)
+```
+Here, each block has size $k=3$, which is smaller than the number of treatments ($t=4$). Hence, each block cannot contain an application of each treatment. This is an example of an **incomplete block design**.
+
+Graphical exploration of the data is a little more problematic in this example. As each treatment does not occur in each block, box plots such as Figure \@ref(fig:tyre-expt-boxplots) are not as informative. Do compounds three and four have higher average wear because they were the only compounds to both occur in blocks 3 and 4? Or do blocks 3 and 4 have a higher mean because they contain both compounds 3 and 4? The design cannot help us entirely disentangle the impact of blocks and treatments^[This is our first example of (partial) confounding, which we will see again in Chapters \@ref(block-factorial) and \@ref(fractional-factorial)]. In our modelling, we will assume variation should first be described by blocks (which are generally fixed aspects of the experiment) and then treatments (which are more directly under the experimenter's control).
+
+
+```{r tyre-expt-boxplots, fig.show = 'hold', fig.align = 'center', fig.cap = 'Tyre experiment: distributions of wear from the four blocks (top) and the four compounds (bottom).'}
+boxplot(wear ~ block, data = tyre)
+boxplot(wear ~ compound, data = tyre)
+```
+:::

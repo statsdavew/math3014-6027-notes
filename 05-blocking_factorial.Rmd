@@ -1,1 +1,1 @@
-# Blocking in factorial designs
+# Blocking in factorial designs {#block-factorial}

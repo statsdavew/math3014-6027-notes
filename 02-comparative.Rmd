@@ -24,7 +24,7 @@ The experiment has one factor (operator) with four levels (sometimes called a on
 
 We can informally compare the responses from these four treatments graphically.
 
-```{r pulp-boxplot, fig.align = 'center', fig.cap = 'Pulp experiments: distributions of reflectance from the four operators.'}
+```{r pulp-boxplot, fig.align = 'center', fig.cap = 'Pulp experiment: distributions of reflectance from the four operators.'}
 boxplot(reflectance ~ operator, data = pulp)
 ```
 Figure \@ref(fig:pulp-boxplot) shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
