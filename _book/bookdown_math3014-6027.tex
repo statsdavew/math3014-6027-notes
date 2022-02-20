@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-02-18}
+\date{2022-02-20}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Milk first"
-## [6] "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Milk first" "Milk first" "Milk first"
+## [6] "Tea first"  "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1832,10 +1832,10 @@ t_{n-t, 1-\frac{\alpha}{2}}\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
 \]
 which can be achieved either by increasing \(n\), and hence reducing the size of the \(t\)-quantile, or for choice of the \(n_i\) for a fixed \(n\), i.e.~through choice of replication of each treatment.
 
-\hypertarget{optimal-treatment-allocation}{%
-\subsection{Optimal treatment allocation}\label{optimal-treatment-allocation}}
+\hypertarget{crd-opt-all}{%
+\subsection{Optimal treatment allocation}\label{crd-opt-all}}
 
-It is quite common that although the total number, \(n\), of runs in the experiment may be fixed, the number1 \(n_1, n_2, \ldots, n_t\) applied to the different treatments is under the experimenter's control. Choosing \(n_1, n_2\) subject to \(n_1+n_2 = n\) was the first \textbf{optimal design} problem we encountered in Chapter \ref{intro}.
+It is quite common that although the total number, \(n\), of runs in the experiment may be fixed, the number \(n_1, n_2, \ldots, n_t\) applied to the different treatments is under the experimenter's control. Choosing \(n_1, n_2\) subject to \(n_1+n_2 = n\) was the first \textbf{optimal design} problem we encountered in Chapter \ref{intro}.
 
 Assume interest lies in estimating the set of \(p\) contrasts \(\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}\), with \(\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})\). One useful measure of the overall quality of the estimators of these \(p\) contrasts is the average variance, given by
 
@@ -1898,7 +1898,7 @@ Let's return to Example \ref{exm:one-way} and calculate the optimal allocations 
 \end{Highlighting}
 \end{Shaded}
 
-Checking that the function \texttt{opt-ni} matches \eqref{eq:opt-ni} as left as an exercise.
+Checking that the function \texttt{opt-ni} matches \eqref{eq:opt-ni} is left as an exercise.
 
 Consider two sets of contrasts:
 
@@ -1976,32 +1976,32 @@ Consider two sets of contrasts:
   So the efficiency of the equally allocated design for estimating this contrast is 75.69 \%.
 \end{enumerate}
 
-\hypertarget{overall-size-of-the-experiment}{%
-\subsection{Overall size of the experiment}\label{overall-size-of-the-experiment}}
+\hypertarget{crd-size}{%
+\subsection{Overall size of the experiment}\label{crd-size}}
 
-We can also consider the complementary question: suppose the proportion of runs that is to be allocated to each treatment has been fixed in advance, what size of experiment should be performed to meet the objectives? That is, given a fixed proportion, \(p_i\), of resource to be allocated to the \(i\)th treatment, so that \(n_i = np_i\) units will be allocated to that treatment, what value of \(n\) should be chosen?
+We can also consider the complementary question: suppose the proportion of runs that is to be allocated to each treatment has been fixed in advance, what size of experiment should be performed to meet the objectives? That is, given a fixed proportion, \(w_i\), of resource to be allocated to the \(i\)th treatment, so that \(n_i = nw_i\) units will be allocated to that treatment, what value of \(n\) should be chosen?
 
 One way of thinking about this question is to consider the ratio
 
 \begin{align*}
-\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}} & = \frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\frac{\sigma^2}{n} \sum_{i=1}^tc_i^2/p_i}} \\
-& = \sqrt{n}\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma}{\sqrt{\sum_{i=1}^tc_i^2/p_i}}\,,
+\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}} & = \frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\frac{\sigma^2}{n} \sum_{i=1}^tc_i^2/w_i}} \\
+& = \sqrt{n}\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma}{\sqrt{\sum_{i=1}^tc_i^2/w_i}}\,,
 \end{align*}
 
 which is analogous to the test statistic for \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\). For a given value of the signal-to-noise ratio \(d = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma\), we can choose \(n\) to result in a specified value of \(T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}\):
 
 \[
-n = T^2\frac{\sum_{i=1}^t c_i^2/p_i}{d^2}\,.
+n = T^2\frac{\sum_{i=1}^t c_i^2/w_i}{d^2}\,.
 \]
-Returning to Example \ref{exm:one-way}, assume are testing a single pairwise comparison and that we require \(T = 3\), so that the null hypothesis would be comfortably rejected at the 5\% level (cf 1.96 for a standard z-test). For equal allocation of the units to each treatment (\(p_1 = \cdots = p_4 = 1/4\)) and a variety of different values of the signal-to-noise ratio \(d\), we obtained the following optimal experiment sizes:
+Returning to Example \ref{exm:one-way}, assume are testing a single pairwise comparison and that we require \(T = 3\), so that the null hypothesis would be comfortably rejected at the 5\% level (cf 1.96 for a standard z-test). For equal allocation of the units to each treatment (\(w_1 = \cdots = w_4 = 1/4\)) and a variety of different values of the signal-to-noise ratio \(d\), we obtained the following optimal experiment sizes:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{opt\_n }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(cv, prop, snr, target) target }\SpecialCharTok{\^{}} \DecValTok{2} \SpecialCharTok{*} \FunctionTok{c}\NormalTok{(}\FunctionTok{t}\NormalTok{(cv) }\SpecialCharTok{\%*\%} \FunctionTok{diag}\NormalTok{( }\DecValTok{1} \SpecialCharTok{/}\NormalTok{ prop) }\SpecialCharTok{\%*\%}\NormalTok{ cv) }\SpecialCharTok{/}\NormalTok{ snr }\SpecialCharTok{\^{}} \DecValTok{2}
 \NormalTok{cv }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)}
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\NormalTok{w }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{)}
 \NormalTok{snr }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{2.5}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\FunctionTok{cbind}\NormalTok{(}\StringTok{\textquotesingle{}Signal{-}to{-}noise\textquotesingle{}} \OtherTok{=}\NormalTok{ snr, }\StringTok{\textquotesingle{}n\textquotesingle{}} \OtherTok{=} \FunctionTok{opt\_n}\NormalTok{(cv, p, snr, }\DecValTok{3}\NormalTok{))}
+\FunctionTok{cbind}\NormalTok{(}\StringTok{\textquotesingle{}Signal{-}to{-}noise\textquotesingle{}} \OtherTok{=}\NormalTok{ snr, }\StringTok{\textquotesingle{}n\textquotesingle{}} \OtherTok{=} \FunctionTok{opt\_n}\NormalTok{(cv, w, snr, }\DecValTok{3}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2052,7 +2052,7 @@ Operator 1 & Operator 2 & Operator 3 & Operator 4\\
 \hline
 \end{tabular}
 
-The mean response from each treatment is given by
+The mean response, and variance, from each treatment is given by
 
 \begin{tabular}{l|r|r|r}
 \hline
@@ -2088,7 +2088,7 @@ contrast & estimate & SE & df & t.ratio & unadjust.p.value & Bonferroni & Tukey\
 \hline
 \end{tabular}
 
-Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (\texttt{2\ *\ (1\ -\ pt(abs(t.ratio),\ 16))}). For Bonferroni, we simply multiply these p-values by \({t \choose 2} = 6\), and then take the minimum of this value and 1. For the Tukey method, we use \texttt{ptukey(abs(t.ratio)\ *\ sqrt(2),\ 4,\ 16)} (see \texttt{?ptukey}).
+Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (\texttt{2\ *\ (1\ -\ pt(abs(t.ratio),\ 16))}). For Bonferroni, we simply multiply these p-values by \({t \choose 2} = 6\), and then take the minimum of this value and 1. For the Tukey method, we use \texttt{1\ -\ ptukey(abs(t.ratio)\ *\ sqrt(2),\ 4,\ 16)} (see \texttt{?ptukey}).
 
 Alternatively, to test each hypothesis at the 5\% level, we can compare each t.ratio to (i) \texttt{qt(0.975,\ 16)\ =\ 2.12} (unadjusted); (ii) \texttt{qt(1\ -\ 0.025/6,\ 16)\ =\ 3.008} (Bonferroni); or (iii) \texttt{qtukey(0.95,\ 4,\ 16)\ /\ sqrt(2)\ =\ 2.861}.
 
@@ -2223,6 +2223,260 @@ Solution
   \item
     multiple comparisons of all pairwise differences between treatments.
   \end{enumerate}
+\end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Two of the simplest ways of examining the data are to calculate basic descriptive statistics, e.g.~the mean and standard deviation of the yield in each batch, and to plot the data in the different batches using a simple graphical display, e.g.~a stripchart of the yields in each batch. Notice that in both \texttt{aggregate} and \texttt{stripchart} we use the formula \texttt{yield $\sim$ batch}. This formula splits the data into groups defined by batch.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ batch, }\AttributeTok{data =}\NormalTok{ napblack, }\AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{c}\NormalTok{(}\AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(x), }
+                                                          \AttributeTok{st.dev =} \FunctionTok{sd}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   batch yield.mean yield.st.dev
+## 1     1      105.0         63.0
+## 2     2      128.0         33.3
+## 3     3      164.0         38.0
+## 4     4       98.0         68.7
+## 5     5      200.0         50.0
+## 6     6       70.0         31.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ batch, }\AttributeTok{data =}\NormalTok{ napblack)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{figure}
+
+   {\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/napblack-summary-1} 
+
+   }
+
+   \caption{Naphthalene black experiment: distributions of dye yields from the six batches.}\label{fig:napblack-summary}
+   \end{figure}
+
+  Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This \emph{within-group} variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e.~between the different batch means themselves. We can see from the stripcharts (Figure \ref{fig:napblack-summary}) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
+\item
+  When we fit linear models and compare them using analysis of variance (ANOVA), it enables us to decide whether the differences that seem to be evident in these simple plots and descriptive statistics are statistically significant or whether this kind of variation could have arisen by chance, even though there are no real differences between the batches.
+
+  An ANOVA table may be used to compare a linear model including differences between the batches to the null model. The linear model we will fit is a simple unit-treatment model:
+
+  \begin{equation}
+   Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
+   \label{eq:linmod}
+   \end{equation}
+
+  where \(Y_{ij}\) is the response obtained from the \(j\)th repetition of the \(i\)th batch, \(\mu\) is a constant term, \(\tau_i\) is the expected effect due to the observation being in the \(k\)th batch \((k=1,\ldots,5)\) and \(\varepsilon_{ij}\) are the random errors.
+
+  A test of the hypothesis that the group means are all equal is equivalent to a test that the \(\tau_i\) are all equal \((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6)\). We can use \texttt{lm} to fit model \eqref{eq:linmod}, and \texttt{anova} to test the hypothesis. Before we fit the linear model, we need to make sure \texttt{batch} has type \texttt{factor}\footnote{Factors are variables in \texttt{R} which take on a limited number of different values (e.g.~categorical variables). We need to define a categorical variable, like \texttt{batch} as a \texttt{factor} to ensure they are treated correctly by functions such as \texttt{lm}.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{napblack}\SpecialCharTok{$}\NormalTok{batch }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(napblack}\SpecialCharTok{$}\NormalTok{batch)}
+\NormalTok{napblack.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ batch, }\AttributeTok{data =}\NormalTok{ napblack)}
+\FunctionTok{anova}\NormalTok{(napblack.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: yield
+##           Df Sum Sq Mean Sq F value Pr(>F)   
+## batch      5  56358   11272     4.6 0.0044 **
+## Residuals 24  58830    2451                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+  The p-value of 0.004 indicates significant differences between at least two of the batch
+  means. Therefore \(H_0\) is rejected and a suitable multiple comparison test should be carried
+  out.
+\item
+  To perform our analysis, we have fitted a linear model. Therefore, we should use some plots of the residuals \(y_{ij} - \hat{y}_{ij}\) to check the model assumptions, particularly that the errors are independently and identically normally distributed. The function \texttt{rstandard} which produces residuals which have been standardised to have variance equal to 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{standres }\OtherTok{\textless{}{-}} \FunctionTok{rstandard}\NormalTok{(napblack.lm)}
+\NormalTok{fitted }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(napblack.lm)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{pty =} \StringTok{"s"}\NormalTok{)}
+\FunctionTok{with}\NormalTok{(napblack, \{}
+  \FunctionTok{plot}\NormalTok{(batch, standres, }\AttributeTok{xlab =} \StringTok{"Batch"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Standarised residuals"}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(fitted, standres, }\AttributeTok{xlab =} \StringTok{"Fitted value"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Standarised residuals"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{figure}
+
+   {\centering \includegraphics[width=1\linewidth]{bookdown_math3014-6027_files/figure-latex/residuals-1} 
+
+   }
+
+   \caption{Residuals against batch (left) and fitted values (right) for the linear model fit to the naphthalene black data.}\label{fig:residuals}
+   \end{figure}
+
+  The plots (Figure \ref{fig:residuals}) show no large standardised residuals (\(>2\) in absolute value\footnote{We would anticipate 95\% of the standardised residuals to lie in {[}-1.96, 1.96{]}, as they will follow a standard normal distribution if the model assumptions are correct.}). While there is some evidence of unequal variation across batches, there is no obvious pattern with respect to fitted values (e.g.~no ``funnelling'').
+
+  We can also plot the standardised residuals against the quantiles of a standard normal distribution to assess the assumption of normality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{pty =} \StringTok{"s"}\NormalTok{)}
+\FunctionTok{qqnorm}\NormalTok{(standres, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{figure}
+
+   {\centering \includegraphics[width=1\linewidth]{bookdown_math3014-6027_files/figure-latex/normalplot-1} 
+
+   }
+
+   \caption{Normal probability plot for the standardised residuals for the linear model fit to the naphthalene black data.}\label{fig:normalplot}
+   \end{figure}
+
+  The points lie quite well on a straight line (see Figure \ref{fig:normalplot}), suggesting the assumption of normality is valid. Overall, the residual plots look reasonable; some investigation of transformations to correct for non-constant variance could be investigated (see MATH2010/STAT6123).
+\item
+  When a significant difference between the treatments has been indicated, the next stage is to try to determine which treatments differ. In some cases a specific difference is of interest, a control versus a new treatment for instance, in which case that difference could now be
+  inspected. However, usually no specific differences are to be considered a priori, and \textit{any}
+  difference is of practical importance. A multiple comparison procedure is required to
+  investigate all possible differences, which takes account of the number of possible differences
+  available amongst the treatments (15 differences between the six batches here).
+
+  We will use Tukey's method for controlling the experiment-wise type I error rate, fixed here at 5\%, as implemented by \texttt{emmeans}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{napblack.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(napblack.lm, }\StringTok{\textquotesingle{}batch\textquotesingle{}}\NormalTok{)}
+\FunctionTok{pairs}\NormalTok{(napblack.emm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate   SE df t.ratio p.value
+##  1 - 2         -23 31.3 24  -0.730  0.9760
+##  1 - 3         -59 31.3 24  -1.880  0.4350
+##  1 - 4           7 31.3 24   0.220  1.0000
+##  1 - 5         -95 31.3 24  -3.030  0.0570
+##  1 - 6          35 31.3 24   1.120  0.8690
+##  2 - 3         -36 31.3 24  -1.150  0.8560
+##  2 - 4          30 31.3 24   0.960  0.9270
+##  2 - 5         -72 31.3 24  -2.300  0.2330
+##  2 - 6          58 31.3 24   1.850  0.4540
+##  3 - 4          66 31.3 24   2.110  0.3170
+##  3 - 5         -36 31.3 24  -1.150  0.8560
+##  3 - 6          94 31.3 24   3.000  0.0610
+##  4 - 5        -102 31.3 24  -3.260  0.0350
+##  4 - 6          28 31.3 24   0.890  0.9440
+##  5 - 6         130 31.3 24   4.150  0.0040
+## 
+## P value adjustment: tukey method for comparing a family of 6 estimates
+\end{verbatim}
+
+  We have two significant differences, between batches 4-5 and 5-6.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{subset}\NormalTok{(}\FunctionTok{transform}\NormalTok{(}\FunctionTok{pairs}\NormalTok{(napblack.emm)), p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    contrast estimate   SE df t.ratio p.value
+## 13    4 - 5     -102 31.3 24   -3.26 0.03482
+## 15    5 - 6      130 31.3 24    4.15 0.00429
+\end{verbatim}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \citep[Adapted from][]{Morris2011} Consider a completely randomised design with \(t = 5\) treatments and \(n=50\) units. The contrasts
+\end{enumerate}
+
+\[
+\tau_2 - \tau_1, \quad \tau_3 - \tau_2, \quad \tau_4 - \tau_3, \tau_5 - \tau_4
+\]
+
+are of primary interest to the experimenter.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Find an allocation of the 50 units to the 5 treatments, i.e.~find \(n_1, \ldots, n_5\), that minimises the average variance of the corresponding contrast estimators.
+\item
+  Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e.~to \(w_i = n_i/50\), find the value of \(n\) required to make the ratio \(\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)}} = 2\) assuming a signal-to-noise ratio of 1.
+\end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  We can use the function \texttt{opt\_ni} given in Section \ref{crd-opt-all}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{50}
+\NormalTok{C }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}
+  \FunctionTok{c}\NormalTok{(}
+  \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+  \DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+  \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+  \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}
+\NormalTok{  ), }\AttributeTok{nrow =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T}
+\NormalTok{)}
+\FunctionTok{opt\_ni}\NormalTok{(C, n) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  8.01 11.33 11.33 11.33  8.01
+\end{verbatim}
+
+  Rounding, we obtain a solution of the form \(n_1 = n_5 =8\), \(n_2 = n_4 = 11\) and \(n_3 = 12\). Any of \(n_2, n_3, n_4\) may be rounded up to 12 to form a design with the same variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nv }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\FunctionTok{crd\_var}\NormalTok{(C, nv }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\FunctionTok{crd\_var}\NormalTok{(C, nv }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\FunctionTok{crd\_var}\NormalTok{(C, nv }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.78
+## [1] 0.78
+## [1] 0.78
+\end{verbatim}
+\item
+  The optimal ratios for each treatment from part (a) are \(w_1 = w_5 = 0.16\) and \(w_2 = w_3 = w_4 = 0.227\). Fixing these, we can use code from Section \ref{crd-size} to find the required value of \(n\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv }\OtherTok{\textless{}{-}}\NormalTok{ C[}\DecValTok{1}\NormalTok{, ] }\CommentTok{\# we can pick any row of C, as all the row sums are the same}
+\FunctionTok{opt\_n}\NormalTok{(cv, }\FunctionTok{opt\_ni}\NormalTok{(C, n) }\SpecialCharTok{/}\NormalTok{ n, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\CommentTok{\# snr = 1, target = 2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 42.6
+\end{verbatim}
+
+  Hence, we need \(n = 43\).
 \end{enumerate}
 
 \hypertarget{blocking}{%

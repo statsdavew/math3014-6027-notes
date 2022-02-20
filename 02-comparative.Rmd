@@ -399,9 +399,9 @@ t_{n-t, 1-\frac{\alpha}{2}}\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
 $$
 which can be achieved either by increasing $n$, and hence reducing the size of the $t$-quantile, or for choice of the $n_i$ for a fixed $n$, i.e. through choice of replication of each treatment. 
 
-### Optimal treatment allocation
+### Optimal treatment allocation {#crd-opt-all}
 
-It is quite common that although the total number, $n$, of runs in the experiment may be fixed, the number1 $n_1, n_2, \ldots, n_t$ applied to the different treatments is under the experimenter's control. Choosing $n_1, n_2$ subject to $n_1+n_2 = n$ was the first **optimal design** problem we encountered in Chapter \@ref(intro).
+It is quite common that although the total number, $n$, of runs in the experiment may be fixed, the number $n_1, n_2, \ldots, n_t$ applied to the different treatments is under the experimenter's control. Choosing $n_1, n_2$ subject to $n_1+n_2 = n$ was the first **optimal design** problem we encountered in Chapter \@ref(intro).
 
 Assume interest lies in estimating the set of $p$ contrasts $\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}$, with $\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})$. One useful measure of the overall quality of the estimators of these $p$ contrasts is the average variance, given by
 
@@ -461,7 +461,7 @@ opt_ni <- function(C, n) {
   n * sqrt(diag(CtC)) / sum(sqrt(diag(CtC)))
 } 
 ```
-Checking that the function `opt-ni` matches \@ref(eq:opt-ni) as left as an exercise.
+Checking that the function `opt-ni` matches \@ref(eq:opt-ni) is left as an exercise.
 
 Consider two sets of contrasts:
 
@@ -515,30 +515,30 @@ opt_ni(C, 20)
     ```
     So the efficiency of the equally allocated design for estimating this contrast is `r 100 * round(crd_var(C, n_opt) / crd_var(C, n_equal), 4)` %.
 
-### Overall size of the experiment
+### Overall size of the experiment {#crd-size}
 
-We can also consider the complementary question: suppose the proportion of runs that is to be allocated to each treatment has been fixed in advance, what size of experiment should be performed to meet the objectives? That is, given a fixed proportion, $p_i$, of resource to be allocated to the $i$th treatment, so that $n_i = np_i$ units will be allocated to that treatment, what value of $n$ should be chosen?  
+We can also consider the complementary question: suppose the proportion of runs that is to be allocated to each treatment has been fixed in advance, what size of experiment should be performed to meet the objectives? That is, given a fixed proportion, $w_i$, of resource to be allocated to the $i$th treatment, so that $n_i = nw_i$ units will be allocated to that treatment, what value of $n$ should be chosen?  
 
 One way of thinking about this question is to consider the ratio
 
 \begin{align*}
-\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}} & = \frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\frac{\sigma^2}{n} \sum_{i=1}^tc_i^2/p_i}} \\
-& = \sqrt{n}\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma}{\sqrt{\sum_{i=1}^tc_i^2/p_i}}\,,
+\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}} & = \frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\frac{\sigma^2}{n} \sum_{i=1}^tc_i^2/w_i}} \\
+& = \sqrt{n}\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma}{\sqrt{\sum_{i=1}^tc_i^2/w_i}}\,,
 \end{align*}
 
 which is analogous to the test statistic for $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$. For a given value of the signal-to-noise ratio $d = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sigma$, we can choose $n$ to result in a specified value of $T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}| / \sqrt{\mbox{Var}(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}})}$:
 
 $$
-n = T^2\frac{\sum_{i=1}^t c_i^2/p_i}{d^2}\,.
+n = T^2\frac{\sum_{i=1}^t c_i^2/w_i}{d^2}\,.
 $$
-Returning to Example \@ref(exm:one-way), assume are testing a single pairwise comparison and that we require $T = 3$, so that the null hypothesis would be comfortably rejected at the 5% level (cf 1.96 for a standard z-test). For equal allocation of the units to each treatment ($p_1 = \cdots = p_4 = 1/4$) and a variety of different values of the signal-to-noise ratio $d$, we obtained the following optimal experiment sizes: 
+Returning to Example \@ref(exm:one-way), assume are testing a single pairwise comparison and that we require $T = 3$, so that the null hypothesis would be comfortably rejected at the 5% level (cf 1.96 for a standard z-test). For equal allocation of the units to each treatment ($w_1 = \cdots = w_4 = 1/4$) and a variety of different values of the signal-to-noise ratio $d$, we obtained the following optimal experiment sizes: 
 
 ```{r exp-size}
 opt_n <- function(cv, prop, snr, target) target ^ 2 * c(t(cv) %*% diag( 1 / prop) %*% cv) / snr ^ 2
 cv <- c(-1, 1, 0, 0)
-p <- rep(1/4, 4)
+w <- rep(1/4, 4)
 snr <- c(0.5, 1, 1.5, 2, 2.5, 3)
-cbind('Signal-to-noise' = snr, 'n' = opt_n(cv, p, snr, 3))
+cbind('Signal-to-noise' = snr, 'n' = opt_n(cv, w, snr, 3))
 ```
 So, for example,  to achieve $T = 3$ with a signal-to-noise ratio of $d=0.5$ requires $n=288$ runs. As would be expected, the number of runs required to achieve this value of $T$ decreases as the signal-to-noise ration increases. For $d=3$, only a very small experiment with $n=8$ runs is needed.
 
@@ -559,7 +559,7 @@ tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)[, -1]
 )
 ```
 
-The mean response from each treatment is given by
+The mean response, and variance, from each treatment is given by
 
 ```{r exercise-1-means, echo = F}
 ybars2 <- pulp |> 
@@ -668,38 +668,132 @@ i. A suitable contrast has $\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)$, with $\bol
     a. usual linear model diagnostics;
     b. multiple comparisons of all pairwise differences between treatments.
  
-<!--
-We start with a short digression to discuss the concept of a generalised inverse.
+<details>
+<summary><b>Solution</b></summary>
 
-## Generalised inverses
+a. Two of the simplest ways of examining the data are to calculate basic descriptive statistics, e.g. the mean and standard deviation of the yield in each batch, and to plot the data in the different batches using a simple graphical display, e.g. a stripchart of the yields in each batch. Notice that in both \texttt{aggregate} and \texttt{stripchart} we use the formula \texttt{yield $\sim$ batch}. This formula splits the data into groups defined by batch.
 
-A generalised inverse of a square, symmetric matrix $A$ is any matrix $A^{-}$ that satisfies
+    ```{r napblack-summary, fig.align = 'center', fig.cap = 'Naphthalene black experiment: distributions of dye yields from the six batches.'}
+    aggregate(yield ~ batch, data = napblack, FUN = function(x) c(mean = mean(x), 
+                                                              st.dev = sd(x)))
+    boxplot(yield ~ batch, data = napblack)
+    ```
+
+    Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This *within-group* variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e. between the different batch means themselves. We can see from the stripcharts (Figure \@ref(fig:napblack-summary)) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
+    
+a. When we fit linear models and compare them using analysis of variance (ANOVA), it enables us to decide whether the differences that seem to be evident in these simple plots and descriptive statistics are statistically significant or whether this kind of variation could have arisen by chance, even though there are no real differences between the batches.
+
+    An ANOVA table may be used to compare a linear model including differences between the batches to the null model. The linear model we will fit is a simple unit-treatment model:
+
+    \begin{equation}
+    Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
+    (\#eq:linmod)
+    \end{equation}
+
+    where $Y_{ij}$ is the response obtained from the $j$th repetition of the $i$th batch, $\mu$ is a constant term, $\tau_i$ is the expected effect due to the observation being in the $k$th batch $(k=1,\ldots,5)$ and $\varepsilon_{ij}$ are the random errors.
+ 
+    A test of the hypothesis that the group means are all equal is equivalent to a test that the  $\tau_i$ are all equal $(H_0:\,  \tau_1 = \tau_2 = \cdots = \tau_6)$. We can use `lm` to fit model \@ref(eq:linmod), and `anova` to test the hypothesis. Before we fit the linear model, we need to make sure `batch` has type `factor`^[Factors are variables in `R` which take on a limited number of different values (e.g. categorical variables). We need to define a categorical variable, like `batch` as a `factor` to ensure they are treated correctly by functions such as `lm`.].  
+ 
+    ```{r linmod}
+    napblack$batch <- as.factor(napblack$batch)
+    napblack.lm <- lm(yield ~ batch, data = napblack)
+    anova(napblack.lm)
+    ```
+
+    The p-value of `r round(anova(napblack.lm)$"Pr(>F)"[1], digits = 4)` indicates significant differences between at least two of the batch
+means. Therefore $H_0$ is rejected and a suitable multiple comparison test should be carried
+out.
+
+a. To perform our analysis, we have fitted a linear model. Therefore, we should use some plots of the residuals $y_{ij} - \hat{y}_{ij}$ to check the model assumptions, particularly that the errors are independently and identically normally distributed. The function `rstandard` which produces residuals which have been standardised to have variance equal to 1.
+
+    ```{r residuals, fig.show = "hold", fig.align = "center", fig.cap = "Residuals against batch (left) and fitted values (right) for the linear model fit to the naphthalene black data.", out.width = "100%"}
+standres <- rstandard(napblack.lm)
+fitted <- fitted(napblack.lm)
+par(mfrow = c(1, 2), pty = "s")
+with(napblack, {
+  plot(batch, standres, xlab = "Batch", ylab = "Standarised residuals")
+  plot(fitted, standres, xlab = "Fitted value", ylab = "Standarised residuals")
+})
+    ```
+    The plots (Figure \@ref(fig:residuals)) show no large standardised residuals ($>2$ in absolute value^[We would anticipate 95\% of the standardised residuals to lie in [-1.96, 1.96], as they will follow a standard normal distribution if the model assumptions are correct.]). While there is some evidence of unequal variation across batches, there is no obvious pattern with respect to fitted values (e.g. no "funnelling"). 
+
+    We can also plot the standardised residuals against the quantiles of a standard normal distribution to assess the assumption of normality.
+
+    ```{r normalplot, fig.align = "center", fig.cap = "Normal probability plot for the standardised residuals for the linear model fit to the naphthalene black data.", out.width = "100%"}
+par(pty = "s")
+qqnorm(standres, main = "")
+    ```
+
+    The points lie quite well on a straight line (see Figure \@ref(fig:normalplot)), suggesting the assumption of normality is valid. Overall, the residual plots look reasonable; some investigation of transformations to correct for non-constant variance could be investigated (see MATH2010/STAT6123).
+
+a. When a significant difference between the treatments has been indicated, the next stage is to try to determine which treatments differ.  In some cases a specific difference is of interest, a control versus a new treatment for instance, in which case that difference could now be
+inspected.  However, usually no specific differences are to be considered a priori, and \textit{any}
+difference is of practical importance.  A multiple comparison procedure is required to
+investigate all possible differences, which takes account of the number of possible differences
+available amongst the treatments (15 differences between the six batches here).
+
+    We will use Tukey's method for controlling the experiment-wise type I error rate, fixed here at 5%, as implemented by `emmeans`.
+    
+    ```{r nap-black-tukey}
+    napblack.emm <- emmeans::emmeans(napblack.lm, 'batch')
+    pairs(napblack.emm)
+    ```
+
+    We have two significant differences, between batches 4-5 and 5-6.
+
+    ```{r nap-black-sig}
+    subset(transform(pairs(napblack.emm)), p.value < 0.05)
+    ```
+
+</details>
+
+4. [Adapted from @Morris2011] Consider a completely randomised design with $t = 5$ treatments and $n=50$ units. The contrasts
 
 $$
-AA^{-}A = A\,.
+\tau_2 - \tau_1, \quad \tau_3 - \tau_2, \quad \tau_4 - \tau_3, \tau_5 - \tau_4
 $$
 
-If matrix $A$ is of full column rank, then there is a single generalised inverse $A^{-} = A^{-1}$, the usual inverse matrix. In other cases, there may be infinitely many choices for $A^{-}$.
+are of primary interest to the experimenter. 
 
-## Solutions to the reduced normal equations
+a. Find an allocation of the 50 units to the 5 treatments, i.e. find $n_1, \ldots, n_5$, that minimises the average variance of the corresponding contrast estimators.
 
-We can use a generalised inverse to generate solutions to \@ref(eq:rne) of the form:
+a. Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to $w_i = n_i/50$, find the value of $n$ required to make the ratio $\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)}} = 2$ assuming a signal-to-noise ratio of 1. 
 
-$$
-\hat{\btau} = (X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\by\,.
-$$
-Substituting this expression into \@ref(eq:rne), we obtain
+<details>
+<summary><b>Solution</b></summary>
 
-\begin{align*}
-X_{2|1}^{\mathrm{T}}X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}\by & = X_{2|1}^{\mathrm{T}}H_{2|1}\by \\ 
-& = X_{2|1}^{\mathrm{T}}\by\,,
-\end{align*}
+a. We can use the function `opt_ni` given in Section \@ref(crd-opt-all):
 
-where $H_{2|1} = X_{2|1}(X_{2|1}^{\mathrm{T}}X_{2|1})^{-}X_{2|1}^{\mathrm{T}}$ and $X_{2|1}^{\mathrm{T}}H_{2|1} = X^{\mathrm{T}}_{21}$^[This equality follows from $H$ being the projection matrix for the column space of $X$.].
+    ```{r opt-alloc}
+n <- 50
+C <- matrix(
+  c(
+  -1, 1, 0, 0, 0,
+  0, -1, 1, 0, 0,
+  0, 0, -1, 1, 0,
+  0, 0, 0, -1, 1
+  ), nrow = 4, byrow = T
+)
+opt_ni(C, n) 
+    ```
+ 
+    Rounding, we obtain a solution of the form $n_1 = n_5 =8$, $n_2 = n_4 = 11$ and $n_3 = 12$. Any of $n_2, n_3, n_4$ may be rounded up to 12 to form a design with the same variance.
 
-The reduced normal equations therefore take the form  
+    ```{r opt-round, results = "hold"}
+    nv <- c(8, 11, 11, 11, 8)
+    crd_var(C, nv + c(0, 1, 0, 0, 0))
+    crd_var(C, nv + c(0, 0, 1, 0, 0))
+    crd_var(C, nv + c(0, 0, 0, 1, 0))
+    ```
+ 
+a. The optimal ratios for each treatment from part (a) are $w_1 = w_5 = `r opt_ni(C, n)[1]/n`$ and $w_2 = w_3 = w_4 = `r opt_ni(C, n)[2]/n`$. Fixing these, we can use code from Section \@ref(crd-size) to find the required value of $n$.
 
-$$
-X_2^{\mathrm{T}}\left[I_n - \frac{1}{n}J_n\right]X_2\hat{\btau} = X_2^{\mathrm{T}}\left[I_n - \frac{1}{n}J_n\right]\by\,.
-$$
--->
+    ```{r crd-opt-n}
+    cv <- C[1, ] # we can pick any row of C, as all the row sums are the same
+    opt_n(cv, opt_ni(C, n) / n, 1, 2) # snr = 1, target = 2
+    ```
+
+    Hence, we need $n = `r ceiling(opt_n(cv, opt_ni(C, n) / n, 1, 2))`$. 
+ 
+</details> 
+

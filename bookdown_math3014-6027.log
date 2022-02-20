@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  18 FEB 2022 17:32
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  20 FEB 2022 13:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1350,7 +1350,7 @@ File: bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf Graphic
 <use bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf>
 [12] [13] [14] [15] [16] [17] [18]
 Overfull \hbox (52.75pt too wide) in paragraph at lines 908--908
- []\TU/lmtt/m/n/10 ## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "
+ []\TU/lmtt/m/n/10 ## [1] "Tea first"  "Milk first" "Milk first" "Milk first" "
 Milk first"[] 
  []
 
@@ -1528,48 +1528,70 @@ Overfull \hbox (30.65009pt too wide) in paragraph at lines 2073--2090
 [][] 
  []
 
-[43] [44] [45] [46]
+[43] [44] [45]
+File: bookdown_math3014-6027_files/figure-latex/napblack-summary-1.pdf Graphic 
+file (type pdf)
+<use bookdown_math3014-6027_files/figure-latex/napblack-summary-1.pdf>
+[46] [47]
+Overfull \hbox (21.25pt too wide) in paragraph at lines 2299--2299
+ []\TU/lmtt/m/n/10 ## Signif. codes:  0 []***[] 0.001 []**[] 0.01 []*[] 0.05 []
+.[] 0.1 [] [] 1[] 
+ []
+
+File: bookdown_math3014-6027_files/figure-latex/residuals-1.pdf Graphic file (t
+ype pdf)
+<use bookdown_math3014-6027_files/figure-latex/residuals-1.pdf>
+File: bookdown_math3014-6027_files/figure-latex/normalplot-1.pdf Graphic file (
+type pdf)
+<use bookdown_math3014-6027_files/figure-latex/normalplot-1.pdf>
+[48] [49]
+Overfull \hbox (63.25pt too wide) in paragraph at lines 2384--2384
+ []\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family o
+f 6 estimates[] 
+ []
+
+[50] [51] [52
+
+]
 Chapter 3.
-[47
-
-] [48
-
-]
-Chapter 4.
-[49] [50
-
-]
-Chapter 5.
-[51] [52
-
-]
-Chapter 6.
 [53] [54
 
 ]
-Chapter 7.
+Chapter 4.
 [55] [56
 
 ]
+Chapter 5.
+[57] [58
+
+]
+Chapter 6.
+[59] [60
+
+]
+Chapter 7.
+[61] [62
+
+]
 Chapter 8.
-(./bookdown_math3014-6027.bbl [57] [58
+(./bookdown_math3014-6027.bbl [63] [64
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2248.
-[59]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2248.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2502.
+[65]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2502.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2248.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2248.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2248.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2502.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2502.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2502.
  ) 
 Here is how much of TeX's memory you used:
- 26770 strings out of 492970
- 488054 string characters out of 6133939
- 721107 words of memory out of 5000000
- 30445 multiletter control sequences out of 15000+600000
+ 26786 strings out of 492970
+ 488756 string characters out of 6133939
+ 721528 words of memory out of 5000000
+ 30458 multiletter control sequences out of 15000+600000
  544633 words of font info for 137 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,17n,117p,10417b,538s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown_math3014-6027.pdf (59 pages).
+Output written on bookdown_math3014-6027.pdf (65 pages).
