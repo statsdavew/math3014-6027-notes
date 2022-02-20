@@ -169,8 +169,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
-<li class="chapter" data-level="5" data-path="blocking-in-factorial-designs.html"><a href="blocking-in-factorial-designs.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
-<li class="chapter" data-level="6" data-path="fractional-factorial-designs.html"><a href="fractional-factorial-designs.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
+<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
+<li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
 <li class="chapter" data-level="8" data-path="optimal-design-of-experiments.html"><a href="optimal-design-of-experiments.html"><i class="fa fa-check"></i><b>8</b> Optimal design of experiments</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -257,9 +257,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can informally compare the responses from these four treatments graphically.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1"></a><span class="kw">boxplot</span>(reflectance <span class="op">~</span><span class="st"> </span>operator, <span class="dt">data =</span> pulp)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pulp-boxplot"></span>
-<img src="bookdown_math3014-6027_files/figure-html/pulp-boxplot-1.png" alt="Pulp experiments: distributions of reflectance from the four operators." width="672" />
+<img src="bookdown_math3014-6027_files/figure-html/pulp-boxplot-1.png" alt="Pulp experiment: distributions of reflectance from the four operators." width="672" />
 <p class="caption">
-Figure 2.1: Pulp experiments: distributions of reflectance from the four operators.
+Figure 2.1: Pulp experiment: distributions of reflectance from the four operators.
 </p>
 </div>
 <p>Figure <a href="crd.html#fig:pulp-boxplot">2.1</a> shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.</p>

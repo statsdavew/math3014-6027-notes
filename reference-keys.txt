@@ -36,6 +36,12 @@ fig:napblack-summary
 eq:linmod
 fig:residuals
 fig:normalplot
+exm:blocks-bars
+tab:bar-expt-data
+fig:bar-expt-boxplots
+exm:blocks-tyres
+tab:tyre-expt-data
+fig:tyre-expt-boxplots
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -62,7 +68,7 @@ crd-size
 exercises-1
 blocking
 factorial
-blocking-in-factorial-designs
-fractional-factorial-designs
+block-factorial
+fractional-factorial
 response-surface-methodology
 optimal-design-of-experiments

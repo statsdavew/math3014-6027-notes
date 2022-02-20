@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Milk first" "Milk first"
-## [6] "Tea first"  "Tea first"  "Tea first"
+## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Tea first" 
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1259,7 +1259,7 @@ We can informally compare the responses from these four treatments graphically.
 
 }
 
-\caption{Pulp experiments: distributions of reflectance from the four operators.}\label{fig:pulp-boxplot}
+\caption{Pulp experiment: distributions of reflectance from the four operators.}\label{fig:pulp-boxplot}
 \end{figure}
 
 Figure \ref{fig:pulp-boxplot} shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
@@ -2482,14 +2482,155 @@ Solution
 \hypertarget{blocking}{%
 \chapter{Blocking}\label{blocking}}
 
+The completely randomised design (CRD) works well when there is sufficient homogeneous experimental units to perform the whole experiment under the same, or very similar, conditions and there are no restrictions on the randomisation of treatments to units. The only systematic (non-random) differences in the observed responses result from differences between the treatments. While such designs are commonly and successfully used, especially in smaller experiments, their application can often be unrealistic or impractical in many settings.
+
+A common way in which the CRD fails is a lack of sufficiently similar experimental units. If there are systemtic differences between different batches, or \textbf{blocks} of units, these differences should be taken into account in both the allocation of treatments to units and the modelling of the resultant data. Otherwise, block-to-block differences may bias treatment comparisons and/or inflate our estimate of the background variability and hence reduce our ability to detect important treatment effects.
+
+\begin{example}
+\protect\hypertarget{exm:blocks-bars}{}\label{exm:blocks-bars}
+
+Steel bar experiment \citep[ch.~4]{Morris2011}
+
+\citet{KSN2005} described an experiment to assess the strength of steel reinforcement bars from \(t=4\) coatings\footnote{Thr four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.} (treatments). In total \(n=32\) different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g.~environmental or operational), these different test sets were assumed to form \(b=8\) blocks of size \(k=4\). The data are shown in Table \ref{tab:bar-expt-data} below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{coating =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\DecValTok{8}\NormalTok{),}
+                   \AttributeTok{block =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{)), }
+                   \AttributeTok{strength =} \FunctionTok{c}\NormalTok{(}\DecValTok{136}\NormalTok{, }\DecValTok{147}\NormalTok{, }\DecValTok{138}\NormalTok{, }\DecValTok{149}\NormalTok{, }\DecValTok{136}\NormalTok{, }\DecValTok{143}\NormalTok{, }\DecValTok{122}\NormalTok{, }\DecValTok{153}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{142}\NormalTok{, }\DecValTok{131}\NormalTok{, }\DecValTok{136}\NormalTok{,}
+                                   \DecValTok{155}\NormalTok{, }\DecValTok{148}\NormalTok{, }\DecValTok{130}\NormalTok{, }\DecValTok{129}\NormalTok{, }\DecValTok{145}\NormalTok{, }\DecValTok{149}\NormalTok{, }\DecValTok{136}\NormalTok{, }\DecValTok{139}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{149}\NormalTok{, }\DecValTok{147}\NormalTok{, }\DecValTok{144}\NormalTok{,}
+                                   \DecValTok{147}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{125}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{148}\NormalTok{, }\DecValTok{149}\NormalTok{, }\DecValTok{118}\NormalTok{, }\DecValTok{145}\NormalTok{)}
+\NormalTok{                     )}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(bar, }\AttributeTok{names\_from =}\NormalTok{ coating, }\AttributeTok{values\_from =}\NormalTok{ strength),}
+ \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Block"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"Coating"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)),}
+ \AttributeTok{caption =} \StringTok{"Steel bar experiment: tensile strength values (kliograms per square inch, ksi) from steel bars with four different coatings."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:bar-expt-data}Steel bar experiment: tensile strength values (kliograms per square inch, ksi) from steel bars with four different coatings.}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+Block & Coating 1 & Coating 2 & Coating 3 & Coating 4\\
+\hline
+1 & 136 & 147 & 138 & 149\\
+\hline
+2 & 136 & 143 & 122 & 153\\
+\hline
+3 & 150 & 142 & 131 & 136\\
+\hline
+4 & 155 & 148 & 130 & 129\\
+\hline
+5 & 145 & 149 & 136 & 139\\
+\hline
+6 & 150 & 149 & 147 & 144\\
+\hline
+7 & 147 & 150 & 125 & 140\\
+\hline
+8 & 148 & 149 & 118 & 145\\
+\hline
+\end{tabular}
+\end{table}
+
+Here, each block has size 4, which is equal to the number of treatments in the experiment, and each treatment is applied in each block. This is an example of a \textbf{randomised complete block design}.
+
+We can study the data graphically, plotting by treatment and by block.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(strength }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block, }\AttributeTok{data =}\NormalTok{ bar)}
+\FunctionTok{boxplot}\NormalTok{(strength }\SpecialCharTok{\textasciitilde{}}\NormalTok{ coating, }\AttributeTok{data =}\NormalTok{ bar)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/bar-expt-boxplots-1} \includegraphics{bookdown_math3014-6027_files/figure-latex/bar-expt-boxplots-2} 
+
+}
+
+\caption{Steel bar experiment: distributions of tensile strength (ksi) from the eight blocks (top) and the four coatings (bottom).}\label{fig:bar-expt-boxplots}
+\end{figure}
+
+The box plots within each plot in Figure \ref{fig:bar-expt-boxplots} are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This \textbf{balance} makes our analysis more straighforward. By eye, it appears here there may be differences between both coating 3 and the other three coatings.
+
+\end{example}
+
+\begin{example}
+\protect\hypertarget{exm:blocks-tyres}{}\label{exm:blocks-tyres}
+
+Tyre experiment \citep[ch.~3]{WH2009}
+
+\citet{Davies1954}, p.200, examined the effect of \(t=4\) different rubber compounds (treatments) on the lifetime of a tyre. Each tyre is only large enough to split into \(k=3\) segments whilst still containing a representative amount of each compound. When tested, each tyre is subjected to the same road conditions, and hence is treated as a block. A design with \(b=4\) blocks was used, as displayed in Table \ref{tab:tyre-expt-data}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tyre }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{compound =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
+                   \AttributeTok{block =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)), }
+                   \AttributeTok{wear =} \FunctionTok{c}\NormalTok{(}\DecValTok{238}\NormalTok{, }\DecValTok{238}\NormalTok{, }\DecValTok{279}\NormalTok{, }\DecValTok{196}\NormalTok{, }\DecValTok{213}\NormalTok{, }\DecValTok{308}\NormalTok{, }\DecValTok{254}\NormalTok{, }\DecValTok{334}\NormalTok{, }\DecValTok{367}\NormalTok{, }\DecValTok{312}\NormalTok{, }\DecValTok{421}\NormalTok{, }\DecValTok{412}\NormalTok{)}
+\NormalTok{                     )}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{knitr.kable.NA =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(tyre, }\AttributeTok{names\_from =}\NormalTok{ compound, }\AttributeTok{values\_from =}\NormalTok{ wear),}
+ \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Block"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"Compound"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)),}
+ \AttributeTok{caption =} \StringTok{"Tyre experiment: wear measurements from tires made with four different rubber compounds."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:tyre-expt-data}Tyre experiment: wear measurements from tires made with four different rubber compounds.}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+Block & Compound 1 & Compound 2 & Compound 3 & Compound 4\\
+\hline
+1 & 238 & 238 & 279 & \\
+\hline
+2 & 196 & 213 &  & 308\\
+\hline
+3 & 254 &  & 334 & 367\\
+\hline
+4 &  & 312 & 421 & 412\\
+\hline
+\end{tabular}
+\end{table}
+
+Here, each block has size \(k=3\), which is smaller than the number of treatments (\(t=4\)). Hence, each block cannot contain an application of each treatment. This is an example of an \textbf{incomplete block design}.
+
+Graphical exploration of the data is a little more problematic in this example. As each treatment does not occur in each block, box plots such as Figure \ref{fig:tyre-expt-boxplots} are not as informative. Do compounds three and four have higher average wear because they were the only compounds to both occur in blocks 3 and 4? Or do blocks 3 and 4 have a higher mean because they contain both compounds 3 and 4? The design cannot help us entirely disentangle the impact of blocks and treatments\footnote{This is our first example of (partial) confounding, which we will see again in Chapters \ref{block-factorial} and \ref{fractional-factorial}}. In our modelling, we will assume variation should first be described by blocks (which are generally fixed aspects of the experiment) and then treatments (which are more directly under the experimenter's control).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(wear }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block, }\AttributeTok{data =}\NormalTok{ tyre)}
+\FunctionTok{boxplot}\NormalTok{(wear }\SpecialCharTok{\textasciitilde{}}\NormalTok{ compound, }\AttributeTok{data =}\NormalTok{ tyre)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/tyre-expt-boxplots-1} \includegraphics{bookdown_math3014-6027_files/figure-latex/tyre-expt-boxplots-2} 
+
+}
+
+\caption{Tyre experiment: distributions of wear from the four blocks (top) and the four compounds (bottom).}\label{fig:tyre-expt-boxplots}
+\end{figure}
+
+\end{example}
+
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
 
-\hypertarget{blocking-in-factorial-designs}{%
-\chapter{Blocking in factorial designs}\label{blocking-in-factorial-designs}}
+\hypertarget{block-factorial}{%
+\chapter{Blocking in factorial designs}\label{block-factorial}}
 
-\hypertarget{fractional-factorial-designs}{%
-\chapter{Fractional factorial designs}\label{fractional-factorial-designs}}
+\hypertarget{fractional-factorial}{%
+\chapter{Fractional factorial designs}\label{fractional-factorial}}
 
 \hypertarget{response-surface-methodology}{%
 \chapter{Response surface methodology}\label{response-surface-methodology}}
