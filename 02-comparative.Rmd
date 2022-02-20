@@ -757,7 +757,7 @@ are of primary interest to the experimenter.
 
 a. Find an allocation of the 50 units to the 5 treatments, i.e. find $n_1, \ldots, n_5$, that minimises the average variance of the corresponding contrast estimators.
 
-a. Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to $w_i = n_i/50$, find the value of $n$ required to make the ratio $\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)}} = 2$ assuming a signal-to-noise ratio of 1. 
+a. Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to $w_i = n_i/50$, find the value of $n$ required to make the ratio $|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2$ assuming a signal-to-noise ratio of 1. 
 
 <details>
 <summary><b>Solution</b></summary>

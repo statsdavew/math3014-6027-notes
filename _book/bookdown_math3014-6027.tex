@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Tea first" 
-## [6] "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -2417,7 +2417,7 @@ are of primary interest to the experimenter.
 \item
   Find an allocation of the 50 units to the 5 treatments, i.e.~find \(n_1, \ldots, n_5\), that minimises the average variance of the corresponding contrast estimators.
 \item
-  Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e.~to \(w_i = n_i/50\), find the value of \(n\) required to make the ratio \(\frac{|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|}{\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)}} = 2\) assuming a signal-to-noise ratio of 1.
+  Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e.~to \(w_i = n_i/50\), find the value of \(n\) required to make the ratio \(|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2\) assuming a signal-to-noise ratio of 1.
 \end{enumerate}
 
 Solution
