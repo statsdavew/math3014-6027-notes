@@ -42,6 +42,7 @@ fig:bar-expt-boxplots
 exm:blocks-tyres
 tab:tyre-expt-data
 fig:tyre-expt-boxplots
+eq:block-model
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -67,6 +68,7 @@ crd-opt-all
 crd-size
 exercises-1
 blocking
+unit-block-treatment-model
 factorial
 block-factorial
 fractional-factorial

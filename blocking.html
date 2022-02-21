@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-02-20" />
+<meta name="date" content="2022-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -167,7 +167,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises-1"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a></li>
+<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a><ul>
+<li class="chapter" data-level="3.1" data-path="blocking.html"><a href="blocking.html#unit-block-treatment-model"><i class="fa fa-check"></i><b>3.1</b> Unit-block-treatment model</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
@@ -360,7 +362,17 @@ Figure 3.2: Tyre experiment: distributions of wear from the four blocks (top) an
 </p>
 </div>
 </div>
+<div id="unit-block-treatment-model" class="section level2">
+<h2><span class="header-section-number">3.1</span> Unit-block-treatment model</h2>
+<p>If <span class="math inline">\(n_{ij}\)</span> is the number of times treatment <span class="math inline">\(j\)</span> occurs in block <span class="math inline">\(i\)</span>, a common statistical model to describe data from a blocked experiment has the form</p>
+<p><span class="math display" id="eq:block-model">\[\begin{equation}
+y_{ijl} = \mu + \beta_i + \tau_i + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
+\tag{3.1}
+\end{equation}\]</span>
+where <span class="math inline">\(y_{ijl}\)</span> is the response from the <span class="math inline">\(l\)</span>th application of the <span class="math inline">\(j\)</span>th treatment in the <span class="math inline">\(i\)</span>th block, <span class="math inline">\(\mu\)</span> is a constant parameter, <span class="math inline">\(\beta_i\)</span> is the effect of the <span class="math inline">\(i\)</span>th block, <span class="math inline">\(\tau_j\)</span> is the effect of treatment <span class="math inline">\(j\)</span>, and <span class="math inline">\(\varepsilon_{ijl}\sim N(0, \sigma^2)\)</span> are once again random individual effects from each experimental unit, assumed independent. The total number of runs in the experiment is given by <span class="math inline">\(n = \sum_{i=1}^b\sum_{j=1}^t n_{ij}\)</span>.</p>
+<p>For Example <a href="blocking.html#exm:blocks-bars">3.1</a>, there are <span class="math inline">\(t=4\)</span> experiments, <span class="math inline">\(b = 8\)</span> blocks and each treatment occurs once in each block, so <span class="math inline">\(n_{ij} = 1\)</span> for all <span class="math inline">\(i, j\)</span>. In Example <a href="blocking.html#exm:blocks-tyres">3.2</a>, there are again <span class="math inline">\(t=4\)</span> treatments but now only <span class="math inline">\(b=4\)</span> blocks and not every treatment occurs in every block. In fact, we have <span class="math inline">\(n_{11} = n_{12} = n_{13} = 1\)</span>, <span class="math inline">\(n_{14} = 0\)</span>, <span class="math inline">\(n_{21} = n_{22} =n_{24} = 1\)</span>, <span class="math inline">\(n_{23} = 0\)</span>, <span class="math inline">\(n_{31} = n_{33} =n_{34} = 1\)</span>, <span class="math inline">\(n_{32} = 0\)</span>, <span class="math inline">\(n_{41} = 0\)</span> and <span class="math inline">\(n_{42} = n_{43} =n_{44} = 1\)</span>.</p>
 
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
