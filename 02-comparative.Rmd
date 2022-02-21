@@ -41,7 +41,7 @@ y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldot
 (\#eq:utm)
 \end{equation}
 
-where $y_{ij}$ is the response from the $j$th application of treatment $i$, $\mu$ is a constant parameter, $\tau_i$ is the effect of the $i$th treatment, and $\varepsilon_{ij}$ is the random individual effect from each experimental unit with $E(\varepsilon_{ij})$ and $\mathrm{Var}(\varepsilon_{ij}) = \sigma^2$. All random errors are assumed independent and here we also assume $\varepsilon_{ij} \sim N(0, \sigma^2)$.
+where $y_{ij}$ is the response from the $j$th application of treatment $i$, $\mu$ is a constant parameter, $\tau_i$ is the effect of the $i$th treatment, and $\varepsilon_{ij}$ is the random individual effect from each experimental unit with $E(\varepsilon_{ij})=0$ and $\mathrm{Var}(\varepsilon_{ij}) = \sigma^2$. All random errors are assumed independent and here we also assume $\varepsilon_{ij} \sim N(0, \sigma^2)$.
 
 Model \@ref(eq:utm) assumes that each treatment can be randomly allocated to one of the $n$ experimental units, and that the response observed is independent of the allocation of all the other treatments (the stable unit treatment value assumption or SUTVA).
 

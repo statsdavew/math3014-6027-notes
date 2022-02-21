@@ -59,3 +59,7 @@ block-factorial
 fractional-factorial
 response-surface-methodology
 optimal-design-of-experiments
+exm:blocks-bars
+exm:blocks-tyres
+eq:block-model
+unit-block-treatment-model

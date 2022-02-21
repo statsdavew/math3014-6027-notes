@@ -60,3 +60,15 @@ boxplot(wear ~ block, data = tyre)
 boxplot(wear ~ compound, data = tyre)
 ```
 :::
+
+## Unit-block-treatment model
+
+If $n_{ij}$ is the number of times treatment $j$ occurs in block $i$, a common statistical model to describe data from a blocked experiment has the form
+
+\begin{equation}
+y_{ijl} = \mu + \beta_i + \tau_i + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
+(\#eq:block-model)
+\end{equation}
+where $y_{ijl}$ is the response from the $l$th application of the $j$th treatment in the $i$th block, $\mu$ is a constant parameter, $\beta_i$ is the effect of the $i$th block, $\tau_j$ is the effect of treatment $j$, and $\varepsilon_{ijl}\sim N(0, \sigma^2)$ are once again random individual effects from each experimental unit, assumed independent. The total number of runs in the experiment is given by $n = \sum_{i=1}^b\sum_{j=1}^t n_{ij}$.
+
+For Example \@ref(exm:blocks-bars), there are $t=4$ experiments, $b = 8$ blocks and each treatment occurs once in each block, so $n_{ij} = 1$ for all $i, j$. In Example \@ref(exm:blocks-tyres), there are again $t=4$ treatments but now only $b=4$ blocks and not every treatment occurs in every block. In fact, we have $n_{11} = n_{12} = n_{13} = 1$, $n_{14} = 0$, $n_{21} = n_{22} =n_{24} = 1$, $n_{23} = 0$, $n_{31} = n_{33} =n_{34} = 1$, $n_{32} = 0$, $n_{41} = 0$ and $n_{42} = n_{43} =n_{44} = 1$.
