@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-02-22}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-02-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -780,27 +780,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -903,7 +887,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Milk first"
 ## [6] "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \item
@@ -917,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1079,15 +1063,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1126,15 +1102,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1173,15 +1141,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2648,7 +2608,7 @@ with \(\boldsymbol{y}\) the \(n\)-vector of responses, \(X_1\) and \(X_2\) \(n\t
 In equation\eqref{eq:block-plm}, assuming without loss of generality that runs of the experiment are ordered by block, the matrix \(X_1\) has the form
 
 \[
-X_2 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
+X_1 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
 \boldsymbol{1}_{k_1} & \boldsymbol{0}_{k_1} & \cdots &  \boldsymbol{0}_{k_1} \\
 \boldsymbol{0}_{k_2} & \boldsymbol{1}_{k_2} & \cdots &  \boldsymbol{0}_{k_2} \\
 \vdots & & \ddots & \vdots \\
@@ -2675,9 +2635,119 @@ X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{
 
 Above, the matrices \(X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)\) and \(X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)\) have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.
 
-The \(t\times b\) matrix \(N = X_2^{\mathcal{T}}X_1\) is particularly important in block designs, and is called the \textbf{incidence} matrix. Each of the \(i\)th row of N indicates in which blocks the \(i\)th treatment occurs.
+The \(t\times b\) matrix \(N = X_2^{\mathcal{T}}X_1\) is particularly important in block designs, and is called the \textbf{incidence} matrix. Each of the \(i\)th row of \(N\) indicates in which blocks the \(i\)th treatment occurs.
 
-\ldots\ldots\ldots..
+We can eliminate the explicit dependence on \(\mu\) and \(\boldsymbol{\beta}\) to find reduced normal equations for \(\boldsymbol{\tau}\) by multiplying the middle equation by \(X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}\):
+
+\begin{multline}
+X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+ = X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+ = X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{y}\\
+\end{multline}
+
+and subtracting from the final equation:
+
+\begin{multline}
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+= X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
+\end{multline}
+Clearly, a zero matrix is multiplying the block effects \(\boldsymbol{\beta}\). Also,
+
+\[
+X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{1}_n\,,
+\]
+as
+
+\[
+X_1(X_1^{\mathrm{T}}X_1)^{-1} = \bigoplus_{i = 1}^b \frac{1}{k_i}\boldsymbol{1}_{k_i} = \begin{bmatrix}
+\frac{1}{k_1}\boldsymbol{1}_{k_1} & \boldsymbol{0}_{k_1} & \cdots &  \boldsymbol{0}_{k_1} \\
+\boldsymbol{0}_{k_2} & \frac{1}{k_2}\boldsymbol{1}_{k_2} & \cdots &  \boldsymbol{0}_{k_2} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k_b} & \boldsymbol{0}_{k_b} & \cdots &  \frac{1}{k_b}\boldsymbol{1}_{k_b} \\
+\end{bmatrix}\,,
+\]
+and hence
+
+\[
+X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}} = \bigoplus_{i = 1}^b \frac{1}{k_i}J_{k_i} = \begin{bmatrix}
+\frac{1}{k_1}J_{k_1} & \boldsymbol{0}_{k_1\times k_2} & \cdots &  \boldsymbol{0}_{k_1\times k_b} \\
+\boldsymbol{0}_{k_2\times k_1} & \frac{1}{k_2}J_{k_2} & \cdots &  \boldsymbol{0}_{k_2\times k_b} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k_b\times k_1} & \boldsymbol{0}_{k_b\times k_2} & \cdots &  \frac{1}{k_b}J_{k_b} \\
+\end{bmatrix}\,.
+\]
+
+Writing \(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\), we then get the reduced normal equations for \(\boldsymbol{\tau}\):
+
+\begin{equation}
+X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\boldsymbol{y}\,.
+\label{eq:block-rne}
+\end{equation}
+
+We can demonstrate the form of these matrices through our two examples.
+
+For Example \ref{exm:blocks-bars}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{one }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\NormalTok{X1 }\OtherTok{\textless{}{-}} \FunctionTok{kronecker}\NormalTok{(}\FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{8}\NormalTok{), one)}
+\NormalTok{X2 }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{4}\NormalTok{)}
+\NormalTok{X2 }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind"}\NormalTok{, }\FunctionTok{replicate}\NormalTok{(}\DecValTok{8}\NormalTok{, X2, }\AttributeTok{simplify =} \ConstantTok{FALSE}\NormalTok{))}
+\CommentTok{\#incidence matrix}
+\NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ X1}
+\NormalTok{X1tX1 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X1) }\SpecialCharTok{\%*\%}\NormalTok{ X1 }\CommentTok{\# diagonal}
+\NormalTok{X2tX2 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ X2 }\CommentTok{\# diagonal}
+\NormalTok{H1 }\OtherTok{\textless{}{-}}\NormalTok{ X1 }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X1) }\SpecialCharTok{\%*\%}\NormalTok{ X1) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X1)}
+\NormalTok{ones }\OtherTok{\textless{}{-}}\NormalTok{ H1 }\SpecialCharTok{\%*\%} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{32}\NormalTok{) }\CommentTok{\# H1 times vector of 1s is also a vector of 1s}
+\NormalTok{A }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ X2 }\SpecialCharTok{{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ H1 }\SpecialCharTok{\%*\%}\NormalTok{ X2 }\CommentTok{\# X2t(I {-} H1)X2}
+\FunctionTok{qr}\NormalTok{(A)}\SpecialCharTok{$}\NormalTok{rank }\CommentTok{\# rank 3}
+\NormalTok{X2tH1 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ H1 }\CommentTok{\# adjustment to y}
+\NormalTok{W }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(ones, X1, X2) }\CommentTok{\# overall model matrix}
+\FunctionTok{qr}\NormalTok{(W)}\SpecialCharTok{$}\NormalTok{rank }\CommentTok{\# rank 11 (t+b {-} 1)}
+\end{Highlighting}
+\end{Shaded}
+
+For Example \ref{exm:blocks-tyres}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{one }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{X1 }\OtherTok{\textless{}{-}} \FunctionTok{kronecker}\NormalTok{(}\FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{4}\NormalTok{), one)}
+\NormalTok{X2 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}
+        \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+          \DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+          \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{12}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T}
+\NormalTok{)}
+\CommentTok{\#incidence matrix}
+\NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ X1}
+\NormalTok{X1tX1 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X1) }\SpecialCharTok{\%*\%}\NormalTok{ X1 }\CommentTok{\# diagonal}
+\NormalTok{X2tX2 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ X2 }\CommentTok{\# diagonal}
+\NormalTok{H1 }\OtherTok{\textless{}{-}}\NormalTok{ X1 }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X1) }\SpecialCharTok{\%*\%}\NormalTok{ X1) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X1)}
+\NormalTok{ones }\OtherTok{\textless{}{-}}\NormalTok{ H1 }\SpecialCharTok{\%*\%} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{12}\NormalTok{) }\CommentTok{\# H1 times vector of 1s is also a vector of 1s}
+\NormalTok{A }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ X2 }\SpecialCharTok{{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ H1 }\SpecialCharTok{\%*\%}\NormalTok{ X2 }\CommentTok{\# X2t(I {-} H1)X2}
+\FunctionTok{qr}\NormalTok{(A)}\SpecialCharTok{$}\NormalTok{rank }\CommentTok{\# rank 3}
+\NormalTok{X2tH1 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X2) }\SpecialCharTok{\%*\%}\NormalTok{ H1 }\CommentTok{\# adjustment to y}
+\NormalTok{W }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(ones, X1, X2) }\CommentTok{\# overall model matrix}
+\FunctionTok{qr}\NormalTok{(W)}\SpecialCharTok{$}\NormalTok{rank }\CommentTok{\# rank 7 (t+b {-} 1)}
+\end{Highlighting}
+\end{Shaded}
+
+Notice that if we write \(X_{2|1} = (I_n - H_1)X2\), then the reduced normal equations become
+
+\[
+X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
+\]
+which have the same form as the CRD in Chapter \ref{crd} albeit with a different \(X_{2|1}\) matrix as we are adjusting for more complex nuisance parameters.
 
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
