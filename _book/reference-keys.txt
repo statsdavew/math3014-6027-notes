@@ -29,6 +29,8 @@ tab:bar-expt-data
 fig:bar-expt-boxplots
 tab:tyre-expt-data
 fig:tyre-expt-boxplots
+eq:block-model
+eq:block-plm
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -54,12 +56,10 @@ crd-opt-all
 crd-size
 exercises-1
 blocking
+unit-block-treatment-model
+normal-equations
 factorial
 block-factorial
 fractional-factorial
 response-surface-methodology
 optimal-design-of-experiments
-exm:blocks-bars
-exm:blocks-tyres
-eq:block-model
-unit-block-treatment-model

@@ -47,7 +47,7 @@ options(knitr.kable.NA = '')
 knitr::kable(
  tidyr::pivot_wider(tyre, names_from = compound, values_from = wear),
  col.names = c("Block", paste("Compound", 1:4)),
- caption = "Tyre experiment: wear measurements from tires made with four different rubber compounds."
+ caption = "Tyre experiment: relative wear measurements (unitless) from tires made with four different rubber compounds."
 )
 ```
 Here, each block has size $k=3$, which is smaller than the number of treatments ($t=4$). Hence, each block cannot contain an application of each treatment. This is an example of an **incomplete block design**.
@@ -72,3 +72,145 @@ y_{ijl} = \mu + \beta_i + \tau_i + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; 
 where $y_{ijl}$ is the response from the $l$th application of the $j$th treatment in the $i$th block, $\mu$ is a constant parameter, $\beta_i$ is the effect of the $i$th block, $\tau_j$ is the effect of treatment $j$, and $\varepsilon_{ijl}\sim N(0, \sigma^2)$ are once again random individual effects from each experimental unit, assumed independent. The total number of runs in the experiment is given by $n = \sum_{i=1}^b\sum_{j=1}^t n_{ij}$.
 
 For Example \@ref(exm:blocks-bars), there are $t=4$ experiments, $b = 8$ blocks and each treatment occurs once in each block, so $n_{ij} = 1$ for all $i, j$. In Example \@ref(exm:blocks-tyres), there are again $t=4$ treatments but now only $b=4$ blocks and not every treatment occurs in every block. In fact, we have $n_{11} = n_{12} = n_{13} = 1$, $n_{14} = 0$, $n_{21} = n_{22} =n_{24} = 1$, $n_{23} = 0$, $n_{31} = n_{33} =n_{34} = 1$, $n_{32} = 0$, $n_{41} = 0$ and $n_{42} = n_{43} =n_{44} = 1$.
+
+Writing model \@ref(eq:block-model) is matrix form as a partitioned linear model, we obtain 
+
+\begin{equation}
+\by = \mu\boldsymbol{1}_n + X_1\boldsymbol{\beta} + X_2\boldsymbol{\tau} + \boldsymbol{\varepsilon}\,,
+(\#eq:block-plm)
+\end{equation}
+
+with $\by$ the $n$-vector of responses, $X_1$ and $X_2$ $n\times b$ and $n\times t$ model matrices for blocks and treatments, respectively, $\boldsymbol{\beta} = (\beta_1,\ldots, \beta_b)^{\mathrm{T}}$, $\boldsymbol{\tau} = (\tau_1,\ldots, \tau_t)^{\mathrm{T}}$ and $\boldsymbol{\varepsilon}$ the $n$-vector of errors.
+
+In equation\@ref(eq:block-plm), assuming without loss of generality that runs of the experiment are ordered by block, the matrix $X_1$ has the form
+
+$$
+X_2 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
+\boldsymbol{1}_{k_1} & \boldsymbol{0}_{k_1} & \cdots &  \boldsymbol{0}_{k_1} \\
+\boldsymbol{0}_{k_2} & \boldsymbol{1}_{k_2} & \cdots &  \boldsymbol{0}_{k_2} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k_b} & \boldsymbol{0}_{k_b} & \cdots &  \boldsymbol{1}_{k_b} \\
+\end{bmatrix}\,,
+$$
+where $k_i = \sum_{j=1}^t n_{ij}$, the number of units in the $i$th block. The structure of matrix $X_2$ is harder to describe so distinctly, but each row includes a single non-zero entry, equal to one, indicating which treatment was applied in that run of the experiment. The first $k_1$ rows correspond to block 1, the second $k_2$ to block 2, and so on. We will see special cases later. 
+
+## Normal equations
+
+Writing as a partitioned model $\by = W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}$, with $W = [\boldsymbol{1} | X_1 | X_2]$ and $\boldsymbol{\alpha}^{\mathrm{T}} = [\mu | \boldsymbol{\beta}^{\mathrm{T}} | \boldsymbol{\tau}^{\mathrm{T}}]$, the least squares normal equations
+
+$$
+W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\by
+$$
+can be written as a set of three matrix equations:
+
+\begin{align}
+n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = \boldsymbol{1}_n^{\mathrm{T}}\bY\,, \\
+X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\bY\,, \\
+X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\bY\,. \\
+\end{align}
+
+Above, the matrices $X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)$ and $X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)$ have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.
+
+The $t\times b$ matrix $N = X_2^{\mathcal{T}}X_1$ is particularly important in block designs, and is called the **incidence** matrix. Each of the $i$th row of N indicates in which blocks the $i$th treatment occurs.
+
+
+
+<!--
+We can eliminate the explicit dependence on $\mu$ and $\boldsymbol{\beta}$ to find reduced normal equations for $\boldsymbol{\tau}$ by multiplying the middle equation by $X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}$:
+
+\begin{align*}
+X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} 
+& = X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^\mathrm{T}X_1\hat{\boldsymbol{\beta}} + X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+& = X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}\bY \\
+\end{align*}
+
+and subtracting from the final equation:
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...........
+
