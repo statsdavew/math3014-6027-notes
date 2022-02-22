@@ -3,7 +3,6 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
-eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -31,6 +30,7 @@ tab:tyre-expt-data
 fig:tyre-expt-boxplots
 eq:block-model
 eq:block-plm
+eq:block-rne
 intro
 motivation
 aims-of-experimentation-and-some-examples

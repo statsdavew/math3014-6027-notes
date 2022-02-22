@@ -85,7 +85,7 @@ with $\by$ the $n$-vector of responses, $X_1$ and $X_2$ $n\times b$ and $n\times
 In equation\@ref(eq:block-plm), assuming without loss of generality that runs of the experiment are ordered by block, the matrix $X_1$ has the form
 
 $$
-X_2 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
+X_1 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
 \boldsymbol{1}_{k_1} & \boldsymbol{0}_{k_1} & \cdots &  \boldsymbol{0}_{k_1} \\
 \boldsymbol{0}_{k_2} & \boldsymbol{1}_{k_2} & \cdots &  \boldsymbol{0}_{k_2} \\
 \vdots & & \ddots & \vdots \\
@@ -111,32 +111,115 @@ X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{
 
 Above, the matrices $X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)$ and $X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)$ have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.
 
-The $t\times b$ matrix $N = X_2^{\mathcal{T}}X_1$ is particularly important in block designs, and is called the **incidence** matrix. Each of the $i$th row of N indicates in which blocks the $i$th treatment occurs.
+The $t\times b$ matrix $N = X_2^{\mathcal{T}}X_1$ is particularly important in block designs, and is called the **incidence** matrix. Each of the $i$th row of $N$ indicates in which blocks the $i$th treatment occurs.
 
-
-
-<!--
 We can eliminate the explicit dependence on $\mu$ and $\boldsymbol{\beta}$ to find reduced normal equations for $\boldsymbol{\tau}$ by multiplying the middle equation by $X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}$:
 
-\begin{align*}
-X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} 
-& = X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^\mathrm{T}X_1\hat{\boldsymbol{\beta}} + X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
-& = X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}\bY \\
-\end{align*}
+\begin{multline}
+X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+ = X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+ = X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\bY \\
+\end{multline}
 
 and subtracting from the final equation:
--->
 
+\begin{multline}
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+= X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\bY\,.
+\end{multline}
+Clearly, a zero matrix is multiplying the block effects $\boldsymbol{\beta}$. Also,
+
+$$
+X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{1}_n\,,
+$$
+as
+
+$$
+X_1(X_1^{\mathrm{T}}X_1)^{-1} = \bigoplus_{i = 1}^b \frac{1}{k_i}\boldsymbol{1}_{k_i} = \begin{bmatrix}
+\frac{1}{k_1}\boldsymbol{1}_{k_1} & \boldsymbol{0}_{k_1} & \cdots &  \boldsymbol{0}_{k_1} \\
+\boldsymbol{0}_{k_2} & \frac{1}{k_2}\boldsymbol{1}_{k_2} & \cdots &  \boldsymbol{0}_{k_2} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k_b} & \boldsymbol{0}_{k_b} & \cdots &  \frac{1}{k_b}\boldsymbol{1}_{k_b} \\
+\end{bmatrix}\,,
+$$
+and hence
 
+$$
+X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}} = \bigoplus_{i = 1}^b \frac{1}{k_i}J_{k_i} = \begin{bmatrix}
+\frac{1}{k_1}J_{k_1} & \boldsymbol{0}_{k_1\times k_2} & \cdots &  \boldsymbol{0}_{k_1\times k_b} \\
+\boldsymbol{0}_{k_2\times k_1} & \frac{1}{k_2}J_{k_2} & \cdots &  \boldsymbol{0}_{k_2\times k_b} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k_b\times k_1} & \boldsymbol{0}_{k_b\times k_2} & \cdots &  \frac{1}{k_b}J_{k_b} \\
+\end{bmatrix}\,.
+$$
 
+Writing $H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}$, we then get the reduced normal equations for $\boldsymbol{\tau}$:
 
+\begin{equation}
+X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\bY\,.
+(\#eq:block-rne)
+\end{equation}
 
+We can demonstrate the form of these matrices through our two examples.
 
+For Example \@ref(exm:blocks-bars):
 
+```{r blocks-bars-matrices, results = 'hold', eval = F}
+one <- rep(1, 4)
+X1 <- kronecker(diag(1, nrow = 8), one)
+X2 <- diag(1, nrow = 4)
+X2 <- do.call("rbind", replicate(8, X2, simplify = FALSE))
+#incidence matrix
+N <- t(X2) %*% X1
+X1tX1 <- t(X1) %*% X1 # diagonal
+X2tX2 <- t(X2) %*% X2 # diagonal
+H1 <- X1 %*% solve(t(X1) %*% X1) %*% t(X1)
+ones <- H1 %*% rep(1, 32) # H1 times vector of 1s is also a vector of 1s
+A <- t(X2) %*% X2 - t(X2) %*% H1 %*% X2 # X2t(I - H1)X2
+qr(A)$rank # rank 3
+X2tH1 <- t(X2) %*% H1 # adjustment to y
+W <- cbind(ones, X1, X2) # overall model matrix
+qr(W)$rank # rank 11 (t+b - 1)
+```
 
+For Example \@ref(exm:blocks-tyres):
 
+```{r blocks-tyres-matrices, results = 'hold', eval = F}
+one <- rep(1, 3)
+X1 <- kronecker(diag(1, nrow = 4), one)
+X2 <- matrix(
+        c(1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 1, 0,
+          1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 0, 1,
+          1, 0, 0, 0,
+          0, 0, 1, 0,
+          0, 0, 0, 1,
+          0, 1, 0, 0,
+          0, 0, 1, 0,
+          0, 0, 0, 1), nrow = 12, byrow = T
+)
+#incidence matrix
+N <- t(X2) %*% X1
+X1tX1 <- t(X1) %*% X1 # diagonal
+X2tX2 <- t(X2) %*% X2 # diagonal
+H1 <- X1 %*% solve(t(X1) %*% X1) %*% t(X1)
+ones <- H1 %*% rep(1, 12) # H1 times vector of 1s is also a vector of 1s
+A <- t(X2) %*% X2 - t(X2) %*% H1 %*% X2 # X2t(I - H1)X2
+qr(A)$rank # rank 3
+X2tH1 <- t(X2) %*% H1 # adjustment to y
+W <- cbind(ones, X1, X2) # overall model matrix
+qr(W)$rank # rank 7 (t+b - 1)
+```
 
+Notice that if we write $X_{2|1} = (I_n - H_1)X2$, then the reduced normal equations become
 
+$$
+X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\bY\,,
+$$
+which have the same form as the CRD in Chapter \@ref(crd) albeit with a different $X_{2|1}$ matrix as we are adjusting for more complex nuisance parameters.
 
 
 
@@ -212,5 +295,9 @@ and subtracting from the final equation:
 
 
 
-...........
+
+
+
+
+
 

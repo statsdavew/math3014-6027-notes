@@ -408,7 +408,7 @@ where <span class="math inline">\(y_{ijl}\)</span> is the response from the <spa
 <p>with <span class="math inline">\(\boldsymbol{y}\)</span> the <span class="math inline">\(n\)</span>-vector of responses, <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> <span class="math inline">\(n\times b\)</span> and <span class="math inline">\(n\times t\)</span> model matrices for blocks and treatments, respectively, <span class="math inline">\(\boldsymbol{\beta} = (\beta_1,\ldots, \beta_b)^{\mathrm{T}}\)</span>, <span class="math inline">\(\boldsymbol{\tau} = (\tau_1,\ldots, \tau_t)^{\mathrm{T}}\)</span> and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> the <span class="math inline">\(n\)</span>-vector of errors.</p>
 <p>In equation<a href="blocking.html#eq:block-plm">(3.2)</a>, assuming without loss of generality that runs of the experiment are ordered by block, the matrix <span class="math inline">\(X_1\)</span> has the form</p>
 <p><span class="math display">\[
-X_2 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
+X_1 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
 \boldsymbol{1}_{k_1} &amp; \boldsymbol{0}_{k_1} &amp; \cdots &amp;  \boldsymbol{0}_{k_1} \\
 \boldsymbol{0}_{k_2} &amp; \boldsymbol{1}_{k_2} &amp; \cdots &amp;  \boldsymbol{0}_{k_2} \\
 \vdots &amp; &amp; \ddots &amp; \vdots \\
@@ -430,19 +430,95 @@ X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{
 X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = X_2^{\mathrm{T}}\boldsymbol{y}\,. \\
 \end{align}\]</span></p>
 <p>Above, the matrices <span class="math inline">\(X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)\)</span> and <span class="math inline">\(X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)\)</span> have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.</p>
-<p>The <span class="math inline">\(t\times b\)</span> matrix <span class="math inline">\(N = X_2^{\mathcal{T}}X_1\)</span> is particularly important in block designs, and is called the <strong>incidence</strong> matrix. Each of the <span class="math inline">\(i\)</span>th row of N indicates in which blocks the <span class="math inline">\(i\)</span>th treatment occurs.</p>
-<!--
-We can eliminate the explicit dependence on $\mu$ and $\boldsymbol{\beta}$ to find reduced normal equations for $\boldsymbol{\tau}$ by multiplying the middle equation by $X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}$:
-
-\begin{align*}
-X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} 
-& = X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^\mathrm{T}X_1\hat{\boldsymbol{\beta}} + X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
-& = X_2^\mathrm{T}X_1(X_1^\mathrm{T}X_1)^{-1}X_1^{\mathrm{T}}\bY \\
-\end{align*}
-
-and subtracting from the final equation:
--->
-<p>………..</p>
+<p>The <span class="math inline">\(t\times b\)</span> matrix <span class="math inline">\(N = X_2^{\mathcal{T}}X_1\)</span> is particularly important in block designs, and is called the <strong>incidence</strong> matrix. Each of the <span class="math inline">\(i\)</span>th row of <span class="math inline">\(N\)</span> indicates in which blocks the <span class="math inline">\(i\)</span>th treatment occurs.</p>
+<p>We can eliminate the explicit dependence on <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\boldsymbol{\beta}\)</span> to find reduced normal equations for <span class="math inline">\(\boldsymbol{\tau}\)</span> by multiplying the middle equation by <span class="math inline">\(X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}\)</span>:</p>
+<p><span class="math display">\[\begin{multline}
+X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+ = X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} \\
+ = X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{y}\\
+\end{multline}\]</span></p>
+<p>and subtracting from the final equation:</p>
+<p><span class="math display">\[\begin{multline}
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+= X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
+\end{multline}\]</span>
+Clearly, a zero matrix is multiplying the block effects <span class="math inline">\(\boldsymbol{\beta}\)</span>. Also,</p>
+<p><span class="math display">\[
+X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{1}_n\,,
+\]</span>
+as</p>
+<p><span class="math display">\[
+X_1(X_1^{\mathrm{T}}X_1)^{-1} = \bigoplus_{i = 1}^b \frac{1}{k_i}\boldsymbol{1}_{k_i} = \begin{bmatrix}
+\frac{1}{k_1}\boldsymbol{1}_{k_1} &amp; \boldsymbol{0}_{k_1} &amp; \cdots &amp;  \boldsymbol{0}_{k_1} \\
+\boldsymbol{0}_{k_2} &amp; \frac{1}{k_2}\boldsymbol{1}_{k_2} &amp; \cdots &amp;  \boldsymbol{0}_{k_2} \\
+\vdots &amp; &amp; \ddots &amp; \vdots \\
+\boldsymbol{0}_{k_b} &amp; \boldsymbol{0}_{k_b} &amp; \cdots &amp;  \frac{1}{k_b}\boldsymbol{1}_{k_b} \\
+\end{bmatrix}\,,
+\]</span>
+and hence</p>
+<p><span class="math display">\[
+X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}} = \bigoplus_{i = 1}^b \frac{1}{k_i}J_{k_i} = \begin{bmatrix}
+\frac{1}{k_1}J_{k_1} &amp; \boldsymbol{0}_{k_1\times k_2} &amp; \cdots &amp;  \boldsymbol{0}_{k_1\times k_b} \\
+\boldsymbol{0}_{k_2\times k_1} &amp; \frac{1}{k_2}J_{k_2} &amp; \cdots &amp;  \boldsymbol{0}_{k_2\times k_b} \\
+\vdots &amp; &amp; \ddots &amp; \vdots \\
+\boldsymbol{0}_{k_b\times k_1} &amp; \boldsymbol{0}_{k_b\times k_2} &amp; \cdots &amp;  \frac{1}{k_b}J_{k_b} \\
+\end{bmatrix}\,.
+\]</span></p>
+<p>Writing <span class="math inline">\(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\)</span>, we then get the reduced normal equations for <span class="math inline">\(\boldsymbol{\tau}\)</span>:</p>
+<p><span class="math display" id="eq:block-rne">\[\begin{equation}
+X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\boldsymbol{y}\,.
+\tag{3.3}
+\end{equation}\]</span></p>
+<p>We can demonstrate the form of these matrices through our two examples.</p>
+<p>For Example <a href="blocking.html#exm:blocks-bars">3.1</a>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="blocking.html#cb62-1" aria-hidden="true" tabindex="-1"></a>one <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb62-2"><a href="blocking.html#cb62-2" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">kronecker</span>(<span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">8</span>), one)</span>
+<span id="cb62-3"><a href="blocking.html#cb62-3" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb62-4"><a href="blocking.html#cb62-4" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(<span class="st">&quot;rbind&quot;</span>, <span class="fu">replicate</span>(<span class="dv">8</span>, X2, <span class="at">simplify =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb62-5"><a href="blocking.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co">#incidence matrix</span></span>
+<span id="cb62-6"><a href="blocking.html#cb62-6" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> X1</span>
+<span id="cb62-7"><a href="blocking.html#cb62-7" aria-hidden="true" tabindex="-1"></a>X1tX1 <span class="ot">&lt;-</span> <span class="fu">t</span>(X1) <span class="sc">%*%</span> X1 <span class="co"># diagonal</span></span>
+<span id="cb62-8"><a href="blocking.html#cb62-8" aria-hidden="true" tabindex="-1"></a>X2tX2 <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> X2 <span class="co"># diagonal</span></span>
+<span id="cb62-9"><a href="blocking.html#cb62-9" aria-hidden="true" tabindex="-1"></a>H1 <span class="ot">&lt;-</span> X1 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(X1) <span class="sc">%*%</span> X1) <span class="sc">%*%</span> <span class="fu">t</span>(X1)</span>
+<span id="cb62-10"><a href="blocking.html#cb62-10" aria-hidden="true" tabindex="-1"></a>ones <span class="ot">&lt;-</span> H1 <span class="sc">%*%</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">32</span>) <span class="co"># H1 times vector of 1s is also a vector of 1s</span></span>
+<span id="cb62-11"><a href="blocking.html#cb62-11" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> X2 <span class="sc">-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> H1 <span class="sc">%*%</span> X2 <span class="co"># X2t(I - H1)X2</span></span>
+<span id="cb62-12"><a href="blocking.html#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="fu">qr</span>(A)<span class="sc">$</span>rank <span class="co"># rank 3</span></span>
+<span id="cb62-13"><a href="blocking.html#cb62-13" aria-hidden="true" tabindex="-1"></a>X2tH1 <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> H1 <span class="co"># adjustment to y</span></span>
+<span id="cb62-14"><a href="blocking.html#cb62-14" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ones, X1, X2) <span class="co"># overall model matrix</span></span>
+<span id="cb62-15"><a href="blocking.html#cb62-15" aria-hidden="true" tabindex="-1"></a><span class="fu">qr</span>(W)<span class="sc">$</span>rank <span class="co"># rank 11 (t+b - 1)</span></span></code></pre></div>
+<p>For Example <a href="blocking.html#exm:blocks-tyres">3.2</a>:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="blocking.html#cb63-1" aria-hidden="true" tabindex="-1"></a>one <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb63-2"><a href="blocking.html#cb63-2" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">kronecker</span>(<span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">4</span>), one)</span>
+<span id="cb63-3"><a href="blocking.html#cb63-3" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb63-4"><a href="blocking.html#cb63-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb63-5"><a href="blocking.html#cb63-5" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb63-6"><a href="blocking.html#cb63-6" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb63-7"><a href="blocking.html#cb63-7" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb63-8"><a href="blocking.html#cb63-8" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb63-9"><a href="blocking.html#cb63-9" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb63-10"><a href="blocking.html#cb63-10" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb63-11"><a href="blocking.html#cb63-11" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb63-12"><a href="blocking.html#cb63-12" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb63-13"><a href="blocking.html#cb63-13" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb63-14"><a href="blocking.html#cb63-14" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb63-15"><a href="blocking.html#cb63-15" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">12</span>, <span class="at">byrow =</span> T</span>
+<span id="cb63-16"><a href="blocking.html#cb63-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb63-17"><a href="blocking.html#cb63-17" aria-hidden="true" tabindex="-1"></a><span class="co">#incidence matrix</span></span>
+<span id="cb63-18"><a href="blocking.html#cb63-18" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> X1</span>
+<span id="cb63-19"><a href="blocking.html#cb63-19" aria-hidden="true" tabindex="-1"></a>X1tX1 <span class="ot">&lt;-</span> <span class="fu">t</span>(X1) <span class="sc">%*%</span> X1 <span class="co"># diagonal</span></span>
+<span id="cb63-20"><a href="blocking.html#cb63-20" aria-hidden="true" tabindex="-1"></a>X2tX2 <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> X2 <span class="co"># diagonal</span></span>
+<span id="cb63-21"><a href="blocking.html#cb63-21" aria-hidden="true" tabindex="-1"></a>H1 <span class="ot">&lt;-</span> X1 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(X1) <span class="sc">%*%</span> X1) <span class="sc">%*%</span> <span class="fu">t</span>(X1)</span>
+<span id="cb63-22"><a href="blocking.html#cb63-22" aria-hidden="true" tabindex="-1"></a>ones <span class="ot">&lt;-</span> H1 <span class="sc">%*%</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">12</span>) <span class="co"># H1 times vector of 1s is also a vector of 1s</span></span>
+<span id="cb63-23"><a href="blocking.html#cb63-23" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> X2 <span class="sc">-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> H1 <span class="sc">%*%</span> X2 <span class="co"># X2t(I - H1)X2</span></span>
+<span id="cb63-24"><a href="blocking.html#cb63-24" aria-hidden="true" tabindex="-1"></a><span class="fu">qr</span>(A)<span class="sc">$</span>rank <span class="co"># rank 3</span></span>
+<span id="cb63-25"><a href="blocking.html#cb63-25" aria-hidden="true" tabindex="-1"></a>X2tH1 <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> H1 <span class="co"># adjustment to y</span></span>
+<span id="cb63-26"><a href="blocking.html#cb63-26" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ones, X1, X2) <span class="co"># overall model matrix</span></span>
+<span id="cb63-27"><a href="blocking.html#cb63-27" aria-hidden="true" tabindex="-1"></a><span class="fu">qr</span>(W)<span class="sc">$</span>rank <span class="co"># rank 7 (t+b - 1)</span></span></code></pre></div>
+<p>Notice that if we write <span class="math inline">\(X_{2|1} = (I_n - H_1)X2\)</span>, then the reduced normal equations become</p>
+<p><span class="math display">\[
+X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
+\]</span>
+which have the same form as the CRD in Chapter <a href="crd.html#crd">2</a> albeit with a different <span class="math inline">\(X_{2|1}\)</span> matrix as we are adjusting for more complex nuisance parameters.</p>
 
 </div>
 </div>
