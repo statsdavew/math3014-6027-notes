@@ -43,6 +43,7 @@ exm:blocks-tyres
 tab:tyre-expt-data
 fig:tyre-expt-boxplots
 eq:block-model
+eq:block-plm
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -69,6 +70,7 @@ crd-size
 exercises-1
 blocking
 unit-block-treatment-model
+normal-equations
 factorial
 block-factorial
 fractional-factorial

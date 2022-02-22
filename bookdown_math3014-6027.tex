@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-02-20}
+\date{2022-02-22}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "Milk first"
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Milk first"
+## [6] "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1278,7 +1278,7 @@ y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldot
 \label{eq:utm}
 \end{equation}
 
-where \(y_{ij}\) is the response from the \(j\)th application of treatment \(i\), \(\mu\) is a constant parameter, \(\tau_i\) is the effect of the \(i\)th treatment, and \(\varepsilon_{ij}\) is the random individual effect from each experimental unit with \(E(\varepsilon_{ij})\) and \(\mathrm{Var}(\varepsilon_{ij}) = \sigma^2\). All random errors are assumed independent and here we also assume \(\varepsilon_{ij} \sim N(0, \sigma^2)\).
+where \(y_{ij}\) is the response from the \(j\)th application of treatment \(i\), \(\mu\) is a constant parameter, \(\tau_i\) is the effect of the \(i\)th treatment, and \(\varepsilon_{ij}\) is the random individual effect from each experimental unit with \(E(\varepsilon_{ij})=0\) and \(\mathrm{Var}(\varepsilon_{ij}) = \sigma^2\). All random errors are assumed independent and here we also assume \(\varepsilon_{ij} \sim N(0, \sigma^2)\).
 
 Model \eqref{eq:utm} assumes that each treatment can be randomly allocated to one of the \(n\) experimental units, and that the response observed is independent of the allocation of all the other treatments (the stable unit treatment value assumption or SUTVA).
 
@@ -2577,14 +2577,14 @@ Tyre experiment \citep[ch.~3]{WH2009}
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
 \NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(tyre, }\AttributeTok{names\_from =}\NormalTok{ compound, }\AttributeTok{values\_from =}\NormalTok{ wear),}
  \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Block"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"Compound"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)),}
- \AttributeTok{caption =} \StringTok{"Tyre experiment: wear measurements from tires made with four different rubber compounds."}
+ \AttributeTok{caption =} \StringTok{"Tyre experiment: relative wear measurements (unitless) from tires made with four different rubber compounds."}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{table}
 
-\caption{\label{tab:tyre-expt-data}Tyre experiment: wear measurements from tires made with four different rubber compounds.}
+\caption{\label{tab:tyre-expt-data}Tyre experiment: relative wear measurements (unitless) from tires made with four different rubber compounds.}
 \centering
 \begin{tabular}[t]{l|r|r|r|r}
 \hline
@@ -2622,6 +2622,62 @@ Graphical exploration of the data is a little more problematic in this example. 
 \end{figure}
 
 \end{example}
+
+\hypertarget{unit-block-treatment-model}{%
+\section{Unit-block-treatment model}\label{unit-block-treatment-model}}
+
+If \(n_{ij}\) is the number of times treatment \(j\) occurs in block \(i\), a common statistical model to describe data from a blocked experiment has the form
+
+\begin{equation}
+y_{ijl} = \mu + \beta_i + \tau_i + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
+\label{eq:block-model}
+\end{equation}
+where \(y_{ijl}\) is the response from the \(l\)th application of the \(j\)th treatment in the \(i\)th block, \(\mu\) is a constant parameter, \(\beta_i\) is the effect of the \(i\)th block, \(\tau_j\) is the effect of treatment \(j\), and \(\varepsilon_{ijl}\sim N(0, \sigma^2)\) are once again random individual effects from each experimental unit, assumed independent. The total number of runs in the experiment is given by \(n = \sum_{i=1}^b\sum_{j=1}^t n_{ij}\).
+
+For Example \ref{exm:blocks-bars}, there are \(t=4\) experiments, \(b = 8\) blocks and each treatment occurs once in each block, so \(n_{ij} = 1\) for all \(i, j\). In Example \ref{exm:blocks-tyres}, there are again \(t=4\) treatments but now only \(b=4\) blocks and not every treatment occurs in every block. In fact, we have \(n_{11} = n_{12} = n_{13} = 1\), \(n_{14} = 0\), \(n_{21} = n_{22} =n_{24} = 1\), \(n_{23} = 0\), \(n_{31} = n_{33} =n_{34} = 1\), \(n_{32} = 0\), \(n_{41} = 0\) and \(n_{42} = n_{43} =n_{44} = 1\).
+
+Writing model \eqref{eq:block-model} is matrix form as a partitioned linear model, we obtain
+
+\begin{equation}
+\boldsymbol{y}= \mu\boldsymbol{1}_n + X_1\boldsymbol{\beta} + X_2\boldsymbol{\tau} + \boldsymbol{\varepsilon}\,,
+\label{eq:block-plm}
+\end{equation}
+
+with \(\boldsymbol{y}\) the \(n\)-vector of responses, \(X_1\) and \(X_2\) \(n\times b\) and \(n\times t\) model matrices for blocks and treatments, respectively, \(\boldsymbol{\beta} = (\beta_1,\ldots, \beta_b)^{\mathrm{T}}\), \(\boldsymbol{\tau} = (\tau_1,\ldots, \tau_t)^{\mathrm{T}}\) and \(\boldsymbol{\varepsilon}\) the \(n\)-vector of errors.
+
+In equation\eqref{eq:block-plm}, assuming without loss of generality that runs of the experiment are ordered by block, the matrix \(X_1\) has the form
+
+\[
+X_2 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
+\boldsymbol{1}_{k_1} & \boldsymbol{0}_{k_1} & \cdots &  \boldsymbol{0}_{k_1} \\
+\boldsymbol{0}_{k_2} & \boldsymbol{1}_{k_2} & \cdots &  \boldsymbol{0}_{k_2} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k_b} & \boldsymbol{0}_{k_b} & \cdots &  \boldsymbol{1}_{k_b} \\
+\end{bmatrix}\,,
+\]
+where \(k_i = \sum_{j=1}^t n_{ij}\), the number of units in the \(i\)th block. The structure of matrix \(X_2\) is harder to describe so distinctly, but each row includes a single non-zero entry, equal to one, indicating which treatment was applied in that run of the experiment. The first \(k_1\) rows correspond to block 1, the second \(k_2\) to block 2, and so on. We will see special cases later.
+
+\hypertarget{normal-equations}{%
+\section{Normal equations}\label{normal-equations}}
+
+Writing as a partitioned model \(\boldsymbol{y}= W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}\), with \(W = [\boldsymbol{1} | X_1 | X_2]\) and \(\boldsymbol{\alpha}^{\mathrm{T}} = [\mu | \boldsymbol{\beta}^{\mathrm{T}} | \boldsymbol{\tau}^{\mathrm{T}}]\), the least squares normal equations
+
+\[
+W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\boldsymbol{y}
+\]
+can be written as a set of three matrix equations:
+
+\begin{align}
+n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \\
+X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\boldsymbol{y}\,, \\
+X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\boldsymbol{y}\,. \\
+\end{align}
+
+Above, the matrices \(X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)\) and \(X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)\) have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.
+
+The \(t\times b\) matrix \(N = X_2^{\mathcal{T}}X_1\) is particularly important in block designs, and is called the \textbf{incidence} matrix. Each of the \(i\)th row of N indicates in which blocks the \(i\)th treatment occurs.
+
+\ldots\ldots\ldots..
 
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
