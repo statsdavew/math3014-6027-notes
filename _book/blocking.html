@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-02-22" />
+<meta name="date" content="2022-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -198,6 +198,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.1" data-path="blocking.html"><a href="blocking.html#unit-block-treatment-model"><i class="fa fa-check"></i><b>3.1</b> Unit-block-treatment model</a></li>
 <li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html#normal-equations"><i class="fa fa-check"></i><b>3.2</b> Normal equations</a></li>
+<li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#analysis-of-variance"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
+<li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
@@ -420,10 +422,11 @@ where <span class="math inline">\(k_i = \sum_{j=1}^t n_{ij}\)</span>, the number
 <div id="normal-equations" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Normal equations</h2>
 <p>Writing as a partitioned model <span class="math inline">\(\boldsymbol{y}= W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}\)</span>, with <span class="math inline">\(W = [\boldsymbol{1} | X_1 | X_2]\)</span> and <span class="math inline">\(\boldsymbol{\alpha}^{\mathrm{T}} = [\mu | \boldsymbol{\beta}^{\mathrm{T}} | \boldsymbol{\tau}^{\mathrm{T}}]\)</span>, the least squares normal equations</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:bne">\[\begin{equation}
 W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\boldsymbol{y}
-\]</span>
-can be written as a set of three matrix equations:</p>
+\tag{3.3}
+\end{equation}\]</span></p>
+<p>can be written as a set of three matrix equations:</p>
 <p><span class="math display">\[\begin{align}
 n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \\
 X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = X_1^{\mathrm{T}}\boldsymbol{y}\,, \\
@@ -439,7 +442,7 @@ X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\ha
 \end{multline}\]</span></p>
 <p>and subtracting from the final equation:</p>
 <p><span class="math display">\[\begin{multline}
-X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
 = X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
 \end{multline}\]</span>
 Clearly, a zero matrix is multiplying the block effects <span class="math inline">\(\boldsymbol{\beta}\)</span>. Also,</p>
@@ -467,7 +470,7 @@ X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}} = \bigoplus_{i = 1}^b \frac{1}{k_i
 <p>Writing <span class="math inline">\(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\)</span>, we then get the reduced normal equations for <span class="math inline">\(\boldsymbol{\tau}\)</span>:</p>
 <p><span class="math display" id="eq:block-rne">\[\begin{equation}
 X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\boldsymbol{y}\,.
-\tag{3.3}
+\tag{3.4}
 \end{equation}\]</span></p>
 <p>We can demonstrate the form of these matrices through our two examples.</p>
 <p>For Example <a href="blocking.html#exm:blocks-bars">3.1</a>:</p>
@@ -519,6 +522,101 @@ X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\lef
 X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \]</span>
 which have the same form as the CRD in Chapter <a href="crd.html#crd">2</a> albeit with a different <span class="math inline">\(X_{2|1}\)</span> matrix as we are adjusting for more complex nuisance parameters.</p>
+<p>In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section @ref(#rcdb) below). By default, to fit model <a href="blocking.html#eq:block-plm">(3.2)</a>, the <code>lm</code> function in <code>R</code> applies the constraint <span class="math inline">\(\tau_t = \beta_b = 0\)</span>, and removes the corresponding columns from <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, to leave a <span class="math inline">\(W\)</span> matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use <code>emmeans</code> to extract these estimates from an <code>lm</code> object).</p>
+</div>
+<div id="analysis-of-variance" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Analysis of variance</h2>
+<p>As was the case with the CRD, it can be shown that any solution to the normal equations <a href="blocking.html#eq:bne">(3.3)</a> will produce a unique solution to <span class="math inline">\(\widehat{W\alpha}\)</span>, and hence a unique analysis of variance decomposition can be obtained.</p>
+<p>For a block experiment, the ANOVA table is comparing the full model <a href="blocking.html#eq:block-plm">(3.2)</a>, the model containing the block effects</p>
+<p><span class="math display" id="eq:anova-bm">\[\begin{equation}
+\boldsymbol{y}= \mu\boldsymbol{1} + X_1\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\tag{3.5}
+\end{equation}\]</span></p>
+<p>and the null model</p>
+<p><span class="math display" id="eq:anova-nm">\[\begin{equation}
+\boldsymbol{y}= \mu\boldsymbol{1} + \boldsymbol{\varepsilon}\,,
+\tag{3.6}
+\end{equation}\]</span></p>
+<p>and has the form:</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="36%" />
+<col width="30%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Source</th>
+<th align="center">Degrees of freedom</th>
+<th align="left">Sums of squares</th>
+<th align="left">Mean square</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Blocks</td>
+<td align="center"><span class="math inline">\(b-1\)</span></td>
+<td align="left">RSS <a href="blocking.html#eq:anova-nm">(3.6)</a> - RSS <a href="blocking.html#eq:anova-bm">(3.5)</a></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Treatments</td>
+<td align="center"><span class="math inline">\(t-1\)</span></td>
+<td align="left">RSS <a href="blocking.html#eq:anova-bm">(3.5)</a> - RSS <a href="blocking.html#eq:block-plm">(3.2)</a></td>
+<td align="left">[RSS <a href="blocking.html#eq:anova-bm">(3.5)</a> - RSS <a href="blocking.html#eq:block-plm">(3.2)</a>] / <span class="math inline">\((t-1)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Residual</td>
+<td align="center"><span class="math inline">\(n - b - t + 1\)</span></td>
+<td align="left">RSS <a href="blocking.html#eq:block-plm">(3.2)</a></td>
+<td align="left">RSS <a href="blocking.html#eq:block-plm">(3.2)</a> / <span class="math inline">\((n - b - t + 1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="center"><span class="math inline">\(n - 1\)</span></td>
+<td align="left">RSS <a href="blocking.html#eq:anova-nm">(3.6)</a></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>We test the hypothesis <span class="math inline">\(H_0: \tau_1 = \cdots = \tau_t = 0\)</span> at the <span class="math inline">\(100\alpha\)</span>% significance level by comparing the ratio of treatment and residual mean squares to the <span class="math inline">\(1-\alpha\)</span> quantile of an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(t-1\)</span> and <span class="math inline">\(n-b-t+1\)</span> degrees of freedom.</p>
+<p>For Example <a href="blocking.html#exm:blocks-bars">3.1</a>, we obtain the following ANOVA.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="blocking.html#cb64-1" aria-hidden="true" tabindex="-1"></a>bar.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(strength <span class="sc">~</span> block <span class="sc">+</span> coating, <span class="at">data =</span> bar)</span>
+<span id="cb64-2"><a href="blocking.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bar.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: strength
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)   
+## block      7    215      31    0.55 0.7903   
+## coating    3   1310     437    7.75 0.0011 **
+## Residuals 21   1184      56                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Clearly, the null hypothesis of no treatment effect is rejected. The <code>anova</code> function also compares the block mean square to the residual mean square to perform a test of the hypothesis <span class="math inline">\(H_0: \beta_1 = \cdots = \beta_b = 0\)</span>. This is not a hypothesis that should usually be tested. The blocks are a nuisance factor and are generally a feature of the experimental process that has not been subject to randomisation; we are not interested in testing for block-to-block differences.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
+<p>For Example <a href="blocking.html#exm:blocks-tyres">3.2</a>, we get the ANOVA table:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="blocking.html#cb66-1" aria-hidden="true" tabindex="-1"></a>tyre.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(wear <span class="sc">~</span> block <span class="sc">+</span> compound, <span class="at">data =</span> tyre)</span>
+<span id="cb66-2"><a href="blocking.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(tyre.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: wear
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## block      3  39123   13041    37.2 0.00076 ***
+## compound   3  20729    6910    19.7 0.00335 ** 
+## Residuals  5   1751     350                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.</p>
+<p>The residual mean square for model <a href="blocking.html#eq:block-plm">(3.2)</a> also provides an unbiased estimate, <span class="math inline">\(s^2\)</span>, of <span class="math inline">\(\sigma^2\)</span>, the variability of the <span class="math inline">\(\varepsilon_{ijl}\)</span>, <em>assuming the unit-block-treatment model is correct</em>.</p>
+</div>
+<div id="rcdb" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Randomised complete block designs</h2>
+<p>A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is <span class="math inline">\(n_{ij} = 1\)</span> for <span class="math inline">\(i=1,\ldots, b; j = 1, \ldots, t\)</span>. Therefore each block has common size <span class="math inline">\(k_1=\cdots =k_b = k\)</span>. For an RCBD, the matrix <span class="math inline">\(X_{2|1}\)</span> has the form</p>
+<p><span class="math display">\[\begin{align*}
+X_{2|1} &amp; = (I_n - H_1)X_2 \\
+&amp; = X2 - H_1X_2 \\
+&amp; = X2 - \frac{1}{t}J_{n \times t}
+\end{align*}\]</span></p>
 
 </div>
 </div>
@@ -542,6 +640,7 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
 <ol start="18">
 <li id="fn18"><p>Thr four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.<a href="blocking.html#fnref18" class="footnote-back">↩︎</a></p></li>
 <li id="fn19"><p>This is our first example of (partial) confounding, which we will see again in Chapters <a href="block-factorial.html#block-factorial">5</a> and <a href="fractional-factorial.html#fractional-factorial">6</a><a href="blocking.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p><code>R</code> and <code>anova</code> don’t, of course, know that this is a block design or that a blocking factor is being tested.<a href="blocking.html#fnref20" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

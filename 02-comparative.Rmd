@@ -679,7 +679,7 @@ a. Two of the simplest ways of examining the data are to calculate basic descrip
     boxplot(yield ~ batch, data = napblack)
     ```
 
-    Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This *within-group* variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e. between the different batch means themselves. We can see from the stripcharts (Figure \@ref(fig:napblack-summary)) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
+    Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This *within-group* variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e. between the different batch means themselves. We can see from the box plots (Figure \@ref(fig:napblack-summary)) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
     
 a. When we fit linear models and compare them using analysis of variance (ANOVA), it enables us to decide whether the differences that seem to be evident in these simple plots and descriptive statistics are statistically significant or whether this kind of variation could have arisen by chance, even though there are no real differences between the batches.
 
@@ -692,7 +692,7 @@ a. When we fit linear models and compare them using analysis of variance (ANOVA)
 
     where $Y_{ij}$ is the response obtained from the $j$th repetition of the $i$th batch, $\mu$ is a constant term, $\tau_i$ is the expected effect due to the observation being in the $k$th batch $(k=1,\ldots,5)$ and $\varepsilon_{ij}$ are the random errors.
  
-    A test of the hypothesis that the group means are all equal is equivalent to a test that the  $\tau_i$ are all equal $(H_0:\,  \tau_1 = \tau_2 = \cdots = \tau_6)$. We can use `lm` to fit model \@ref(eq:linmod), and `anova` to test the hypothesis. Before we fit the linear model, we need to make sure `batch` has type `factor`^[Factors are variables in `R` which take on a limited number of different values (e.g. categorical variables). We need to define a categorical variable, like `batch` as a `factor` to ensure they are treated correctly by functions such as `lm`.].  
+    A test of the hypothesis that the group means are all equal is equivalent to a test that the  $\tau_i$ are all equal to 0 $(H_0:\,  \tau_1 = \tau_2 = \cdots = \tau_6 = 0)$. We can use `lm` to fit model \@ref(eq:linmod), and `anova` to test the hypothesis. Before we fit the linear model, we need to make sure `batch` has type `factor`^[Factors are variables in `R` which take on a limited number of different values (e.g. categorical variables). We need to define a categorical variable, like `batch` as a `factor` to ensure they are treated correctly by functions such as `lm`.].  
  
     ```{r linmod}
     napblack$batch <- as.factor(napblack$batch)

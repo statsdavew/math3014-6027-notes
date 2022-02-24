@@ -98,9 +98,11 @@ where $k_i = \sum_{j=1}^t n_{ij}$, the number of units in the $i$th block. The s
 
 Writing as a partitioned model $\by = W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}$, with $W = [\boldsymbol{1} | X_1 | X_2]$ and $\boldsymbol{\alpha}^{\mathrm{T}} = [\mu | \boldsymbol{\beta}^{\mathrm{T}} | \boldsymbol{\tau}^{\mathrm{T}}]$, the least squares normal equations
 
-$$
+\begin{equation}
 W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\by
-$$
+(\#eq:bne)
+\end{equation}
+
 can be written as a set of three matrix equations:
 
 \begin{align}
@@ -124,7 +126,7 @@ X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\ha
 and subtracting from the final equation:
 
 \begin{multline}
-X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
 = X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\bY\,.
 \end{multline}
 Clearly, a zero matrix is multiplying the block effects $\boldsymbol{\beta}$. Also,
@@ -220,6 +222,67 @@ $$
 X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\bY\,,
 $$
 which have the same form as the CRD in Chapter \@ref(crd) albeit with a different $X_{2|1}$ matrix as we are adjusting for more complex nuisance parameters.
+
+In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section \@ref(#rcdb) below). By default, to fit model \@ref(eq:block-plm), the `lm` function in `R` applies the constraint $\tau_t = \beta_b = 0$, and removes the corresponding columns from $X_1$ and $X_2$, to leave a $W$ matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use `emmeans` to extract these estimates from an `lm` object).
+
+## Analysis of variance
+
+As was the case with the CRD, it can be shown that any solution to the normal equations \@ref(eq:bne) will produce a unique solution to $\widehat{W\alpha}$, and hence a unique analysis of variance decomposition can be obtained.
+
+For a block experiment, the ANOVA table is comparing the full model \@ref(eq:block-plm), the model containing the block effects
+
+\begin{equation}
+\bY = \mu\boldsymbol{1} + X_1\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+(\#eq:anova-bm)
+\end{equation}
+
+and the null model
+
+\begin{equation}
+\bY = \mu\boldsymbol{1} + \boldsymbol{\varepsilon}\,,
+(\#eq:anova-nm)
+\end{equation}
+
+and has the form:
+
+| Source | Degrees of freedom | Sums of squares | Mean square |
+| :----- | :----------------: | :-------------- | :---------- |
+| Blocks | $b-1$ | RSS \@ref(eq:anova-nm) - RSS \@ref(eq:anova-bm) | |
+| Treatments | $t-1$ | RSS \@ref(eq:anova-bm) - RSS \@ref(eq:block-plm) | [RSS \@ref(eq:anova-bm) - RSS \@ref(eq:block-plm)] / $(t-1)$ |
+| Residual | $n - b - t + 1$ | RSS \@ref(eq:block-plm) | RSS \@ref(eq:block-plm) / $(n - b - t + 1)$ |
+| Total | $n - 1$ | RSS \@ref(eq:anova-nm) | |
+
+We test the hypothesis $H_0: \tau_1 = \cdots = \tau_t = 0$ at the $100\alpha$% significance level by comparing the ratio of treatment and residual mean squares to the $1-\alpha$ quantile of an $F$ distribution with $t-1$ and $n-b-t+1$ degrees of freedom.
+
+For Example \@ref(exm:blocks-bars), we obtain the following ANOVA. 
+
+```{r block-bars-anova}
+bar.lm <- lm(strength ~ block + coating, data = bar)
+anova(bar.lm)
+```
+Clearly, the null hypothesis of no treatment effect is rejected. The `anova` function also compares the block mean square to the residual mean square to perform a test of the hypothesis $H_0: \beta_1 = \cdots = \beta_b  = 0$. This is not a hypothesis that should usually be tested. The blocks are a nuisance factor and are generally a feature of the experimental process that has not been subject to randomisation; we are not interested in testing for block-to-block differences.^[`R` and `anova` don't, of course, know that this is a block design or that a blocking factor is being tested.] 
+
+For Example \@ref(exm:blocks-tyres), we get the ANOVA table:
+
+```{r block-tyres-anova}
+tyre.lm <- lm(wear ~ block + compound, data = tyre)
+anova(tyre.lm)
+```
+
+Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.
+
+The residual mean square for model \@ref(eq:block-plm) also provides an unbiased estimate, $s^2$, of $\sigma^2$, the variability of the $\varepsilon_{ijl}$, *assuming the unit-block-treatment model is correct*. 
+
+## Randomised complete block designs {#rcdb}
+
+A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is $n_{ij} = 1$ for $i=1,\ldots, b; j = 1, \ldots, t$. Therefore each block has common size $k_1=\cdots =k_b = k$. For an RCBD, the matrix $X_{2|1}$ has the form
+
+\begin{align*}
+X_{2|1} & = (I_n - H_1)X_2 \\
+& = X2 - H_1X_2 \\
+& = X2 - \frac{1}{t}J_{n \times t}
+\end{align*}
+
 
 
 

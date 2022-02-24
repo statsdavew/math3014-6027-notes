@@ -117,7 +117,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-02-22}
+\date{2022-02-24}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -887,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Milk first"
-## [6] "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Milk first" "Tea first" 
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2224,7 +2224,7 @@ Solution
    \caption{Naphthalene black experiment: distributions of dye yields from the six batches.}\label{fig:napblack-summary}
    \end{figure}
 
-  Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This \emph{within-group} variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e.~between the different batch means themselves. We can see from the stripcharts (Figure \ref{fig:napblack-summary}) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
+  Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This \emph{within-group} variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e.~between the different batch means themselves. We can see from the box plots (Figure \ref{fig:napblack-summary}) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
 \item
   When we fit linear models and compare them using analysis of variance (ANOVA), it enables us to decide whether the differences that seem to be evident in these simple plots and descriptive statistics are statistically significant or whether this kind of variation could have arisen by chance, even though there are no real differences between the batches.
 
@@ -2237,7 +2237,7 @@ Solution
 
   where \(Y_{ij}\) is the response obtained from the \(j\)th repetition of the \(i\)th batch, \(\mu\) is a constant term, \(\tau_i\) is the expected effect due to the observation being in the \(k\)th batch \((k=1,\ldots,5)\) and \(\varepsilon_{ij}\) are the random errors.
 
-  A test of the hypothesis that the group means are all equal is equivalent to a test that the \(\tau_i\) are all equal \((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6)\). We can use \texttt{lm} to fit model \eqref{eq:linmod}, and \texttt{anova} to test the hypothesis. Before we fit the linear model, we need to make sure \texttt{batch} has type \texttt{factor}\footnote{Factors are variables in \texttt{R} which take on a limited number of different values (e.g.~categorical variables). We need to define a categorical variable, like \texttt{batch} as a \texttt{factor} to ensure they are treated correctly by functions such as \texttt{lm}.}.
+  A test of the hypothesis that the group means are all equal is equivalent to a test that the \(\tau_i\) are all equal to 0 \((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\). We can use \texttt{lm} to fit model \eqref{eq:linmod}, and \texttt{anova} to test the hypothesis. Before we fit the linear model, we need to make sure \texttt{batch} has type \texttt{factor}\footnote{Factors are variables in \texttt{R} which take on a limited number of different values (e.g.~categorical variables). We need to define a categorical variable, like \texttt{batch} as a \texttt{factor} to ensure they are treated correctly by functions such as \texttt{lm}.}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2622,9 +2622,11 @@ where \(k_i = \sum_{j=1}^t n_{ij}\), the number of units in the \(i\)th block. T
 
 Writing as a partitioned model \(\boldsymbol{y}= W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}\), with \(W = [\boldsymbol{1} | X_1 | X_2]\) and \(\boldsymbol{\alpha}^{\mathrm{T}} = [\mu | \boldsymbol{\beta}^{\mathrm{T}} | \boldsymbol{\tau}^{\mathrm{T}}]\), the least squares normal equations
 
-\[
+\begin{equation}
 W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\boldsymbol{y}
-\]
+\label{eq:bne}
+\end{equation}
+
 can be written as a set of three matrix equations:
 
 \begin{align}
@@ -2648,7 +2650,7 @@ X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\ha
 and subtracting from the final equation:
 
 \begin{multline}
-X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
 = X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
 \end{multline}
 Clearly, a zero matrix is multiplying the block effects \(\boldsymbol{\beta}\). Also,
@@ -2748,6 +2750,106 @@ Notice that if we write \(X_{2|1} = (I_n - H_1)X2\), then the reduced normal equ
 X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \]
 which have the same form as the CRD in Chapter \ref{crd} albeit with a different \(X_{2|1}\) matrix as we are adjusting for more complex nuisance parameters.
+
+In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section @ref(\#rcdb) below). By default, to fit model \eqref{eq:block-plm}, the \texttt{lm} function in \texttt{R} applies the constraint \(\tau_t = \beta_b = 0\), and removes the corresponding columns from \(X_1\) and \(X_2\), to leave a \(W\) matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use \texttt{emmeans} to extract these estimates from an \texttt{lm} object).
+
+\hypertarget{analysis-of-variance}{%
+\section{Analysis of variance}\label{analysis-of-variance}}
+
+As was the case with the CRD, it can be shown that any solution to the normal equations \eqref{eq:bne} will produce a unique solution to \(\widehat{W\alpha}\), and hence a unique analysis of variance decomposition can be obtained.
+
+For a block experiment, the ANOVA table is comparing the full model \eqref{eq:block-plm}, the model containing the block effects
+
+\begin{equation}
+\boldsymbol{y}= \mu\boldsymbol{1} + X_1\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\label{eq:anova-bm}
+\end{equation}
+
+and the null model
+
+\begin{equation}
+\boldsymbol{y}= \mu\boldsymbol{1} + \boldsymbol{\varepsilon}\,,
+\label{eq:anova-nm}
+\end{equation}
+
+and has the form:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
+  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
+\toprule
+Source & Degrees of freedom & Sums of squares & Mean square \\
+\midrule
+\endhead
+Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
+Treatments & \(t-1\) & RSS \eqref{eq:anova-bm} - RSS \eqref{eq:block-plm} & {[}RSS \eqref{eq:anova-bm} - RSS \eqref{eq:block-plm}{]} / \((t-1)\) \\
+Residual & \(n - b - t + 1\) & RSS \eqref{eq:block-plm} & RSS \eqref{eq:block-plm} / \((n - b - t + 1)\) \\
+Total & \(n - 1\) & RSS \eqref{eq:anova-nm} & \\
+\bottomrule
+\end{longtable}
+
+We test the hypothesis \(H_0: \tau_1 = \cdots = \tau_t = 0\) at the \(100\alpha\)\% significance level by comparing the ratio of treatment and residual mean squares to the \(1-\alpha\) quantile of an \(F\) distribution with \(t-1\) and \(n-b-t+1\) degrees of freedom.
+
+For Example \ref{exm:blocks-bars}, we obtain the following ANOVA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(strength }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block }\SpecialCharTok{+}\NormalTok{ coating, }\AttributeTok{data =}\NormalTok{ bar)}
+\FunctionTok{anova}\NormalTok{(bar.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: strength
+##           Df Sum Sq Mean Sq F value Pr(>F)   
+## block      7    215      31    0.55 0.7903   
+## coating    3   1310     437    7.75 0.0011 **
+## Residuals 21   1184      56                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Clearly, the null hypothesis of no treatment effect is rejected. The \texttt{anova} function also compares the block mean square to the residual mean square to perform a test of the hypothesis \(H_0: \beta_1 = \cdots = \beta_b = 0\). This is not a hypothesis that should usually be tested. The blocks are a nuisance factor and are generally a feature of the experimental process that has not been subject to randomisation; we are not interested in testing for block-to-block differences.\footnote{\texttt{R} and \texttt{anova} don't, of course, know that this is a block design or that a blocking factor is being tested.}
+
+For Example \ref{exm:blocks-tyres}, we get the ANOVA table:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tyre.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wear }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block }\SpecialCharTok{+}\NormalTok{ compound, }\AttributeTok{data =}\NormalTok{ tyre)}
+\FunctionTok{anova}\NormalTok{(tyre.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: wear
+##           Df Sum Sq Mean Sq F value  Pr(>F)    
+## block      3  39123   13041    37.2 0.00076 ***
+## compound   3  20729    6910    19.7 0.00335 ** 
+## Residuals  5   1751     350                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.
+
+The residual mean square for model \eqref{eq:block-plm} also provides an unbiased estimate, \(s^2\), of \(\sigma^2\), the variability of the \(\varepsilon_{ijl}\), \emph{assuming the unit-block-treatment model is correct}.
+
+\hypertarget{rcdb}{%
+\section{Randomised complete block designs}\label{rcdb}}
+
+A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is \(n_{ij} = 1\) for \(i=1,\ldots, b; j = 1, \ldots, t\). Therefore each block has common size \(k_1=\cdots =k_b = k\). For an RCBD, the matrix \(X_{2|1}\) has the form
+
+\begin{align*}
+X_{2|1} & = (I_n - H_1)X_2 \\
+& = X2 - H_1X_2 \\
+& = X2 - \frac{1}{t}J_{n \times t}
+\end{align*}
 
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
