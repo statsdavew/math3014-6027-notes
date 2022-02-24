@@ -44,7 +44,10 @@ tab:tyre-expt-data
 fig:tyre-expt-boxplots
 eq:block-model
 eq:block-plm
+eq:bne
 eq:block-rne
+eq:anova-bm
+eq:anova-nm
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -72,6 +75,8 @@ exercises-1
 blocking
 unit-block-treatment-model
 normal-equations
+analysis-of-variance
+rcdb
 factorial
 block-factorial
 fractional-factorial
