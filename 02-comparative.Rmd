@@ -757,7 +757,7 @@ are of primary interest to the experimenter.
 
 a. Find an allocation of the 50 units to the 5 treatments, i.e. find $n_1, \ldots, n_5$, that minimises the average variance of the corresponding contrast estimators.
 
-a. Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to $w_i = n_i/50$, find the value of $n$ required to make the ratio $|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2$ assuming a signal-to-noise ratio of 1. 
+a. Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to $w_i = n_i/50$, find the value of $n$ required to make the ratio $T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2$ assuming a signal-to-noise ratio of 1. 
 
 <details>
 <summary><b>Solution</b></summary>
@@ -786,14 +786,16 @@ opt_ni(C, n)
     crd_var(C, nv + c(0, 0, 0, 1, 0))
     ```
  
-a. The optimal ratios for each treatment from part (a) are $w_1 = w_5 = `r opt_ni(C, n)[1]/n`$ and $w_2 = w_3 = w_4 = `r opt_ni(C, n)[2]/n`$. Fixing these, we can use code from Section \@ref(crd-size) to find the required value of $n$.
+a. The optimal ratios for each treatment from part (a) are $w_1 = w_5 = `r opt_ni(C, n)[1]/n`$ and $w_2 = w_3 = w_4 = `r opt_ni(C, n)[2]/n`$. Fixing these, we can use code from Section \@ref(crd-size) to find the required value of $n$ for each contrast.
 
     ```{r crd-opt-n}
-    cv <- C[1, ] # we can pick any row of C, as all the row sums are the same
-    opt_n(cv, opt_ni(C, n) / n, 1, 2) # snr = 1, target = 2
+    nv <- NULL
+    for(i in 1:4) nv[i] <- opt_n(C[i, ], opt_ni(C, n) / n, 1, 2) # snr = 1, target = 2
+    nv
     ```
 
-    Hence, we need $n = `r ceiling(opt_n(cv, opt_ni(C, n) / n, 1, 2))`$. 
+
+    Hence, we need $n = `r ceiling(nv[1])`$ for to achieve $T = 2$ for the first and last contrasts, and $n = `r ceiling(nv[2])`$ for the second and third. The differences are due to the different proportions $w_i$ assumed for each treatment. To achieve $T=2$ for all contrasts, we pick the larger number, $n = `r ceiling(nv[1])`$. 
  
 </details> 
 
