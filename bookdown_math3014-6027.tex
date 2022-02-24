@@ -887,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Milk first"
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2377,7 +2377,7 @@ are of primary interest to the experimenter.
 \item
   Find an allocation of the 50 units to the 5 treatments, i.e.~find \(n_1, \ldots, n_5\), that minimises the average variance of the corresponding contrast estimators.
 \item
-  Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e.~to \(w_i = n_i/50\), find the value of \(n\) required to make the ratio \(|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2\) assuming a signal-to-noise ratio of 1.
+  Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e.~to \(w_i = n_i/50\), find the value of \(n\) required to make the ratio \(T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2\) assuming a signal-to-noise ratio of 1.
 \end{enumerate}
 
 Solution
@@ -2423,20 +2423,21 @@ Solution
 ## [1] 0.78
 \end{verbatim}
 \item
-  The optimal ratios for each treatment from part (a) are \(w_1 = w_5 = 0.16\) and \(w_2 = w_3 = w_4 = 0.227\). Fixing these, we can use code from Section \ref{crd-size} to find the required value of \(n\).
+  The optimal ratios for each treatment from part (a) are \(w_1 = w_5 = 0.16\) and \(w_2 = w_3 = w_4 = 0.227\). Fixing these, we can use code from Section \ref{crd-size} to find the required value of \(n\) for each contrast.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{cv }\OtherTok{\textless{}{-}}\NormalTok{ C[}\DecValTok{1}\NormalTok{, ] }\CommentTok{\# we can pick any row of C, as all the row sums are the same}
-\FunctionTok{opt\_n}\NormalTok{(cv, }\FunctionTok{opt\_ni}\NormalTok{(C, n) }\SpecialCharTok{/}\NormalTok{ n, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\CommentTok{\# snr = 1, target = 2}
+\NormalTok{nv }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{) nv[i] }\OtherTok{\textless{}{-}} \FunctionTok{opt\_n}\NormalTok{(C[i, ], }\FunctionTok{opt\_ni}\NormalTok{(C, n) }\SpecialCharTok{/}\NormalTok{ n, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\CommentTok{\# snr = 1, target = 2}
+\NormalTok{nv}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 42.6
+## [1] 42.6 35.3 35.3 42.6
 \end{verbatim}
 
-  Hence, we need \(n = 43\).
+  Hence, we need \(n = 43\) for to achieve \(T = 2\) for the first and last contrasts, and \(n = 36\) for the second and third. The differences are due to the different proportions \(w_i\) assumed for each treatment. To achieve \(T=2\) for all contrasts, we pick the larger number, \(n = 43\).
 \end{enumerate}
 
 \hypertarget{blocking}{%

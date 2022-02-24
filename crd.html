@@ -1219,7 +1219,7 @@ available amongst the treatments (15 differences between the six batches here).<
 <p>are of primary interest to the experimenter.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Find an allocation of the 50 units to the 5 treatments, i.e. find <span class="math inline">\(n_1, \ldots, n_5\)</span>, that minimises the average variance of the corresponding contrast estimators.</p></li>
-<li><p>Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to <span class="math inline">\(w_i = n_i/50\)</span>, find the value of <span class="math inline">\(n\)</span> required to make the ratio <span class="math inline">\(|\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2\)</span> assuming a signal-to-noise ratio of 1.</p></li>
+<li><p>Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to <span class="math inline">\(w_i = n_i/50\)</span>, find the value of <span class="math inline">\(n\)</span> required to make the ratio <span class="math inline">\(T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2\)</span> assuming a signal-to-noise ratio of 1.</p></li>
 </ol>
 <details>
 <p><summary><b>Solution</b></summary></p>
@@ -1244,11 +1244,12 @@ available amongst the treatments (15 differences between the six batches here).<
 <pre><code>## [1] 0.78
 ## [1] 0.78
 ## [1] 0.78</code></pre></li>
-<li><p>The optimal ratios for each treatment from part (a) are <span class="math inline">\(w_1 = w_5 = 0.16\)</span> and <span class="math inline">\(w_2 = w_3 = w_4 = 0.227\)</span>. Fixing these, we can use code from Section <a href="crd.html#crd-size">2.8.2</a> to find the required value of <span class="math inline">\(n\)</span>.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="crd.html#cb56-1"></a>cv &lt;-<span class="st"> </span>C[<span class="dv">1</span>, ] <span class="co"># we can pick any row of C, as all the row sums are the same</span></span>
-<span id="cb56-2"><a href="crd.html#cb56-2"></a><span class="kw">opt_n</span>(cv, <span class="kw">opt_ni</span>(C, n) <span class="op">/</span><span class="st"> </span>n, <span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># snr = 1, target = 2</span></span></code></pre></div>
-<pre><code>## [1] 42.6</code></pre>
-<p>Hence, we need <span class="math inline">\(n = 43\)</span>.</p></li>
+<li><p>The optimal ratios for each treatment from part (a) are <span class="math inline">\(w_1 = w_5 = 0.16\)</span> and <span class="math inline">\(w_2 = w_3 = w_4 = 0.227\)</span>. Fixing these, we can use code from Section <a href="crd.html#crd-size">2.8.2</a> to find the required value of <span class="math inline">\(n\)</span> for each contrast.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="crd.html#cb56-1"></a>nv &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb56-2"><a href="crd.html#cb56-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) nv[i] &lt;-<span class="st"> </span><span class="kw">opt_n</span>(C[i, ], <span class="kw">opt_ni</span>(C, n) <span class="op">/</span><span class="st"> </span>n, <span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># snr = 1, target = 2</span></span>
+<span id="cb56-3"><a href="crd.html#cb56-3"></a>nv</span></code></pre></div>
+<pre><code>## [1] 42.6 35.3 35.3 42.6</code></pre>
+<p>Hence, we need <span class="math inline">\(n = 43\)</span> for to achieve <span class="math inline">\(T = 2\)</span> for the first and last contrasts, and <span class="math inline">\(n = 36\)</span> for the second and third. The differences are due to the different proportions <span class="math inline">\(w_i\)</span> assumed for each treatment. To achieve <span class="math inline">\(T=2\)</span> for all contrasts, we pick the larger number, <span class="math inline">\(n = 43\)</span>.</p></li>
 </ol>
 </details>
 
