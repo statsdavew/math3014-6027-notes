@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-02-24" />
+<meta name="date" content="2022-02-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,6 +200,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html#normal-equations"><i class="fa fa-check"></i><b>3.2</b> Normal equations</a></li>
 <li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#analysis-of-variance"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
+<li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
@@ -397,7 +398,7 @@ Figure 3.2: Tyre experiment: distributions of wear from the four blocks (top) an
 <h2><span class="header-section-number">3.1</span> Unit-block-treatment model</h2>
 <p>If <span class="math inline">\(n_{ij}\)</span> is the number of times treatment <span class="math inline">\(j\)</span> occurs in block <span class="math inline">\(i\)</span>, a common statistical model to describe data from a blocked experiment has the form</p>
 <p><span class="math display" id="eq:block-model">\[\begin{equation}
-y_{ijl} = \mu + \beta_i + \tau_i + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
+y_{ijl} = \mu + \beta_i + \tau_j + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
 \tag{3.1}
 \end{equation}\]</span>
 where <span class="math inline">\(y_{ijl}\)</span> is the response from the <span class="math inline">\(l\)</span>th application of the <span class="math inline">\(j\)</span>th treatment in the <span class="math inline">\(i\)</span>th block, <span class="math inline">\(\mu\)</span> is a constant parameter, <span class="math inline">\(\beta_i\)</span> is the effect of the <span class="math inline">\(i\)</span>th block, <span class="math inline">\(\tau_j\)</span> is the effect of treatment <span class="math inline">\(j\)</span>, and <span class="math inline">\(\varepsilon_{ijl}\sim N(0, \sigma^2)\)</span> are once again random individual effects from each experimental unit, assumed independent. The total number of runs in the experiment is given by <span class="math inline">\(n = \sum_{i=1}^b\sum_{j=1}^t n_{ij}\)</span>.</p>
@@ -427,10 +428,10 @@ W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\boldsymbol{y}
 \tag{3.3}
 \end{equation}\]</span></p>
 <p>can be written as a set of three matrix equations:</p>
-<p><span class="math display">\[\begin{align}
-n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \\
-X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = X_1^{\mathrm{T}}\boldsymbol{y}\,, \\
-X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = X_2^{\mathrm{T}}\boldsymbol{y}\,. \\
+<p><span class="math display" id="eq:blocks-normal-3" id="eq:blocks-normal-2" id="eq:blocks-normal-1">\[\begin{align}
+n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \tag{3.4}\\
+X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = X_1^{\mathrm{T}}\boldsymbol{y}\,, \tag{3.5}\\
+X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; = X_2^{\mathrm{T}}\boldsymbol{y}\,. \tag{3.6}\\
 \end{align}\]</span></p>
 <p>Above, the matrices <span class="math inline">\(X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)\)</span> and <span class="math inline">\(X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)\)</span> have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.</p>
 <p>The <span class="math inline">\(t\times b\)</span> matrix <span class="math inline">\(N = X_2^{\mathcal{T}}X_1\)</span> is particularly important in block designs, and is called the <strong>incidence</strong> matrix. Each of the <span class="math inline">\(i\)</span>th row of <span class="math inline">\(N\)</span> indicates in which blocks the <span class="math inline">\(i\)</span>th treatment occurs.</p>
@@ -470,7 +471,7 @@ X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}} = \bigoplus_{i = 1}^b \frac{1}{k_i
 <p>Writing <span class="math inline">\(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\)</span>, we then get the reduced normal equations for <span class="math inline">\(\boldsymbol{\tau}\)</span>:</p>
 <p><span class="math display" id="eq:block-rne">\[\begin{equation}
 X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\boldsymbol{y}\,.
-\tag{3.4}
+\tag{3.7}
 \end{equation}\]</span></p>
 <p>We can demonstrate the form of these matrices through our two examples.</p>
 <p>For Example <a href="blocking.html#exm:blocks-bars">3.1</a>:</p>
@@ -517,7 +518,7 @@ X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\lef
 <span id="cb63-25"><a href="blocking.html#cb63-25" aria-hidden="true" tabindex="-1"></a>X2tH1 <span class="ot">&lt;-</span> <span class="fu">t</span>(X2) <span class="sc">%*%</span> H1 <span class="co"># adjustment to y</span></span>
 <span id="cb63-26"><a href="blocking.html#cb63-26" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ones, X1, X2) <span class="co"># overall model matrix</span></span>
 <span id="cb63-27"><a href="blocking.html#cb63-27" aria-hidden="true" tabindex="-1"></a><span class="fu">qr</span>(W)<span class="sc">$</span>rank <span class="co"># rank 7 (t+b - 1)</span></span></code></pre></div>
-<p>Notice that if we write <span class="math inline">\(X_{2|1} = (I_n - H_1)X2\)</span>, then the reduced normal equations become</p>
+<p>Notice that if we write <span class="math inline">\(X_{2|1} = (I_n - H_1)X_2\)</span>, then the reduced normal equations become</p>
 <p><span class="math display">\[
 X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \]</span>
@@ -530,12 +531,12 @@ which have the same form as the CRD in Chapter <a href="crd.html#crd">2</a> albe
 <p>For a block experiment, the ANOVA table is comparing the full model <a href="blocking.html#eq:block-plm">(3.2)</a>, the model containing the block effects</p>
 <p><span class="math display" id="eq:anova-bm">\[\begin{equation}
 \boldsymbol{y}= \mu\boldsymbol{1} + X_1\boldsymbol{\beta} + \boldsymbol{\varepsilon}
-\tag{3.5}
+\tag{3.8}
 \end{equation}\]</span></p>
 <p>and the null model</p>
 <p><span class="math display" id="eq:anova-nm">\[\begin{equation}
 \boldsymbol{y}= \mu\boldsymbol{1} + \boldsymbol{\varepsilon}\,,
-\tag{3.6}
+\tag{3.9}
 \end{equation}\]</span></p>
 <p>and has the form:</p>
 <table>
@@ -557,14 +558,14 @@ which have the same form as the CRD in Chapter <a href="crd.html#crd">2</a> albe
 <tr class="odd">
 <td align="left">Blocks</td>
 <td align="center"><span class="math inline">\(b-1\)</span></td>
-<td align="left">RSS <a href="blocking.html#eq:anova-nm">(3.6)</a> - RSS <a href="blocking.html#eq:anova-bm">(3.5)</a></td>
+<td align="left">RSS <a href="blocking.html#eq:anova-nm">(3.9)</a> - RSS <a href="blocking.html#eq:anova-bm">(3.8)</a></td>
 <td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">Treatments</td>
 <td align="center"><span class="math inline">\(t-1\)</span></td>
-<td align="left">RSS <a href="blocking.html#eq:anova-bm">(3.5)</a> - RSS <a href="blocking.html#eq:block-plm">(3.2)</a></td>
-<td align="left">[RSS <a href="blocking.html#eq:anova-bm">(3.5)</a> - RSS <a href="blocking.html#eq:block-plm">(3.2)</a>] / <span class="math inline">\((t-1)\)</span></td>
+<td align="left">RSS <a href="blocking.html#eq:anova-bm">(3.8)</a> - RSS <a href="blocking.html#eq:block-plm">(3.2)</a></td>
+<td align="left">[RSS <a href="blocking.html#eq:anova-bm">(3.8)</a> - RSS <a href="blocking.html#eq:block-plm">(3.2)</a>] / <span class="math inline">\((t-1)\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left">Residual</td>
@@ -575,7 +576,7 @@ which have the same form as the CRD in Chapter <a href="crd.html#crd">2</a> albe
 <tr class="even">
 <td align="left">Total</td>
 <td align="center"><span class="math inline">\(n - 1\)</span></td>
-<td align="left">RSS <a href="blocking.html#eq:anova-nm">(3.6)</a></td>
+<td align="left">RSS <a href="blocking.html#eq:anova-nm">(3.9)</a></td>
 <td align="left"></td>
 </tr>
 </tbody>
@@ -607,16 +608,123 @@ which have the same form as the CRD in Chapter <a href="crd.html#crd">2</a> albe
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.</p>
-<p>The residual mean square for model <a href="blocking.html#eq:block-plm">(3.2)</a> also provides an unbiased estimate, <span class="math inline">\(s^2\)</span>, of <span class="math inline">\(\sigma^2\)</span>, the variability of the <span class="math inline">\(\varepsilon_{ijl}\)</span>, <em>assuming the unit-block-treatment model is correct</em>.</p>
+<p>The residual mean square for model <a href="blocking.html#eq:block-plm">(3.2)</a> also provides an unbiased estimate, <span class="math inline">\(s^2\)</span>, of <span class="math inline">\(\sigma^2\)</span>, the variability of the <span class="math inline">\(\varepsilon_{ijl}\)</span>, <em>assuming the unit-block-treatment model is correct</em>. For Example <a href="blocking.html#exm:blocks-bars">3.1</a>,
+<span class="math inline">\(s^2 = 56.387\)</span> and for Example <a href="blocking.html#exm:blocks-tyres">3.2</a>, <span class="math inline">\(s^2 = 350.183\)</span>.</p>
 </div>
 <div id="rcdb" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Randomised complete block designs</h2>
-<p>A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is <span class="math inline">\(n_{ij} = 1\)</span> for <span class="math inline">\(i=1,\ldots, b; j = 1, \ldots, t\)</span>. Therefore each block has common size <span class="math inline">\(k_1=\cdots =k_b = k\)</span>. For an RCBD, the matrix <span class="math inline">\(X_{2|1}\)</span> has the form</p>
-<p><span class="math display">\[\begin{align*}
-X_{2|1} &amp; = (I_n - H_1)X_2 \\
-&amp; = X2 - H_1X_2 \\
-&amp; = X2 - \frac{1}{t}J_{n \times t}
-\end{align*}\]</span></p>
+<p>A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is <span class="math inline">\(n_{ij} = 1\)</span> for <span class="math inline">\(i=1,\ldots, b; j = 1, \ldots, t\)</span>. Therefore each block has common size <span class="math inline">\(k_1=\cdots =k_b = t\)</span>. The <span class="math inline">\(t\)</span> treatments are randomised to the <span class="math inline">\(t\)</span> units in each block. We can drop the index <span class="math inline">\(l\)</span> from our unit-block-treatment model, as every treatment is replicated just once:</p>
+<p><span class="math display">\[\begin{equation*}
+y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t\,.
+\end{equation*}\]</span></p>
+<p>For an RCBD, the matrix <span class="math inline">\(X_{2|1}\)</span> has the form</p>
+<p><span class="math display" id="eq:rcbd-x21">\[\begin{align}
+X_{2|1} &amp; = (I_n - H_1)X_2 \nonumber \\
+&amp; = X_2 - H_1X_2 \nonumber \\
+&amp; = X_2 - \frac{1}{t}J_{n \times t} \tag{3.10}\,,
+\end{align}\]</span></p>
+<p>following from the fact that</p>
+<p><span class="math display">\[\begin{align}
+H_1X_2 &amp; = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2 \\
+&amp; = \frac{1}{t}X_1X_1^{\mathrm{T}}X_2 \\
+&amp; = \frac{1}{t}X_1N^{\mathrm{T}} \\
+&amp; = \frac{1}{t}X_1J_{b\times t} \\
+&amp; = \frac{1}{t}J_{n\times t}\,,
+\end{align}\]</span></p>
+<p>as for a RCBD <span class="math inline">\(X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots, k_b) = tI_b\)</span> and <span class="math inline">\(X_2^{\mathrm{T}}X_1 = N = J_{t\times b}\)</span>.</p>
+<p>Comparing <a href="blocking.html#eq:rcbd-x21">(3.10)</a> to the form of <span class="math inline">\(X_{2|1}\)</span> for a CRD, equation <a href="crd.html#eq:crd-x21">(2.6)</a>, we see that for the RCBD, <span class="math inline">\(X_{2|1}\)</span> has the same form as a CRD with <span class="math inline">\(b\)</span> replicates of each treatment (that is, <span class="math inline">\(n_i = b\)</span> for <span class="math inline">\(i=1,\ldots, t\)</span>). This is a powerful result, as it tell us</p>
+<ul>
+<li><p>The reduced normal equations for the RCBD take the same form as for the CRD,</p>
+<p><span class="math display">\[
+  \hat{\tau}_j - \hat{\tau}_w = \bar{y}_{.j} - \bar{y}_{..}\,,
+\]</span></p>
+<p>with <span class="math inline">\(\hat{\tau}_w = \frac{1}{t}\sum_{j=1}^t\hat{\tau}_j\)</span>, <span class="math inline">\(\bar{y}_{.j} = \frac{1}{b}\sum_{i=1}^b y_{ij}\)</span> and <span class="math inline">\(\bar{y}_{..} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^t y_{ij}\)</span>. Hence, as with a CRD, we can estimate any contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span>, having <span class="math inline">\(\sum_{j=1}^tc_j = 1\)</span>, with estimator</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{j=1}^tc_j\bar{y}_{.j}\,.
+\]</span></p>
+<p>Hence, the <strong>point estimate</strong> for a contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> is exactly the same as would be obtained by ignoring blocks and treating the experiment as a CRD with <span class="math inline">\(n = bt\)</span> and <span class="math inline">\(n_i = b\)</span>, for <span class="math inline">\(i=1,\ldots, t\)</span>.</p></li>
+<li><p>Inference for a contrast takes exactly the same form as for a CRD (Section <a href="crd.html#contrast-crd">2.5</a>), with in particular:</p>
+<p><span class="math display">\[
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{\sigma^2}{b}\sum_{j=1}^tc_j^2\,,
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+  \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \frac{\sigma^2}{b}\sum_{j=1}^t c_j^2\right)\,.
+\]</span></p></li>
+</ul>
+<p>Although these equations have the same form as for a CRD, note that <span class="math inline">\(\sigma^2\)</span> is representing different quantities in each case.</p>
+<ul>
+<li><p>In a CRD, <span class="math inline">\(\sigma^2\)</span> is the uncontrolled variation in the response <em>among all experimental units</em>.</p></li>
+<li><p>In a RCBD, <span class="math inline">\(\sigma^2\)</span> is the uncontrolled variation in the response <em>among all units within a common block</em>.</p></li>
+</ul>
+<p>Block-to-block differences are modelled via inclusion of the block effects <span class="math inline">\(\beta_i\)</span> in the model, and hence if blocking is effective, we would expect <span class="math inline">\(\sigma^2\)</span> from a RCBD to be substantially smaller than from a corresponding CRD with <span class="math inline">\(n_i = b\)</span>.</p>
+<p>Example <a href="blocking.html#exm:blocks-bars">3.1</a> is a RCBD. We can estimate the contrasts</p>
+<p><span class="math display">\[
+\tau_{1} - \tau_{2} \\
+\tau_{1} - \tau_{3} \\
+\tau_{1} - \tau_{4} \\
+\]</span></p>
+<p>between coatings<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a> using <code>emmeans</code>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="blocking.html#cb68-1" aria-hidden="true" tabindex="-1"></a>bar.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(bar.lm, <span class="sc">~</span> coating)</span>
+<span id="cb68-2"><a href="blocking.html#cb68-2" aria-hidden="true" tabindex="-1"></a>contrastv1.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs)</span>
+<span id="cb68-3"><a href="blocking.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&#39;t1 v t2&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="st">&#39;t1 v t3&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb68-4"><a href="blocking.html#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;t1 v t4&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb68-5"><a href="blocking.html#cb68-5" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(bar.emm, <span class="st">&#39;contrastv1&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate   SE df t.ratio p.value
+##  t1.v.t2     -1.25 3.75 21  -0.330  0.7420
+##  t1.v.t3     15.00 3.75 21   4.000  0.0010
+##  t1.v.t4      4.00 3.75 21   1.070  0.2990
+## 
+## Results are averaged over the levels of: block</code></pre>
+<p>It is important to once again adjust for mulitple comparisons. Here we can use a Bonferroni adjustment, and multiply each p-value by the number of tests (3). We obtain p-values of 1 (coating 1 versus 2), 0.002 (1 versus 3) and 0.896 (2 versus 3). Hence, there is a significant difference between coatings 1 and 3, with <span class="math inline">\(H_0: \tau_1 = \tau_3\)</span> rejected at the 1% significant level.</p>
+<p>We can demonstrate the equivalence of the contrast point estimates between a RCBD and a CRD by fitting a unit-treatment model that ignores blocks:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="blocking.html#cb70-1" aria-hidden="true" tabindex="-1"></a>bar_crd.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(strength <span class="sc">~</span> coating, <span class="at">data =</span> bar)</span>
+<span id="cb70-2"><a href="blocking.html#cb70-2" aria-hidden="true" tabindex="-1"></a>bar_crd.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(bar_crd.lm, <span class="sc">~</span> coating)</span>
+<span id="cb70-3"><a href="blocking.html#cb70-3" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(bar_crd.emm, <span class="st">&#39;contrastv1&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate   SE df t.ratio p.value
+##  t1.v.t2     -1.25 3.53 28  -0.350  0.7260
+##  t1.v.t3     15.00 3.53 28   4.240  &lt;.0001
+##  t1.v.t4      4.00 3.53 28   1.130  0.2670</code></pre>
+<p>As expected the point estimates of the three contrasts are identical. In this case, the standard error of each contrast is actually smaller assuming a CRD without blocks, suggesting block-to-block differences were actually small here (further evidence is provided by the small block sums of squares in the ANOVA table). Here the estimate of <span class="math inline">\(\sigma\)</span> from the RCBD is <span class="math inline">\(s_{RCBD} = 7.509\)</span> and from the CRD is <span class="math inline">\(s_{CRD} = 7.07\)</span>, so for this example the unit-to-unit variation within and between blocks is not so different, and actually estimated to be slightly smaller in the CRD<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.</p>
+</div>
+<div id="blocks-orthogonal" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Orthogonal blocking</h2>
+<p>The equality of the point estimates from the RCBD and the CRD is a consequence of the block and treatment parameters in model <a href="blocking.html#eq:block-model">(3.1)</a> being <strong>orthogonal</strong>. That is, the least squares estimators for <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\tau}\)</span> are independent in the sense that the estimators obtained from model <a href="blocking.html#eq:block-plm">(3.2)</a> are the same as those obtained from the sub-models</p>
+<p><span class="math display">\[
+\boldsymbol{y}= \mu\boldsymbol{1}_n + X_1\boldsymbol{\beta} + \boldsymbol{\varepsilon}\,,
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\boldsymbol{y}= \mu\boldsymbol{1}_n + X_2\boldsymbol{\tau} + \boldsymbol{\varepsilon}\,.
+\]</span></p>
+<p>That is, the presence or absence of the block parameters does not affect the estimator of the treatment parameters (and vice versa).</p>
+<p>A condition for <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\tau}\)</span> to be estimated orthogonally can be derived from normal equations <a href="blocking.html#eq:blocks-normal-1">(3.4)</a> - <a href="blocking.html#eq:blocks-normal-2">(3.5)</a>. Firstly. we premultiply <a href="blocking.html#eq:blocks-normal-1">(3.4)</a> by <span class="math inline">\(\frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\)</span> and substract it from <a href="blocking.html#eq:blocks-normal-2">(3.5)</a>:</p>
+<p><span class="math display" id="eq:blocks-orth-ne1">\[\begin{align}
+ &amp; \left(X_1^{\mathrm{T}}\boldsymbol{1}_n - X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_1^{\mathrm{T}}X_1 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_1\right)\hat{\boldsymbol{\beta}} + \left(X_1^{\mathrm{T}}X_2 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_2\right)\hat{\boldsymbol{\tau}} \nonumber \\
+ &amp; = X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} \nonumber \\
+ &amp; =  X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right) \tag{3.11}\,.
+\end{align}\]</span></p>
+<p>Secondly, we premultiply <a href="blocking.html#eq:blocks-normal-1">(3.4)</a> by <span class="math inline">\(\frac{1}{n}X_2^{\mathrm{T}}\boldsymbol{1}_n\)</span> and substract it from <a href="blocking.html#eq:blocks-normal-3">(3.6)</a>:</p>
+<p><span class="math display" id="eq:blocks-orth-ne2">\[\begin{equation}
+X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\,.
+\tag{3.12}
+\end{equation}\]</span></p>
+<p>For equations <a href="blocking.html#eq:blocks-orth-ne1">(3.11)</a> and <a href="blocking.html#eq:blocks-orth-ne2">(3.12)</a> to be independent, we require</p>
+<p><span class="math display">\[
+X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1 = \boldsymbol{0}_{t\times b}\,.
+\]</span>
+Hence, we obtain the following condition on the incidence matrix <span class="math inline">\(N = X_2^{\mathrm{T}}X_1\)</span> for a block design to be orthogonal:</p>
+<p><span class="math display">\[\begin{align}
+N &amp; = \frac{1}{n}X_2^{\mathrm{T}}X_1 \\
+&amp; = \frac{1}{n}\boldsymbol{n}\boldsymbol{k}^{\mathrm{T}}\,,
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{n}^{\mathrm{T}} = (n_1,\ldots, n_t)\)</span> is the vector of treatment replications and <span class="math inline">\(\boldsymbol{k}^{\mathrm{T}} = (k_1,\ldots, k_b)\)</span> is the vector of block sizes.</p>
+<p>The most common orthogonal block design for unstructured treatments is the RCBD, which has <span class="math inline">\(n = bt\)</span>, <span class="math inline">\(\boldsymbol{n} = b\boldsymbol{1}_t\)</span>, <span class="math inline">\(\boldsymbol{k} = t\boldsymbol{1}_b\)</span>, and</p>
+<p><span class="math display">\[\begin{align}
+N &amp; = J_{t \times b}
+&amp; = \frac{1}{bt}\boldsymbol{n}\boldsymbol{k}^{\mathrm{T}}\,.
+\end{align}\]</span></p>
+<p>Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter <a href="block-factorial.html#block-factorial">5</a>.</p>
 
 </div>
 </div>
@@ -641,6 +749,8 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
 <li id="fn18"><p>Thr four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.<a href="blocking.html#fnref18" class="footnote-back">↩︎</a></p></li>
 <li id="fn19"><p>This is our first example of (partial) confounding, which we will see again in Chapters <a href="block-factorial.html#block-factorial">5</a> and <a href="fractional-factorial.html#fractional-factorial">6</a><a href="blocking.html#fnref19" class="footnote-back">↩︎</a></p></li>
 <li id="fn20"><p><code>R</code> and <code>anova</code> don’t, of course, know that this is a block design or that a blocking factor is being tested.<a href="blocking.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>These contrasts measure the difference between the coating only made from ETPU and the three coatings with added fibres.<a href="blocking.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>Of course, the CRD has seven more degrees of freedom for estimating <span class="math inline">\(\sigma^2\)</span> as block effects do not require estimation.<a href="blocking.html#fnref22" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

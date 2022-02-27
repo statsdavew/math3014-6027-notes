@@ -66,7 +66,7 @@ boxplot(wear ~ compound, data = tyre)
 If $n_{ij}$ is the number of times treatment $j$ occurs in block $i$, a common statistical model to describe data from a blocked experiment has the form
 
 \begin{equation}
-y_{ijl} = \mu + \beta_i + \tau_i + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
+y_{ijl} = \mu + \beta_i + \tau_j + \varepsilon_{ijl}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t; l = 1,\ldots,n_{ij}\,,
 (\#eq:block-model)
 \end{equation}
 where $y_{ijl}$ is the response from the $l$th application of the $j$th treatment in the $i$th block, $\mu$ is a constant parameter, $\beta_i$ is the effect of the $i$th block, $\tau_j$ is the effect of treatment $j$, and $\varepsilon_{ijl}\sim N(0, \sigma^2)$ are once again random individual effects from each experimental unit, assumed independent. The total number of runs in the experiment is given by $n = \sum_{i=1}^b\sum_{j=1}^t n_{ij}$.
@@ -106,9 +106,9 @@ W^{\mathrm{T}}W \hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\by
 can be written as a set of three matrix equations:
 
 \begin{align}
-n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = \boldsymbol{1}_n^{\mathrm{T}}\bY\,, \\
-X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\bY\,, \\
-X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\bY\,. \\
+n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = \boldsymbol{1}_n^{\mathrm{T}}\bY\,, (\#eq:blocks-normal-1)\\
+X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\bY\,, (\#eq:blocks-normal-2)\\
+X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\bY\,. (\#eq:blocks-normal-3)\\
 \end{align}
 
 Above, the matrices $X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots,k_b)$ and $X_2^{\mathrm{T}}X_2 = \mathrm{diag}(n_1,\ldots,n_t)$ have simple forms as diagonal matrices with entries equal to the size of each block and the number of replications of each treatment, respectively.
@@ -216,7 +216,7 @@ W <- cbind(ones, X1, X2) # overall model matrix
 qr(W)$rank # rank 7 (t+b - 1)
 ```
 
-Notice that if we write $X_{2|1} = (I_n - H_1)X2$, then the reduced normal equations become
+Notice that if we write $X_{2|1} = (I_n - H_1)X_2$, then the reduced normal equations become
 
 $$
 X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\bY\,,
@@ -271,31 +271,170 @@ anova(tyre.lm)
 
 Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.
 
-The residual mean square for model \@ref(eq:block-plm) also provides an unbiased estimate, $s^2$, of $\sigma^2$, the variability of the $\varepsilon_{ijl}$, *assuming the unit-block-treatment model is correct*. 
+```{r blocks-s2, echo = F}
+bar.s2 <- summary(bar.lm)$sigma^2
+tyre.s2 <- summary(tyre.lm)$sigma^2
+```
+
+The residual mean square for model \@ref(eq:block-plm) also provides an unbiased estimate, $s^2$, of $\sigma^2$, the variability of the $\varepsilon_{ijl}$, *assuming the unit-block-treatment model is correct*. For Example \@ref(exm:blocks-bars), 
+$s^2 = `r bar.s2`$ and for Example \@ref(exm:blocks-tyres), $s^2 = `r tyre.s2`$.
 
 ## Randomised complete block designs {#rcdb}
 
-A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is $n_{ij} = 1$ for $i=1,\ldots, b; j = 1, \ldots, t$. Therefore each block has common size $k_1=\cdots =k_b = k$. For an RCBD, the matrix $X_{2|1}$ has the form
+A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is $n_{ij} = 1$ for $i=1,\ldots, b; j = 1, \ldots, t$. Therefore each block has common size $k_1=\cdots =k_b = t$. The $t$ treatments are randomised to the $t$ units in each block. We can drop the index $l$ from our unit-block-treatment model, as every treatment is replicated just once:
 
-\begin{align*}
-X_{2|1} & = (I_n - H_1)X_2 \\
-& = X2 - H_1X_2 \\
-& = X2 - \frac{1}{t}J_{n \times t}
-\end{align*}
+\begin{equation*}
+y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,, \qquad i = 1,\ldots, b; j = 1, \ldots, t\,.
+\end{equation*}
 
+For an RCBD, the matrix $X_{2|1}$ has the form
 
+\begin{align}
+X_{2|1} & = (I_n - H_1)X_2 \nonumber \\
+& = X_2 - H_1X_2 \nonumber \\
+& = X_2 - \frac{1}{t}J_{n \times t} (\#eq:rcbd-x21)\,,
+\end{align}
 
+following from the fact that
 
+\begin{align}
+H_1X_2 & = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2 \\
+& = \frac{1}{t}X_1X_1^{\mathrm{T}}X_2 \\
+& = \frac{1}{t}X_1N^{\mathrm{T}} \\
+& = \frac{1}{t}X_1J_{b\times t} \\
+& = \frac{1}{t}J_{n\times t}\,,
+\end{align}
 
+as for a RCBD $X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots, k_b) = tI_b$ and $X_2^{\mathrm{T}}X_1 = N = J_{t\times b}$.
 
+Comparing \@ref(eq:rcbd-x21) to the form of $X_{2|1}$ for a CRD, equation \@ref(eq:crd-x21), we see that for the RCBD, $X_{2|1}$ has the same form as a CRD with $b$ replicates of each treatment (that is, $n_i = b$ for $i=1,\ldots, t$). This is a powerful result, as it tell us
 
+- The reduced normal equations for the RCBD take the same form as for the CRD,
+    
+  $$
+    \hat{\tau}_j - \hat{\tau}_w = \bar{y}_{.j} - \bar{y}_{..}\,,
+  $$
 
+    with $\hat{\tau}_w = \frac{1}{t}\sum_{j=1}^t\hat{\tau}_j$, $\bar{y}_{.j} = \frac{1}{b}\sum_{i=1}^b y_{ij}$ and $\bar{y}_{..} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^t y_{ij}$. Hence, as with a CRD, we can estimate any contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$, having $\sum_{j=1}^tc_j = 1$, with estimator 
+    
+  $$
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{j=1}^tc_j\bar{y}_{.j}\,.
+  $$
+    
+    Hence, the **point estimate** for a contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ is exactly the same as would be obtained by ignoring blocks and treating the experiment as a CRD with $n = bt$ and $n_i = b$, for $i=1,\ldots, t$.
+    
+- Inference for a contrast takes exactly the same form as for a CRD (Section \@ref(contrast-crd)), with in particular:
 
+  $$
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{\sigma^2}{b}\sum_{j=1}^tc_j^2\,,
+  $$
 
+  and
 
+  $$
+    \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \frac{\sigma^2}{b}\sum_{j=1}^t c_j^2\right)\,.
+  $$
 
+Although these equations have the same form as for a CRD, note that $\sigma^2$ is representing different quantities in each case.
 
+- In a CRD, $\sigma^2$ is the uncontrolled variation in the response *among all experimental units*.
 
+- In a RCBD, $\sigma^2$ is the uncontrolled variation in the response *among all units within a common block*.
+
+Block-to-block differences are modelled via inclusion of the block effects $\beta_i$ in the model, and hence if blocking is effective, we would expect $\sigma^2$ from a RCBD to be substantially smaller than from a corresponding CRD with $n_i = b$.
+
+Example \@ref(exm:blocks-bars) is a RCBD. We can estimate the contrasts 
+
+$$
+\tau_{1} - \tau_{2} \\
+\tau_{1} - \tau_{3} \\
+\tau_{1} - \tau_{4} \\
+$$
+
+between coatings^[These contrasts measure the difference between the coating only made from ETPU and the three coatings with added fibres.] using `emmeans`.
+
+```{r blocks-bar-contrasts}
+bar.emm <- emmeans::emmeans(bar.lm, ~ coating)
+contrastv1.emmc <- function(levs)
+  data.frame('t1 v t2' = c(1, -1, 0, 0), 't1 v t3' = c(1, 0, -1, 0), 
+  't1 v t4' = c(1, 0, 0, -1))
+emmeans::contrast(bar.emm, 'contrastv1')
+```
+
+```{r blocks-bar-bonf, echo = F}
+temp <- pmin(3 * transform(emmeans::contrast(bar.emm, 'contrastv1'))[, 6], 1)
+```
+
+It is important to once again adjust for mulitple comparisons. Here we can use a Bonferroni adjustment, and multiply each p-value by the number of tests (3). We obtain p-values of `r temp[1]` (coating 1 versus 2), `r temp[2]` (1 versus 3) and `r temp[3]` (2 versus 3). Hence, there is a significant difference between coatings 1 and 3, with $H_0: \tau_1 = \tau_3$ rejected at the 1% significant level.
+
+We can demonstrate the equivalence of the contrast point estimates between a RCBD and a CRD by fitting a unit-treatment model that ignores blocks:
+
+```{r blocks-crd}
+bar_crd.lm <- lm(strength ~ coating, data = bar)
+bar_crd.emm <- emmeans::emmeans(bar_crd.lm, ~ coating)
+emmeans::contrast(bar_crd.emm, 'contrastv1')
+```
+
+```{r blocks-crd-s2, echo = F}
+crd.s2 <- summary(bar_crd.lm)$sigma^2
+rcbd.s2 <- summary(bar.lm)$sigma^2
+```
+
+As expected the point estimates of the three contrasts are identical. In this case, the standard error of each contrast is actually smaller assuming a CRD without blocks, suggesting block-to-block differences were actually small here (further evidence is provided by the small block sums of squares in the ANOVA table). Here the estimate of $\sigma$ from the RCBD is $s_{RCBD} = `r sqrt(rcbd.s2)`$ and from the CRD is $s_{CRD} = `r sqrt(crd.s2)`$, so for this example the unit-to-unit variation within and between blocks is not so different, and actually estimated to be slightly smaller in the CRD^[Of course, the CRD has seven more degrees of freedom for estimating $\sigma^2$ as block effects do not require estimation.].
+
+## Orthogonal blocking {#blocks-orthogonal}
+
+The equality of the point estimates from the RCBD and the CRD is a consequence of the block and treatment parameters in model \@ref(eq:block-model) being **orthogonal**. That is, the least squares estimators for $\boldsymbol{\beta}$ and $\boldsymbol{\tau}$ are independent in the sense that the estimators obtained from model \@ref(eq:block-plm) are the same as those obtained from the sub-models
+
+$$
+\by = \mu\boldsymbol{1}_n + X_1\boldsymbol{\beta} + \boldsymbol{\varepsilon}\,,
+$$
+
+and
+
+$$
+\by = \mu\boldsymbol{1}_n + X_2\boldsymbol{\tau} + \boldsymbol{\varepsilon}\,.
+$$
+
+That is, the presence or absence of the block parameters does not affect the estimator of the treatment parameters (and vice versa).
+
+A condition for $\boldsymbol{\beta}$ and $\boldsymbol{\tau}$ to be estimated orthogonally can be derived from normal equations \@ref(eq:blocks-normal-1) - \@ref(eq:blocks-normal-2). Firstly. we premultiply \@ref(eq:blocks-normal-1) by $\frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n$ and substract it from \@ref(eq:blocks-normal-2):
+
+\begin{align}
+ & \left(X_1^{\mathrm{T}}\boldsymbol{1}_n - X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_1^{\mathrm{T}}X_1 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_1\right)\hat{\boldsymbol{\beta}} + \left(X_1^{\mathrm{T}}X_2 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_2\right)\hat{\boldsymbol{\tau}} \nonumber \\
+ & = X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} \nonumber \\
+ & =  X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right) (\#eq:blocks-orth-ne1)\,.
+\end{align}
+
+Secondly, we premultiply \@ref(eq:blocks-normal-1) by $\frac{1}{n}X_2^{\mathrm{T}}\boldsymbol{1}_n$ and substract it from \@ref(eq:blocks-normal-3):
+
+\begin{equation}
+X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\,.
+(\#eq:blocks-orth-ne2)
+\end{equation}
+
+For equations \@ref(eq:blocks-orth-ne1) and \@ref(eq:blocks-orth-ne2) to be independent, we require 
+
+$$
+X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1 = \boldsymbol{0}_{t\times b}\,.
+$$
+Hence, we obtain the following condition on the incidence matrix $N = X_2^{\mathrm{T}}X_1$ for a block design to be orthogonal:
+
+\begin{align}
+N & = \frac{1}{n}X_2^{\mathrm{T}}X_1 \\
+& = \frac{1}{n}\boldsymbol{n}\boldsymbol{k}^{\mathrm{T}}\,,
+\end{align}
+
+where $\boldsymbol{n}^{\mathrm{T}} = (n_1,\ldots, n_t)$ is the vector of treatment replications and $\boldsymbol{k}^{\mathrm{T}} = (k_1,\ldots, k_b)$ is the vector of block sizes.
+
+The most common orthogonal block design for unstructured treatments is the RCBD, which has $n = bt$, $\boldsymbol{n} = b\boldsymbol{1}_t$, $\boldsymbol{k} = t\boldsymbol{1}_b$, and 
+
+\begin{align}
+N & = J_{t \times b}
+& = \frac{1}{bt}\boldsymbol{n}\boldsymbol{k}^{\mathrm{T}}\,.
+\end{align}
+
+Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter \@ref(block-factorial).
 
 
 

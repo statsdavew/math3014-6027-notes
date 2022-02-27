@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-02-24" />
+<meta name="date" content="2022-02-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,6 +200,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html#normal-equations"><i class="fa fa-check"></i><b>3.2</b> Normal equations</a></li>
 <li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#analysis-of-variance"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
+<li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
@@ -385,11 +386,11 @@ X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsy
 <h2><span class="header-section-number">2.3</span> Reduced normal equations for the CRD</h2>
 <p>For the CRD discussed in this chapter, <span class="math inline">\(X_1^{\mathrm{T}}X_1 = n\)</span>, the total number of runs in the experiment<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>. Hence <span class="math inline">\((X_1^{\mathrm{T}}X_1)^{-1} = 1/n\)</span> and <span class="math inline">\(H_1 = \frac{1}{n}J_n\)</span>, with <span class="math inline">\(J_n\)</span> the <span class="math inline">\(n\times n\)</span> matrix with all entries equal to 1.</p>
 <p>The adjusted model matrix then has the form</p>
-<p><span class="math display">\[\begin{align*}
-X_{2|1} &amp; = (I_n - H_1)X_2 \\
-&amp; = X_2 - \frac{1}{n}J_nX_2 \\
-&amp; = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
-\end{align*}\]</span></p>
+<p><span class="math display" id="eq:crd-x21">\[\begin{align}
+X_{2|1} &amp; = (I_n - H_1)X_2 \nonumber\\
+&amp; = X_2 - \frac{1}{n}J_nX_2 \nonumber\\
+&amp; = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. \tag{2.6} 
+\end{align}\]</span></p>
 <p>That is, every column of <span class="math inline">\(X_2\)</span> has been adjusted by the subtraction of the column mean from each entry<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. Also notice that each row of <span class="math inline">\(X_{2|1}\)</span> has a row-sum equal to zero (<span class="math inline">\(= 1 - \sum_{i=1}^tn_t/n\)</span>). Hence, <span class="math inline">\(X_{2|1}\)</span> is not of full column rank, and so the reduced normal equations do not have a unique solution<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
 <p>Although <a href="crd.html#eq:rne">(2.5)</a>, and hence, <a href="crd.html#eq:crd-ls">(2.2)</a>, have no unique solution<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>, it can be shown that both <span class="math inline">\(\widehat{X_{2|1}\boldsymbol{\tau}}\)</span> and <span class="math inline">\(\widehat{X\boldsymbol{\beta}}\)</span> have unique solutions. Hence fitted values <span class="math inline">\(\hat{\boldsymbol{y}} = \widehat{X\boldsymbol{\beta}}\)</span> and the residual sum of squares</p>
 <p><span class="math display">\[
@@ -408,16 +409,16 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 <p><span class="math display" id="eq:crd-rne">\[\begin{align}
 \left[\mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\right]\hat{\boldsymbol{\tau}} &amp; = X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{n}X_2^{\mathrm{T}}J_n\boldsymbol{y}\\
 &amp; = X_2^{\mathrm{T}}\boldsymbol{y}- \boldsymbol{n}\bar{y}_{..}\,,
-\tag{2.6}
+\tag{2.7}
 \end{align}\]</span></p>
 <p>where <span class="math inline">\(\bar{y}_{..} = \frac{1}{n}\sum_{i = 1}^t\sum_{j = 1}^{n_i} y_{ij}\)</span>, i.e. the overall average of the observations from the experiment.</p>
-<p>From <a href="crd.html#eq:crd-rne">(2.6)</a> we obtain a system of <span class="math inline">\(t\)</span> equations, each having the form</p>
+<p>From <a href="crd.html#eq:crd-rne">(2.7)</a> we obtain a system of <span class="math inline">\(t\)</span> equations, each having the form</p>
 <p><span class="math display" id="eq:crd-irne">\[\begin{equation}
 \hat{\tau}_i - \hat{\tau}_w = \bar{y}_{i.} - \bar{y}_{..}\,,
-\tag{2.7}
+\tag{2.8}
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\)</span> and <span class="math inline">\(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\)</span> <span class="math inline">\((i = 1, \ldots, t)\)</span>.</p>
-<p>These <span class="math inline">\(t\)</span> equations are not independent; when multiplied by the <span class="math inline">\(n_i\)</span>, they sum to zero due to the linear dependency between the columns of <span class="math inline">\(X_{2|1}\)</span>. Hence, there is no unique solution to <span class="math inline">\(\hat{\boldsymbol{\tau}}\)</span> from equation <a href="crd.html#eq:crd-rne">(2.6)</a>. However, we can estimate certain linear combinations of the <span class="math inline">\(\tau_i\)</span>, called <em>contrasts</em>.</p>
+<p>These <span class="math inline">\(t\)</span> equations are not independent; when multiplied by the <span class="math inline">\(n_i\)</span>, they sum to zero due to the linear dependency between the columns of <span class="math inline">\(X_{2|1}\)</span>. Hence, there is no unique solution to <span class="math inline">\(\hat{\boldsymbol{\tau}}\)</span> from equation <a href="crd.html#eq:crd-rne">(2.7)</a>. However, we can estimate certain linear combinations of the <span class="math inline">\(\tau_i\)</span>, called <em>contrasts</em>.</p>
 </div>
 <div id="contrasts" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Contrasts</h2>
@@ -445,7 +446,7 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 </div>
 <div id="contrast-crd" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Treatment contrast estimators in the CRD</h2>
-<p>We estimate a treatment contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> in the CRD via linear combinations of equations <a href="crd.html#eq:crd-irne">(2.7)</a>:</p>
+<p>We estimate a treatment contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> in the CRD via linear combinations of equations <a href="crd.html#eq:crd-irne">(2.8)</a>:</p>
 <p><span class="math display">\[\begin{align*}
 &amp; \sum_{i=1}^t c_i\hat{\tau}_i - \sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{i.} - \sum_{i=1}^tc_i\bar{y}_{..} \\
 \Rightarrow &amp; \sum_{i=1}^t c_i\hat{\tau}_i = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
@@ -475,7 +476,7 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
 <p>where <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2}}\)</span> is the <span class="math inline">\(1-\frac{\alpha}{2}\)</span> quantile of a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-t\)</span> degrees of freedom and</p>
 <p><span class="math display" id="eq:crd-s2">\[\begin{equation} 
 s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
-\tag{2.8}
+\tag{2.9}
 \end{equation}\]</span></p>
 <p>is the estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <ul>
@@ -688,10 +689,10 @@ which can be achieved either by increasing <span class="math inline">\(n\)</span
 So we will minimise this variance by allocating larger values of <span class="math inline">\(n_i\)</span> to the treatments with correspondingly larger values of the contrast coefficients <span class="math inline">\(c_{li}\)</span>. Therefore an approach to optimal allocation is to choose <span class="math inline">\(\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}\)</span> so as to</p>
 <p><span class="math display" id="eq:opt-all">\[\begin{equation}
 \mbox{minimise} \quad \phi(\boldsymbol{n}) = \sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,\qquad \mbox{subject to} \quad \sum_{i=1}^tn_i = n\,.
-\tag{2.9}
+\tag{2.10}
 \end{equation}\]</span></p>
 <p>This is a discrete optimisation problem (the <span class="math inline">\(n_i\)</span> are integers). It is usually easier to solve the relaxed problem, where we allow continuous <span class="math inline">\(0\le n_i \le n\)</span>, and round the resulting solution to obtain integers. There is no guarantee that such a rounded allocation will actually be the optimal integer-valued solution, but it is usually fairly close.</p>
-<p>To solve the continuous version of <a href="crd.html#eq:opt-all">(2.9)</a> we will use the method of Lagrange mutliplers, where we define the function</p>
+<p>To solve the continuous version of <a href="crd.html#eq:opt-all">(2.10)</a> we will use the method of Lagrange mutliplers, where we define the function</p>
 <p><span class="math display">\[
 h(\boldsymbol{n}, \lambda) = \phi(\boldsymbol{n}) + \lambda\left(\sum_{i=1}^tn_i - n\right)\,,
 \]</span>
@@ -705,27 +706,27 @@ introducing the new scalar variable <span class="math inline">\(\lambda\)</span>
 <p>In this case, we have</p>
 <p><span class="math display" id="eq:lm-ni">\[\begin{equation}
 \frac{\partial h}{\partial n_i} = -\sum_{l=1}^pc_{li}^2/n_i^2 + \lambda = 0\,,\quad i=1,\ldots t,
-\tag{2.10}
+\tag{2.11}
 \end{equation}\]</span>
 and
 <span class="math display">\[
 \frac{\partial h}{\partial \lambda} = \sum_{i=1}^t n_i - n = 0\,.
 \]</span>
-This last equation ensures <span class="math inline">\(\sum_{i=1}^tn_i = n\)</span>. From the <span class="math inline">\(t\)</span> equations described by <a href="crd.html#eq:lm-ni">(2.10)</a>, we get</p>
+This last equation ensures <span class="math inline">\(\sum_{i=1}^tn_i = n\)</span>. From the <span class="math inline">\(t\)</span> equations described by <a href="crd.html#eq:lm-ni">(2.11)</a>, we get</p>
 <p><span class="math display">\[
 n_i \propto \sqrt{\sum_{l=1}^pc_{li}^2}
 \]</span>
 We don’t need to explicitly solve for <span class="math inline">\(\lambda\)</span> to find the normalising constant for each <span class="math inline">\(n_i\)</span>. As we know <span class="math inline">\(\sum_{i=1}^tn_i = n\)</span>, we obtain,</p>
 <p><span class="math display" id="eq:opt-ni">\[\begin{equation}
 n_i = \frac{\sqrt{\sum_{l=1}^pc_{li}^2}}{\sum_{i=1}^t\sqrt{\sum_{l=1}^pc_{li}^2}}n\,.
-\tag{2.11}
+\tag{2.12}
 \end{equation}\]</span></p>
-<p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a> and calculate the optimal allocations under two different sets of contrasts. First, we define an <code>R</code> function for calculating <a href="crd.html#eq:opt-ni">(2.11)</a>.</p>
+<p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a> and calculate the optimal allocations under two different sets of contrasts. First, we define an <code>R</code> function for calculating <a href="crd.html#eq:opt-ni">(2.12)</a>.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="crd.html#cb31-1" aria-hidden="true" tabindex="-1"></a>opt_ni <span class="ot">&lt;-</span> <span class="cf">function</span>(C, n) {</span>
 <span id="cb31-2"><a href="crd.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  CtC <span class="ot">&lt;-</span> <span class="fu">t</span>(C) <span class="sc">%*%</span> C</span>
 <span id="cb31-3"><a href="crd.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  n <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(CtC)) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(CtC)))</span>
 <span id="cb31-4"><a href="crd.html#cb31-4" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
-<p>Checking that the function <code>opt-ni</code> matches <a href="crd.html#eq:opt-ni">(2.11)</a> is left as an exercise.</p>
+<p>Checking that the function <code>opt-ni</code> matches <a href="crd.html#eq:opt-ni">(2.12)</a> is left as an exercise.</p>
 <p>Consider two sets of contrasts:</p>
 <ol style="list-style-type: decimal">
 <li><p>All pairwise comparisons between the four treatments
@@ -737,7 +738,7 @@ c_4 &amp; = (0, -1, 1, 0) \\
 c_5 &amp; = (0, -1, 0, 1) \\
 c_6 &amp; = (0, 0, -1, 1)\,.
 \end{align*}\]</span></p>
-<p>Calculating <a href="crd.html#eq:opt-ni">(2.11)</a>, we obtain</p>
+<p>Calculating <a href="crd.html#eq:opt-ni">(2.12)</a>, we obtain</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="crd.html#cb32-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
 <span id="cb32-2"><a href="crd.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
 <span id="cb32-3"><a href="crd.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
@@ -890,7 +891,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 </tr>
 </tbody>
 </table>
-<p>The sample variance, <span class="math inline">\(s^2 = 0.106\)</span>, from <a href="crd.html#eq:crd-s2">(2.8)</a>. As <span class="math inline">\(\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}\)</span> for contrast vectors <span class="math inline">\(\boldsymbol{c}\)</span> corresponding to pairwise differences, the standard error of each pairwise difference is given by <span class="math inline">\(\sqrt{\frac{2s^2}{5}} = 0.206\)</span>. Hence, we can create a table of pairwise differences, standard errors and test statistics.</p>
+<p>The sample variance, <span class="math inline">\(s^2 = 0.106\)</span>, from <a href="crd.html#eq:crd-s2">(2.9)</a>. As <span class="math inline">\(\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}\)</span> for contrast vectors <span class="math inline">\(\boldsymbol{c}\)</span> corresponding to pairwise differences, the standard error of each pairwise difference is given by <span class="math inline">\(\sqrt{\frac{2s^2}{5}} = 0.206\)</span>. Hence, we can create a table of pairwise differences, standard errors and test statistics.</p>
 <table>
 <thead>
 <tr class="header">
@@ -1168,10 +1169,10 @@ Figure 2.2: Naphthalene black experiment: distributions of dye yields from the s
 <p>An ANOVA table may be used to compare a linear model including differences between the batches to the null model. The linear model we will fit is a simple unit-treatment model:</p>
 <p><span class="math display" id="eq:linmod">\[\begin{equation}
  Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
- \tag{2.12}
+ \tag{2.13}
  \end{equation}\]</span></p>
 <p>where <span class="math inline">\(Y_{ij}\)</span> is the response obtained from the <span class="math inline">\(j\)</span>th repetition of the <span class="math inline">\(i\)</span>th batch, <span class="math inline">\(\mu\)</span> is a constant term, <span class="math inline">\(\tau_i\)</span> is the expected effect due to the observation being in the <span class="math inline">\(k\)</span>th batch <span class="math inline">\((k=1,\ldots,5)\)</span> and <span class="math inline">\(\varepsilon_{ij}\)</span> are the random errors.</p>
-<p>A test of the hypothesis that the group means are all equal is equivalent to a test that the <span class="math inline">\(\tau_i\)</span> are all equal to 0 <span class="math inline">\((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\)</span>. We can use <code>lm</code> to fit model <a href="crd.html#eq:linmod">(2.12)</a>, and <code>anova</code> to test the hypothesis. Before we fit the linear model, we need to make sure <code>batch</code> has type <code>factor</code><a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
+<p>A test of the hypothesis that the group means are all equal is equivalent to a test that the <span class="math inline">\(\tau_i\)</span> are all equal to 0 <span class="math inline">\((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\)</span>. We can use <code>lm</code> to fit model <a href="crd.html#eq:linmod">(2.13)</a>, and <code>anova</code> to test the hypothesis. Before we fit the linear model, we need to make sure <code>batch</code> has type <code>factor</code><a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="crd.html#cb44-1" aria-hidden="true" tabindex="-1"></a>napblack<span class="sc">$</span>batch <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(napblack<span class="sc">$</span>batch)</span>
 <span id="cb44-2"><a href="crd.html#cb44-2" aria-hidden="true" tabindex="-1"></a>napblack.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span>
 <span id="cb44-3"><a href="crd.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(napblack.lm)</span></code></pre></div>

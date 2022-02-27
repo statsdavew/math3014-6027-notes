@@ -13,6 +13,7 @@ eq:crd-ls
 eq:almost-reduced
 eq:crd-red-normal
 eq:rne
+eq:crd-x21
 eq:crd-rne
 eq:crd-irne
 eq:crd-s2
@@ -32,9 +33,15 @@ fig:tyre-expt-boxplots
 eq:block-model
 eq:block-plm
 eq:bne
+eq:blocks-normal-1
+eq:blocks-normal-2
+eq:blocks-normal-3
 eq:block-rne
 eq:anova-bm
 eq:anova-nm
+eq:rcbd-x21
+eq:blocks-orth-ne1
+eq:blocks-orth-ne2
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -64,6 +71,7 @@ unit-block-treatment-model
 normal-equations
 analysis-of-variance
 rcdb
+blocks-orthogonal
 factorial
 block-factorial
 fractional-factorial

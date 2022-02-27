@@ -145,11 +145,11 @@ For the CRD discussed in this chapter, $X_1^{\mathrm{T}}X_1 = n$, the total numb
 
 The adjusted model matrix then has the form
 
-\begin{align*}
-X_{2|1} & = (I_n - H_1)X_2 \\
-& = X_2 - \frac{1}{n}J_nX_2 \\
-& = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. 
-\end{align*}
+\begin{align}
+X_{2|1} & = (I_n - H_1)X_2 \nonumber\\
+& = X_2 - \frac{1}{n}J_nX_2 \nonumber\\
+& = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. (\#eq:crd-x21) 
+\end{align}
 
 That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution^[If we recalled the material on "dummy" variables from MATH2010 or STAT6123, we would already have realised this.].
 
