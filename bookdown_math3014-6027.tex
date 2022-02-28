@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-02-27}
+\date{2022-02-28}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Tea first" 
+## [6] "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3065,6 +3065,89 @@ N & = J_{t \times b}
 \end{align}
 
 Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter \ref{block-factorial}.
+
+\hypertarget{exercises-2}{%
+\section{Exercises}\label{exercises-2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Consider the below randomised complete block design for comparing two catalysts, \(A\) and \(B\), for a chemical reaction using six batches of material. The response is the yield (\%) from the reaction.
+
+  \begin{longtable}[]{@{}lcccccc@{}}
+  \toprule
+  Catalyst & Batch 1 & Batch 2 & Batch 3 & Batch 4 & Batch 5 & Batch 6 \\
+  \midrule
+  \endhead
+  A & 9 & 19 & 28 & 22 & 18 & 8 \\
+  B & 10 & 22 & 30 & 21 & 23 & 12 \\
+  \bottomrule
+  \end{longtable}
+
+  \begin{enumerate}
+  \def\labelenumii{\roman{enumii}.}
+  \tightlist
+  \item
+    Write down a unit-block-treatment model for this example.
+  \item
+    Test if there is a significant difference between catalysts at the 5\% level.
+  \item
+    Fit a unit-treatment model ignoring blocks and test again for a difference between catalysts. Comment on difference between this analysis and the one including blocks.
+  \end{enumerate}
+\item
+  Consider the data below obtained from an agricultural experiment in which six different fertilizers were given to a crop of blackcurrants in a field. The field was divided into four equal areas of land so that the land in each area was fairly homogeneous. Each area of land was further subdivided into six plots and one of the fertilizers, chosen by a random procedure, was applied to each plot. The yields of blackcurrants obtained from each plot were recorded (in lbs) and are given in Table \ref{tab:blackcurrent-data}. In this randomised block design the treatments are the six fertilizers and the blocks are the four areas of land.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{blackcurrent }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{fertilizer =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{), }\DecValTok{4}\NormalTok{),}
+               \AttributeTok{block =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{)), }
+               \AttributeTok{yield =} \FunctionTok{c}\NormalTok{(}\FloatTok{14.5}\NormalTok{, }\FloatTok{13.5}\NormalTok{, }\FloatTok{11.5}\NormalTok{, }\FloatTok{13.0}\NormalTok{, }\FloatTok{15.0}\NormalTok{, }\FloatTok{12.5}\NormalTok{,}
+                            \FloatTok{12.0}\NormalTok{, }\FloatTok{10.0}\NormalTok{, }\FloatTok{11.0}\NormalTok{, }\FloatTok{13.0}\NormalTok{, }\FloatTok{12.0}\NormalTok{, }\FloatTok{13.5}\NormalTok{,}
+                            \FloatTok{9.0}\NormalTok{, }\FloatTok{9.0}\NormalTok{, }\FloatTok{14.0}\NormalTok{, }\FloatTok{13.5}\NormalTok{, }\FloatTok{8.0}\NormalTok{, }\FloatTok{14.0}\NormalTok{,}
+                            \FloatTok{6.5}\NormalTok{, }\FloatTok{8.5}\NormalTok{, }\FloatTok{10.0}\NormalTok{, }\FloatTok{7.5}\NormalTok{, }\FloatTok{7.0}\NormalTok{, }\FloatTok{8.0}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(blackcurrent, }\AttributeTok{names\_from =}\NormalTok{ fertilizer, }\AttributeTok{values\_from =}\NormalTok{ yield),}
+ \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Block"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"Ferilizer"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)),}
+ \AttributeTok{caption =} \StringTok{"Blackcurrent experiment: yield (lbs) from six different fertilizers."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{table}
+
+   \caption{\label{tab:blackcurrent-data}Blackcurrent experiment: yield (lbs) from six different fertilizers.}
+   \centering
+   \begin{tabular}[t]{l|r|r|r|r|r|r}
+   \hline
+   Block & Ferilizer 1 & Ferilizer 2 & Ferilizer 3 & Ferilizer 4 & Ferilizer 5 & Ferilizer 6\\
+   \hline
+   1 & 14.5 & 13.5 & 11.5 & 13.0 & 15 & 12.5\\
+   \hline
+   2 & 12.0 & 10.0 & 11.0 & 13.0 & 12 & 13.5\\
+   \hline
+   3 & 9.0 & 9.0 & 14.0 & 13.5 & 8 & 14.0\\
+   \hline
+   4 & 6.5 & 8.5 & 10.0 & 7.5 & 7 & 8.0\\
+   \hline
+   \end{tabular}
+   \end{table}
+
+  Conduct a full analysis of this experiment, including
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    exploratory data analysis;
+  \item
+    fitting an appropriate linear model, and conducting an F-test to compare a model that explains variation between the six fertilizers to the model only containing blocks;
+  \item
+    Linear model diagnostics;
+  \item
+    if appropriate, multiple comparisons of all pairwise differences between treatments.
+  \end{enumerate}
+\end{enumerate}
 
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
