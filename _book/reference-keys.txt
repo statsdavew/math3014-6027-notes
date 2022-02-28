@@ -42,6 +42,7 @@ eq:anova-nm
 eq:rcbd-x21
 eq:blocks-orth-ne1
 eq:blocks-orth-ne2
+tab:blackcurrent-data
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -72,6 +73,7 @@ normal-equations
 analysis-of-variance
 rcdb
 blocks-orthogonal
+exercises-2
 factorial
 block-factorial
 fractional-factorial

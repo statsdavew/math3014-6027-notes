@@ -436,10 +436,43 @@ N & = J_{t \times b}
 
 Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter \@ref(block-factorial).
 
+## Exercises
+
+1. Consider the below randomised complete block design for comparing two catalysts, $A$ and $B$, for a chemical reaction using six batches of material. The response is the yield (%) from the reaction.
 
 
+    | Catalyst | Batch 1 | Batch 2 | Batch 3 | Batch 4 | Batch 5 | Batch 6 |
+    | :------- | :----: | :-----: | :-----: | :-----: | :-----: | :-----: |
+    | A      | 9       | 19      | 28      | 22      | 18      | 8       |
+    | B      | 10      | 22      | 30      | 21      | 23      | 12      |
 
+    i. Write down a unit-block-treatment model for this example.
+    i. Test if there is a significant difference between catalysts at the 5% level.
+    i. Fit a unit-treatment model ignoring blocks and test again for a difference between catalysts. Comment on difference between this analysis and the one including blocks.
+    
+2. Consider the data below obtained from an agricultural experiment in which six different fertilizers were given to a crop of blackcurrants in a field. The field was divided into four equal areas of land so that the land in each area was fairly homogeneous. Each area of land was further subdivided into six plots and one of the fertilizers, chosen by a random procedure, was applied to each plot. The yields of blackcurrants obtained from each plot were recorded (in lbs) and are given in Table \@ref(tab:blackcurrent-data). In this randomised block design the treatments are the six fertilizers and the blocks are the four areas of land. 
 
+    ```{r blackcurrent-data, warning = F}
+blackcurrent <- data.frame(fertilizer = rep(factor(1:6), 4),
+                   block = rep(factor(1:4), rep(6, 4)), 
+                   yield = c(14.5, 13.5, 11.5, 13.0, 15.0, 12.5,
+                                12.0, 10.0, 11.0, 13.0, 12.0, 13.5,
+                                9.0, 9.0, 14.0, 13.5, 8.0, 14.0,
+                                6.5, 8.5, 10.0, 7.5, 7.0, 8.0)
+)
+knitr::kable(
+ tidyr::pivot_wider(blackcurrent, names_from = fertilizer, values_from = yield),
+ col.names = c("Block", paste("Ferilizer", 1:6)),
+ caption = "Blackcurrent experiment: yield (lbs) from six different fertilizers."
+)
+    ```
+
+    Conduct a full analysis of this experiment, including
+    
+    a. exploratory data analysis;
+    b. fitting an appropriate linear model, and conducting an F-test to compare a model that explains variation between the six fertilizers to the model only containing blocks;
+    c. Linear model diagnostics;
+    d. if appropriate, multiple comparisons of all pairwise differences between treatments.
 
 
 
