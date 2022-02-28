@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3065,6 +3065,94 @@ N & = J_{t \times b}
 \end{align}
 
 Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter \ref{block-factorial}.
+
+\hypertarget{balanced-incomplete-block-designs}{%
+\section{Balanced incomplete block designs}\label{balanced-incomplete-block-designs}}
+
+When the blocks sizes are less than the number of treatments, i.e.~\(k_i < t\) for all \(i=1,\ldots, b\), by necessity the design is incomplete, in that not all treatments can be allocated to every block. We will restrict ourselves now to considering binary designs with common block size \(k<t\). In a binary design, each treatment occurs within a block either 0 or 1 times (\(n_{ij}=0\) or \(n_{ij}=1\)).
+
+Example \ref{exm:blocks-tyres} is an example of an incomplete design with \(k=3<t=4\). For incomplete designs, it is often useful to study the \emph{treatment concurrence} matrix, given by \(NN^{\mathrm{T}}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}
+  \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+    \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+  \AttributeTok{nrow =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T}
+\NormalTok{)}
+\NormalTok{N }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(N)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    3    2    2    2
+## [2,]    2    3    2    2
+## [3,]    2    2    3    2
+## [4,]    2    2    2    3
+\end{verbatim}
+
+This matrix has the number of treatment replications, \(n_j\), on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as \(\lambda_{ij}\) the number of blocks that contain both treatment \(i\) and treatment \(j\). For Example \ref{exm:blocks-tyres}, \(\lambda_{ij} = 2\) for all \(i,j = 1,\ldots, 4\); that is, each pair of treatments occurs together in two blocks.
+
+\begin{definition}
+\protect\hypertarget{def:bibd}{}\label{def:bibd}
+
+A \textbf{balanced incomplete block design} (BIBD) is an incomplete block design with \(k<t\) that meets three requirements:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The design is binary.
+\item
+  Each treatment is applied to a unit in the same number of blocks. It follows that the common number of units applied to each treatment must be \(r = n_j = bk / t\) (\(j=1,\ldots, t\)), where \(n = bk\). (Sometimes referred to as first-order balance).
+\item
+  Each pair of treatments is applied to two units in the same number of blocks, that is \(\lambda_{ij} = \lambda\). (Sometimes referred to as second-order balance).
+
+  In fact, we can deduce that \(\lambda(t-1) = r(k - 1)\). To see this, focus on treatment 1. This treatment occurs in \(r\) blocks, and in each of these blocks, it occurs together with \(k-1\) other treatments. But also, treatment 1 occurs \(\lambda\) times with each of the other \(t-1\) treatments. Hence \(\lambda(t-1) = r(k - 1)\), or \(\lambda = r(k - 1) / (t-1)\).
+\end{enumerate}
+
+\end{definition}
+
+The design in Example \ref{exm:blocks-tyres} is a BIBD with \(b=4\), \(k=3\), \(t = 4\), \(r = 4\times 3 / 4 = 3\), \(\lambda = 3 \times (3-1) / (4-1) = 2\).
+
+\hypertarget{construction-of-bibds}{%
+\subsection{Construction of BIBDs}\label{construction-of-bibds}}
+
+BIBDs do not exist for all combinations of values of \(t\), \(k\) and \(b\). In particular, we must ensure
+
+\begin{itemize}
+\tightlist
+\item
+  \(r=bk/t\) is integer, and
+\item
+  \(\lambda = r(k - 1) / (t-1)\) is integer.
+\end{itemize}
+
+In general, we can always construct a BIBD for \(t\) treatments in \(b = {t \choose k}\) blocks of size \(k\), although it may not be the smallest possible BIBD. Such a design will have \(r = {t-1 \choose k-1}\) and \(\lambda = {t-2 \choose k-2}\). The design in Example \ref{exm:blocks-tyres} was constructed this way, with \(b = 4\), \(r = 3\) and \(\lambda = 2\).
+
+\hypertarget{reduced-normal-equations}{%
+\subsection{Reduced normal equations}\label{reduced-normal-equations}}
+
+It can be shown that the reduced normal equations \eqref{eq:block-rne} for a BIBD can be written as
+
+\begin{equation}
+\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
+\label{eq:blocks-bibd-rne}
+\end{equation}
+
+Equation \eqref{eq:blocks-bibd-rne} defines a series of \(t\) equations of the form
+
+\[
+\hat{\tau_j} - \hat{\tau}_w = \frac{k}{\lambda t}\left(\sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\right)\,. 
+\]
+Hence, as with the CRD and RCD we can estimate contrasts in the \(\tau_i\), with estimator
+
+\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\sum_{j=1}^tc_jq_j\,,
+\]
+with \(q_j = \sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\).
 
 \hypertarget{exercises-2}{%
 \section{Exercises}\label{exercises-2}}
