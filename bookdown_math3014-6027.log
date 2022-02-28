@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  28 FEB 2022 10:13
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.2.9)  28 FEB 2022 18:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1349,9 +1349,9 @@ File: bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf Graphic
  file (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/simple-efficiency-1.pdf>
 [12] [13] [14] [15] [16] [17] [18]
-Overfull \hbox (47.5pt too wide) in paragraph at lines 908--908
- []\TU/lmtt/m/n/10 ## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "
-Tea first"[] 
+Overfull \hbox (52.75pt too wide) in paragraph at lines 908--908
+ []\TU/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "
+Milk first"[] 
  []
 
 [19] [20]
@@ -1586,19 +1586,16 @@ Underfull \hbox (badness 2635) in paragraph at lines 3058--3059
 nt replications and
  []
 
-
-Overfull \vbox (1.38795pt too high) has occurred while \output is active []
-
-[67]
-Overfull \hbox (27.16006pt too wide) in paragraph at lines 3121--3134
+[67] [68] [69]
+Overfull \hbox (27.16006pt too wide) in paragraph at lines 3209--3222
  [][] 
  []
 
-[68] [69] [70
-
-]
+[70]
 Chapter 4.
-[71] [72
+[71
+
+] [72
 
 ]
 Chapter 5.
@@ -1617,19 +1614,19 @@ Chapter 8.
 (./bookdown_math3014-6027.bbl [79] [80
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3169.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3257.
 [81]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3169.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3257.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 3169.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3169.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3169.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 3257.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3257.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3257.
  ) 
 Here is how much of TeX's memory you used:
- 26842 strings out of 492970
- 490330 string characters out of 6133939
- 726437 words of memory out of 5000000
- 30510 multiletter control sequences out of 15000+600000
+ 26848 strings out of 492970
+ 490450 string characters out of 6133939
+ 727701 words of memory out of 5000000
+ 30516 multiletter control sequences out of 15000+600000
  544633 words of font info for 137 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,17n,117p,10417b,538s stack positions out of 5000i,500n,10000p,200000b,80000s

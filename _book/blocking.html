@@ -201,7 +201,12 @@ div.csl-indent {
 <li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#analysis-of-variance"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
 <li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
-<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#balanced-incomplete-block-designs"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="blocking.html"><a href="blocking.html#construction-of-bibds"><i class="fa fa-check"></i><b>3.6.1</b> Construction of BIBDs</a></li>
+<li class="chapter" data-level="3.6.2" data-path="blocking.html"><a href="blocking.html#reduced-normal-equations"><i class="fa fa-check"></i><b>3.6.2</b> Reduced normal equations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
@@ -727,8 +732,63 @@ N &amp; = J_{t \times b}
 \end{align}\]</span></p>
 <p>Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter <a href="block-factorial.html#block-factorial">5</a>.</p>
 </div>
-<div id="exercises-2" class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Exercises</h2>
+<div id="balanced-incomplete-block-designs" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Balanced incomplete block designs</h2>
+<p>When the blocks sizes are less than the number of treatments, i.e. <span class="math inline">\(k_i &lt; t\)</span> for all <span class="math inline">\(i=1,\ldots, b\)</span>, by necessity the design is incomplete, in that not all treatments can be allocated to every block. We will restrict ourselves now to considering binary designs with common block size <span class="math inline">\(k&lt;t\)</span>. In a binary design, each treatment occurs within a block either 0 or 1 times (<span class="math inline">\(n_{ij}=0\)</span> or <span class="math inline">\(n_{ij}=1\)</span>).</p>
+<p>Example <a href="blocking.html#exm:blocks-tyres">3.2</a> is an example of an incomplete design with <span class="math inline">\(k=3&lt;t=4\)</span>. For incomplete designs, it is often useful to study the <em>treatment concurrence</em> matrix, given by <span class="math inline">\(NN^{\mathrm{T}}\)</span>.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="blocking.html#cb72-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb72-2"><a href="blocking.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb72-3"><a href="blocking.html#cb72-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb72-4"><a href="blocking.html#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>,</span>
+<span id="cb72-5"><a href="blocking.html#cb72-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb72-6"><a href="blocking.html#cb72-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T</span>
+<span id="cb72-7"><a href="blocking.html#cb72-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb72-8"><a href="blocking.html#cb72-8" aria-hidden="true" tabindex="-1"></a>N <span class="sc">%*%</span> <span class="fu">t</span>(N)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    3    2    2    2
+## [2,]    2    3    2    2
+## [3,]    2    2    3    2
+## [4,]    2    2    2    3</code></pre>
+<p>This matrix has the number of treatment replications, <span class="math inline">\(n_j\)</span>, on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as <span class="math inline">\(\lambda_{ij}\)</span> the number of blocks that contain both treatment <span class="math inline">\(i\)</span> and treatment <span class="math inline">\(j\)</span>. For Example <a href="blocking.html#exm:blocks-tyres">3.2</a>, <span class="math inline">\(\lambda_{ij} = 2\)</span> for all <span class="math inline">\(i,j = 1,\ldots, 4\)</span>; that is, each pair of treatments occurs together in two blocks.</p>
+<div class="definition">
+<p><span id="def:bibd" class="definition"><strong>Definition 3.1  </strong></span>A <strong>balanced incomplete block design</strong> (BIBD) is an incomplete block design with <span class="math inline">\(k&lt;t\)</span> that meets three requirements:</p>
+<ol style="list-style-type: decimal">
+<li><p>The design is binary.</p></li>
+<li><p>Each treatment is applied to a unit in the same number of blocks. It follows that the common number of units applied to each treatment must be <span class="math inline">\(r = n_j = bk / t\)</span> (<span class="math inline">\(j=1,\ldots, t\)</span>), where <span class="math inline">\(n = bk\)</span>. (Sometimes referred to as first-order balance).</p></li>
+<li><p>Each pair of treatments is applied to two units in the same number of blocks, that is <span class="math inline">\(\lambda_{ij} = \lambda\)</span>. (Sometimes referred to as second-order balance).</p>
+<p>In fact, we can deduce that <span class="math inline">\(\lambda(t-1) = r(k - 1)\)</span>. To see this, focus on treatment 1. This treatment occurs in <span class="math inline">\(r\)</span> blocks, and in each of these blocks, it occurs together with <span class="math inline">\(k-1\)</span> other treatments. But also, treatment 1 occurs <span class="math inline">\(\lambda\)</span> times with each of the other <span class="math inline">\(t-1\)</span> treatments. Hence <span class="math inline">\(\lambda(t-1) = r(k - 1)\)</span>, or <span class="math inline">\(\lambda = r(k - 1) / (t-1)\)</span>.</p></li>
+</ol>
+</div>
+<p>The design in Example <a href="blocking.html#exm:blocks-tyres">3.2</a> is a BIBD with <span class="math inline">\(b=4\)</span>, <span class="math inline">\(k=3\)</span>, <span class="math inline">\(t = 4\)</span>, <span class="math inline">\(r = 4\times 3 / 4 = 3\)</span>, <span class="math inline">\(\lambda = 3 \times (3-1) / (4-1) = 2\)</span>.</p>
+<div id="construction-of-bibds" class="section level3" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Construction of BIBDs</h3>
+<p>BIBDs do not exist for all combinations of values of <span class="math inline">\(t\)</span>, <span class="math inline">\(k\)</span> and <span class="math inline">\(b\)</span>. In particular, we must ensure</p>
+<ul>
+<li><span class="math inline">\(r=bk/t\)</span> is integer, and</li>
+<li><span class="math inline">\(\lambda = r(k - 1) / (t-1)\)</span> is integer.</li>
+</ul>
+<p>In general, we can always construct a BIBD for <span class="math inline">\(t\)</span> treatments in <span class="math inline">\(b = {t \choose k}\)</span> blocks of size <span class="math inline">\(k\)</span>, although it may not be the smallest possible BIBD. Such a design will have <span class="math inline">\(r = {t-1 \choose k-1}\)</span> and <span class="math inline">\(\lambda = {t-2 \choose k-2}\)</span>. The design in Example <a href="blocking.html#exm:blocks-tyres">3.2</a> was constructed this way, with <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(r = 3\)</span> and <span class="math inline">\(\lambda = 2\)</span>.</p>
+</div>
+<div id="reduced-normal-equations" class="section level3" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> Reduced normal equations</h3>
+<p>It can be shown that the reduced normal equations <a href="blocking.html#eq:block-rne">(3.7)</a> for a BIBD can be written as</p>
+<p><span class="math display" id="eq:blocks-bibd-rne">\[\begin{equation}
+\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
+\tag{3.13}
+\end{equation}\]</span></p>
+<p>Equation <a href="blocking.html#eq:blocks-bibd-rne">(3.13)</a> defines a series of <span class="math inline">\(t\)</span> equations of the form</p>
+<p><span class="math display">\[
+\hat{\tau_j} - \hat{\tau}_w = \frac{k}{\lambda t}\left(\sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\right)\,. 
+\]</span>
+Hence, as with the CRD and RCD we can estimate contrasts in the <span class="math inline">\(\tau_i\)</span>, with estimator</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\sum_{j=1}^tc_jq_j\,,
+\]</span>
+with <span class="math inline">\(q_j = \sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\)</span>.</p>
+</div>
+</div>
+<div id="exercises-2" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>Consider the below randomised complete block design for comparing two catalysts, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, for a chemical reaction using six batches of material. The response is the yield (%) from the reaction.</p>
 <table>
@@ -770,18 +830,18 @@ N &amp; = J_{t \times b}
 <li>Fit a unit-treatment model ignoring blocks and test again for a difference between catalysts. Comment on difference between this analysis and the one including blocks.</li>
 </ol></li>
 <li><p>Consider the data below obtained from an agricultural experiment in which six different fertilizers were given to a crop of blackcurrants in a field. The field was divided into four equal areas of land so that the land in each area was fairly homogeneous. Each area of land was further subdivided into six plots and one of the fertilizers, chosen by a random procedure, was applied to each plot. The yields of blackcurrants obtained from each plot were recorded (in lbs) and are given in Table <a href="blocking.html#tab:blackcurrent-data">3.3</a>. In this randomised block design the treatments are the six fertilizers and the blocks are the four areas of land.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="blocking.html#cb72-1" aria-hidden="true" tabindex="-1"></a>blackcurrent <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fertilizer =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="dv">4</span>),</span>
-<span id="cb72-2"><a href="blocking.html#cb72-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">block =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="fu">rep</span>(<span class="dv">6</span>, <span class="dv">4</span>)), </span>
-<span id="cb72-3"><a href="blocking.html#cb72-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">yield =</span> <span class="fu">c</span>(<span class="fl">14.5</span>, <span class="fl">13.5</span>, <span class="fl">11.5</span>, <span class="fl">13.0</span>, <span class="fl">15.0</span>, <span class="fl">12.5</span>,</span>
-<span id="cb72-4"><a href="blocking.html#cb72-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fl">12.0</span>, <span class="fl">10.0</span>, <span class="fl">11.0</span>, <span class="fl">13.0</span>, <span class="fl">12.0</span>, <span class="fl">13.5</span>,</span>
-<span id="cb72-5"><a href="blocking.html#cb72-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fl">9.0</span>, <span class="fl">9.0</span>, <span class="fl">14.0</span>, <span class="fl">13.5</span>, <span class="fl">8.0</span>, <span class="fl">14.0</span>,</span>
-<span id="cb72-6"><a href="blocking.html#cb72-6" aria-hidden="true" tabindex="-1"></a>                            <span class="fl">6.5</span>, <span class="fl">8.5</span>, <span class="fl">10.0</span>, <span class="fl">7.5</span>, <span class="fl">7.0</span>, <span class="fl">8.0</span>)</span>
-<span id="cb72-7"><a href="blocking.html#cb72-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb72-8"><a href="blocking.html#cb72-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb72-9"><a href="blocking.html#cb72-9" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(blackcurrent, <span class="at">names_from =</span> fertilizer, <span class="at">values_from =</span> yield),</span>
-<span id="cb72-10"><a href="blocking.html#cb72-10" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Block&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Ferilizer&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)),</span>
-<span id="cb72-11"><a href="blocking.html#cb72-11" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Blackcurrent experiment: yield (lbs) from six different fertilizers.&quot;</span></span>
-<span id="cb72-12"><a href="blocking.html#cb72-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="blocking.html#cb74-1" aria-hidden="true" tabindex="-1"></a>blackcurrent <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fertilizer =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="dv">4</span>),</span>
+<span id="cb74-2"><a href="blocking.html#cb74-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">block =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="fu">rep</span>(<span class="dv">6</span>, <span class="dv">4</span>)), </span>
+<span id="cb74-3"><a href="blocking.html#cb74-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">yield =</span> <span class="fu">c</span>(<span class="fl">14.5</span>, <span class="fl">13.5</span>, <span class="fl">11.5</span>, <span class="fl">13.0</span>, <span class="fl">15.0</span>, <span class="fl">12.5</span>,</span>
+<span id="cb74-4"><a href="blocking.html#cb74-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fl">12.0</span>, <span class="fl">10.0</span>, <span class="fl">11.0</span>, <span class="fl">13.0</span>, <span class="fl">12.0</span>, <span class="fl">13.5</span>,</span>
+<span id="cb74-5"><a href="blocking.html#cb74-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fl">9.0</span>, <span class="fl">9.0</span>, <span class="fl">14.0</span>, <span class="fl">13.5</span>, <span class="fl">8.0</span>, <span class="fl">14.0</span>,</span>
+<span id="cb74-6"><a href="blocking.html#cb74-6" aria-hidden="true" tabindex="-1"></a>                            <span class="fl">6.5</span>, <span class="fl">8.5</span>, <span class="fl">10.0</span>, <span class="fl">7.5</span>, <span class="fl">7.0</span>, <span class="fl">8.0</span>)</span>
+<span id="cb74-7"><a href="blocking.html#cb74-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb74-8"><a href="blocking.html#cb74-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb74-9"><a href="blocking.html#cb74-9" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(blackcurrent, <span class="at">names_from =</span> fertilizer, <span class="at">values_from =</span> yield),</span>
+<span id="cb74-10"><a href="blocking.html#cb74-10" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Block&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Ferilizer&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)),</span>
+<span id="cb74-11"><a href="blocking.html#cb74-11" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Blackcurrent experiment: yield (lbs) from six different fertilizers.&quot;</span></span>
+<span id="cb74-12"><a href="blocking.html#cb74-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:blackcurrent-data">Table 3.3: </span>Blackcurrent experiment: yield (lbs) from six different fertilizers.</caption>
 <thead>

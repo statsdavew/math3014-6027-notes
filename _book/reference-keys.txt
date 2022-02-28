@@ -3,7 +3,6 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
-eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -42,6 +41,7 @@ eq:anova-nm
 eq:rcbd-x21
 eq:blocks-orth-ne1
 eq:blocks-orth-ne2
+eq:blocks-bibd-rne
 tab:blackcurrent-data
 intro
 motivation
@@ -73,6 +73,9 @@ normal-equations
 analysis-of-variance
 rcdb
 blocks-orthogonal
+balanced-incomplete-block-designs
+construction-of-bibds
+reduced-normal-equations
 exercises-2
 factorial
 block-factorial
