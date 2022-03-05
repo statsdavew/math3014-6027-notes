@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-02-28}
+\date{2022-03-05}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Milk first"
-## [6] "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Milk first"
+## [6] "Tea first"  "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1637,12 +1637,12 @@ Clearly, we could directly calculate, and then compare, mean responses for each 
 
 \begin{verbatim}
 ##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3960
-##  1 - 3       -0.38 0.206 16  -1.843  0.0840
-##  1 - 4       -0.44 0.206 16  -2.134  0.0490
-##  2 - 3       -0.56 0.206 16  -2.716  0.0150
-##  2 - 4       -0.62 0.206 16  -3.007  0.0080
-##  3 - 4       -0.06 0.206 16  -0.291  0.7750
+##  1 - 2        0.18 0.206 16   0.873  0.3955
+##  1 - 3       -0.38 0.206 16  -1.843  0.0839
+##  1 - 4       -0.44 0.206 16  -2.134  0.0486
+##  2 - 3       -0.56 0.206 16  -2.716  0.0153
+##  2 - 4       -0.62 0.206 16  -3.007  0.0083
+##  3 - 4       -0.06 0.206 16  -0.291  0.7748
 \end{verbatim}
 
   Here, we have first fitted the linear model object. The \texttt{lm} function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5\% significance level,
@@ -1666,12 +1666,12 @@ Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for
 
 \begin{verbatim}
 ##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3960
-##  1 - 3       -0.38 0.206 16  -1.843  0.0840
-##  1 - 4       -0.44 0.206 16  -2.134  0.0490
-##  2 - 3       -0.56 0.206 16  -2.716  0.0150
-##  2 - 4       -0.62 0.206 16  -3.007  0.0080
-##  3 - 4       -0.06 0.206 16  -0.291  0.7750
+##  1 - 2        0.18 0.206 16   0.873  0.3955
+##  1 - 3       -0.38 0.206 16  -1.843  0.0839
+##  1 - 4       -0.44 0.206 16  -2.134  0.0486
+##  2 - 3       -0.56 0.206 16  -2.716  0.0153
+##  2 - 4       -0.62 0.206 16  -3.007  0.0083
+##  3 - 4       -0.06 0.206 16  -0.291  0.7748
 \end{verbatim}
 
 \begin{Shaded}
@@ -1686,7 +1686,7 @@ Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for
 
 \begin{verbatim}
 ##  contrast       estimate    SE df t.ratio p.value
-##  t1.v.avg.t2.t3     -0.1 0.178 16  -0.560  0.5830
+##  t1.v.avg.t2.t3     -0.1 0.179 16  -0.560  0.5832
 \end{verbatim}
 \item
   It more easily generalises to the more complicated models we will see in Chapter \ref{blocking}.
@@ -1711,10 +1711,10 @@ For Example \ref{exm:one-way}, there are \({4 \choose 2} = 6\) pairwise comparis
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.265
+## [1] 0.2649
 \end{verbatim}
 
-An experiment-wise error rate of 0.265 is substantially greater than 0.05. Hence, we would expect to make many more type I errors than may be desirable. \href{https://xkcd.com/882}{xkcd} has a fun example:
+An experiment-wise error rate of 0.2649 is substantially greater than 0.05. Hence, we would expect to make many more type I errors than may be desirable. \href{https://xkcd.com/882}{xkcd} has a fun example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1724,7 +1724,7 @@ An experiment-wise error rate of 0.265 is substantially greater than 0.05. Hence
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.642
+## [1] 0.6415
 \end{verbatim}
 
 Therefore it is usually desirable to maintain some control of the experiment-wise type I error rate. We will consider two methods.
@@ -1753,10 +1753,10 @@ Therefore it is usually desirable to maintain some control of the experiment-wis
 \begin{verbatim}
 ##  contrast estimate    SE df t.ratio p.value
 ##  1 - 2        0.18 0.206 16   0.873  1.0000
-##  1 - 3       -0.38 0.206 16  -1.843  0.5030
-##  1 - 4       -0.44 0.206 16  -2.134  0.2920
-##  2 - 3       -0.56 0.206 16  -2.716  0.0920
-##  2 - 4       -0.62 0.206 16  -3.007  0.0500
+##  1 - 3       -0.38 0.206 16  -1.843  0.5034
+##  1 - 4       -0.44 0.206 16  -2.134  0.2918
+##  2 - 3       -0.56 0.206 16  -2.716  0.0915
+##  2 - 4       -0.62 0.206 16  -3.007  0.0501
 ##  3 - 4       -0.06 0.206 16  -0.291  1.0000
 ## 
 ## P value adjustment: bonferroni method for 6 tests
@@ -1776,12 +1776,12 @@ Therefore it is usually desirable to maintain some control of the experiment-wis
 
 \begin{verbatim}
 ##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.8190
-##  1 - 3       -0.38 0.206 16  -1.843  0.2900
-##  1 - 4       -0.44 0.206 16  -2.134  0.1840
-##  2 - 3       -0.56 0.206 16  -2.716  0.0660
-##  2 - 4       -0.62 0.206 16  -3.007  0.0380
-##  3 - 4       -0.06 0.206 16  -0.291  0.9910
+##  1 - 2        0.18 0.206 16   0.873  0.8185
+##  1 - 3       -0.38 0.206 16  -1.843  0.2903
+##  1 - 4       -0.44 0.206 16  -2.134  0.1845
+##  2 - 3       -0.56 0.206 16  -2.716  0.0658
+##  2 - 4       -0.62 0.206 16  -3.007  0.0377
+##  3 - 4       -0.06 0.206 16  -0.291  0.9911
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates
 \end{verbatim}
@@ -1799,20 +1799,20 @@ The default adjustment in the \texttt{pairs} function is the Tukey method. Compa
 \end{Shaded}
 
 \begin{verbatim}
-##   contrast estimate    SE df t.ratio Bonf.p.value Tukey.p.value
-## 1    1 - 2     0.18 0.206 16   0.873       1.0000        0.8185
-## 2    1 - 3    -0.38 0.206 16  -1.843       0.5034        0.2903
-## 3    1 - 4    -0.44 0.206 16  -2.134       0.2918        0.1845
-## 4    2 - 3    -0.56 0.206 16  -2.716       0.0915        0.0658
-## 5    2 - 4    -0.62 0.206 16  -3.007       0.0501        0.0377
-## 6    3 - 4    -0.06 0.206 16  -0.291       1.0000        0.9911
+##   contrast estimate     SE df t.ratio Bonf.p.value Tukey.p.value
+## 1    1 - 2     0.18 0.2062 16  0.8731      1.00000       0.81854
+## 2    1 - 3    -0.38 0.2062 16 -1.8433      0.50336       0.29030
+## 3    1 - 4    -0.44 0.2062 16 -2.1343      0.29182       0.18448
+## 4    2 - 3    -0.56 0.2062 16 -2.7164      0.09150       0.06579
+## 5    2 - 4    -0.62 0.2062 16 -3.0074      0.05009       0.03767
+## 6    3 - 4    -0.06 0.2062 16 -0.2910      1.00000       0.99108
 ##   unadjust.p.value
-## 1          0.39551
-## 2          0.08389
-## 3          0.04864
-## 4          0.01525
-## 5          0.00835
-## 6          0.77476
+## 1         0.395509
+## 2         0.083893
+## 3         0.048637
+## 4         0.015251
+## 5         0.008349
+## 6         0.774758
 \end{verbatim}
 
 Although the decision on which hypotheses to reject (comparson 2 - 4) is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.
@@ -1952,7 +1952,7 @@ Consider two sets of contrasts:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  3.33  3.33  3.33 10.00
+## [1]  3.333  3.333  3.333 10.000
 \end{verbatim}
 
   So the optimal allocation splits 10 units between operators 1-3, and allocates 10 units to operator 4. There is no exact integer rounding possible, so we will use \(n_1 = 4\), \(n_2=n_3 = 3\), \(n_4 = 10\) and calculate the efficiency by comparing the variance of this allocation to that from the equally allocated design.
@@ -1970,7 +1970,7 @@ Consider two sets of contrasts:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.757
+## [1] 0.7569
 \end{verbatim}
 
   So the efficiency of the equally allocated design for estimating this contrast is 75.69 \%.
@@ -2006,13 +2006,13 @@ Returning to Example \ref{exm:one-way}, assume are testing a single pairwise com
 \end{Shaded}
 
 \begin{verbatim}
-##      Signal-to-noise     n
-## [1,]             0.5 288.0
-## [2,]             1.0  72.0
-## [3,]             1.5  32.0
-## [4,]             2.0  18.0
-## [5,]             2.5  11.5
-## [6,]             3.0   8.0
+##      Signal-to-noise      n
+## [1,]             0.5 288.00
+## [2,]             1.0  72.00
+## [3,]             1.5  32.00
+## [4,]             2.0  18.00
+## [5,]             2.5  11.52
+## [6,]             3.0   8.00
 \end{verbatim}
 
 So, for example, to achieve \(T = 3\) with a signal-to-noise ratio of \(d=0.5\) requires \(n=288\) runs. As would be expected, the number of runs required to achieve this value of \(T\) decreases as the signal-to-noise ration increases. For \(d=3\), only a very small experiment with \(n=8\) runs is needed.
@@ -2058,13 +2058,13 @@ The mean response, and variance, from each treatment is given by
 \hline
 operator & n\_i & mean & variance\\
 \hline
-1 & 5 & 60.2 & 0.268\\
+1 & 5 & 60.24 & 0.268\\
 \hline
-2 & 5 & 60.1 & 0.058\\
+2 & 5 & 60.06 & 0.058\\
 \hline
-3 & 5 & 60.6 & 0.052\\
+3 & 5 & 60.62 & 0.052\\
 \hline
-4 & 5 & 60.7 & 0.047\\
+4 & 5 & 60.68 & 0.047\\
 \hline
 \end{tabular}
 
@@ -2129,7 +2129,7 @@ Solution
 \item
   Each patient should be randomly allocated to one of the drugs. This is to protect against possible bias from lurking variables, e.g.~demographic variables or subjective bias from the study administrator (blinding the study can also help to protect against this).
 \item
-  Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under \(H_0\): no difference in bioactivity between the drugs, the test statistic follows an \(F_{3,26}\) distribution, which has a 1\% critical value of \texttt{qf(0.99,\ 3,\ 26)\ =\ 4.637}. Hence, we can reject \(H_0\).
+  Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under \(H_0\): no difference in bioactivity between the drugs, the test statistic follows an \(F_{3,26}\) distribution, which has a 1\% critical value of \texttt{qf(0.99,\ 3,\ 26)\ =\ 4.6366}. Hence, we can reject \(H_0\).
 \item
   For each difference, the test statistic has the form
 
@@ -2149,7 +2149,7 @@ Solution
   \bottomrule
   \end{longtable}
 
-  The Bonferroni critical value is \(t_{26, 1-0.05/12} = 3.507\). The Tukey critical value is \(q_{4,26, 0.95}/\sqrt{2} = 2.743\) (available \texttt{R} as \texttt{qtukey(0.95,\ 4,\ 26)\ /\ sqrt(2)}). Hence under both methods, bioactivity of drugs \(A\) and \(C\), and \(B\) and \(C\), are significantly different.
+  The Bonferroni critical value is \(t_{26, 1-0.05/12} = 3.5069\). The Tukey critical value is \(q_{4,26, 0.95}/\sqrt{2} = 2.7433\) (available \texttt{R} as \texttt{qtukey(0.95,\ 4,\ 26)\ /\ sqrt(2)}). Hence under both methods, bioactivity of drugs \(A\) and \(C\), and \(B\) and \(C\), are significantly different.
 \item
   A suitable contrast has \(\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)\), with \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = (\tau_A + \tau_B) / 2 - (\tau_C + \tau_D) / 2\) (the difference in average treatment effects).
 
@@ -2163,7 +2163,7 @@ Solution
   \frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
    \]
 
-  The critical value is \(t_{26, 1-0.05/2} = 2.056\). Hence, we can reject \(H_0\) and conclude there is a difference between brand-name and generic drugs.
+  The critical value is \(t_{26, 1-0.05/2} = 2.0555\). Hence, we can reject \(H_0\) and conclude there is a difference between brand-name and generic drugs.
 \end{enumerate}
 
 \begin{enumerate}
@@ -2241,12 +2241,12 @@ Solution
 
 \begin{verbatim}
 ##   batch yield.mean yield.st.dev
-## 1     1      105.0         63.0
-## 2     2      128.0         33.3
-## 3     3      164.0         38.0
-## 4     4       98.0         68.7
-## 5     5      200.0         50.0
-## 6     6       70.0         31.0
+## 1     1     105.00        63.05
+## 2     2     128.00        33.28
+## 3     3     164.00        37.98
+## 4     4      98.00        68.70
+## 5     5     200.00        50.00
+## 6     6      70.00        31.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -2298,7 +2298,7 @@ Solution
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
-  The p-value of 0.004 indicates significant differences between at least two of the batch
+  The p-value of 0.0044 indicates significant differences between at least two of the batch
   means. Therefore \(H_0\) is rejected and a suitable multiple comparison test should be carried
   out.
 \item
@@ -2364,21 +2364,21 @@ Solution
 
 \begin{verbatim}
 ##  contrast estimate   SE df t.ratio p.value
-##  1 - 2         -23 31.3 24  -0.730  0.9760
-##  1 - 3         -59 31.3 24  -1.880  0.4350
-##  1 - 4           7 31.3 24   0.220  1.0000
-##  1 - 5         -95 31.3 24  -3.030  0.0570
-##  1 - 6          35 31.3 24   1.120  0.8690
-##  2 - 3         -36 31.3 24  -1.150  0.8560
-##  2 - 4          30 31.3 24   0.960  0.9270
-##  2 - 5         -72 31.3 24  -2.300  0.2330
-##  2 - 6          58 31.3 24   1.850  0.4540
-##  3 - 4          66 31.3 24   2.110  0.3170
-##  3 - 5         -36 31.3 24  -1.150  0.8560
-##  3 - 6          94 31.3 24   3.000  0.0610
-##  4 - 5        -102 31.3 24  -3.260  0.0350
-##  4 - 6          28 31.3 24   0.890  0.9440
-##  5 - 6         130 31.3 24   4.150  0.0040
+##  1 - 2         -23 31.3 24  -0.735  0.9755
+##  1 - 3         -59 31.3 24  -1.884  0.4351
+##  1 - 4           7 31.3 24   0.224  0.9999
+##  1 - 5         -95 31.3 24  -3.034  0.0566
+##  1 - 6          35 31.3 24   1.118  0.8692
+##  2 - 3         -36 31.3 24  -1.150  0.8555
+##  2 - 4          30 31.3 24   0.958  0.9266
+##  2 - 5         -72 31.3 24  -2.299  0.2329
+##  2 - 6          58 31.3 24   1.852  0.4535
+##  3 - 4          66 31.3 24   2.108  0.3167
+##  3 - 5         -36 31.3 24  -1.150  0.8555
+##  3 - 6          94 31.3 24   3.002  0.0606
+##  4 - 5        -102 31.3 24  -3.257  0.0348
+##  4 - 6          28 31.3 24   0.894  0.9442
+##  5 - 6         130 31.3 24   4.152  0.0043
 ## 
 ## P value adjustment: tukey method for comparing a family of 6 estimates
 \end{verbatim}
@@ -2392,9 +2392,9 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-##    contrast estimate   SE df t.ratio p.value
-## 13    4 - 5     -102 31.3 24   -3.26 0.03482
-## 15    5 - 6      130 31.3 24    4.15 0.00429
+##    contrast estimate    SE df t.ratio  p.value
+## 13    4 - 5     -102 31.31 24  -3.257 0.034820
+## 15    5 - 6      130 31.31 24   4.152 0.004295
 \end{verbatim}
 \end{enumerate}
 
@@ -2443,7 +2443,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  8.01 11.33 11.33 11.33  8.01
+## [1]  8.009 11.327 11.327 11.327  8.009
 \end{verbatim}
 
   Rounding, we obtain a solution of the form \(n_1 = n_5 =8\), \(n_2 = n_4 = 11\) and \(n_3 = 12\). Any of \(n_2, n_3, n_4\) may be rounded up to 12 to form a design with the same variance.
@@ -2458,12 +2458,12 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.78
-## [1] 0.78
-## [1] 0.78
+## [1] 0.7803
+## [1] 0.7803
+## [1] 0.7803
 \end{verbatim}
 \item
-  The optimal ratios for each treatment from part (a) are \(w_1 = w_5 = 0.16\) and \(w_2 = w_3 = w_4 = 0.227\). Fixing these, we can use code from Section \ref{crd-size} to find the required value of \(n\) for each contrast.
+  The optimal ratios for each treatment from part (a) are \(w_1 = w_5 = 0.1602\) and \(w_2 = w_3 = w_4 = 0.2265\). Fixing these, we can use code from Section \ref{crd-size} to find the required value of \(n\) for each contrast.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2474,7 +2474,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 42.6 35.3 35.3 42.6
+## [1] 42.63 35.31 35.31 42.63
 \end{verbatim}
 
   Hence, we need \(n = 43\) for to achieve \(T = 2\) for the first and last contrasts, and \(n = 36\) for the second and third. The differences are due to the different proportions \(w_i\) assumed for each treatment. To achieve \(T=2\) for all contrasts, we pick the larger number, \(n = 43\).
@@ -2888,7 +2888,7 @@ For Example \ref{exm:blocks-tyres}, we get the ANOVA table:
 Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.
 
 The residual mean square for model \eqref{eq:block-plm} also provides an unbiased estimate, \(s^2\), of \(\sigma^2\), the variability of the \(\varepsilon_{ijl}\), \emph{assuming the unit-block-treatment model is correct}. For Example \ref{exm:blocks-bars},
-\(s^2 = 56.387\) and for Example \ref{exm:blocks-tyres}, \(s^2 = 350.183\).
+\(s^2 = 56.3869\) and for Example \ref{exm:blocks-tyres}, \(s^2 = 350.1833\).
 
 \hypertarget{rcdb}{%
 \section{Randomised complete block designs}\label{rcdb}}
@@ -2929,7 +2929,7 @@ Comparing \eqref{eq:rcbd-x21} to the form of \(X_{2|1}\) for a CRD, equation \eq
     \hat{\tau}_j - \hat{\tau}_w = \bar{y}_{.j} - \bar{y}_{..}\,,
   \]
 
-  with \(\hat{\tau}_w = \frac{1}{t}\sum_{j=1}^t\hat{\tau}_j\), \(\bar{y}_{.j} = \frac{1}{b}\sum_{i=1}^b y_{ij}\) and \(\bar{y}_{..} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^t y_{ij}\). Hence, as with a CRD, we can estimate any contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\), having \(\sum_{j=1}^tc_j = 1\), with estimator
+  with \(\hat{\tau}_w = \frac{1}{t}\sum_{j=1}^t\hat{\tau}_j\), \(\bar{y}_{.j} = \frac{1}{b}\sum_{i=1}^b y_{ij}\) and \(\bar{y}_{..} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^t y_{ij}\). Hence, as with a CRD, we can estimate any contrast \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\), having \(\sum_{j=1}^tc_j = 0\), with estimator
 
   \[
   \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{j=1}^tc_j\bar{y}_{.j}\,.
@@ -2983,14 +2983,14 @@ between coatings\footnote{These contrasts measure the difference between the coa
 
 \begin{verbatim}
 ##  contrast estimate   SE df t.ratio p.value
-##  t1.v.t2     -1.25 3.75 21  -0.330  0.7420
-##  t1.v.t3     15.00 3.75 21   4.000  0.0010
-##  t1.v.t4      4.00 3.75 21   1.070  0.2990
+##  t1.v.t2     -1.25 3.75 21  -0.333  0.7425
+##  t1.v.t3     15.00 3.75 21   3.995  0.0007
+##  t1.v.t4      4.00 3.75 21   1.065  0.2988
 ## 
 ## Results are averaged over the levels of: block
 \end{verbatim}
 
-It is important to once again adjust for mulitple comparisons. Here we can use a Bonferroni adjustment, and multiply each p-value by the number of tests (3). We obtain p-values of 1 (coating 1 versus 2), 0.002 (1 versus 3) and 0.896 (2 versus 3). Hence, there is a significant difference between coatings 1 and 3, with \(H_0: \tau_1 = \tau_3\) rejected at the 1\% significant level.
+It is important to once again adjust for mulitple comparisons. Here we can use a Bonferroni adjustment, and multiply each p-value by the number of tests (3). We obtain p-values of 1 (coating 1 versus 2), 0.002 (1 versus 3) and 0.8964 (2 versus 3). Hence, there is a significant difference between coatings 1 and 3, with \(H_0: \tau_1 = \tau_3\) rejected at the 1\% significant level.
 
 We can demonstrate the equivalence of the contrast point estimates between a RCBD and a CRD by fitting a unit-treatment model that ignores blocks:
 
@@ -3004,12 +3004,12 @@ We can demonstrate the equivalence of the contrast point estimates between a RCB
 
 \begin{verbatim}
 ##  contrast estimate   SE df t.ratio p.value
-##  t1.v.t2     -1.25 3.53 28  -0.350  0.7260
-##  t1.v.t3     15.00 3.53 28   4.240  <.0001
-##  t1.v.t4      4.00 3.53 28   1.130  0.2670
+##  t1.v.t2     -1.25 3.54 28  -0.354  0.7263
+##  t1.v.t3     15.00 3.54 28   4.243  0.0002
+##  t1.v.t4      4.00 3.54 28   1.132  0.2674
 \end{verbatim}
 
-As expected the point estimates of the three contrasts are identical. In this case, the standard error of each contrast is actually smaller assuming a CRD without blocks, suggesting block-to-block differences were actually small here (further evidence is provided by the small block sums of squares in the ANOVA table). Here the estimate of \(\sigma\) from the RCBD is \(s_{RCBD} = 7.509\) and from the CRD is \(s_{CRD} = 7.07\), so for this example the unit-to-unit variation within and between blocks is not so different, and actually estimated to be slightly smaller in the CRD\footnote{Of course, the CRD has seven more degrees of freedom for estimating \(\sigma^2\) as block effects do not require estimation.}.
+As expected the point estimates of the three contrasts are identical. In this case, the standard error of each contrast is actually smaller assuming a CRD without blocks, suggesting block-to-block differences were actually small here (further evidence is provided by the small block sums of squares in the ANOVA table). Here the estimate of \(\sigma\) from the RCBD is \(s_{RCBD} = 7.5091\) and from the CRD is \(s_{CRD} = 7.0698\), so for this example the unit-to-unit variation within and between blocks is not so different, and actually estimated to be slightly smaller in the CRD\footnote{Of course, the CRD has seven more degrees of freedom for estimating \(\sigma^2\) as block effects do not require estimation.}.
 
 \hypertarget{blocks-orthogonal}{%
 \section{Orthogonal blocking}\label{blocks-orthogonal}}
@@ -3051,7 +3051,7 @@ X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1 = \boldsymbol{0}_{t\times b
 Hence, we obtain the following condition on the incidence matrix \(N = X_2^{\mathrm{T}}X_1\) for a block design to be orthogonal:
 
 \begin{align}
-N & = \frac{1}{n}X_2^{\mathrm{T}}X_1 \\
+N & = \frac{1}{n}X_2^{\mathrm{T}}J_nX_1 \\
 & = \frac{1}{n}\boldsymbol{n}\boldsymbol{k}^{\mathrm{T}}\,,
 \end{align}
 
@@ -3132,6 +3132,46 @@ BIBDs do not exist for all combinations of values of \(t\), \(k\) and \(b\). In 
 
 In general, we can always construct a BIBD for \(t\) treatments in \(b = {t \choose k}\) blocks of size \(k\), although it may not be the smallest possible BIBD. Such a design will have \(r = {t-1 \choose k-1}\) and \(\lambda = {t-2 \choose k-2}\). The design in Example \ref{exm:blocks-tyres} was constructed this way, with \(b = 4\), \(r = 3\) and \(\lambda = 2\).
 
+Sometimes, smaller BIBDs that satisfy the two conditions above can be constructed. Finding these designs is an combinatorial problem, and tables of designs are available in the literature\footnote{See \citet{CochranCox1957} and \citet{FisherYates1963}}. A large collection of BIBDs has also been catalogued in the \texttt{R} package \texttt{ibd}. The function \texttt{bibd} generates BIBDs for given values of \(t\), \(b\), \(r\), \(k\) and \(\lambda\), or returns a message that a design is not available for those values. We can use the function to find the design used in Example \ref{exm:blocks-tyres}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tyre.bibd }\OtherTok{\textless{}{-}}\NormalTok{ ibd}\SpecialCharTok{::}\FunctionTok{bibd}\NormalTok{(}\AttributeTok{v =} \DecValTok{4}\NormalTok{, }\AttributeTok{b =} \DecValTok{4}\NormalTok{, }\AttributeTok{r =} \DecValTok{3}\NormalTok{, }\AttributeTok{k =} \DecValTok{3}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{2}\NormalTok{) }\CommentTok{\# note, v is the notation for the number of treatments}
+\NormalTok{tyre.bibd}\SpecialCharTok{$}\NormalTok{N }\CommentTok{\# incidence matrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    1    1
+## [2,]    0    1    1    1
+## [3,]    1    1    0    1
+## [4,]    1    1    1    0
+\end{verbatim}
+
+We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{larger.bibd }\OtherTok{\textless{}{-}}\NormalTok{ ibd}\SpecialCharTok{::}\FunctionTok{bibd}\NormalTok{(}\AttributeTok{v =} \DecValTok{8}\NormalTok{, }\AttributeTok{b =} \DecValTok{14}\NormalTok{, }\AttributeTok{r =} \DecValTok{7}\NormalTok{, }\AttributeTok{k =} \DecValTok{4}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{3}\NormalTok{) }
+\NormalTok{larger.bibd}\SpecialCharTok{$}\NormalTok{N}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+## [1,]    1    1    0    1    0    0    0    1    1     1     0     0     1     0
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    1    0    0    1    0    1    0    1    0     0     1     1     0     1
+## [4,]    1    1    0    0    1    1    1    0    0     0     0     0     1     1
+## [5,]    1    1    1    0    1    0    0    0    0     1     1     1     0     0
+## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
+## [7,]    0    0    1    1    1    0    1    1    0     1     0     0     0     1
+## [8,]    0    0    1    1    1    1    0    0    1     0     0     1     1     0
+\end{verbatim}
+
+Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
+
 \hypertarget{reduced-normal-equations}{%
 \subsection{Reduced normal equations}\label{reduced-normal-equations}}
 
@@ -3144,15 +3184,121 @@ It can be shown that the reduced normal equations \eqref{eq:block-rne} for a BIB
 
 Equation \eqref{eq:blocks-bibd-rne} defines a series of \(t\) equations of the form
 
-\[
-\hat{\tau_j} - \hat{\tau}_w = \frac{k}{\lambda t}\left(\sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\right)\,. 
-\]
-Hence, as with the CRD and RCD we can estimate contrasts in the \(\tau_i\), with estimator
+\begin{align*}
+\hat{\tau_j} - \hat{\tau}_w & = \frac{k}{\lambda t}\left(\sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\right) \\
+& = \frac{k}{\lambda t} q_j\,,
+\end{align*}
+
+with \(q_j = \sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\).
+
+Notice that unlike for the RCBD, the reduced normal equations for a BIBD do not correspond to the equations for a CRD. Although the first term in \(q_i\) is the sum of the responses for the \(j\)th treatment (mirroring the CRD), the second term is no longer the overall sum (or average) of the responses. In fact, for \(q_j\) this second term is an adjusted total, just involving observations from those blocks that contain treatment \(j\).
+
+\hypertarget{estimation-and-inference}{%
+\subsection{Estimation and inference}\label{estimation-and-inference}}
+
+As with the CRD and RCD we can estimate contrasts in the \(\tau_i\), with estimator
 
 \[
-\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\sum_{j=1}^tc_jq_j\,,
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\sum_{j=1}^tc_jq_j\,.
 \]
-with \(q_j = \sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\).
+Due to the form of the reduced normal equations for the BIBD, the estimator is no longer just a linear combination of the treatment means; \(q_j\) includes a term that adjusts for the blocks in which treatment \(j\) has occurred.
+
+The simplest way to derive the variance of this estimator is to rewrite it in the form
+
+\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{q}\,, 
+\]
+with \(\boldsymbol{q} = \left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\). Then
+
+\[
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\mathrm{var}(\boldsymbol{q}) \boldsymbol{c}\,.
+\]
+Recalling that \(NN^{\mathrm{T}}\) is the treatment coincidence matrix, the variance-covariance matrix of \(\boldsymbol{q}\) is given by
+
+\begin{align*}
+\mathrm{var}(\boldsymbol{q}) & = \left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\left(X_2 - \frac{1}{k}X_1N\right)\sigma^2 \\
+& = \sigma^2\left\{rI_t - \frac{1}{k}NN^{\mathrm{T}}\right\} \\
+& = \sigma^2\left\{rI_t - \frac{1}{k}\left[(r-\lambda)I_t + \lambda J_t\right]\right\} \\
+& = \sigma^2\left\{\left(\frac{r(k-1) + \lambda}{k}\right)I_t - \frac{\lambda}{k}J_t\right\} \\
+& = \sigma^2\left\{\left(\frac{\lambda(t-1) + \lambda}{k}\right)I_t - \frac{\lambda}{k}J_t\right\} \\
+& = \sigma^2\left\{\frac{\lambda t}{k}I_t - \frac{\lambda}{k}J_t\right\}\,.
+\end{align*}
+
+Hence
+
+\begin{align*}
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)
+& = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\left(\frac{\lambda t}{k}I_t - \frac{\lambda}{k}J_t\right)\boldsymbol{c}\sigma^2 \\
+& = \frac{k\sigma^2}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{c} \\
+& = \frac{k\sigma^2}{\lambda t}\sum_{j=1}^tc_i^2\,,
+\end{align*}
+
+as \(\boldsymbol{c}^{\mathrm{T}}J_t = \boldsymbol{0}\) as \(\sum_{j=1}^tc_j = 0\). The estimator is also unbiased (\(E(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}) = \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)), and hence the sampling distribution, upon which inference can be based, is given by
+
+\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \frac{k\sigma^2}{\lambda t}\sum_{j=1}^t c_j^2\right)\,.
+\]
+
+Returning to Example \ref{exm:blocks-tyres}, we can use these results to estimate all pairwise differences between the four treatments. Firstly, we directly calculate the \(q_j\) from treatment and block sums, using the incidence matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trtsum }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(wear }\SpecialCharTok{\textasciitilde{}}\NormalTok{ compound, }\AttributeTok{data =}\NormalTok{ tyre, }\AttributeTok{FUN =}\NormalTok{ sum)[, }\DecValTok{2}\NormalTok{]}
+\NormalTok{blocksum }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(wear }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block, }\AttributeTok{data =}\NormalTok{ tyre, }\AttributeTok{FUN =}\NormalTok{ sum)[, }\DecValTok{2}\NormalTok{]}
+\NormalTok{q }\OtherTok{\textless{}{-}}\NormalTok{ trtsum }\SpecialCharTok{{-}}\NormalTok{ N }\SpecialCharTok{\%*\%}\NormalTok{ blocksum }\SpecialCharTok{/} \DecValTok{3}
+\NormalTok{C }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}
+  \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}
+    \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+    \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}
+    \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{ncol =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T}
+\NormalTok{)}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{3}\NormalTok{; lambda }\OtherTok{\textless{}{-}} \DecValTok{2}\NormalTok{; t }\OtherTok{\textless{}{-}} \DecValTok{4}
+\NormalTok{pe }\OtherTok{\textless{}{-}}\NormalTok{ k }\SpecialCharTok{*}\NormalTok{ C }\SpecialCharTok{\%*\%}\NormalTok{ q }\SpecialCharTok{/}\NormalTok{ (lambda }\SpecialCharTok{*}\NormalTok{ t) }\CommentTok{\# point estimates}
+\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ k }\SpecialCharTok{*}\NormalTok{ tyre.s2 }\SpecialCharTok{/}\NormalTok{ (lambda }\SpecialCharTok{*}\NormalTok{ t)) }\CommentTok{\# st error (same for each contrast)}
+\NormalTok{t.ratio }\OtherTok{\textless{}{-}}\NormalTok{ pe }\SpecialCharTok{/}\NormalTok{ se}
+\NormalTok{p.value }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{ptukey}\NormalTok{(}\FunctionTok{abs}\NormalTok{(t.ratio) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\NormalTok{), }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Pair =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}1v2\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}1v3\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}1v4\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}2v3\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}2v4\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}3v4\textquotesingle{}}\NormalTok{),}
+  \AttributeTok{Estimate =}\NormalTok{ pe, }\AttributeTok{St.err =}\NormalTok{ se, }\AttributeTok{t.ratio =}\NormalTok{ t.ratio, }
+           \AttributeTok{p.value =}\NormalTok{ p.value, }\AttributeTok{reject =}\NormalTok{ p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Pair Estimate St.err t.ratio  p.value reject
+## 1  1v2   -4.375  16.21  -0.270 0.992273  FALSE
+## 2  1v3  -76.250  16.21  -4.705 0.019509   TRUE
+## 3  1v4 -100.875  16.21  -6.225 0.005912   TRUE
+## 4  2v3  -71.875  16.21  -4.435 0.024757   TRUE
+## 5  2v4  -96.500  16.21  -5.955 0.007188   TRUE
+## 6  3v4  -24.625  16.21  -1.519 0.491534  FALSE
+\end{verbatim}
+
+Secondly, we can use \texttt{emmeans} to generate the same output from an \texttt{lm} object.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tyre.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(tyre.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ compound)}
+\FunctionTok{pairs}\NormalTok{(tyre.emm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate   SE df t.ratio p.value
+##  1 - 2       -4.37 16.2  5  -0.270  0.9923
+##  1 - 3      -76.25 16.2  5  -4.705  0.0195
+##  1 - 4     -100.87 16.2  5  -6.225  0.0059
+##  2 - 3      -71.88 16.2  5  -4.435  0.0248
+##  2 - 4      -96.50 16.2  5  -5.955  0.0072
+##  3 - 4      -24.62 16.2  5  -1.519  0.4915
+## 
+## Results are averaged over the levels of: block 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are significantly different at an experiment-wise type I error rate of 5\%.
 
 \hypertarget{exercises-2}{%
 \section{Exercises}\label{exercises-2}}

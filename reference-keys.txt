@@ -91,6 +91,7 @@ blocks-orthogonal
 balanced-incomplete-block-designs
 construction-of-bibds
 reduced-normal-equations
+estimation-and-inference
 exercises-2
 factorial
 block-factorial
