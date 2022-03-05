@@ -315,7 +315,7 @@ Comparing \@ref(eq:rcbd-x21) to the form of $X_{2|1}$ for a CRD, equation \@ref(
     \hat{\tau}_j - \hat{\tau}_w = \bar{y}_{.j} - \bar{y}_{..}\,,
   $$
 
-    with $\hat{\tau}_w = \frac{1}{t}\sum_{j=1}^t\hat{\tau}_j$, $\bar{y}_{.j} = \frac{1}{b}\sum_{i=1}^b y_{ij}$ and $\bar{y}_{..} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^t y_{ij}$. Hence, as with a CRD, we can estimate any contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$, having $\sum_{j=1}^tc_j = 1$, with estimator 
+    with $\hat{\tau}_w = \frac{1}{t}\sum_{j=1}^t\hat{\tau}_j$, $\bar{y}_{.j} = \frac{1}{b}\sum_{i=1}^b y_{ij}$ and $\bar{y}_{..} = \frac{1}{n}\sum_{i=1}^b\sum_{j=1}^t y_{ij}$. Hence, as with a CRD, we can estimate any contrast $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$, having $\sum_{j=1}^tc_j = 0$, with estimator 
     
   $$
 \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{j=1}^tc_j\bar{y}_{.j}\,.
@@ -421,7 +421,7 @@ $$
 Hence, we obtain the following condition on the incidence matrix $N = X_2^{\mathrm{T}}X_1$ for a block design to be orthogonal:
 
 \begin{align}
-N & = \frac{1}{n}X_2^{\mathrm{T}}X_1 \\
+N & = \frac{1}{n}X_2^{\mathrm{T}}J_nX_1 \\
 & = \frac{1}{n}\boldsymbol{n}\boldsymbol{k}^{\mathrm{T}}\,,
 \end{align}
 
@@ -476,6 +476,21 @@ BIBDs do not exist for all combinations of values of $t$, $k$ and $b$. In partic
 
 In general, we can always construct a BIBD for $t$ treatments in $b = {t \choose k}$ blocks of size $k$, although it may not be the smallest possible BIBD. Such a design will have $r = {t-1 \choose k-1}$ and $\lambda = {t-2 \choose k-2}$. The design in Example \@ref(exm:blocks-tyres) was constructed this way, with $b = 4$, $r = 3$ and $\lambda = 2$.
 
+Sometimes, smaller BIBDs that satisfy the two conditions above can be constructed. Finding these designs is an combinatorial problem, and tables of designs are available in the literature^[See @CochranCox1957 and @FisherYates1963]. A large collection of BIBDs has also been catalogued in the `R` package `ibd`. The function `bibd` generates BIBDs for given values of $t$, $b$, $r$, $k$ and $\lambda$, or returns a message that a design is not available for those values. We can use the function to find the design used in Example \@ref(exm:blocks-tyres).
+
+```{r idb-tyre}
+tyre.bibd <- ibd::bibd(v = 4, b = 4, r = 3, k = 3, lambda = 2) # note, v is the notation for the number of treatments
+tyre.bibd$N # incidence matrix
+```
+We can also use the package to find a design for bigger experiments, for example $t=8$ treatments in $b=14$ blocks of size $k=4$. Here, $r = 14\times 4 / 8 = `r 14*4/8`$ and $\lambda = `r 14*4/8` \times 3 / 7 = `r (14*4/8) * 3 / 7`$.
+
+```{r idb-larger-ex}
+larger.bibd <- ibd::bibd(v = 8, b = 14, r = 7, k = 4, lambda = 3) 
+larger.bibd$N
+```
+Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with $b = {t \choose k} = {8 \choose 4} = `r choose(8, 4)`$ blocks.  
+
+
 ### Reduced normal equations
 
 It can be shown that the reduced normal equations \@ref(eq:block-rne) for a BIBD can be written as
@@ -487,15 +502,92 @@ It can be shown that the reduced normal equations \@ref(eq:block-rne) for a BIBD
 
 Equation \@ref(eq:blocks-bibd-rne) defines a series of $t$ equations of the form
 
-$$
-\hat{\tau_j} - \hat{\tau}_w = \frac{k}{\lambda t}\left(\sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\right)\,. 
-$$
-Hence, as with the CRD and RCD we can estimate contrasts in the $\tau_i$, with estimator
+\begin{align*}
+\hat{\tau_j} - \hat{\tau}_w & = \frac{k}{\lambda t}\left(\sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}\right) \\
+& = \frac{k}{\lambda t} q_j\,,
+\end{align*}
+
+with $q_j = \sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}$.
+
+Notice that unlike for the RCBD, the reduced normal equations for a BIBD do not correspond to the equations for a CRD. Although the first term in $q_i$ is the sum of the responses for the $j$th treatment (mirroring the CRD), the second term is no longer the overall sum (or average) of the responses. In fact, for $q_j$ this second term is an adjusted total, just involving observations from those blocks that contain treatment $j$.
+
+### Estimation and inference
+
+As with the CRD and RCD we can estimate contrasts in the $\tau_i$, with estimator
 
 $$
-\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\sum_{j=1}^tc_jq_j\,,
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\sum_{j=1}^tc_jq_j\,.
 $$
-with $q_j = \sum_{i = 1}^b n_{ij}y_{ij} - \frac{1}{k}\sum_{i=1}^bn_{ij}\sum_{j=1}^tn_{ij}y_{ij}$.
+Due to the form of the reduced normal equations for the BIBD, the estimator is no longer just a linear combination of the treatment means; $q_j$ includes a term that adjusts for the blocks in which treatment $j$ has occurred.
+
+The simplest way to derive the variance of this estimator is to rewrite it in the form
+
+$$
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{q}\,, 
+$$
+with $\boldsymbol{q} = \left(X_2^{\mathrm{T}}\bY - \frac{1}{k}NX_1^{\mathrm{T}}\right)\bY$. Then
+
+$$
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\mathrm{var}(\boldsymbol{q}) \boldsymbol{c}\,.
+$$
+Recalling that $NN^{\mathrm{T}}$ is the treatment coincidence matrix, the variance-covariance matrix of $\boldsymbol{q}$ is given by
+
+\begin{align*}
+\mathrm{var}(\boldsymbol{q}) & = \left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\left(X_2 - \frac{1}{k}X_1N\right)\sigma^2 \\
+& = \sigma^2\left\{rI_t - \frac{1}{k}NN^{\mathrm{T}}\right\} \\
+& = \sigma^2\left\{rI_t - \frac{1}{k}\left[(r-\lambda)I_t + \lambda J_t\right]\right\} \\
+& = \sigma^2\left\{\left(\frac{r(k-1) + \lambda}{k}\right)I_t - \frac{\lambda}{k}J_t\right\} \\
+& = \sigma^2\left\{\left(\frac{\lambda(t-1) + \lambda}{k}\right)I_t - \frac{\lambda}{k}J_t\right\} \\
+& = \sigma^2\left\{\frac{\lambda t}{k}I_t - \frac{\lambda}{k}J_t\right\}\,.
+\end{align*}
+
+Hence
+
+\begin{align*}
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)
+& = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\left(\frac{\lambda t}{k}I_t - \frac{\lambda}{k}J_t\right)\boldsymbol{c}\sigma^2 \\
+& = \frac{k\sigma^2}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{c} \\
+& = \frac{k\sigma^2}{\lambda t}\sum_{j=1}^tc_i^2\,,
+\end{align*}
+
+as $\boldsymbol{c}^{\mathrm{T}}J_t = \boldsymbol{0}$ as $\sum_{j=1}^tc_j = 0$. The estimator is also unbiased ($E(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}) = \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$), and hence the sampling distribution, upon which inference can be based, is given by
+
+$$
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} \sim N\left(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}, \frac{k\sigma^2}{\lambda t}\sum_{j=1}^t c_j^2\right)\,.
+$$
+
+Returning to Example \@ref(exm:blocks-tyres), we can use these results to estimate all pairwise differences between the four treatments. Firstly, we directly calculate the $q_j$ from treatment and block sums, using the incidence matrix.
+
+```{r bibd-tyre-q}
+trtsum <- aggregate(wear ~ compound, data = tyre, FUN = sum)[, 2]
+blocksum <- aggregate(wear ~ block, data = tyre, FUN = sum)[, 2]
+q <- trtsum - N %*% blocksum / 3
+C <- matrix(
+  c(1, -1, 0, 0,
+    1, 0, -1, 0,
+    1, 0, 0, -1,
+    0, 1, -1, 0,
+    0, 1, 0, -1,
+    0, 0, 1, -1),
+  ncol = 4, byrow = T
+)
+k <- 3; lambda <- 2; t <- 4
+pe <- k * C %*% q / (lambda * t) # point estimates
+se <- sqrt(2 * k * tyre.s2 / (lambda * t)) # st error (same for each contrast)
+t.ratio <- pe / se
+p.value <- 1 - ptukey(abs(t.ratio) * sqrt(2), 4, 5)
+data.frame(Pair = c('1v2', '1v3', '1v4', '2v3', '2v4', '3v4'),
+  Estimate = pe, St.err = se, t.ratio = t.ratio, 
+           p.value = p.value, reject = p.value < 0.05)
+```
+
+Secondly, we can use `emmeans` to generate the same output from an `lm` object. 
+
+```{r bibd-tyre-contrasts}
+tyre.emm <- emmeans::emmeans(tyre.lm, ~ compound)
+pairs(tyre.emm)
+```
+For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are significantly different at an experiment-wise type I error rate of 5%.
 
 ## Exercises
 

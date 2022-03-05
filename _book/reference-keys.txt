@@ -3,6 +3,7 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
+eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -76,6 +77,7 @@ blocks-orthogonal
 balanced-incomplete-block-designs
 construction-of-bibds
 reduced-normal-equations
+estimation-and-inference
 exercises-2
 factorial
 block-factorial
