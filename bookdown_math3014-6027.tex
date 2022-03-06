@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-03-05}
+\date{2022-03-06}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Tea first"  "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "Tea first" 
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3143,8 +3143,8 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    0    1    1
-## [2,]    0    1    1    1
+## [1,]    0    1    1    1
+## [2,]    1    0    1    1
 ## [3,]    1    1    0    1
 ## [4,]    1    1    1    0
 \end{verbatim}
@@ -3160,14 +3160,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    0    1    0    0    0    1    1     1     0     0     1     0
-## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    1    0    0    1    0    1    0    1    0     0     1     1     0     1
-## [4,]    1    1    0    0    1    1    1    0    0     0     0     0     1     1
-## [5,]    1    1    1    0    1    0    0    0    0     1     1     1     0     0
+## [1,]    1    0    1    0    1    0    1    0    1     1     0     0     1     0
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    1    0    0    0    1    1    1    0    0     0     1     1     0     1
+## [4,]    1    0    1    1    0    1    0    1    0     0     0     0     1     1
+## [5,]    1    1    1    1    0    0    0    0    0     1     1     1     0     0
 ## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
-## [7,]    0    0    1    1    1    0    1    1    0     1     0     0     0     1
-## [8,]    0    0    1    1    1    1    0    0    1     0     0     1     1     0
+## [7,]    0    1    0    1    1    0    1    1    0     1     0     0     0     1
+## [8,]    0    1    0    1    1    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3380,6 +3380,101 @@ For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are signi
     Linear model diagnostics;
   \item
     if appropriate, multiple comparisons of all pairwise differences between treatments.
+  \end{enumerate}
+\item
+  Prove that \(2k/\lambda t > 2/b\), and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size \(k\) and an RCBD, both with \(t\) treatments in \(b\) blocks.
+\item
+  Construct a BIBD for \(t=5\) treatments in \(b=5\) blocks of size \(k=4\) units. What are \(r\) and \(k\) for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+\item
+  Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, ``Position'' and ``Application''. For this experiment, we use a \textbf{latin square} design, as follows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fabric }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{material =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}D\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}D\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{, }
+                           \StringTok{\textquotesingle{}D\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}D\textquotesingle{}}\NormalTok{)),}
+               \AttributeTok{position =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\DecValTok{4}\NormalTok{),}
+               \AttributeTok{application =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
+               \AttributeTok{weight =} \FunctionTok{c}\NormalTok{(}\DecValTok{235}\NormalTok{, }\DecValTok{236}\NormalTok{, }\DecValTok{218}\NormalTok{, }\DecValTok{268}\NormalTok{,}
+                            \DecValTok{251}\NormalTok{, }\DecValTok{241}\NormalTok{, }\DecValTok{227}\NormalTok{, }\DecValTok{229}\NormalTok{, }
+                            \DecValTok{234}\NormalTok{, }\DecValTok{273}\NormalTok{, }\DecValTok{274}\NormalTok{, }\DecValTok{226}\NormalTok{,}
+                            \DecValTok{195}\NormalTok{, }\DecValTok{270}\NormalTok{, }\DecValTok{230}\NormalTok{, }\DecValTok{225}\NormalTok{)}
+\NormalTok{                 )}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(fabric, }\AttributeTok{id\_cols =}\NormalTok{ application, }\AttributeTok{names\_from =}\NormalTok{ position, }
+                \AttributeTok{values\_from =}\NormalTok{ material),}
+ \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Application"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"Position"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{tabular}{l|l|l|l|l}
+   \hline
+   Application & Position 1 & Position 2 & Position 3 & Position 4\\
+   \hline
+   1 & C & D & B & A\\
+   \hline
+   2 & A & B & D & C\\
+   \hline
+   3 & D & C & A & B\\
+   \hline
+   4 & B & A & C & D\\
+   \hline
+   \end{tabular}
+
+  The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order \(k\) is a \(k\times k\) square of \(k\) latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters.
+
+  A suitable unit-block-treatment model for a latin square design has the form
+
+  \[
+   y_{ijk} = \mu + \beta_i + \gamma_j + \tau_k + \varepsilon_{ijk}\,,\qquad i,j,k = 1,\ldots, t\,,
+   \]
+
+  with \(\mu\) a constant parameter, \(\beta_i\) row block effects, \(\gamma_j\) column block effects and \(\tau_k\) the treatment effects. As usual, \(\varepsilon_{ijk}\sim N(0, \sigma^2)\), with errors from different units assumed independent. Note that not all combinations of \(i,j,k\) actually occur in the design; at the intersection of the \(i\)th row and \(j\)th column, only one of the \(t\) treatments is applied.
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Write down a set of normal equations for the model parameters.
+  \item
+    It can be shown that the reduced normal equations for the treatment parameters \(\tau_1,\ldots, \tau_t\) have the form
+    \[
+     \hat{\tau}_k - \hat{\tau}_w = \bar{y}_{..j} - \bar{y}_{...}\,,
+     \]
+    with \(\hat{\tau}_w = \frac{1}{t}\sum_{k=1}^t\hat{\tau}_k\), \(\bar{y}_{..k} = \frac{1}{t}\sum_{i=1}^t\sum_{j=1}^tn_{ijk}y_{ijk}\) (mean for treatment \(k\)) and \(\bar{y}_{...} = \frac{1}{n}\sum_{i=1}^t\sum_{j=1}^t\sum_{k=1}^tn_{ij}y_{ijk}\) (overall mean) where \(n_{ijk} = 1\) if treatment \(k\) occurs at the intersection of row \(i\) and column \(j\) and zero otherwise, and \(\sum_{i=1}^t\sum_{j=1}^tn_{ijk} = t\) for all \(k=1, \ldots, t\).
+
+    Demonstrate that any contrast can therefore be estimated from this design, and derive the variance of the estimator of \(\sum_{k=1}^tc_k\tau_k\).
+  \end{enumerate}
+
+  The data for this experiment is as follows, where the entries in the table give the response for the corresponding treatment:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{ tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_wider}\NormalTok{(fabric, }\AttributeTok{id\_cols =}\NormalTok{ application, }\AttributeTok{names\_from =}\NormalTok{ position, }
+                \AttributeTok{values\_from =}\NormalTok{ weight),}
+ \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Application"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"Position"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{tabular}{l|r|r|r|r}
+   \hline
+   Application & Position 1 & Position 2 & Position 3 & Position 4\\
+   \hline
+   1 & 235 & 236 & 218 & 268\\
+   \hline
+   2 & 251 & 241 & 227 & 229\\
+   \hline
+   3 & 234 & 273 & 274 & 226\\
+   \hline
+   4 & 195 & 270 & 230 & 225\\
+   \hline
+   \end{tabular}
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \setcounter{enumii}{2}
+  \tightlist
+  \item
+    For this data, test if there is a significant difference between materials. If there is, conduct multiple comparisons of all pairs at an experimentwise type I error rate of 5\%.
   \end{enumerate}
 \end{enumerate}
 
