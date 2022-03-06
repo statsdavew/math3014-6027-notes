@@ -198,7 +198,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.1" data-path="blocking.html"><a href="blocking.html#unit-block-treatment-model"><i class="fa fa-check"></i><b>3.1</b> Unit-block-treatment model</a></li>
 <li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html#normal-equations"><i class="fa fa-check"></i><b>3.2</b> Normal equations</a></li>
-<li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#analysis-of-variance"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
+<li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#block-anova"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
 <li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
 <li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#balanced-incomplete-block-designs"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a>
@@ -735,12 +735,12 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 <li><p>The simplest method here might be to select four black playing cards and four red playing cards, assign one treatment to each colour, shuffle the cards, and then draw them in order. The colour drawn indicates the treatment that should be used to make the next cup of tea. This operation would give one possible randomisation.</p>
 <p>We could of course also use <code>R</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot; 
-## [6] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre></li>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Tea first&quot; 
+## [6] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot;</code></pre></li>
 <li><p>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># block 1</span></span>
 <span id="cb4-2"><a href="intro.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># block 2</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
 <pre><code>## [1] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre></li>

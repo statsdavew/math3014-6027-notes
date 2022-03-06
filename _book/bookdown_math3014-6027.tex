@@ -903,8 +903,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Tea first"  "Tea first"  "Tea first"  "Milk first"
+## [6] "Milk first" "Milk first" "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -917,7 +917,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +928,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -2492,7 +2492,7 @@ A common way in which the CRD fails is a lack of sufficiently similar experiment
 
 Steel bar experiment \citep[ch.~4]{Morris2011}
 
-\citet{KSN2005} described an experiment to assess the strength of steel reinforcement bars from \(t=4\) coatings\footnote{Thr four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.} (treatments). In total \(n=32\) different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g.~environmental or operational), these different test sets were assumed to form \(b=8\) blocks of size \(k=4\). The data are shown in Table \ref{tab:bar-expt-data} below.
+\citet{KSN2005} described an experiment to assess the strength of steel reinforcement bars from \(t=4\) coatings\footnote{The four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.} (treatments). In total \(n=32\) different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g.~environmental or operational), these different test sets were assumed to form \(b=8\) blocks of size \(k=4\). The data are shown in Table \ref{tab:bar-expt-data} below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2794,8 +2794,8 @@ which have the same form as the CRD in Chapter \ref{crd} albeit with a different
 
 In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section @ref(\#rcdb) below). By default, to fit model \eqref{eq:block-plm}, the \texttt{lm} function in \texttt{R} applies the constraint \(\tau_t = \beta_b = 0\), and removes the corresponding columns from \(X_1\) and \(X_2\), to leave a \(W\) matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use \texttt{emmeans} to extract these estimates from an \texttt{lm} object).
 
-\hypertarget{analysis-of-variance}{%
-\section{Analysis of variance}\label{analysis-of-variance}}
+\hypertarget{block-anova}{%
+\section{Analysis of variance}\label{block-anova}}
 
 As was the case with the CRD, it can be shown that any solution to the normal equations \eqref{eq:bne} will produce a unique solution to \(\widehat{W\alpha}\), and hence a unique analysis of variance decomposition can be obtained.
 
@@ -3143,10 +3143,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0
+## [1,]    1    1    1    0
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3160,14 +3160,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    1    0    1    0    1    0    1     1     0     0     1     0
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    1    0    0    0    1    1    1    0    0     0     1     1     0     1
-## [4,]    1    0    1    1    0    1    0    1    0     0     0     0     1     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     1     0     0
-## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
-## [7,]    0    1    0    1    1    0    1    1    0     1     0     0     0     1
-## [8,]    0    1    0    1    1    1    0    0    1     0     0     1     1     0
+## [1,]    0    0    0    1    1    0    1    0    0     1     0     1     1     1
+## [2,]    1    0    0    0    0    0    0    1    1     0     1     1     1     1
+## [3,]    0    0    0    0    1    1    1    1    1     1     1     0     0     0
+## [4,]    1    0    1    1    1    1    0    1    0     0     0     0     0     1
+## [5,]    0    1    1    0    0    1    0    0    0     1     1     0     1     1
+## [6,]    0    1    1    1    0    0    0    1    1     1     0     1     0     0
+## [7,]    1    1    1    0    1    0    1    0    0     0     1     1     0     0
+## [8,]    1    1    0    1    0    1    1    0    1     0     0     0     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3328,6 +3328,87 @@ For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are signi
   \item
     Fit a unit-treatment model ignoring blocks and test again for a difference between catalysts. Comment on difference between this analysis and the one including blocks.
   \end{enumerate}
+\end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\item
+  The unit-block-treatment model for this RCBD is given by
+
+  \begin{equation}
+  y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,,
+  \label{eq:exercises-rcbd-model}
+   \end{equation}
+
+  where \(y_{ij}\) is the yield from the application of catalyst \(j\) to block \(i\), \(\mu\) is a constant parameter, \(\beta_i\) is the effect of block \(i\) and \(\tau_j\) is the effect of treatment \(j\). The errors follow a normal distribution \(\varepsilon_{ij}\sim N(0, \sigma^2)\) with mean 0 and constant variance, and are assumed independent for different experimental units.
+\item
+  To test if there is a difference between catalysts, we compare model \eqref{eq:exercises-rcbd-model} with the model that only includes block effects:
+
+  \begin{equation}
+  y_{ij} = \mu + \beta_i + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,.
+  \label{eq:exercises-rcbd-model-block}
+   \end{equation}
+
+  The relative difference in the residual mean squares between these two models follows an F distribution under \(H_0: \tau_1 = \tau_2 = 0\), see Section \ref{block-anova}. These test statistic and associated p-value can be calculated in \texttt{R} using \texttt{anova}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reaction }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{catalyst =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{), }\DecValTok{6}\NormalTok{)),}
+  \AttributeTok{batch =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{6}\NormalTok{))),}
+  \AttributeTok{yield =} \FunctionTok{c}\NormalTok{(}\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{19}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{23}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{12}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{reaction.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ batch }\SpecialCharTok{+}\NormalTok{ catalyst, }\AttributeTok{data =}\NormalTok{ reaction)}
+\FunctionTok{anova}\NormalTok{(reaction.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: yield
+##           Df Sum Sq Mean Sq F value  Pr(>F)    
+## batch      5    561   112.2    48.1 0.00031 ***
+## catalyst   1     16    16.3     7.0 0.04566 *  
+## Residuals  5     12     2.3                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+  The p-value is (just) less than 0.05, and so we can reject \(H_0\) (no treatment difference) at the 5\% level.
+\item
+  The unit-treatment model is given by
+
+  \[
+  y_{ij} = \mu + \tau_j + \varepsilon_{ij}\,,\qquad i = 1,\ldots, 6; j = 1,2\,,
+   \]
+
+  where now \textbf{all} the between unit differences, including any block-to-block differences, are modelled by the unit errors \(\varepsilon_{ij}\). We can fit this model in \texttt{R}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reaction2.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ catalyst, }\AttributeTok{data =}\NormalTok{ reaction)}
+\FunctionTok{anova}\NormalTok{(reaction2.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: yield
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## catalyst   1     16    16.3    0.29    0.6
+## Residuals 10    573    57.3
+\end{verbatim}
+
+  There is no longer evidence to reject the null hypothesis of no treatment difference. This is because the residual mean square is now so much larger (57.2667 versus 2.3333). The residual mean square is also an unbiased estimate of \(\sigma^2\), and our estimate of \(\sigma^2\) from the unit-treatment model is clearly much larger, as block-to-block variation has also been included.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
 \item
   Consider the data below obtained from an agricultural experiment in which six different fertilizers were given to a crop of blackcurrants in a field. The field was divided into four equal areas of land so that the land in each area was fairly homogeneous. Each area of land was further subdivided into six plots and one of the fertilizers, chosen by a random procedure, was applied to each plot. The yields of blackcurrants obtained from each plot were recorded (in lbs) and are given in Table \ref{tab:blackcurrent-data}. In this randomised block design the treatments are the six fertilizers and the blocks are the four areas of land.
 

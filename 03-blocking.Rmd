@@ -7,7 +7,7 @@ A common way in which the CRD fails is a lack of sufficiently similar experiment
 ::: {.example #blocks-bars}
 Steel bar experiment [@Morris2011, ch. 4]
 
-@KSN2005 described an experiment to assess the strength of steel reinforcement bars from $t=4$ coatings^[Thr four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.] (treatments). In total $n=32$ different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g. environmental or operational), these different test sets were assumed to form $b=8$ blocks of size $k=4$. The data are shown in Table \@ref(tab:bar-expt-data) below.
+@KSN2005 described an experiment to assess the strength of steel reinforcement bars from $t=4$ coatings^[The four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.] (treatments). In total $n=32$ different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g. environmental or operational), these different test sets were assumed to form $b=8$ blocks of size $k=4$. The data are shown in Table \@ref(tab:bar-expt-data) below.
 
 ```{r bar-expt-data, warning = F}
 bar <- data.frame(coating = rep(factor(1:4), 8),
@@ -225,7 +225,7 @@ which have the same form as the CRD in Chapter \@ref(crd) albeit with a differen
 
 In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section \@ref(#rcdb) below). By default, to fit model \@ref(eq:block-plm), the `lm` function in `R` applies the constraint $\tau_t = \beta_b = 0$, and removes the corresponding columns from $X_1$ and $X_2$, to leave a $W$ matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use `emmeans` to extract these estimates from an `lm` object).
 
-## Analysis of variance
+## Analysis of variance {#block-anova}
 
 As was the case with the CRD, it can be shown that any solution to the normal equations \@ref(eq:bne) will produce a unique solution to $\widehat{W\alpha}$, and hence a unique analysis of variance decomposition can be obtained.
 
@@ -602,6 +602,54 @@ For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are signi
     i. Write down a unit-block-treatment model for this example.
     i. Test if there is a significant difference between catalysts at the 5% level.
     i. Fit a unit-treatment model ignoring blocks and test again for a difference between catalysts. Comment on difference between this analysis and the one including blocks.
+    
+<details>
+<summary><b>Solution</b></summary>
+i. The unit-block-treatment model for this RCBD is given by
+
+    \begin{equation}
+y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,,
+(\#eq:exercises-rcbd-model)
+    \end{equation}
+
+    where $y_{ij}$ is the yield from the application of catalyst $j$ to block $i$, $\mu$ is a constant parameter, $\beta_i$ is the effect of block $i$ and $\tau_j$ is the effect of treatment $j$. The errors follow a normal distribution $\varepsilon_{ij}\sim N(0, \sigma^2)$ with mean 0 and constant variance, and are assumed independent for different experimental units.
+
+i. To test if there is a difference between catalysts, we compare model \@ref(eq:exercises-rcbd-model) with the model that only includes block effects:
+
+    \begin{equation}
+y_{ij} = \mu + \beta_i + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,.
+(\#eq:exercises-rcbd-model-block)
+    \end{equation}
+
+    The relative difference in the residual mean squares between these two models follows an F distribution under $H_0: \tau_1 = \tau_2 = 0$, see Section \@ref(block-anova). These test statistic and associated p-value can be calculated in `R` using `anova`.
+
+    ```{r ex1-anova}
+reaction <- data.frame(
+  catalyst = factor(rep(c('A', 'B'), 6)),
+  batch = factor(rep(1:6, rep(2, 6))),
+  yield = c(9, 10, 19, 22, 28, 30, 22, 21, 18, 23, 8, 12)
+)
+reaction.lm <- lm(yield ~ batch + catalyst, data = reaction)
+anova(reaction.lm)
+    ```
+
+    The p-value is (just) less than 0.05, and so we can reject $H_0$ (no treatment difference) at the 5\% level.
+
+i. The unit-treatment model is given by
+
+    $$
+y_{ij} = \mu + \tau_j + \varepsilon_{ij}\,,\qquad i = 1,\ldots, 6; j = 1,2\,,
+    $$
+
+    where now **all** the between unit differences, including any block-to-block differences, are modelled by the unit errors $\varepsilon_{ij}$. We can fit this model in `R`.
+
+    ```{r ex1-unit-treatment}
+reaction2.lm <- lm(yield ~ catalyst, data = reaction)
+anova(reaction2.lm)
+    ```
+
+    There is no longer evidence to reject the null hypothesis of no treatment difference. This is because the residual mean square is now so much larger (`r summary(reaction2.lm)$sigma^2` versus `r summary(reaction.lm)$sigma^2`). The residual mean square is also an unbiased estimate of $\sigma^2$, and our estimate of $\sigma^2$ from the unit-treatment model is clearly much larger, as block-to-block variation has also been included.
+</details>
     
 2. Consider the data below obtained from an agricultural experiment in which six different fertilizers were given to a crop of blackcurrants in a field. The field was divided into four equal areas of land so that the land in each area was fairly homogeneous. Each area of land was further subdivided into six plots and one of the fertilizers, chosen by a random procedure, was applied to each plot. The yields of blackcurrants obtained from each plot were recorded (in lbs) and are given in Table \@ref(tab:blackcurrent-data). In this randomised block design the treatments are the six fertilizers and the blocks are the four areas of land. 
 
