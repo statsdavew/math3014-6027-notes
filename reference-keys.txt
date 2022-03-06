@@ -57,6 +57,8 @@ eq:blocks-orth-ne1
 eq:blocks-orth-ne2
 def:bibd
 eq:blocks-bibd-rne
+eq:exercises-rcbd-model
+eq:exercises-rcbd-model-block
 tab:blackcurrent-data
 intro
 motivation
@@ -85,7 +87,7 @@ exercises-1
 blocking
 unit-block-treatment-model
 normal-equations
-analysis-of-variance
+block-anova
 rcdb
 blocks-orthogonal
 balanced-incomplete-block-designs
