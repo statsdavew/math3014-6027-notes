@@ -627,6 +627,58 @@ knitr::kable(
     c. Linear model diagnostics;
     d. if appropriate, multiple comparisons of all pairwise differences between treatments.
 
+3. Prove that $2k/\lambda t > 2/b$, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size $k$ and an RCBD, both with $t$ treatments in $b$ blocks.
+
+4. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $k$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+
+5. Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, "Position" and "Application". For this experiment, we use a **latin square** design, as follows.
+
+    ```{r rc-expt-treatments, warning = F}
+fabric <- data.frame(material = factor(c('C', 'D', 'B', 'A', 'A', 'B', 'D', 'C', 
+                               'D', 'C', 'A', 'B', 'B', 'A', 'C', 'D')),
+                   position = rep(factor(1:4), 4),
+                   application = rep(factor(1:4), rep(4, 4)),
+                   weight = c(235, 236, 218, 268,
+                                251, 241, 227, 229, 
+                                234, 273, 274, 226,
+                                195, 270, 230, 225)
+                     )
+knitr::kable(
+ tidyr::pivot_wider(fabric, id_cols = application, names_from = position, 
+                    values_from = material),
+ col.names = c("Application", paste("Position", 1:4)))
+    ```
+
+
+    The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order $k$ is a $k\times k$ square of $k$ latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters.
+
+    A suitable unit-block-treatment model for a latin square design has the form
+    
+    $$
+    y_{ijk} = \mu + \beta_i + \gamma_j + \tau_k + \varepsilon_{ijk}\,,\qquad i,j,k = 1,\ldots, t\,,
+    $$
+    
+    with $\mu$ a constant parameter, $\beta_i$ row block effects, $\gamma_j$ column block effects and $\tau_k$ the treatment effects. As usual, $\varepsilon_{ijk}\sim N(0, \sigma^2)$, with errors from different units assumed independent.  Note that not all combinations of $i,j,k$ actually occur in the design; at the intersection of the $i$th row and $j$th column, only one of the $t$ treatments is applied.
+
+    a. Write down a set of normal equations for the model parameters. 
+    b. It can be shown that the reduced normal equations for the treatment parameters $\tau_1,\ldots, \tau_t$ have the form
+    $$
+    \hat{\tau}_k - \hat{\tau}_w = \bar{y}_{..j} - \bar{y}_{...}\,,
+    $$
+    with $\hat{\tau}_w = \frac{1}{t}\sum_{k=1}^t\hat{\tau}_k$, $\bar{y}_{..k} = \frac{1}{t}\sum_{i=1}^t\sum_{j=1}^tn_{ijk}y_{ijk}$ (mean for treatment $k$) and $\bar{y}_{...} = \frac{1}{n}\sum_{i=1}^t\sum_{j=1}^t\sum_{k=1}^tn_{ij}y_{ijk}$ (overall mean) where $n_{ijk} = 1$ if treatment $k$ occurs at the intersection of row $i$ and column $j$ and zero otherwise, and $\sum_{i=1}^t\sum_{j=1}^tn_{ijk} = t$ for all $k=1, \ldots, t$. 
+    
+        Demonstrate that any contrast can therefore be estimated from this design, and derive the variance of the estimator of $\sum_{k=1}^tc_k\tau_k$.
+
+    The data for this experiment is as follows, where the entries in the table give the response for the corresponding treatment:
+
+    ```{r rc-expt-data, warning = F}
+knitr::kable(
+ tidyr::pivot_wider(fabric, id_cols = application, names_from = position, 
+                    values_from = weight),
+ col.names = c("Application", paste("Position", 1:4)))
+    ```
+   
+    c. For this data, test if there is a significant difference between materials. If there is, conduct multiple comparisons of all pairs at an experimentwise type I error rate of 5%.
 
 
 
