@@ -453,7 +453,7 @@ N <- matrix(
 N %*% t(N)
 
 ```
-This matrix has the number of treatment replications, $n_j$, on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as $\lambda_{ij}$ the number of blocks that contain both treatment $i$ and treatment $j$. For Example \@ref(exm:blocks-tyres), $\lambda_{ij} = 2$ for all $i,j = 1,\ldots, 4$; that is, each pair of treatments occurs together in two blocks. 
+This matrix has the number of treatment replications, $n_j$, on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as $\lambda_{ij}$ the number of blocks that contain both treatment $i$ and treatment $j$ ($i\ne j$). For Example \@ref(exm:blocks-tyres), $\lambda_{ij} = 2$ for all $i,j = 1,\ldots, 4$; that is, each pair of treatments occurs together in two blocks. 
 
 ::: {.definition #bibd}
 A **balanced incomplete block design** (BIBD) is an incomplete block design with $k<t$ that meets three requirements:
@@ -474,11 +474,11 @@ BIBDs do not exist for all combinations of values of $t$, $k$ and $b$. In partic
 - $r=bk/t$ is integer, and
 - $\lambda = r(k - 1) / (t-1)$ is integer.
 
-In general, we can always construct a BIBD for $t$ treatments in $b = {t \choose k}$ blocks of size $k$, although it may not be the smallest possible BIBD. Such a design will have $r = {t-1 \choose k-1}$ and $\lambda = {t-2 \choose k-2}$. The design in Example \@ref(exm:blocks-tyres) was constructed this way, with $b = 4$, $r = 3$ and $\lambda = 2$.
+In general, we can always construct a BIBD for $t$ treatments in $b = {t \choose k}$ blocks of size $k$, although it may not be the smallest possible BIBD. Each of the possible choices of $k$ treatments from the total $t$ forms one block. Such a design will have $r = {t-1 \choose k-1}$ and $\lambda = {t-2 \choose k-2}$. The design in Example \@ref(exm:blocks-tyres) was constructed this way, with $b = 4$, $r = 3$ and $\lambda = 2$.
 
 Sometimes, smaller BIBDs that satisfy the two conditions above can be constructed. Finding these designs is an combinatorial problem, and tables of designs are available in the literature^[See @CochranCox1957 and @FisherYates1963]. A large collection of BIBDs has also been catalogued in the `R` package `ibd`. The function `bibd` generates BIBDs for given values of $t$, $b$, $r$, $k$ and $\lambda$, or returns a message that a design is not available for those values. We can use the function to find the design used in Example \@ref(exm:blocks-tyres).
 
-```{r idb-tyre}
+```{r idb-tyre, warning = FALSE}
 tyre.bibd <- ibd::bibd(v = 4, b = 4, r = 3, k = 3, lambda = 2) # note, v is the notation for the number of treatments
 tyre.bibd$N # incidence matrix
 ```
