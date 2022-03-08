@@ -496,7 +496,7 @@ Although larger than the examples we have considered before, this design is smal
 It can be shown that the reduced normal equations \@ref(eq:block-rne) for a BIBD can be written as
 
 \begin{equation}
-\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}}\bY - \frac{1}{k}NX_1^{\mathrm{T}}\right)\bY\,.
+\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\bY\,.
 (\#eq:blocks-bibd-rne)
 \end{equation}
 
@@ -525,7 +525,7 @@ The simplest way to derive the variance of this estimator is to rewrite it in th
 $$
 \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{q}\,, 
 $$
-with $\boldsymbol{q} = \left(X_2^{\mathrm{T}}\bY - \frac{1}{k}NX_1^{\mathrm{T}}\right)\bY$. Then
+with $\boldsymbol{q} = \left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\bY$. Then
 
 $$
 \mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\mathrm{var}(\boldsymbol{q}) \boldsymbol{c}\,.

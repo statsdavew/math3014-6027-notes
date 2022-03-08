@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-06" />
+<meta name="date" content="2022-03-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
+<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#main-effects-and-interaction-contrasts"><i class="fa fa-check"></i><b>4.1</b> Main effects and interaction contrasts</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
@@ -750,7 +753,7 @@ N &amp; = J_{t \times b}
 ## [2,]    2    3    2    2
 ## [3,]    2    2    3    2
 ## [4,]    2    2    2    3</code></pre>
-<p>This matrix has the number of treatment replications, <span class="math inline">\(n_j\)</span>, on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as <span class="math inline">\(\lambda_{ij}\)</span> the number of blocks that contain both treatment <span class="math inline">\(i\)</span> and treatment <span class="math inline">\(j\)</span>. For Example <a href="blocking.html#exm:blocks-tyres">3.2</a>, <span class="math inline">\(\lambda_{ij} = 2\)</span> for all <span class="math inline">\(i,j = 1,\ldots, 4\)</span>; that is, each pair of treatments occurs together in two blocks.</p>
+<p>This matrix has the number of treatment replications, <span class="math inline">\(n_j\)</span>, on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as <span class="math inline">\(\lambda_{ij}\)</span> the number of blocks that contain both treatment <span class="math inline">\(i\)</span> and treatment <span class="math inline">\(j\)</span> (<span class="math inline">\(i\ne j\)</span>). For Example <a href="blocking.html#exm:blocks-tyres">3.2</a>, <span class="math inline">\(\lambda_{ij} = 2\)</span> for all <span class="math inline">\(i,j = 1,\ldots, 4\)</span>; that is, each pair of treatments occurs together in two blocks.</p>
 <div class="definition">
 <p><span id="def:bibd" class="definition"><strong>Definition 3.1  </strong></span>A <strong>balanced incomplete block design</strong> (BIBD) is an incomplete block design with <span class="math inline">\(k&lt;t\)</span> that meets three requirements:</p>
 <ol style="list-style-type: decimal">
@@ -768,34 +771,34 @@ N &amp; = J_{t \times b}
 <li><span class="math inline">\(r=bk/t\)</span> is integer, and</li>
 <li><span class="math inline">\(\lambda = r(k - 1) / (t-1)\)</span> is integer.</li>
 </ul>
-<p>In general, we can always construct a BIBD for <span class="math inline">\(t\)</span> treatments in <span class="math inline">\(b = {t \choose k}\)</span> blocks of size <span class="math inline">\(k\)</span>, although it may not be the smallest possible BIBD. Such a design will have <span class="math inline">\(r = {t-1 \choose k-1}\)</span> and <span class="math inline">\(\lambda = {t-2 \choose k-2}\)</span>. The design in Example <a href="blocking.html#exm:blocks-tyres">3.2</a> was constructed this way, with <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(r = 3\)</span> and <span class="math inline">\(\lambda = 2\)</span>.</p>
+<p>In general, we can always construct a BIBD for <span class="math inline">\(t\)</span> treatments in <span class="math inline">\(b = {t \choose k}\)</span> blocks of size <span class="math inline">\(k\)</span>, although it may not be the smallest possible BIBD. Each of the possible choices of <span class="math inline">\(k\)</span> treatments from the total <span class="math inline">\(t\)</span> forms one block. Such a design will have <span class="math inline">\(r = {t-1 \choose k-1}\)</span> and <span class="math inline">\(\lambda = {t-2 \choose k-2}\)</span>. The design in Example <a href="blocking.html#exm:blocks-tyres">3.2</a> was constructed this way, with <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(r = 3\)</span> and <span class="math inline">\(\lambda = 2\)</span>.</p>
 <p>Sometimes, smaller BIBDs that satisfy the two conditions above can be constructed. Finding these designs is an combinatorial problem, and tables of designs are available in the literature<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>. A large collection of BIBDs has also been catalogued in the <code>R</code> package <code>ibd</code>. The function <code>bibd</code> generates BIBDs for given values of <span class="math inline">\(t\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(r\)</span>, <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, or returns a message that a design is not available for those values. We can use the function to find the design used in Example <a href="blocking.html#exm:blocks-tyres">3.2</a>.</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="blocking.html#cb74-1" aria-hidden="true" tabindex="-1"></a>tyre.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">4</span>, <span class="at">b =</span> <span class="dv">4</span>, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">lambda =</span> <span class="dv">2</span>) <span class="co"># note, v is the notation for the number of treatments</span></span>
 <span id="cb74-2"><a href="blocking.html#cb74-2" aria-hidden="true" tabindex="-1"></a>tyre.bibd<span class="sc">$</span>N <span class="co"># incidence matrix</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0</code></pre>
+## [1,]    1    1    1    0
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1</code></pre>
 <p>We can also use the package to find a design for bigger experiments, for example <span class="math inline">\(t=8\)</span> treatments in <span class="math inline">\(b=14\)</span> blocks of size <span class="math inline">\(k=4\)</span>. Here, <span class="math inline">\(r = 14\times 4 / 8 = 7\)</span> and <span class="math inline">\(\lambda = 7 \times 3 / 7 = 3\)</span>.</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="blocking.html#cb76-1" aria-hidden="true" tabindex="-1"></a>larger.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">b =</span> <span class="dv">14</span>, <span class="at">r =</span> <span class="dv">7</span>, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">lambda =</span> <span class="dv">3</span>) </span>
 <span id="cb76-2"><a href="blocking.html#cb76-2" aria-hidden="true" tabindex="-1"></a>larger.bibd<span class="sc">$</span>N</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    0    1    1    1    0    1    0     1     0     1     0     0
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    1    0    0     0     1     0     1     1
-## [4,]    0    1    1    1    0    0    1    0    1     0     0     1     0     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
-## [6,]    1    1    0    0    0    1    1    1    1     0     1     0     0     0
-## [7,]    1    0    1    0    1    0    1    1    0     1     0     0     0     1
-## [8,]    1    0    1    0    1    1    0    0    1     0     0     1     1     0</code></pre>
+## [1,]    0    1    1    1    0    1    1    0    0     0     1     1     0     0
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    0    1    0    1    0    1    0    1    0     1     0     0     1     1
+## [4,]    0    1    1    0    1    0    0    1    1     0     0     1     0     1
+## [5,]    1    1    1    0    1    0    0    0    0     1     1     0     1     0
+## [6,]    1    0    1    0    0    1    1    1    1     1     0     0     0     0
+## [7,]    1    0    0    1    1    0    1    1    0     0     1     0     0     1
+## [8,]    1    0    0    1    1    1    0    0    1     0     0     1     1     0</code></pre>
 <p>Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with <span class="math inline">\(b = {t \choose k} = {8 \choose 4} = 70\)</span> blocks.</p>
 </div>
 <div id="reduced-normal-equations" class="section level3" number="3.6.2">
 <h3><span class="header-section-number">3.6.2</span> Reduced normal equations</h3>
 <p>It can be shown that the reduced normal equations <a href="blocking.html#eq:block-rne">(3.7)</a> for a BIBD can be written as</p>
 <p><span class="math display" id="eq:blocks-bibd-rne">\[\begin{equation}
-\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
+\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
 \tag{3.13}
 \end{equation}\]</span></p>
 <p>Equation <a href="blocking.html#eq:blocks-bibd-rne">(3.13)</a> defines a series of <span class="math inline">\(t\)</span> equations of the form</p>
@@ -817,7 +820,7 @@ Due to the form of the reduced normal equations for the BIBD, the estimator is n
 <p><span class="math display">\[
 \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{q}\,, 
 \]</span>
-with <span class="math inline">\(\boldsymbol{q} = \left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\)</span>. Then</p>
+with <span class="math inline">\(\boldsymbol{q} = \left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\)</span>. Then</p>
 <p><span class="math display">\[
 \mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\mathrm{var}(\boldsymbol{q}) \boldsymbol{c}\,.
 \]</span>
