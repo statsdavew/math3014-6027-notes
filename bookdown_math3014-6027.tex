@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-03-06}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-03-08}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -780,27 +780,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -903,7 +887,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Tea first"  "Tea first" 
 ## [6] "Milk first" "Milk first" "Milk first"
 \end{verbatim}
 \item
@@ -917,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1079,15 +1063,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1126,15 +1102,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1173,15 +1141,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2821,15 +2781,7 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Degrees of freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Sums of squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean square
-\end{minipage} \\
+Source & Degrees of freedom & Sums of squares & Mean square \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3094,7 +3046,7 @@ Example \ref{exm:blocks-tyres} is an example of an incomplete design with \(k=3<
 ## [4,]    2    2    2    3
 \end{verbatim}
 
-This matrix has the number of treatment replications, \(n_j\), on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as \(\lambda_{ij}\) the number of blocks that contain both treatment \(i\) and treatment \(j\). For Example \ref{exm:blocks-tyres}, \(\lambda_{ij} = 2\) for all \(i,j = 1,\ldots, 4\); that is, each pair of treatments occurs together in two blocks.
+This matrix has the number of treatment replications, \(n_j\), on the diagonal and the off-diagonal elements are equal to the number of blocks within which each pair of treatments occurs together. We will denote as \(\lambda_{ij}\) the number of blocks that contain both treatment \(i\) and treatment \(j\) (\(i\ne j\)). For Example \ref{exm:blocks-tyres}, \(\lambda_{ij} = 2\) for all \(i,j = 1,\ldots, 4\); that is, each pair of treatments occurs together in two blocks.
 
 \begin{definition}
 \protect\hypertarget{def:bibd}{}\label{def:bibd}
@@ -3130,7 +3082,7 @@ BIBDs do not exist for all combinations of values of \(t\), \(k\) and \(b\). In 
   \(\lambda = r(k - 1) / (t-1)\) is integer.
 \end{itemize}
 
-In general, we can always construct a BIBD for \(t\) treatments in \(b = {t \choose k}\) blocks of size \(k\), although it may not be the smallest possible BIBD. Such a design will have \(r = {t-1 \choose k-1}\) and \(\lambda = {t-2 \choose k-2}\). The design in Example \ref{exm:blocks-tyres} was constructed this way, with \(b = 4\), \(r = 3\) and \(\lambda = 2\).
+In general, we can always construct a BIBD for \(t\) treatments in \(b = {t \choose k}\) blocks of size \(k\), although it may not be the smallest possible BIBD. Each of the possible choices of \(k\) treatments from the total \(t\) forms one block. Such a design will have \(r = {t-1 \choose k-1}\) and \(\lambda = {t-2 \choose k-2}\). The design in Example \ref{exm:blocks-tyres} was constructed this way, with \(b = 4\), \(r = 3\) and \(\lambda = 2\).
 
 Sometimes, smaller BIBDs that satisfy the two conditions above can be constructed. Finding these designs is an combinatorial problem, and tables of designs are available in the literature\footnote{See \citet{CochranCox1957} and \citet{FisherYates1963}}. A large collection of BIBDs has also been catalogued in the \texttt{R} package \texttt{ibd}. The function \texttt{bibd} generates BIBDs for given values of \(t\), \(b\), \(r\), \(k\) and \(\lambda\), or returns a message that a design is not available for those values. We can use the function to find the design used in Example \ref{exm:blocks-tyres}.
 
@@ -3143,10 +3095,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
-## [2,]    0    1    1    1
-## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [1,]    0    1    1    1
+## [2,]    1    0    1    1
+## [3,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3160,14 +3112,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    0    1    1    0    1    0    0     1     0     1     1     1
-## [2,]    1    0    0    0    0    0    0    1    1     0     1     1     1     1
-## [3,]    0    0    0    0    1    1    1    1    1     1     1     0     0     0
-## [4,]    1    0    1    1    1    1    0    1    0     0     0     0     0     1
-## [5,]    0    1    1    0    0    1    0    0    0     1     1     0     1     1
-## [6,]    0    1    1    1    0    0    0    1    1     1     0     1     0     0
-## [7,]    1    1    1    0    1    0    1    0    0     0     1     1     0     0
-## [8,]    1    1    0    1    0    1    1    0    1     0     0     0     1     0
+## [1,]    0    0    0    1    0    1    0    0    1     1     1     0     1     1
+## [2,]    1    0    0    0    0    0    1    1    0     0     1     1     1     1
+## [3,]    0    0    0    0    1    1    1    1    1     1     0     1     0     0
+## [4,]    1    0    1    1    1    1    0    0    0     0     0     1     0     1
+## [5,]    0    1    1    0    1    0    0    1    0     1     0     0     1     1
+## [6,]    1    1    1    0    0    1    1    0    0     1     1     0     0     0
+## [7,]    1    1    0    1    1    0    1    0    1     0     0     0     1     0
+## [8,]    0    1    1    1    0    0    0    1    1     0     1     1     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3178,7 +3130,7 @@ Although larger than the examples we have considered before, this design is smal
 It can be shown that the reduced normal equations \eqref{eq:block-rne} for a BIBD can be written as
 
 \begin{equation}
-\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
+\left(I_t - \frac{1}{t}J_t\right)\hat{\boldsymbol{\tau}} = \frac{k}{\lambda t}\left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
 \label{eq:blocks-bibd-rne}
 \end{equation}
 
@@ -3208,7 +3160,7 @@ The simplest way to derive the variance of this estimator is to rewrite it in th
 \[
 \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \frac{k}{\lambda t}\boldsymbol{c}^{\mathrm{T}}\boldsymbol{q}\,, 
 \]
-with \(\boldsymbol{q} = \left(X_2^{\mathrm{T}}\boldsymbol{y}- \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\). Then
+with \(\boldsymbol{q} = \left(X_2^{\mathrm{T}} - \frac{1}{k}NX_1^{\mathrm{T}}\right)\boldsymbol{y}\). Then
 
 \[
 \mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) = \frac{k^2}{\lambda^2t^2}\boldsymbol{c}^{\mathrm{T}}\mathrm{var}(\boldsymbol{q}) \boldsymbol{c}\,.
@@ -3561,6 +3513,129 @@ Solution
 
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
+
+In Chapters \ref{crd} and \ref{blocking}, we assumed the objective of the experiment was to investigate \(t\) \emph{unstructured} treatments, defined only as a collection of distinct entities (drugs, advertisements, receipes, etc.). That is, there was not necessarily any explicit relationship between the treatments (although we could clearly choose which paticular comparisons between treatments were of interest via choice of contrast).
+
+In many experiments, particularly in industry, engineering and the physical sciences, the treatments are actually defined via the choice of a \emph{level} relating to each of a set of \emph{factors}. For example, consider the below experiment from the pharmaceutical industry.
+
+\begin{example}
+\protect\hypertarget{exm:factorial-desilylation}{}\label{exm:factorial-desilylation}
+
+Desilylation experiment \citep{Owen2001}
+
+In this experiment, performed at GlaxoSmithKline, the aim was to optimise the desilylation6{[}Desilylation is a process of removing silyl, SiH\(_3\) a silicon hydride, from a compound.{]} of an ether into an alcohol, which was a key step in the synthesis of a particular antibiotic. There were \(t=16\) treatments, defined via the settings of four different factors, as given in Table \ref{tab:factorial-desilylation-data}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{desilylation }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{4}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F,}
+                           \AttributeTok{factor.names =} \FunctionTok{list}\NormalTok{(}\AttributeTok{temp =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{), }\AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{, }\DecValTok{25}\NormalTok{), }\AttributeTok{solvent =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{), }
+                                               \AttributeTok{reagent =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{1.33}\NormalTok{)))}
+\NormalTok{yield }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{82.93}\NormalTok{, }\FloatTok{94.04}\NormalTok{, }\FloatTok{88.07}\NormalTok{, }\FloatTok{93.97}\NormalTok{, }\FloatTok{77.21}\NormalTok{, }\FloatTok{92.99}\NormalTok{, }\FloatTok{83.60}\NormalTok{, }\FloatTok{94.38}\NormalTok{, }
+           \FloatTok{88.68}\NormalTok{, }\FloatTok{94.30}\NormalTok{, }\FloatTok{93.00}\NormalTok{, }\FloatTok{93.42}\NormalTok{, }\FloatTok{84.86}\NormalTok{, }\FloatTok{94.26}\NormalTok{, }\FloatTok{88.71}\NormalTok{, }\FloatTok{94.66}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(desilylation) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"Trt"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(desilylation, }\AttributeTok{yield =}\NormalTok{ yield), }
+             \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Temp (degrees C)"}\NormalTok{, }\StringTok{"Time (hours)"}\NormalTok{, }\StringTok{"Solvent (vol.)"}\NormalTok{, }
+                           \StringTok{"Reagent (equiv.)"}\NormalTok{, }\StringTok{"Yield (\%)"}\NormalTok{),}
+             \AttributeTok{caption =} \StringTok{"Desilylation experiment: 16 treatments defined }
+\StringTok{             by settings of four factors, with response (yield)."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:factorial-desilylation-data}Desilylation experiment: 16 treatments defined 
+             by settings of four factors, with response (yield).}
+\centering
+\begin{tabular}[t]{l|l|l|l|l|r}
+\hline
+  & Temp (degrees C) & Time (hours) & Solvent (vol.) & Reagent (equiv.) & Yield (\%)\\
+\hline
+Trt 1 & 10 & 19 & 5 & 1 & 82.93\\
+\hline
+Trt 2 & 20 & 19 & 5 & 1 & 94.04\\
+\hline
+Trt 3 & 10 & 25 & 5 & 1 & 88.07\\
+\hline
+Trt 4 & 20 & 25 & 5 & 1 & 93.97\\
+\hline
+Trt 5 & 10 & 19 & 7 & 1 & 77.21\\
+\hline
+Trt 6 & 20 & 19 & 7 & 1 & 92.99\\
+\hline
+Trt 7 & 10 & 25 & 7 & 1 & 83.60\\
+\hline
+Trt 8 & 20 & 25 & 7 & 1 & 94.38\\
+\hline
+Trt 9 & 10 & 19 & 5 & 1.33 & 88.68\\
+\hline
+Trt 10 & 20 & 19 & 5 & 1.33 & 94.30\\
+\hline
+Trt 11 & 10 & 25 & 5 & 1.33 & 93.00\\
+\hline
+Trt 12 & 20 & 25 & 5 & 1.33 & 93.42\\
+\hline
+Trt 13 & 10 & 19 & 7 & 1.33 & 84.86\\
+\hline
+Trt 14 & 20 & 19 & 7 & 1.33 & 94.26\\
+\hline
+Trt 15 & 10 & 25 & 7 & 1.33 & 88.71\\
+\hline
+Trt 16 & 20 & 25 & 7 & 1.33 & 94.66\\
+\hline
+\end{tabular}
+\end{table}
+
+Each treatment is defined by the choice of one of two levels for each of the four factors. In the \texttt{R} code above, we have used the function \texttt{FrF2} (from the package of the same name) to generated all \(t = 2^4 = 16\) combinations of the two levels of these four factors. We come back to this function later in the chapter.
+
+\end{example}
+
+This \textbf{factorial treatment structure} lends itself to certain treatment contrasts being of natural interest.
+
+\hypertarget{main-effects-and-interaction-contrasts}{%
+\section{Main effects and interaction contrasts}\label{main-effects-and-interaction-contrasts}}
+
+Throughout this chapter, we will assume there are no blocks or other restrictions on randomisation, and so we will assume a completely randomised design can be used. We start by assuming the same unit-treatment model as Chapter \ref{crd}:
+
+\begin{equation}
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, 
+\label{eq:factorial-utm}
+\end{equation}
+
+where \(y_{ij}\) is the response from the \(j\)th application of treatment \(i\), \(\mu\) is a constant parameter, \(\tau_i\) is the effect of the \(i\)th treatment, and \(\varepsilon_{ij}\) is the random individual effect from each experimental unit with \(\varepsilon_{ij} \sim N(0, \sigma^2)\) independent of other errors.
+
+For Example \ref{factorial-desilylation}, we have \(t = 16\) and \(n_i = 1\) for all \(i=1,\ldots, 16\); that is, each of the 16 treatments are replicated once.
+
+Studying Table \ref{tab:factorial-desilylation-data}, there are some comparisons between treatments which are obviously of interest. For example, comparing the average effect from the first 8 treatments with the average effect of the second 8, using
+
+\[
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \sum_{i=1}^tc_i\tau_i
+\]
+with
+
+\[
+\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{desilylation.trt }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(desilylation, }\AttributeTok{trt =} \FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{))}
+\NormalTok{desilylation.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ trt, }\AttributeTok{data =}\NormalTok{ desilylation.trt)}
+\NormalTok{desilylation.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(desilylation.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ trt)}
+\NormalTok{contrast.mat }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{4}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F, }
+                           \AttributeTok{factor.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"temp"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"solvent"}\NormalTok{, }\StringTok{"reagent"}\NormalTok{))}
+\NormalTok{fac.contrasts.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate\_all}\NormalTok{(contrast.mat, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{scale}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(x), }\AttributeTok{scale =} \DecValTok{4}\NormalTok{))}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(desilylation.emm, }\StringTok{\textquotesingle{}fac.contrasts\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate  SE df t.ratio p.value
+##  temp         8.12 NaN  0     NaN     NaN
+##  time         2.57 NaN  0     NaN     NaN
+##  solvent     -2.22 NaN  0     NaN     NaN
+##  reagent      3.09 NaN  0     NaN     NaN
+\end{verbatim}
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}
