@@ -405,13 +405,13 @@ A condition for $\boldsymbol{\beta}$ and $\boldsymbol{\tau}$ to be estimated ort
 \begin{align}
  & \left(X_1^{\mathrm{T}}\boldsymbol{1}_n - X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_1^{\mathrm{T}}X_1 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_1\right)\hat{\boldsymbol{\beta}} + \left(X_1^{\mathrm{T}}X_2 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_2\right)\hat{\boldsymbol{\tau}} \nonumber \\
  & = X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} \nonumber \\
- & =  X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right) (\#eq:blocks-orth-ne1)\,.
+ & =  X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\bY (\#eq:blocks-orth-ne1)\,.
 \end{align}
 
 Secondly, we premultiply \@ref(eq:blocks-normal-1) by $\frac{1}{n}X_2^{\mathrm{T}}\boldsymbol{1}_n$ and substract it from \@ref(eq:blocks-normal-3):
 
 \begin{equation}
-X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\,.
+X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\bY\,.
 (\#eq:blocks-orth-ne2)
 \end{equation}
 

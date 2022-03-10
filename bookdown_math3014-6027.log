@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.12.11)  8 MAR 2022 14:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.12.11)  10 MAR 2022 09:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -775,7 +775,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [17] [18] [19]
 Overfull \hbox (47.49896pt too wide) in paragraph at lines 892--892
- []\T1/lmtt/m/n/10 ## [1] "Tea first"  "Milk first" "Tea first"  "Tea first"  "
+ []\T1/lmtt/m/n/10 ## [1] "Tea first"  "Tea first"  "Milk first" "Tea first"  "
 Tea first"[] 
  []
 
@@ -1048,79 +1048,76 @@ Overfull \hbox (11.4363pt too wide) in paragraph at lines 2788--2788
 []|\T1/lmr/m/n/10 (-20) Treatments|  
  []
 
-[62]
-Underfull \vbox (badness 2970) has occurred while \output is active []
-
-[63] [64] [65]
-Overfull \hbox (9.15253pt too wide) detected at line 2989
+[62] [63] [64] [65]
+Overfull \hbox (9.15253pt too wide) detected at line 3005
 []
  []
 
-[66] [67]
-Underfull \vbox (badness 3590) has occurred while \output is active []
 
-[68]
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
+Underfull \vbox (badness 1331) has occurred while \output is active []
+
+[66] [67] [68]
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
 []\T1/lmtt/m/n/10 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,
 11] [,12] [,13] [,14][] 
  []
 
 
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [1,]    0    0    0    1    0    1    0    0    1     1   
-  1     0     1     1[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    1    1    0     0   
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [1,]    0    0    0    0    1    1    0    0    0     1   
   1     1     1     1[] 
  []
 
 
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    0    1    1    1    1    1     1   
-  0     1     0     0[] 
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    1    1    1     0   
+  0     1     1     1[] 
  []
 
 
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    1    0    0    0     0   
-  0     1     0     1[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [5,]    0    1    1    0    1    0    0    1    0     1   
-  0     0     1     1[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [6,]    1    1    1    0    0    1    1    0    0     1   
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    1    0    1    1    1    1     1   
   1     0     0     0[] 
  []
 
 
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [7,]    1    1    0    1    1    0    1    0    1     0   
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    1    1    0    0     0   
+  0     0     0     1[] 
+ []
+
+[69]
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [5,]    0    1    1    1    0    0    1    0    0     0   
+  1     1     1     0[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [6,]    1    1    0    1    1    0    0    0    1     1   
+  0     1     0     0[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [7,]    0    1    1    0    1    0    0    1    1     0   
+  1     0     0     1[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [8,]    1    1    1    0    0    1    0    1    0     1   
   0     0     1     0[] 
  []
 
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3123--3123
-[]\T1/lmtt/m/n/10 ## [8,]    0    1    1    1    0    0    0    1    1     0   
-  1     1     0     0[] 
- []
-
-[69] [70] [71]
-Overfull \hbox (38.24889pt too wide) in paragraph at lines 3251--3251
+[70] [71] [72]
+Overfull \hbox (38.24889pt too wide) in paragraph at lines 3267--3267
 []\T1/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family of
  4 estimates[] 
  []
 
-[72] [73]
-Overfull \hbox (21.24904pt too wide) in paragraph at lines 3330--3330
+[73]
+Overfull \hbox (21.24904pt too wide) in paragraph at lines 3346--3346
  []\T1/lmtt/m/n/10 ## Signif. codes:  0 \TS1/lmtt/m/n/10 '\T1/lmtt/m/n/10 ***\T
 S1/lmtt/m/n/10 ' \T1/lmtt/m/n/10 0.001 \TS1/lmtt/m/n/10 '\T1/lmtt/m/n/10 **\TS1
 /lmtt/m/n/10 ' \T1/lmtt/m/n/10 0.01 \TS1/lmtt/m/n/10 '\T1/lmtt/m/n/10 *\TS1/lmt
@@ -1129,7 +1126,7 @@ n/10 ' \T1/lmtt/m/n/10 0.1 \TS1/lmtt/m/n/10 ' ' \T1/lmtt/m/n/10 1[]
  []
 
 [74]
-Overfull \hbox (27.15186pt too wide) in paragraph at lines 3388--3401
+Overfull \hbox (27.15186pt too wide) in paragraph at lines 3404--3417
  [][] 
  []
 
@@ -1138,14 +1135,14 @@ Overfull \hbox (27.15186pt too wide) in paragraph at lines 3388--3401
 ]
 Chapter 4.
 
-Overfull \hbox (66.27808pt too wide) in paragraph at lines 3549--3586
+Overfull \hbox (66.27808pt too wide) in paragraph at lines 3565--3602
  [][] 
  []
 
 [79]
 
 LaTeX Warning: Reference `factorial-desilylation' on page 80 undefined on input
- line 3606.
+ line 3622.
 
 [80] [81] [82
 
@@ -1166,16 +1163,16 @@ Chapter 8.
 (./bookdown_math3014-6027.bbl [89] [90
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3654.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3670.
 [91]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3654.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3670.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3654.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3654.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3670.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3670.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3654.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3670.
  ) 
 Here is how much of TeX's memory you used:
  14684 strings out of 492649
@@ -1226,7 +1223,7 @@ t/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
 pe1/public/lm/lmtt8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/
 lm/lmtti10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
 symbols/msbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (91 pages, 3509726 bytes).
+Output written on bookdown_math3014-6027.pdf (91 pages, 3509834 bytes).
 PDF statistics:
  1333 PDF objects out of 1440 (max. 8388607)
  1169 compressed objects within 12 object streams
