@@ -677,6 +677,84 @@ knitr::kable(
     c. Linear model diagnostics;
     d. if appropriate, multiple comparisons of all pairwise differences between treatments.
 
+<details>
+<summary><b>Solution</b></summary>
+
+a. We start with exploratory tabular and graphical analysis.
+
+    ```{r ex2-eda, results = 'hold', fig.show = 'hold', fig.align = 'center', fig.cap = 'Blackcurrent experiment: yield against treatment and block.'}
+    aggregate(yield ~ fertilizer, data = blackcurrent, 
+              FUN = function(x) c(mean = mean(x), sd = sd(x)))
+    aggregate(yield ~ block, data = blackcurrent, 
+              FUN = function(x) c(mean = mean(x), sd = sd(x)))
+    boxplot(yield ~ fertilizer, data = blackcurrent)
+    boxplot(yield ~ block, data = blackcurrent)
+    ```
+    
+    There are substantial differences in average responses between blocks; differences between treatment means are smaller. These plots are only meaningful because this design is an RCBD, and each treatment occurs in each block. 
+    
+    The unit-block-treatment model is *additive*; that is, we assume the effect of each treatment does not vary for each block. Therefore we also need to check that there are no substantive interactions between treatments and blocks. We will do this graphically.
+    
+    ```{r ex2-interaction, fig.align = 'center', fig.cap = 'Blackcurrent experiment: treatment-block interaction plot.'}
+    with(blackcurrent,
+      interaction.plot(fertilizer, block, yield, xlab = 'Treatment', ylab = 'Yield', trace.label = 'Block')
+    )
+    ```
+
+    Figure \@ref(fig:ex2-interaction) plots the treatment means within each block. While there are clear differences between blocks, the differences between treatments do not seem to vary systematically between blocks.
+    
+b. We now fit a linear model, and perform an F-test for the hypothesis $H_0: \tau_1 = \tau_2 = \tau_3 = \tau_4 = \tau_5 = \tau_6 = 0$.
+    
+    ```{r ex2-lm}
+    blackcurrent.lm <- lm(yield ~ block + fertilizer, data = blackcurrent)
+    anova(blackcurrent.lm)
+    ```
+
+    The "treatment" row of the ANOVA table compares the model including blocks and treatments to that only containing blocks. This comparison tests the above null hypothesis. We can see here that there is no evidence to reject $H_0$ (p-value = `r anova(blackcurrent.lm)[2, 5]`). This outcome is not surprising, given the tabular and graphical summaries we saw above. The block sum of squares is large, but we do not perform formal hypothesis testing for blocks.
+    
+    Out of curiousity, we can also assess the "efficiency" of blocking by comparing the estimate of $\sigma^2$ from the block design with the estimate that would result from ignoring the blocks, treating the experiment as a CRD and fitting a unit-treatment model.
+    
+    ```{r ex2-block-eff}
+    blackcurrent_crd.lm <- lm(yield ~ fertilizer, data = blackcurrent)
+    summary(blackcurrent_crd.lm)$sig^2 / summary(blackcurrent.lm)$sig^2
+    ```
+
+    The estimate of $\sigma^2$ from the CRD is more the two times greater than the estimate from the block design, meaning about 100% more observations would be needed in the CRD to get the same level of precision as the RCBD.
+
+c. We now examine residual diagnostics, to check the assumptions of our model:
+    - constant variance, with respect to the mean response, the treatment and the block
+    - normality of residuals
+    - additive treatment and block effects (already assessed in Fig \@ref(fig:ex2-interaction)).
+    
+    ```{r ex2-residual-plots-1, fig.align = 'center', fig.cap = 'Blackcurrent experiment: Residuals against treatments (left), blocks (middle) and fitted values (right).', fig.height = 3}
+    standres <- rstandard(blackcurrent.lm)
+    fitted <- fitted(blackcurrent.lm)
+    par(mfrow = c(1, 3), pty = "s")
+    with(blackcurrent, {
+      plot(fertilizer, standres, xlab = "Treatment", ylab = "Standarised residuals")
+      plot(block, standres, xlab = "Block", ylab = "Standarised residuals")
+      plot(fitted, standres, xlab = "Fitted value", ylab = "Standarised residuals")
+})
+    ```
+    
+    The plots in Figure \@ref(fig:ex2-residual-plots-1) do not show any serious evidence of non-constant variance (maybe very slightly for blocks), and no large outliers.
+    
+    ```{r ex2-residual-plots-2, fig.align = 'center', fig.cap = 'Blackcurrent experiment: Normal probability plot for standardised residuals.'}
+     par(pty = "s") 
+     qqnorm(standres, main = "")
+    ```
+    
+    Figure \@ref(fig:ex2-residual-plots-2) shows the residuals lie roughly on a straight line when plotted against theoretical normal quantiles, and hence the assumption of normally distributed errors seems reasonable.
+    
+d. There is no evidence of a difference between treatments, so we would not normally test each pairwise difference. However, if we did, we could use the following code.
+    
+    ```{r ex2-pairwise}
+    blackcurrent.emm <- emmeans::emmeans(blackcurrent.lm, ~ fertilizer)
+    pairs(blackcurrent.emm)
+    ```
+
+</details>
+
 3. Prove that $2k/\lambda t > 2/b$, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size $k$ and an RCBD, both with $t$ treatments in $b$ blocks.
 
 4. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $k$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
