@@ -749,21 +749,21 @@ N &amp; = J_{t \times b}
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="blocking.html#cb76-1"></a>tyre.bibd &lt;-<span class="st"> </span>ibd<span class="op">::</span><span class="kw">bibd</span>(<span class="dt">v =</span> <span class="dv">4</span>, <span class="dt">b =</span> <span class="dv">4</span>, <span class="dt">r =</span> <span class="dv">3</span>, <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">lambda =</span> <span class="dv">2</span>) <span class="co"># note, v is the notation for the number of treatments</span></span>
 <span id="cb76-2"><a href="blocking.html#cb76-2"></a>tyre.bibd<span class="op">$</span>N <span class="co"># incidence matrix</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
+## [1,]    1    1    0    1
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
 ## [4,]    1    1    1    0</code></pre>
 <p>We can also use the package to find a design for bigger experiments, for example <span class="math inline">\(t=8\)</span> treatments in <span class="math inline">\(b=14\)</span> blocks of size <span class="math inline">\(k=4\)</span>. Here, <span class="math inline">\(r = 14\times 4 / 8 = 7\)</span> and <span class="math inline">\(\lambda = 7 \times 3 / 7 = 3\)</span>.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="blocking.html#cb78-1"></a>larger.bibd &lt;-<span class="st"> </span>ibd<span class="op">::</span><span class="kw">bibd</span>(<span class="dt">v =</span> <span class="dv">8</span>, <span class="dt">b =</span> <span class="dv">14</span>, <span class="dt">r =</span> <span class="dv">7</span>, <span class="dt">k =</span> <span class="dv">4</span>, <span class="dt">lambda =</span> <span class="dv">3</span>) </span>
 <span id="cb78-2"><a href="blocking.html#cb78-2"></a>larger.bibd<span class="op">$</span>N</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    0    0    0    0    1    1    1     1     0     0     1     1
-## [2,]    1    0    1    0    0    0    0    0    0     1     1     1     1     1
-## [3,]    1    0    0    0    0    1    1    1    1     0     1     1     0     0
-## [4,]    0    1    1    0    1    1    1    0    0     0     0     1     0     1
-## [5,]    0    0    0    1    1    1    1    0    0     1     1     0     1     0
-## [6,]    1    1    1    1    0    1    0    0    1     1     0     0     0     0
-## [7,]    0    0    1    1    1    0    0    1    1     0     1     0     0     1
+## [1,]    1    0    0    0    0    0    1    1    0     1     1     0     1     1
+## [2,]    0    1    1    0    0    0    0    0    1     0     1     1     1     1
+## [3,]    0    1    0    0    0    1    1    1    1     1     0     1     0     0
+## [4,]    1    0    1    0    1    1    1    0    0     0     0     1     0     1
+## [5,]    0    0    0    1    1    1    1    0    1     0     1     0     1     0
+## [6,]    1    1    1    1    0    1    0    0    0     1     1     0     0     0
+## [7,]    0    0    1    1    1    0    0    1    1     1     0     0     0     1
 ## [8,]    1    1    0    1    1    0    0    1    0     0     0     1     1     0</code></pre>
 <p>Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with <span class="math inline">\(b = {t \choose k} = {8 \choose 4} = 70\)</span> blocks.</p>
 </div>
@@ -1025,22 +1025,136 @@ y_{ij} = \mu + \tau_j + \varepsilon_{ij}\,,\qquad i = 1,\ldots, 6; j = 1,2\,,
 <li>Linear model diagnostics;</li>
 <li>if appropriate, multiple comparisons of all pairwise differences between treatments.</li>
 </ol></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>We start with exploratory tabular and graphical analysis.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="blocking.html#cb91-1"></a><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>fertilizer, <span class="dt">data =</span> blackcurrent, </span>
+<span id="cb91-2"><a href="blocking.html#cb91-2"></a>          <span class="dt">FUN =</span> <span class="cf">function</span>(x) <span class="kw">c</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(x), <span class="dt">sd =</span> <span class="kw">sd</span>(x)))</span>
+<span id="cb91-3"><a href="blocking.html#cb91-3"></a><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>block, <span class="dt">data =</span> blackcurrent, </span>
+<span id="cb91-4"><a href="blocking.html#cb91-4"></a>          <span class="dt">FUN =</span> <span class="cf">function</span>(x) <span class="kw">c</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(x), <span class="dt">sd =</span> <span class="kw">sd</span>(x)))</span>
+<span id="cb91-5"><a href="blocking.html#cb91-5"></a><span class="kw">boxplot</span>(yield <span class="op">~</span><span class="st"> </span>fertilizer, <span class="dt">data =</span> blackcurrent)</span>
+<span id="cb91-6"><a href="blocking.html#cb91-6"></a><span class="kw">boxplot</span>(yield <span class="op">~</span><span class="st"> </span>block, <span class="dt">data =</span> blackcurrent)</span></code></pre></div>
+<pre><code>##   fertilizer yield.mean yield.sd
+## 1          1     10.500    3.488
+## 2          2     10.250    2.255
+## 3          3     11.625    1.702
+## 4          4     11.750    2.843
+## 5          5     10.500    3.697
+## 6          6     12.000    2.739
+##   block yield.mean yield.sd
+## 1     1     13.333    1.291
+## 2     2     11.917    1.281
+## 3     3     11.250    2.859
+## 4     4      7.917    1.242</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:ex2-eda"></span>
+<img src="bookdown_math3014-6027_files/figure-html/ex2-eda-1.png" alt="Blackcurrent experiment: yield against treatment and block." width="672" /><img src="bookdown_math3014-6027_files/figure-html/ex2-eda-2.png" alt="Blackcurrent experiment: yield against treatment and block." width="672" />
+<p class="caption">
+Figure 3.3: Blackcurrent experiment: yield against treatment and block.
+</p>
+</div>
+<p>There are substantial differences in average responses between blocks; differences between treatment means are smaller. These plots are only meaningful because this design is an RCBD, and each treatment occurs in each block.</p>
+<p>The unit-block-treatment model is <em>additive</em>; that is, we assume the effect of each treatment does not vary for each block. Therefore we also need to check that there are no substantive interactions between treatments and blocks. We will do this graphically.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="blocking.html#cb93-1"></a><span class="kw">with</span>(blackcurrent,</span>
+<span id="cb93-2"><a href="blocking.html#cb93-2"></a>  <span class="kw">interaction.plot</span>(fertilizer, block, yield, <span class="dt">xlab =</span> <span class="st">&#39;Treatment&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Yield&#39;</span>, <span class="dt">trace.label =</span> <span class="st">&#39;Block&#39;</span>)</span>
+<span id="cb93-3"><a href="blocking.html#cb93-3"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ex2-interaction"></span>
+<img src="bookdown_math3014-6027_files/figure-html/ex2-interaction-1.png" alt="Blackcurrent experiment: treatment-block interaction plot." width="672" />
+<p class="caption">
+Figure 3.4: Blackcurrent experiment: treatment-block interaction plot.
+</p>
+</div>
+<p>Figure <a href="blocking.html#fig:ex2-interaction">3.4</a> plots the treatment means within each block. While there are clear differences between blocks, the differences between treatments do not seem to vary systematically between blocks.</p></li>
+<li><p>We now fit a linear model, and perform an F-test for the hypothesis <span class="math inline">\(H_0: \tau_1 = \tau_2 = \tau_3 = \tau_4 = \tau_5 = \tau_6 = 0\)</span>.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="blocking.html#cb94-1"></a>blackcurrent.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>block <span class="op">+</span><span class="st"> </span>fertilizer, <span class="dt">data =</span> blackcurrent)</span>
+<span id="cb94-2"><a href="blocking.html#cb94-2"></a><span class="kw">anova</span>(blackcurrent.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: yield
+##            Df Sum Sq Mean Sq F value Pr(&gt;F)   
+## block       3   94.9   31.62    8.90 0.0013 **
+## fertilizer  5   11.8    2.36    0.66 0.6564   
+## Residuals  15   53.3    3.55                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The “treatment” row of the ANOVA table compares the model including blocks and treatments to that only containing blocks. This comparison tests the above null hypothesis. We can see here that there is no evidence to reject <span class="math inline">\(H_0\)</span> (p-value = 0.6564). This outcome is not surprising, given the tabular and graphical summaries we saw above. The block sum of squares is large, but we do not perform formal hypothesis testing for blocks.</p>
+<p>Out of curiousity, we can also assess the “efficiency” of blocking by comparing the estimate of <span class="math inline">\(\sigma^2\)</span> from the block design with the estimate that would result from ignoring the blocks, treating the experiment as a CRD and fitting a unit-treatment model.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="blocking.html#cb96-1"></a>blackcurrent_crd.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>fertilizer, <span class="dt">data =</span> blackcurrent)</span>
+<span id="cb96-2"><a href="blocking.html#cb96-2"></a><span class="kw">summary</span>(blackcurrent_crd.lm)<span class="op">$</span>sig<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="kw">summary</span>(blackcurrent.lm)<span class="op">$</span>sig<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 2.316</code></pre>
+<p>The estimate of <span class="math inline">\(\sigma^2\)</span> from the CRD is more the two times greater than the estimate from the block design, meaning about 100% more observations would be needed in the CRD to get the same level of precision as the RCBD.</p></li>
+<li><p>We now examine residual diagnostics, to check the assumptions of our model:</p>
+<ul>
+<li>constant variance, with respect to the mean response, the treatment and the block</li>
+<li>normality of residuals</li>
+<li>additive treatment and block effects (already assessed in Fig <a href="blocking.html#fig:ex2-interaction">3.4</a>).</li>
+</ul>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="blocking.html#cb98-1"></a>standres &lt;-<span class="st"> </span><span class="kw">rstandard</span>(blackcurrent.lm)</span>
+<span id="cb98-2"><a href="blocking.html#cb98-2"></a>fitted &lt;-<span class="st"> </span><span class="kw">fitted</span>(blackcurrent.lm)</span>
+<span id="cb98-3"><a href="blocking.html#cb98-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
+<span id="cb98-4"><a href="blocking.html#cb98-4"></a><span class="kw">with</span>(blackcurrent, {</span>
+<span id="cb98-5"><a href="blocking.html#cb98-5"></a>  <span class="kw">plot</span>(fertilizer, standres, <span class="dt">xlab =</span> <span class="st">&quot;Treatment&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
+<span id="cb98-6"><a href="blocking.html#cb98-6"></a>  <span class="kw">plot</span>(block, standres, <span class="dt">xlab =</span> <span class="st">&quot;Block&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
+<span id="cb98-7"><a href="blocking.html#cb98-7"></a>  <span class="kw">plot</span>(fitted, standres, <span class="dt">xlab =</span> <span class="st">&quot;Fitted value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
+<span id="cb98-8"><a href="blocking.html#cb98-8"></a>})</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ex2-residual-plots-1"></span>
+<img src="bookdown_math3014-6027_files/figure-html/ex2-residual-plots-1-1.png" alt="Blackcurrent experiment: Residuals against treatments (left), blocks (middle) and fitted values (right)." width="672" />
+<p class="caption">
+Figure 3.5: Blackcurrent experiment: Residuals against treatments (left), blocks (middle) and fitted values (right).
+</p>
+</div>
+<p>The plots in Figure <a href="blocking.html#fig:ex2-residual-plots-1">3.5</a> do not show any serious evidence of non-constant variance (maybe very slightly for blocks), and no large outliers.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="blocking.html#cb99-1"></a> <span class="kw">par</span>(<span class="dt">pty =</span> <span class="st">&quot;s&quot;</span>) </span>
+<span id="cb99-2"><a href="blocking.html#cb99-2"></a> <span class="kw">qqnorm</span>(standres, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ex2-residual-plots-2"></span>
+<img src="bookdown_math3014-6027_files/figure-html/ex2-residual-plots-2-1.png" alt="Blackcurrent experiment: Normal probability plot for standardised residuals." width="672" />
+<p class="caption">
+Figure 3.6: Blackcurrent experiment: Normal probability plot for standardised residuals.
+</p>
+</div>
+<p>Figure <a href="blocking.html#fig:ex2-residual-plots-2">3.6</a> shows the residuals lie roughly on a straight line when plotted against theoretical normal quantiles, and hence the assumption of normally distributed errors seems reasonable.</p></li>
+<li><p>There is no evidence of a difference between treatments, so we would not normally test each pairwise difference. However, if we did, we could use the following code.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="blocking.html#cb100-1"></a>blackcurrent.emm &lt;-<span class="st"> </span>emmeans<span class="op">::</span><span class="kw">emmeans</span>(blackcurrent.lm, <span class="op">~</span><span class="st"> </span>fertilizer)</span>
+<span id="cb100-2"><a href="blocking.html#cb100-2"></a><span class="kw">pairs</span>(blackcurrent.emm)</span></code></pre></div>
+<pre><code>##  contrast estimate   SE df t.ratio p.value
+##  1 - 2       0.250 1.33 15   0.188  1.0000
+##  1 - 3      -1.125 1.33 15  -0.844  0.9541
+##  1 - 4      -1.250 1.33 15  -0.938  0.9303
+##  1 - 5       0.000 1.33 15   0.000  1.0000
+##  1 - 6      -1.500 1.33 15  -1.125  0.8635
+##  2 - 3      -1.375 1.33 15  -1.031  0.9000
+##  2 - 4      -1.500 1.33 15  -1.125  0.8635
+##  2 - 5      -0.250 1.33 15  -0.188  1.0000
+##  2 - 6      -1.750 1.33 15  -1.313  0.7741
+##  3 - 4      -0.125 1.33 15  -0.094  1.0000
+##  3 - 5       1.125 1.33 15   0.844  0.9541
+##  3 - 6      -0.375 1.33 15  -0.281  0.9997
+##  4 - 5       1.250 1.33 15   0.938  0.9303
+##  4 - 6      -0.250 1.33 15  -0.188  1.0000
+##  5 - 6      -1.500 1.33 15  -1.125  0.8635
+## 
+## Results are averaged over the levels of: block 
+## P value adjustment: tukey method for comparing a family of 6 estimates</code></pre></li>
+</ol>
+</details>
+<ol start="3" style="list-style-type: decimal">
 <li><p>Prove that <span class="math inline">\(2k/\lambda t &gt; 2/b\)</span>, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size <span class="math inline">\(k\)</span> and an RCBD, both with <span class="math inline">\(t\)</span> treatments in <span class="math inline">\(b\)</span> blocks.</p></li>
 <li><p>Construct a BIBD for <span class="math inline">\(t=5\)</span> treatments in <span class="math inline">\(b=5\)</span> blocks of size <span class="math inline">\(k=4\)</span> units. What are <span class="math inline">\(r\)</span> and <span class="math inline">\(k\)</span> for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.</p></li>
 <li><p>Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, “Position” and “Application”. For this experiment, we use a <strong>latin square</strong> design, as follows.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="blocking.html#cb91-1"></a>fabric &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">material =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, </span>
-<span id="cb91-2"><a href="blocking.html#cb91-2"></a>                           <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>)),</span>
-<span id="cb91-3"><a href="blocking.html#cb91-3"></a>               <span class="dt">position =</span> <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dv">4</span>),</span>
-<span id="cb91-4"><a href="blocking.html#cb91-4"></a>               <span class="dt">application =</span> <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="kw">rep</span>(<span class="dv">4</span>, <span class="dv">4</span>)),</span>
-<span id="cb91-5"><a href="blocking.html#cb91-5"></a>               <span class="dt">weight =</span> <span class="kw">c</span>(<span class="dv">235</span>, <span class="dv">236</span>, <span class="dv">218</span>, <span class="dv">268</span>,</span>
-<span id="cb91-6"><a href="blocking.html#cb91-6"></a>                            <span class="dv">251</span>, <span class="dv">241</span>, <span class="dv">227</span>, <span class="dv">229</span>, </span>
-<span id="cb91-7"><a href="blocking.html#cb91-7"></a>                            <span class="dv">234</span>, <span class="dv">273</span>, <span class="dv">274</span>, <span class="dv">226</span>,</span>
-<span id="cb91-8"><a href="blocking.html#cb91-8"></a>                            <span class="dv">195</span>, <span class="dv">270</span>, <span class="dv">230</span>, <span class="dv">225</span>)</span>
-<span id="cb91-9"><a href="blocking.html#cb91-9"></a>                 )</span>
-<span id="cb91-10"><a href="blocking.html#cb91-10"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb91-11"><a href="blocking.html#cb91-11"></a> tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(fabric, <span class="dt">id_cols =</span> application, <span class="dt">names_from =</span> position, </span>
-<span id="cb91-12"><a href="blocking.html#cb91-12"></a>                <span class="dt">values_from =</span> material),</span>
-<span id="cb91-13"><a href="blocking.html#cb91-13"></a> <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="kw">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="blocking.html#cb102-1"></a>fabric &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">material =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, </span>
+<span id="cb102-2"><a href="blocking.html#cb102-2"></a>                           <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>)),</span>
+<span id="cb102-3"><a href="blocking.html#cb102-3"></a>               <span class="dt">position =</span> <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dv">4</span>),</span>
+<span id="cb102-4"><a href="blocking.html#cb102-4"></a>               <span class="dt">application =</span> <span class="kw">rep</span>(<span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="kw">rep</span>(<span class="dv">4</span>, <span class="dv">4</span>)),</span>
+<span id="cb102-5"><a href="blocking.html#cb102-5"></a>               <span class="dt">weight =</span> <span class="kw">c</span>(<span class="dv">235</span>, <span class="dv">236</span>, <span class="dv">218</span>, <span class="dv">268</span>,</span>
+<span id="cb102-6"><a href="blocking.html#cb102-6"></a>                            <span class="dv">251</span>, <span class="dv">241</span>, <span class="dv">227</span>, <span class="dv">229</span>, </span>
+<span id="cb102-7"><a href="blocking.html#cb102-7"></a>                            <span class="dv">234</span>, <span class="dv">273</span>, <span class="dv">274</span>, <span class="dv">226</span>,</span>
+<span id="cb102-8"><a href="blocking.html#cb102-8"></a>                            <span class="dv">195</span>, <span class="dv">270</span>, <span class="dv">230</span>, <span class="dv">225</span>)</span>
+<span id="cb102-9"><a href="blocking.html#cb102-9"></a>                 )</span>
+<span id="cb102-10"><a href="blocking.html#cb102-10"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb102-11"><a href="blocking.html#cb102-11"></a> tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(fabric, <span class="dt">id_cols =</span> application, <span class="dt">names_from =</span> position, </span>
+<span id="cb102-12"><a href="blocking.html#cb102-12"></a>                <span class="dt">values_from =</span> material),</span>
+<span id="cb102-13"><a href="blocking.html#cb102-13"></a> <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="kw">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1098,10 +1212,10 @@ with <span class="math inline">\(\hat{\tau}_w = \frac{1}{t}\sum_{k=1}^t\hat{\tau
 <p>Demonstrate that any contrast can therefore be estimated from this design, and derive the variance of the estimator of <span class="math inline">\(\sum_{k=1}^tc_k\tau_k\)</span>.</p></li>
 </ol>
 <p>The data for this experiment is as follows, where the entries in the table give the response for the corresponding treatment:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="blocking.html#cb92-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb92-2"><a href="blocking.html#cb92-2"></a> tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(fabric, <span class="dt">id_cols =</span> application, <span class="dt">names_from =</span> position, </span>
-<span id="cb92-3"><a href="blocking.html#cb92-3"></a>                <span class="dt">values_from =</span> weight),</span>
-<span id="cb92-4"><a href="blocking.html#cb92-4"></a> <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="kw">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="blocking.html#cb103-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb103-2"><a href="blocking.html#cb103-2"></a> tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(fabric, <span class="dt">id_cols =</span> application, <span class="dt">names_from =</span> position, </span>
+<span id="cb103-3"><a href="blocking.html#cb103-3"></a>                <span class="dt">values_from =</span> weight),</span>
+<span id="cb103-4"><a href="blocking.html#cb103-4"></a> <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="kw">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
