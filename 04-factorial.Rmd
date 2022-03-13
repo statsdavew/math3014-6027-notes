@@ -1,1 +1,153 @@
 # Factorial experiments {#factorial}
+
+In Chapters \@ref(crd) and \@ref(blocking), we assumed the objective of the experiment was to investigate $t$ **unstructured** treatments, defined only as a collection of distinct entities (drugs, advertisements, receipes, etc.). That is, there was not necessarily any explicit relationship between the treatments (although we could clearly choose which paticular comparisons between treatments were of interest via choice of contrast).
+
+In many experiments, particularly in industry, engineering and the physical sciences, the treatments are actually defined via the choice of a **level** relating to each of a set of **factors**. We will focus on the commonly occurring case of factors at **two levels**. For example, consider the below experiment from the pharmaceutical industry.
+
+::: {.example #factorial-desilylation}
+Desilylation experiment [@Owen2001]
+
+In this experiment, performed at GlaxoSmithKline, the aim was to optimise the desilylation^[Desilylation is a process of removing silyl, SiH$_3$ a silicon hydride, from a compound.] of an ether into an alcohol, which was a key step in the synthesis of a particular antibiotic. There were $t=16$ treatments, defined via the settings of four different factors, as given in Table \@ref(tab:factorial-desilylation-data).
+
+```{r factorial-desilylation-data, message = F}
+desilylation <- FrF2::FrF2(nruns = 16, nfactors = 4, randomize = F,
+                           factor.names = list(temp = c(10, 20), time = c(19, 25),
+                                               solvent = c(5, 7), reagent = c(1, 1.33)))
+yield <- c(82.93, 94.04, 88.07, 93.97, 77.21, 92.99, 83.60, 94.38, 
+           88.68, 94.30, 93.00, 93.42, 84.86, 94.26, 88.71, 94.66)
+desilylation <- data.frame(desilylation, yield = yield)
+rownames(desilylation) <- paste("Trt", 1:16)
+knitr::kable(desilylation, 
+             col.names = c("Temp (degrees C)", "Time (hours)", "Solvent (vol.)", 
+                           "Reagent (equiv.)", "Yield (%)"),
+             caption = "Desilylation experiment: 16 treatments defined 
+             by settings of four factors, with response (yield).")
+```
+
+Each treatment is defined by the choice of one of two levels for each of the four factors. In the `R` code above, we have used the function `FrF2` (from the package of the same name) to generate all $t = 2^4 = 16$ combinations of the two levels of these four factors. We come back to this function later in the chapter.
+:::
+
+This **factorial treatment structure** lends itself to certain treatment contrasts being of natural interest.
+
+## Factorial contrasts
+
+Throughout this chapter, we will assume there are no blocks or other restrictions on randomisation, and so we will assume a completely randomised design can be used. We start by assuming the same unit-treatment model as Chapter \@ref(crd):
+
+\begin{equation}
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, (\#eq:factorial-utm)
+\end{equation}
+
+where $y_{ij}$ is the response from the $j$th application of treatment $i$, $\mu$ is a constant parameter, $\tau_i$ is the effect of the $i$th treatment, and $\varepsilon_{ij}$ is the random individual effect from each experimental unit with $\varepsilon_{ij} \sim N(0, \sigma^2)$ independent of other errors.
+
+Now, the number of treatments $t = 2^f$, where $f$ equals the number of factors in the experiment.
+
+For Example \@ref(exm:factorial-desilylation), we have $t = 2^4 = 16$ and $n_i = 1$ for all $i=1,\ldots, 16$; that is, each of the 16 treatments are replicated once. In general, we shall assume common treatment replication $n_i = r \ge 1$.
+
+If we fit model \@ref(eq:factorial-utm) and compute the ANOVA table, we notice a particular issue with this design.
+
+```{r desilylation-anova, warning = F}
+desilylation <- data.frame(desilylation, trt = factor(1:16))
+desilylation.lm <- lm(yield ~ trt, data = desilylation)
+anova(desilylation.lm)
+```
+All available degrees of freedom are being used to estimate parameters in the mean ($\mu$ and the treatment effects $\tau_i$). There are no degrees of freedom left to estimate $\sigma^2$. This is due to a lack of treatment replication. Without replication in the design, model \@ref(eq:factorial-utm) is **saturated**, with as many treatments as there are observations and an unbiased estimate of $\sigma^2$ cannot be obtained. We will return to this issue later. 
+
+### Main effects
+
+Studying Table \@ref(tab:factorial-desilylation-data), there are some comparisons between treatments which are obviously of interest. For example, comparing the average effect from the first 8 treatments with the average effect of the second 8, using
+
+$$
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \sum_{i=1}^tc_i\tau_i\,,
+$$
+with
+
+$$
+\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
+$$
+
+```{r desilylation-lm, message = F}
+desilylation.emm <- emmeans::emmeans(desilylation.lm, ~ trt)
+reagent_me.emmc <- function(levs) data.frame('reagent m.e.' = rep(c(-1, 1), rep(8, 2)) / 8)
+emmeans::contrast(desilylation.emm, 'reagent_me')
+```
+This contrast compares the average treatment effect from the 8 treatments which have `reagent` set to its low level (1 equiv.) to the average effect from the 8 treatments which have `reagent` set to its high level. This is a "fair" comparison, as both of these sets of treatments have each of the combinations of the factors `temp`, `time` and `solvent` occuring equally often (twice here). Hence, the **main effect** of `reagent` is averaged over the levels of the other three factors.
+
+As in Chapter \@ref(crd), we can estimate this treatment contrast by applying the same contrast coefficients to the treatment means, 
+
+$$
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
+$$
+where, for this experiment, each $\bar{y}_{i.}$ is the mean of a single observation (as there is no treatment replication). We see that inference about this contrast is not possible, as no standard error can be obtained.
+
+::: {.definition #main-effect}
+The **main effect** of a factor $A$ is defined as the difference in the average response from the high and low levels of the factor
+
+$$
+\mbox{ME}(A) = \bar{y}(A+) - \bar{y}(A-)\,,
+$$
+where $\bar{y}(A+)$ is the average response when factor $A$ is set to its high level, averaged across all combinations of levels of the other factors (with $\bar{y}(A+)$ defined similarly for the low level of $A$).
+:::
+
+As we have averaged the response across the levels of the other factors, the intepretation of the main effect extends beyond this experiment. That is, we can use it to infer something about the system under study. Assuming model \@ref(eq:factorial-utm) is correct, any variation in the main effect can only come from random error in the observations. In fact,
+
+\begin{align*}
+\mbox{var}\{ME(A)\} & = \frac{\sigma^2}{n/2} + \frac{\sigma^2}{n/2} \\
+& = \frac{4\sigma^2}{n}\,,
+\end{align*}
+
+and assuming $r>1$, 
+
+\begin{equation}
+\hat{\sigma}^2 = \frac{1}{2^f(r-1)} \sum_{i=1}^{2^f}\sum_{j=1}^r(y_{ij} - \bar{y}_{i.})^2\,,
+(\#eq:factorial-sigma-hat-2)
+\end{equation}
+
+which is the residual mean square.
+
+For Example \@ref(exm:factorial-desilylation), we can also calculate main effect estimates for the other three factors by defining appropriate contrasts in the treatments.
+
+```{r desilylation-all-me-contrasts, message = F}
+contrast.mat <- FrF2::FrF2(nruns = 16, nfactors = 4, randomize = F, 
+                           factor.names = c("temp", "time", "solvent", "reagent"))
+fac.contrasts.emmc <- function(levs) 
+  dplyr::mutate_all(contrast.mat, function(x) scale(as.numeric(x), scale = 4))
+main_effect_contrasts <- fac.contrasts.emmc()
+rownames(main_effect_contrasts) <- paste("Trt", 1:16)
+knitr::kable(main_effect_contrasts, caption = 'Desilylation experiment: main effect contrast coefficients', col.names = c("Temperature", "Time", "Solvent", "Reagent"))
+```
+Estimates can be obtained by applying these coefficients to the observed treatment means.
+
+```{r desilylation-all-me-estimates}
+t(as.matrix(main_effect_contrasts)) %*% yield
+emmeans::contrast(desilylation.emm, 'fac.contrasts')
+```
+Main effects are often displayed graphically, using **main effect plots** which simply plot the average response for each factor level, joined by a line. The larger the main effect, the larger the slope of the line (or the bigger the difference between the averages). Figure \@ref(fig:desilylation-me-plots) presents the four main effect plots for Example \@ref(exm:factorial-desilylation).
+
+```{r desilylation-me-plots, fig.align = 'center', fig.keep = T, fig.cap = 'Desilylation experiment: main effect plots', fig.width = 7, fig.height = 7}
+## calculate the means
+temp_bar <- aggregate(yield ~ temp, data = desilylation, FUN = mean)
+time_bar <- aggregate(yield ~ time, data = desilylation, FUN = mean)
+solvent_bar <- aggregate(yield ~ solvent, data = desilylation, FUN = mean)
+reagent_bar <- aggregate(yield ~ reagent, data = desilylation, FUN = mean)
+
+## convert factors to numeric
+fac_to_num <- function(x) as.numeric(as.character(x))
+temp_bar$temp <- fac_to_num(temp_bar$temp)
+time_bar$time <- fac_to_num(time_bar$time)
+solvent_bar$solvent <- fac_to_num(solvent_bar$solvent)
+reagent_bar$reagent <- fac_to_num(reagent_bar$reagent)
+
+## main effect plots
+plotmin <- min(temp_bar$yield, time_bar$yield, solvent_bar$yield, reagent_bar$yield)
+plotmax <- max(temp_bar$yield, time_bar$yield, solvent_bar$yield, reagent_bar$yield)
+par(cex = 2)
+layout(matrix(c(1, 2, 3, 4), nrow = 2, ncol = 2, byrow = TRUE), respect = T)
+plot(temp_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
+plot(time_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
+plot(solvent_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
+plot(reagent_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
+```
+
+
+
+

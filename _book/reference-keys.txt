@@ -46,6 +46,15 @@ eq:blocks-bibd-rne
 eq:exercises-rcbd-model
 eq:exercises-rcbd-model-block
 tab:blackcurrent-data
+fig:ex2-eda
+fig:ex2-interaction
+fig:ex2-residual-plots-1
+fig:ex2-residual-plots-2
+tab:factorial-desilylation-data
+eq:factorial-utm
+eq:factorial-sigma-hat-2
+tab:desilylation-all-me-contrasts
+fig:desilylation-me-plots
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -82,6 +91,8 @@ reduced-normal-equations
 estimation-and-inference
 exercises-2
 factorial
+factorial-contrasts
+main-effects
 block-factorial
 fractional-factorial
 response-surface-methodology
