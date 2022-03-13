@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{book}
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-03-13}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -109,15 +113,11 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-03-08}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,6 +181,10 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
+
+\begin{verbatim}
+## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
+\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -780,11 +784,27 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -887,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Tea first"  "Tea first" 
-## [6] "Milk first" "Milk first" "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Milk first"
+## [6] "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +921,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -912,7 +932,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1063,7 +1083,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1102,7 +1130,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1141,7 +1177,15 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\centering
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2781,7 +2825,15 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-Source & Degrees of freedom & Sums of squares & Mean square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Degrees of freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sums of squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean square
+\end{minipage} \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -2839,7 +2891,16 @@ For Example \ref{exm:blocks-tyres}, we get the ANOVA table:
 
 Again, the null hypothesis is rejected, and hence we should investigate which tyre compounds differ in their mean response.
 
-The residual mean square for model \eqref{eq:block-plm} also provides an unbiased estimate, \(s^2\), of \(\sigma^2\), the variability of the \(\varepsilon_{ijl}\), \emph{assuming the unit-block-treatment model is correct}. For Example \ref{exm:blocks-bars},
+The residual mean square for model \eqref{eq:block-plm} also provides an unbiased estimate, \(s^2\), of \(\sigma^2\), the variability of the \(\varepsilon_{ijl}\), \emph{assuming the unit-block-treatment model is correct}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bar.s2 }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(bar.lm)}\SpecialCharTok{$}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{tyre.s2 }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(tyre.lm)}\SpecialCharTok{$}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+For Example \ref{exm:blocks-bars},
 \(s^2 = 56.3869\) and for Example \ref{exm:blocks-tyres}, \(s^2 = 350.1833\).
 
 \hypertarget{rcdb}{%
@@ -2961,6 +3022,13 @@ We can demonstrate the equivalence of the contrast point estimates between a RCB
 ##  t1.v.t4      4.00 3.54 28   1.132  0.2674
 \end{verbatim}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{crd.s2 }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(bar\_crd.lm)}\SpecialCharTok{$}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{rcbd.s2 }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(bar.lm)}\SpecialCharTok{$}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
 As expected the point estimates of the three contrasts are identical. In this case, the standard error of each contrast is actually smaller assuming a CRD without blocks, suggesting block-to-block differences were actually small here (further evidence is provided by the small block sums of squares in the ANOVA table). Here the estimate of \(\sigma\) from the RCBD is \(s_{RCBD} = 7.5091\) and from the CRD is \(s_{CRD} = 7.0698\), so for this example the unit-to-unit variation within and between blocks is not so different, and actually estimated to be slightly smaller in the CRD\footnote{Of course, the CRD has seven more degrees of freedom for estimating \(\sigma^2\) as block effects do not require estimation.}.
 
 \hypertarget{blocks-orthogonal}{%
@@ -2985,13 +3053,13 @@ A condition for \(\boldsymbol{\beta}\) and \(\boldsymbol{\tau}\) to be estimated
 \begin{align}
  & \left(X_1^{\mathrm{T}}\boldsymbol{1}_n - X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_1^{\mathrm{T}}X_1 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_1\right)\hat{\boldsymbol{\beta}} + \left(X_1^{\mathrm{T}}X_2 - \frac{1}{n}X_1^{\mathrm{T}}\boldsymbol{1}_n\boldsymbol{1}_n^{\mathrm{T}}X_2\right)\hat{\boldsymbol{\tau}} \nonumber \\
  & = X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} \nonumber \\
- & =  X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right) \label{eq:blocks-orth-ne1}\,.
+ & =  X_1^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\boldsymbol{y}\label{eq:blocks-orth-ne1}\,.
 \end{align}
 
 Secondly, we premultiply \eqref{eq:blocks-normal-1} by \(\frac{1}{n}X_2^{\mathrm{T}}\boldsymbol{1}_n\) and substract it from \eqref{eq:blocks-normal-3}:
 
 \begin{equation}
-X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\,.
+X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)X_2\hat{\boldsymbol{\tau}} = X_2^{\mathrm{T}}\left(I_n - \frac{1}{n}J_n\right)\boldsymbol{y}\,.
 \label{eq:blocks-orth-ne2}
 \end{equation}
 
@@ -3095,8 +3163,8 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
+## [1,]    1    0    1    1
+## [2,]    0    1    1    1
 ## [3,]    1    1    0    1
 ## [4,]    1    1    1    0
 \end{verbatim}
@@ -3112,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    0    1    0    1    0    0    1     1     1     0     1     1
-## [2,]    1    0    0    0    0    0    1    1    0     0     1     1     1     1
-## [3,]    0    0    0    0    1    1    1    1    1     1     0     1     0     0
-## [4,]    1    0    1    1    1    1    0    0    0     0     0     1     0     1
-## [5,]    0    1    1    0    1    0    0    1    0     1     0     0     1     1
-## [6,]    1    1    1    0    0    1    1    0    0     1     1     0     0     0
-## [7,]    1    1    0    1    1    0    1    0    1     0     0     0     1     0
-## [8,]    0    1    1    1    0    0    0    1    1     0     1     1     0     0
+## [1,]    1    1    0    0    0    0    1    1    1     1     0     1     0     0
+## [2,]    0    0    1    0    0    0    0    0    1     1     1     1     1     1
+## [3,]    1    0    0    0    0    1    1    1    0     0     1     0     1     1
+## [4,]    1    1    1    0    1    1    0    0    0     0     0     1     0     1
+## [5,]    0    0    0    1    1    1    0    1    0     1     0     1     1     0
+## [6,]    1    0    1    1    1    0    0    1    1     0     1     0     0     0
+## [7,]    0    1    1    1    0    1    1    0    1     0     0     0     1     0
+## [8,]    0    1    0    1    1    0    1    0    0     1     1     0     0     1
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3414,6 +3482,200 @@ Solution
   \item
     if appropriate, multiple comparisons of all pairwise differences between treatments.
   \end{enumerate}
+\end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  We start with exploratory tabular and graphical analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ fertilizer, }\AttributeTok{data =}\NormalTok{ blackcurrent, }
+          \AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{c}\NormalTok{(}\AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(x), }\AttributeTok{sd =} \FunctionTok{sd}\NormalTok{(x)))}
+\FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block, }\AttributeTok{data =}\NormalTok{ blackcurrent, }
+          \AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{c}\NormalTok{(}\AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(x), }\AttributeTok{sd =} \FunctionTok{sd}\NormalTok{(x)))}
+\FunctionTok{boxplot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ fertilizer, }\AttributeTok{data =}\NormalTok{ blackcurrent)}
+\FunctionTok{boxplot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block, }\AttributeTok{data =}\NormalTok{ blackcurrent)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   fertilizer yield.mean yield.sd
+## 1          1     10.500    3.488
+## 2          2     10.250    2.255
+## 3          3     11.625    1.702
+## 4          4     11.750    2.843
+## 5          5     10.500    3.697
+## 6          6     12.000    2.739
+##   block yield.mean yield.sd
+## 1     1     13.333    1.291
+## 2     2     11.917    1.281
+## 3     3     11.250    2.859
+## 4     4      7.917    1.242
+\end{verbatim}
+
+  \begin{figure}
+
+   {\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/ex2-eda-1} \includegraphics{bookdown_math3014-6027_files/figure-latex/ex2-eda-2} 
+
+   }
+
+   \caption{Blackcurrent experiment: yield against treatment and block.}\label{fig:ex2-eda}
+   \end{figure}
+
+  There are substantial differences in average responses between blocks; differences between treatment means are smaller. These plots are only meaningful because this design is an RCBD, and each treatment occurs in each block.
+
+  The unit-block-treatment model is \emph{additive}; that is, we assume the effect of each treatment does not vary for each block. Therefore we also need to check that there are no substantive interactions between treatments and blocks. We will do this graphically.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(blackcurrent,}
+  \FunctionTok{interaction.plot}\NormalTok{(fertilizer, block, yield, }\AttributeTok{xlab =} \StringTok{\textquotesingle{}Treatment\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab =} \StringTok{\textquotesingle{}Yield\textquotesingle{}}\NormalTok{, }\AttributeTok{trace.label =} \StringTok{\textquotesingle{}Block\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{figure}
+
+   {\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/ex2-interaction-1} 
+
+   }
+
+   \caption{Blackcurrent experiment: treatment-block interaction plot.}\label{fig:ex2-interaction}
+   \end{figure}
+
+  Figure \ref{fig:ex2-interaction} plots the treatment means within each block. While there are clear differences between blocks, the differences between treatments do not seem to vary systematically between blocks.
+\item
+  We now fit a linear model, and perform an F-test for the hypothesis \(H_0: \tau_1 = \tau_2 = \tau_3 = \tau_4 = \tau_5 = \tau_6 = 0\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{blackcurrent.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ block }\SpecialCharTok{+}\NormalTok{ fertilizer, }\AttributeTok{data =}\NormalTok{ blackcurrent)}
+\FunctionTok{anova}\NormalTok{(blackcurrent.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: yield
+##            Df Sum Sq Mean Sq F value Pr(>F)   
+## block       3   94.9   31.62    8.90 0.0013 **
+## fertilizer  5   11.8    2.36    0.66 0.6564   
+## Residuals  15   53.3    3.55                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+  The ``treatment'' row of the ANOVA table compares the model including blocks and treatments to that only containing blocks. This comparison tests the above null hypothesis. We can see here that there is no evidence to reject \(H_0\) (p-value = 0.6564). This outcome is not surprising, given the tabular and graphical summaries we saw above. The block sum of squares is large, but we do not perform formal hypothesis testing for blocks.
+
+  Out of curiousity, we can also assess the ``efficiency'' of blocking by comparing the estimate of \(\sigma^2\) from the block design with the estimate that would result from ignoring the blocks, treating the experiment as a CRD and fitting a unit-treatment model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{blackcurrent\_crd.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ fertilizer, }\AttributeTok{data =}\NormalTok{ blackcurrent)}
+\FunctionTok{summary}\NormalTok{(blackcurrent\_crd.lm)}\SpecialCharTok{$}\NormalTok{sig}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/} \FunctionTok{summary}\NormalTok{(blackcurrent.lm)}\SpecialCharTok{$}\NormalTok{sig}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.316
+\end{verbatim}
+
+  The estimate of \(\sigma^2\) from the CRD is more the two times greater than the estimate from the block design, meaning about 100\% more observations would be needed in the CRD to get the same level of precision as the RCBD.
+\item
+  We now examine residual diagnostics, to check the assumptions of our model:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    constant variance, with respect to the mean response, the treatment and the block
+  \item
+    normality of residuals
+  \item
+    additive treatment and block effects (already assessed in Fig \ref{fig:ex2-interaction}).
+  \end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{standres }\OtherTok{\textless{}{-}} \FunctionTok{rstandard}\NormalTok{(blackcurrent.lm)}
+\NormalTok{fitted }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(blackcurrent.lm)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{pty =} \StringTok{"s"}\NormalTok{)}
+\FunctionTok{with}\NormalTok{(blackcurrent, \{}
+  \FunctionTok{plot}\NormalTok{(fertilizer, standres, }\AttributeTok{xlab =} \StringTok{"Treatment"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Standarised residuals"}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(block, standres, }\AttributeTok{xlab =} \StringTok{"Block"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Standarised residuals"}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(fitted, standres, }\AttributeTok{xlab =} \StringTok{"Fitted value"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Standarised residuals"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{figure}
+
+   {\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/ex2-residual-plots-1-1} 
+
+   }
+
+   \caption{Blackcurrent experiment: Residuals against treatments (left), blocks (middle) and fitted values (right).}\label{fig:ex2-residual-plots-1}
+   \end{figure}
+
+  The plots in Figure \ref{fig:ex2-residual-plots-1} do not show any serious evidence of non-constant variance (maybe very slightly for blocks), and no large outliers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \FunctionTok{par}\NormalTok{(}\AttributeTok{pty =} \StringTok{"s"}\NormalTok{) }
+ \FunctionTok{qqnorm}\NormalTok{(standres, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{figure}
+
+   {\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/ex2-residual-plots-2-1} 
+
+   }
+
+   \caption{Blackcurrent experiment: Normal probability plot for standardised residuals.}\label{fig:ex2-residual-plots-2}
+   \end{figure}
+
+  Figure \ref{fig:ex2-residual-plots-2} shows the residuals lie roughly on a straight line when plotted against theoretical normal quantiles, and hence the assumption of normally distributed errors seems reasonable.
+\item
+  There is no evidence of a difference between treatments, so we would not normally test each pairwise difference. However, if we did, we could use the following code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{blackcurrent.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(blackcurrent.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ fertilizer)}
+\FunctionTok{pairs}\NormalTok{(blackcurrent.emm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate   SE df t.ratio p.value
+##  1 - 2       0.250 1.33 15   0.188  1.0000
+##  1 - 3      -1.125 1.33 15  -0.844  0.9541
+##  1 - 4      -1.250 1.33 15  -0.938  0.9303
+##  1 - 5       0.000 1.33 15   0.000  1.0000
+##  1 - 6      -1.500 1.33 15  -1.125  0.8635
+##  2 - 3      -1.375 1.33 15  -1.031  0.9000
+##  2 - 4      -1.500 1.33 15  -1.125  0.8635
+##  2 - 5      -0.250 1.33 15  -0.188  1.0000
+##  2 - 6      -1.750 1.33 15  -1.313  0.7741
+##  3 - 4      -0.125 1.33 15  -0.094  1.0000
+##  3 - 5       1.125 1.33 15   0.844  0.9541
+##  3 - 6      -0.375 1.33 15  -0.281  0.9997
+##  4 - 5       1.250 1.33 15   0.938  0.9303
+##  4 - 6      -0.250 1.33 15  -0.188  1.0000
+##  5 - 6      -1.500 1.33 15  -1.125  0.8635
+## 
+## Results are averaged over the levels of: block 
+## P value adjustment: tukey method for comparing a family of 6 estimates
+\end{verbatim}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
 \item
   Prove that \(2k/\lambda t > 2/b\), and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size \(k\) and an RCBD, both with \(t\) treatments in \(b\) blocks.
 \item
@@ -3514,26 +3776,27 @@ Solution
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
 
-In Chapters \ref{crd} and \ref{blocking}, we assumed the objective of the experiment was to investigate \(t\) \emph{unstructured} treatments, defined only as a collection of distinct entities (drugs, advertisements, receipes, etc.). That is, there was not necessarily any explicit relationship between the treatments (although we could clearly choose which paticular comparisons between treatments were of interest via choice of contrast).
+In Chapters \ref{crd} and \ref{blocking}, we assumed the objective of the experiment was to investigate \(t\) \textbf{unstructured} treatments, defined only as a collection of distinct entities (drugs, advertisements, receipes, etc.). That is, there was not necessarily any explicit relationship between the treatments (although we could clearly choose which paticular comparisons between treatments were of interest via choice of contrast).
 
-In many experiments, particularly in industry, engineering and the physical sciences, the treatments are actually defined via the choice of a \emph{level} relating to each of a set of \emph{factors}. For example, consider the below experiment from the pharmaceutical industry.
+In many experiments, particularly in industry, engineering and the physical sciences, the treatments are actually defined via the choice of a \textbf{level} relating to each of a set of \textbf{factors}. We will focus on the commonly occurring case of factors at \textbf{two levels}. For example, consider the below experiment from the pharmaceutical industry.
 
 \begin{example}
 \protect\hypertarget{exm:factorial-desilylation}{}\label{exm:factorial-desilylation}
 
 Desilylation experiment \citep{Owen2001}
 
-In this experiment, performed at GlaxoSmithKline, the aim was to optimise the desilylation6{[}Desilylation is a process of removing silyl, SiH\(_3\) a silicon hydride, from a compound.{]} of an ether into an alcohol, which was a key step in the synthesis of a particular antibiotic. There were \(t=16\) treatments, defined via the settings of four different factors, as given in Table \ref{tab:factorial-desilylation-data}.
+In this experiment, performed at GlaxoSmithKline, the aim was to optimise the desilylation\footnote{Desilylation is a process of removing silyl, SiH\(_3\) a silicon hydride, from a compound.} of an ether into an alcohol, which was a key step in the synthesis of a particular antibiotic. There were \(t=16\) treatments, defined via the settings of four different factors, as given in Table \ref{tab:factorial-desilylation-data}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{desilylation }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{4}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F,}
-                           \AttributeTok{factor.names =} \FunctionTok{list}\NormalTok{(}\AttributeTok{temp =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{), }\AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{, }\DecValTok{25}\NormalTok{), }\AttributeTok{solvent =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{), }
-                                               \AttributeTok{reagent =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{1.33}\NormalTok{)))}
+                           \AttributeTok{factor.names =} \FunctionTok{list}\NormalTok{(}\AttributeTok{temp =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{), }\AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{, }\DecValTok{25}\NormalTok{),}
+                                               \AttributeTok{solvent =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{), }\AttributeTok{reagent =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{1.33}\NormalTok{)))}
 \NormalTok{yield }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{82.93}\NormalTok{, }\FloatTok{94.04}\NormalTok{, }\FloatTok{88.07}\NormalTok{, }\FloatTok{93.97}\NormalTok{, }\FloatTok{77.21}\NormalTok{, }\FloatTok{92.99}\NormalTok{, }\FloatTok{83.60}\NormalTok{, }\FloatTok{94.38}\NormalTok{, }
            \FloatTok{88.68}\NormalTok{, }\FloatTok{94.30}\NormalTok{, }\FloatTok{93.00}\NormalTok{, }\FloatTok{93.42}\NormalTok{, }\FloatTok{84.86}\NormalTok{, }\FloatTok{94.26}\NormalTok{, }\FloatTok{88.71}\NormalTok{, }\FloatTok{94.66}\NormalTok{)}
+\NormalTok{desilylation }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(desilylation, }\AttributeTok{yield =}\NormalTok{ yield)}
 \FunctionTok{rownames}\NormalTok{(desilylation) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"Trt"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{)}
-\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(desilylation, }\AttributeTok{yield =}\NormalTok{ yield), }
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(desilylation, }
              \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Temp (degrees C)"}\NormalTok{, }\StringTok{"Time (hours)"}\NormalTok{, }\StringTok{"Solvent (vol.)"}\NormalTok{, }
                            \StringTok{"Reagent (equiv.)"}\NormalTok{, }\StringTok{"Yield (\%)"}\NormalTok{),}
              \AttributeTok{caption =} \StringTok{"Desilylation experiment: 16 treatments defined }
@@ -3585,30 +3848,55 @@ Trt 16 & 20 & 25 & 7 & 1.33 & 94.66\\
 \end{tabular}
 \end{table}
 
-Each treatment is defined by the choice of one of two levels for each of the four factors. In the \texttt{R} code above, we have used the function \texttt{FrF2} (from the package of the same name) to generated all \(t = 2^4 = 16\) combinations of the two levels of these four factors. We come back to this function later in the chapter.
+Each treatment is defined by the choice of one of two levels for each of the four factors. In the \texttt{R} code above, we have used the function \texttt{FrF2} (from the package of the same name) to generate all \(t = 2^4 = 16\) combinations of the two levels of these four factors. We come back to this function later in the chapter.
 
 \end{example}
 
 This \textbf{factorial treatment structure} lends itself to certain treatment contrasts being of natural interest.
 
-\hypertarget{main-effects-and-interaction-contrasts}{%
-\section{Main effects and interaction contrasts}\label{main-effects-and-interaction-contrasts}}
+\hypertarget{factorial-contrasts}{%
+\section{Factorial contrasts}\label{factorial-contrasts}}
 
 Throughout this chapter, we will assume there are no blocks or other restrictions on randomisation, and so we will assume a completely randomised design can be used. We start by assuming the same unit-treatment model as Chapter \ref{crd}:
 
 \begin{equation}
-y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, 
-\label{eq:factorial-utm}
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, \label{eq:factorial-utm}
 \end{equation}
 
 where \(y_{ij}\) is the response from the \(j\)th application of treatment \(i\), \(\mu\) is a constant parameter, \(\tau_i\) is the effect of the \(i\)th treatment, and \(\varepsilon_{ij}\) is the random individual effect from each experimental unit with \(\varepsilon_{ij} \sim N(0, \sigma^2)\) independent of other errors.
 
-For Example \ref{factorial-desilylation}, we have \(t = 16\) and \(n_i = 1\) for all \(i=1,\ldots, 16\); that is, each of the 16 treatments are replicated once.
+Now, the number of treatments \(t = 2^f\), where \(f\) equals the number of factors in the experiment.
+
+For Example \ref{exm:factorial-desilylation}, we have \(t = 2^4 = 16\) and \(n_i = 1\) for all \(i=1,\ldots, 16\); that is, each of the 16 treatments are replicated once. In general, we shall assume common treatment replication \(n_i = r \ge 1\).
+
+If we fit model \eqref{eq:factorial-utm} and compute the ANOVA table, we notice a particular issue with this design.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{desilylation }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(desilylation, }\AttributeTok{trt =} \FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{))}
+\NormalTok{desilylation.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ trt, }\AttributeTok{data =}\NormalTok{ desilylation)}
+\FunctionTok{anova}\NormalTok{(desilylation.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: yield
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## trt       15    427    28.5     NaN    NaN
+## Residuals  0      0     NaN
+\end{verbatim}
+
+All available degrees of freedom are being used to estimate parameters in the mean (\(\mu\) and the treatment effects \(\tau_i\)). There are no degrees of freedom left to estimate \(\sigma^2\). This is due to a lack of treatment replication. Without replication in the design, model \eqref{eq:factorial-utm} is \textbf{saturated}, with as many treatments as there are observations and an unbiased estimate of \(\sigma^2\) cannot be obtained. We will return to this issue later.
+
+\hypertarget{main-effects}{%
+\subsection{Main effects}\label{main-effects}}
 
 Studying Table \ref{tab:factorial-desilylation-data}, there are some comparisons between treatments which are obviously of interest. For example, comparing the average effect from the first 8 treatments with the average effect of the second 8, using
 
 \[
-\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \sum_{i=1}^tc_i\tau_i
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \sum_{i=1}^tc_i\tau_i\,,
 \]
 with
 
@@ -3618,13 +3906,129 @@ with
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{desilylation.trt }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(desilylation, }\AttributeTok{trt =} \FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{))}
-\NormalTok{desilylation.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ trt, }\AttributeTok{data =}\NormalTok{ desilylation.trt)}
 \NormalTok{desilylation.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(desilylation.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ trt)}
+\NormalTok{reagent\_me.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }\FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}reagent m.e.\textquotesingle{}} \OtherTok{=} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/} \DecValTok{8}\NormalTok{)}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(desilylation.emm, }\StringTok{\textquotesingle{}reagent\_me\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast     estimate  SE df t.ratio p.value
+##  reagent.m.e.     3.09 NaN  0     NaN     NaN
+\end{verbatim}
+
+This contrast compares the average treatment effect from the 8 treatments which have \texttt{reagent} set to its low level (1 equiv.) to the average effect from the 8 treatments which have \texttt{reagent} set to its high level. This is a ``fair'' comparison, as both of these sets of treatments have each of the combinations of the factors \texttt{temp}, \texttt{time} and \texttt{solvent} occuring equally often (twice here). Hence, the \textbf{main effect} of \texttt{reagent} is averaged over the levels of the other three factors.
+
+As in Chapter \ref{crd}, we can estimate this treatment contrast by applying the same contrast coefficients to the treatment means,
+
+\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
+\]
+where, for this experiment, each \(\bar{y}_{i.}\) is the mean of a single observation (as there is no treatment replication). We see that inference about this contrast is not possible, as no standard error can be obtained.
+
+\begin{definition}
+\protect\hypertarget{def:main-effect}{}\label{def:main-effect}
+
+The \textbf{main effect} of a factor \(A\) is defined as the difference in the average response from the high and low levels of the factor
+
+\[
+\mbox{ME}(A) = \bar{y}(A+) - \bar{y}(A-)\,,
+\]
+where \(\bar{y}(A+)\) is the average response when factor \(A\) is set to its high level, averaged across all combinations of levels of the other factors (with \(\bar{y}(A+)\) defined similarly for the low level of \(A\)).
+
+\end{definition}
+
+As we have averaged the response across the levels of the other factors, the intepretation of the main effect extends beyond this experiment. That is, we can use it to infer something about the system under study. Assuming model \eqref{eq:factorial-utm} is correct, any variation in the main effect can only come from random error in the observations. In fact,
+
+\begin{align*}
+\mbox{var}\{ME(A)\} & = \frac{\sigma^2}{n/2} + \frac{\sigma^2}{n/2} \\
+& = \frac{4\sigma^2}{n}\,,
+\end{align*}
+
+and assuming \(r>1\),
+
+\begin{equation}
+\hat{\sigma}^2 = \frac{1}{2^f(r-1)} \sum_{i=1}^{2^f}\sum_{j=1}^r(y_{ij} - \bar{y}_{i.})^2\,,
+\label{eq:factorial-sigma-hat-2}
+\end{equation}
+
+which is the residual mean square.
+
+For Example \ref{exm:factorial-desilylation}, we can also calculate main effect estimates for the other three factors by defining appropriate contrasts in the treatments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{contrast.mat }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{4}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F, }
                            \AttributeTok{factor.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"temp"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"solvent"}\NormalTok{, }\StringTok{"reagent"}\NormalTok{))}
 \NormalTok{fac.contrasts.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate\_all}\NormalTok{(contrast.mat, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{scale}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(x), }\AttributeTok{scale =} \DecValTok{4}\NormalTok{))}
+\NormalTok{main\_effect\_contrasts }\OtherTok{\textless{}{-}} \FunctionTok{fac.contrasts.emmc}\NormalTok{()}
+\FunctionTok{rownames}\NormalTok{(main\_effect\_contrasts) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"Trt"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(main\_effect\_contrasts, }\AttributeTok{caption =} \StringTok{\textquotesingle{}Desilylation experiment: main effect contrast coefficients\textquotesingle{}}\NormalTok{, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Temperature"}\NormalTok{, }\StringTok{"Time"}\NormalTok{, }\StringTok{"Solvent"}\NormalTok{, }\StringTok{"Reagent"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:desilylation-all-me-contrasts}Desilylation experiment: main effect contrast coefficients}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+  & Temperature & Time & Solvent & Reagent\\
+\hline
+Trt 1 & -0.125 & -0.125 & -0.125 & -0.125\\
+\hline
+Trt 2 & 0.125 & -0.125 & -0.125 & -0.125\\
+\hline
+Trt 3 & -0.125 & 0.125 & -0.125 & -0.125\\
+\hline
+Trt 4 & 0.125 & 0.125 & -0.125 & -0.125\\
+\hline
+Trt 5 & -0.125 & -0.125 & 0.125 & -0.125\\
+\hline
+Trt 6 & 0.125 & -0.125 & 0.125 & -0.125\\
+\hline
+Trt 7 & -0.125 & 0.125 & 0.125 & -0.125\\
+\hline
+Trt 8 & 0.125 & 0.125 & 0.125 & -0.125\\
+\hline
+Trt 9 & -0.125 & -0.125 & -0.125 & 0.125\\
+\hline
+Trt 10 & 0.125 & -0.125 & -0.125 & 0.125\\
+\hline
+Trt 11 & -0.125 & 0.125 & -0.125 & 0.125\\
+\hline
+Trt 12 & 0.125 & 0.125 & -0.125 & 0.125\\
+\hline
+Trt 13 & -0.125 & -0.125 & 0.125 & 0.125\\
+\hline
+Trt 14 & 0.125 & -0.125 & 0.125 & 0.125\\
+\hline
+Trt 15 & -0.125 & 0.125 & 0.125 & 0.125\\
+\hline
+Trt 16 & 0.125 & 0.125 & 0.125 & 0.125\\
+\hline
+\end{tabular}
+\end{table}
+
+Estimates can be obtained by applying these coefficients to the observed treatment means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(main\_effect\_contrasts)) }\SpecialCharTok{\%*\%}\NormalTok{ yield}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]
+## temp     8.120
+## time     2.567
+## solvent -2.218
+## reagent  3.087
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(desilylation.emm, }\StringTok{\textquotesingle{}fac.contrasts\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3636,6 +4040,44 @@ with
 ##  solvent     -2.22 NaN  0     NaN     NaN
 ##  reagent      3.09 NaN  0     NaN     NaN
 \end{verbatim}
+
+Main effects are often displayed graphically, using \textbf{main effect plots} which simply plot the average response for each factor level, joined by a line. The larger the main effect, the larger the slope of the line (or the bigger the difference between the averages). Figure \ref{fig:desilylation-me-plots} presents the four main effect plots for Example \ref{exm:factorial-desilylation}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# calculate the means}
+\NormalTok{temp\_bar }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{time\_bar }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{solvent\_bar }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ solvent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{reagent\_bar }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ reagent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+
+\DocumentationTok{\#\# convert factors to numeric}
+\NormalTok{fac\_to\_num }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x))}
+\NormalTok{temp\_bar}\SpecialCharTok{$}\NormalTok{temp }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_num}\NormalTok{(temp\_bar}\SpecialCharTok{$}\NormalTok{temp)}
+\NormalTok{time\_bar}\SpecialCharTok{$}\NormalTok{time }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_num}\NormalTok{(time\_bar}\SpecialCharTok{$}\NormalTok{time)}
+\NormalTok{solvent\_bar}\SpecialCharTok{$}\NormalTok{solvent }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_num}\NormalTok{(solvent\_bar}\SpecialCharTok{$}\NormalTok{solvent)}
+\NormalTok{reagent\_bar}\SpecialCharTok{$}\NormalTok{reagent }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_num}\NormalTok{(reagent\_bar}\SpecialCharTok{$}\NormalTok{reagent)}
+
+\DocumentationTok{\#\# main effect plots}
+\NormalTok{plotmin }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(temp\_bar}\SpecialCharTok{$}\NormalTok{yield, time\_bar}\SpecialCharTok{$}\NormalTok{yield, solvent\_bar}\SpecialCharTok{$}\NormalTok{yield, reagent\_bar}\SpecialCharTok{$}\NormalTok{yield)}
+\NormalTok{plotmax }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(temp\_bar}\SpecialCharTok{$}\NormalTok{yield, time\_bar}\SpecialCharTok{$}\NormalTok{yield, solvent\_bar}\SpecialCharTok{$}\NormalTok{yield, reagent\_bar}\SpecialCharTok{$}\NormalTok{yield)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{cex =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{layout}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{respect =}\NormalTok{ T)}
+\FunctionTok{plot}\NormalTok{(temp\_bar, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax))}
+\FunctionTok{plot}\NormalTok{(time\_bar, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax))}
+\FunctionTok{plot}\NormalTok{(solvent\_bar, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax))}
+\FunctionTok{plot}\NormalTok{(reagent\_bar, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/desilylation-me-plots-1} 
+
+}
+
+\caption{Desilylation experiment: main effect plots}\label{fig:desilylation-me-plots}
+\end{figure}
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}

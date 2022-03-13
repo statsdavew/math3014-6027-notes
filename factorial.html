@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-10" />
+<meta name="date" content="2022-03-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -180,7 +180,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a></li>
+<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a><ul>
+<li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#factorial-contrasts"><i class="fa fa-check"></i><b>4.1</b> Factorial contrasts</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
@@ -208,7 +212,420 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="factorial" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Factorial experiments</h1>
+<p>In Chapters <a href="crd.html#crd">2</a> and <a href="blocking.html#blocking">3</a>, we assumed the objective of the experiment was to investigate <span class="math inline">\(t\)</span> <strong>unstructured</strong> treatments, defined only as a collection of distinct entities (drugs, advertisements, receipes, etc.). That is, there was not necessarily any explicit relationship between the treatments (although we could clearly choose which paticular comparisons between treatments were of interest via choice of contrast).</p>
+<p>In many experiments, particularly in industry, engineering and the physical sciences, the treatments are actually defined via the choice of a <strong>level</strong> relating to each of a set of <strong>factors</strong>. We will focus on the commonly occurring case of factors at <strong>two levels</strong>. For example, consider the below experiment from the pharmaceutical industry.</p>
+<div class="example">
+<p><span id="exm:factorial-desilylation" class="example"><strong>Example 4.1  </strong></span>Desilylation experiment <span class="citation">(Owen <em>et al.</em>, <a href="#ref-Owen2001" role="doc-biblioref">2001</a>)</span></p>
+<p>In this experiment, performed at GlaxoSmithKline, the aim was to optimise the desilylation<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a> of an ether into an alcohol, which was a key step in the synthesis of a particular antibiotic. There were <span class="math inline">\(t=16\)</span> treatments, defined via the settings of four different factors, as given in Table <a href="factorial.html#tab:factorial-desilylation-data">4.1</a>.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="factorial.html#cb104-1"></a>desilylation &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">16</span>, <span class="dt">nfactors =</span> <span class="dv">4</span>, <span class="dt">randomize =</span> F,</span>
+<span id="cb104-2"><a href="factorial.html#cb104-2"></a>                           <span class="dt">factor.names =</span> <span class="kw">list</span>(<span class="dt">temp =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>), <span class="dt">time =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">25</span>),</span>
+<span id="cb104-3"><a href="factorial.html#cb104-3"></a>                                               <span class="dt">solvent =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">7</span>), <span class="dt">reagent =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">1.33</span>)))</span>
+<span id="cb104-4"><a href="factorial.html#cb104-4"></a>yield &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">82.93</span>, <span class="fl">94.04</span>, <span class="fl">88.07</span>, <span class="fl">93.97</span>, <span class="fl">77.21</span>, <span class="fl">92.99</span>, <span class="fl">83.60</span>, <span class="fl">94.38</span>, </span>
+<span id="cb104-5"><a href="factorial.html#cb104-5"></a>           <span class="fl">88.68</span>, <span class="fl">94.30</span>, <span class="fl">93.00</span>, <span class="fl">93.42</span>, <span class="fl">84.86</span>, <span class="fl">94.26</span>, <span class="fl">88.71</span>, <span class="fl">94.66</span>)</span>
+<span id="cb104-6"><a href="factorial.html#cb104-6"></a>desilylation &lt;-<span class="st"> </span><span class="kw">data.frame</span>(desilylation, <span class="dt">yield =</span> yield)</span>
+<span id="cb104-7"><a href="factorial.html#cb104-7"></a><span class="kw">rownames</span>(desilylation) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Trt&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">16</span>)</span>
+<span id="cb104-8"><a href="factorial.html#cb104-8"></a>knitr<span class="op">::</span><span class="kw">kable</span>(desilylation, </span>
+<span id="cb104-9"><a href="factorial.html#cb104-9"></a>             <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Temp (degrees C)&quot;</span>, <span class="st">&quot;Time (hours)&quot;</span>, <span class="st">&quot;Solvent (vol.)&quot;</span>, </span>
+<span id="cb104-10"><a href="factorial.html#cb104-10"></a>                           <span class="st">&quot;Reagent (equiv.)&quot;</span>, <span class="st">&quot;Yield (%)&quot;</span>),</span>
+<span id="cb104-11"><a href="factorial.html#cb104-11"></a>             <span class="dt">caption =</span> <span class="st">&quot;Desilylation experiment: 16 treatments defined </span></span>
+<span id="cb104-12"><a href="factorial.html#cb104-12"></a><span class="st">             by settings of four factors, with response (yield).&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:factorial-desilylation-data">Table 4.1: </span>Desilylation experiment: 16 treatments defined
+by settings of four factors, with response (yield).</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Temp (degrees C)</th>
+<th align="left">Time (hours)</th>
+<th align="left">Solvent (vol.)</th>
+<th align="left">Reagent (equiv.)</th>
+<th align="right">Yield (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Trt 1</td>
+<td align="left">10</td>
+<td align="left">19</td>
+<td align="left">5</td>
+<td align="left">1</td>
+<td align="right">82.93</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 2</td>
+<td align="left">20</td>
+<td align="left">19</td>
+<td align="left">5</td>
+<td align="left">1</td>
+<td align="right">94.04</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 3</td>
+<td align="left">10</td>
+<td align="left">25</td>
+<td align="left">5</td>
+<td align="left">1</td>
+<td align="right">88.07</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 4</td>
+<td align="left">20</td>
+<td align="left">25</td>
+<td align="left">5</td>
+<td align="left">1</td>
+<td align="right">93.97</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 5</td>
+<td align="left">10</td>
+<td align="left">19</td>
+<td align="left">7</td>
+<td align="left">1</td>
+<td align="right">77.21</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 6</td>
+<td align="left">20</td>
+<td align="left">19</td>
+<td align="left">7</td>
+<td align="left">1</td>
+<td align="right">92.99</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 7</td>
+<td align="left">10</td>
+<td align="left">25</td>
+<td align="left">7</td>
+<td align="left">1</td>
+<td align="right">83.60</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 8</td>
+<td align="left">20</td>
+<td align="left">25</td>
+<td align="left">7</td>
+<td align="left">1</td>
+<td align="right">94.38</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 9</td>
+<td align="left">10</td>
+<td align="left">19</td>
+<td align="left">5</td>
+<td align="left">1.33</td>
+<td align="right">88.68</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 10</td>
+<td align="left">20</td>
+<td align="left">19</td>
+<td align="left">5</td>
+<td align="left">1.33</td>
+<td align="right">94.30</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 11</td>
+<td align="left">10</td>
+<td align="left">25</td>
+<td align="left">5</td>
+<td align="left">1.33</td>
+<td align="right">93.00</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 12</td>
+<td align="left">20</td>
+<td align="left">25</td>
+<td align="left">5</td>
+<td align="left">1.33</td>
+<td align="right">93.42</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 13</td>
+<td align="left">10</td>
+<td align="left">19</td>
+<td align="left">7</td>
+<td align="left">1.33</td>
+<td align="right">84.86</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 14</td>
+<td align="left">20</td>
+<td align="left">19</td>
+<td align="left">7</td>
+<td align="left">1.33</td>
+<td align="right">94.26</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 15</td>
+<td align="left">10</td>
+<td align="left">25</td>
+<td align="left">7</td>
+<td align="left">1.33</td>
+<td align="right">88.71</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 16</td>
+<td align="left">20</td>
+<td align="left">25</td>
+<td align="left">7</td>
+<td align="left">1.33</td>
+<td align="right">94.66</td>
+</tr>
+</tbody>
+</table>
+<p>Each treatment is defined by the choice of one of two levels for each of the four factors. In the <code>R</code> code above, we have used the function <code>FrF2</code> (from the package of the same name) to generate all <span class="math inline">\(t = 2^4 = 16\)</span> combinations of the two levels of these four factors. We come back to this function later in the chapter.</p>
+</div>
+<p>This <strong>factorial treatment structure</strong> lends itself to certain treatment contrasts being of natural interest.</p>
+<div id="factorial-contrasts" class="section level2">
+<h2><span class="header-section-number">4.1</span> Factorial contrasts</h2>
+<p>Throughout this chapter, we will assume there are no blocks or other restrictions on randomisation, and so we will assume a completely randomised design can be used. We start by assuming the same unit-treatment model as Chapter <a href="crd.html#crd">2</a>:</p>
+<p><span class="math display" id="eq:factorial-utm">\[\begin{equation}
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, \tag{4.1}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(y_{ij}\)</span> is the response from the <span class="math inline">\(j\)</span>th application of treatment <span class="math inline">\(i\)</span>, <span class="math inline">\(\mu\)</span> is a constant parameter, <span class="math inline">\(\tau_i\)</span> is the effect of the <span class="math inline">\(i\)</span>th treatment, and <span class="math inline">\(\varepsilon_{ij}\)</span> is the random individual effect from each experimental unit with <span class="math inline">\(\varepsilon_{ij} \sim N(0, \sigma^2)\)</span> independent of other errors.</p>
+<p>Now, the number of treatments <span class="math inline">\(t = 2^f\)</span>, where <span class="math inline">\(f\)</span> equals the number of factors in the experiment.</p>
+<p>For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, we have <span class="math inline">\(t = 2^4 = 16\)</span> and <span class="math inline">\(n_i = 1\)</span> for all <span class="math inline">\(i=1,\ldots, 16\)</span>; that is, each of the 16 treatments are replicated once. In general, we shall assume common treatment replication <span class="math inline">\(n_i = r \ge 1\)</span>.</p>
+<p>If we fit model <a href="factorial.html#eq:factorial-utm">(4.1)</a> and compute the ANOVA table, we notice a particular issue with this design.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="factorial.html#cb105-1"></a>desilylation &lt;-<span class="st"> </span><span class="kw">data.frame</span>(desilylation, <span class="dt">trt =</span> <span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>))</span>
+<span id="cb105-2"><a href="factorial.html#cb105-2"></a>desilylation.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>trt, <span class="dt">data =</span> desilylation)</span>
+<span id="cb105-3"><a href="factorial.html#cb105-3"></a><span class="kw">anova</span>(desilylation.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: yield
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## trt       15    427    28.5     NaN    NaN
+## Residuals  0      0     NaN</code></pre>
+<p>All available degrees of freedom are being used to estimate parameters in the mean (<span class="math inline">\(\mu\)</span> and the treatment effects <span class="math inline">\(\tau_i\)</span>). There are no degrees of freedom left to estimate <span class="math inline">\(\sigma^2\)</span>. This is due to a lack of treatment replication. Without replication in the design, model <a href="factorial.html#eq:factorial-utm">(4.1)</a> is <strong>saturated</strong>, with as many treatments as there are observations and an unbiased estimate of <span class="math inline">\(\sigma^2\)</span> cannot be obtained. We will return to this issue later.</p>
+<div id="main-effects" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Main effects</h3>
+<p>Studying Table <a href="factorial.html#tab:factorial-desilylation-data">4.1</a>, there are some comparisons between treatments which are obviously of interest. For example, comparing the average effect from the first 8 treatments with the average effect of the second 8, using</p>
+<p><span class="math display">\[
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \sum_{i=1}^tc_i\tau_i\,,
+\]</span>
+with</p>
+<p><span class="math display">\[
+\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
+\]</span></p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="factorial.html#cb107-1"></a>desilylation.emm &lt;-<span class="st"> </span>emmeans<span class="op">::</span><span class="kw">emmeans</span>(desilylation.lm, <span class="op">~</span><span class="st"> </span>trt)</span>
+<span id="cb107-2"><a href="factorial.html#cb107-2"></a>reagent_me.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) <span class="kw">data.frame</span>(<span class="st">&#39;reagent m.e.&#39;</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="kw">rep</span>(<span class="dv">8</span>, <span class="dv">2</span>)) <span class="op">/</span><span class="st"> </span><span class="dv">8</span>)</span>
+<span id="cb107-3"><a href="factorial.html#cb107-3"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;reagent_me&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast     estimate  SE df t.ratio p.value
+##  reagent.m.e.     3.09 NaN  0     NaN     NaN</code></pre>
+<p>This contrast compares the average treatment effect from the 8 treatments which have <code>reagent</code> set to its low level (1 equiv.) to the average effect from the 8 treatments which have <code>reagent</code> set to its high level. This is a “fair” comparison, as both of these sets of treatments have each of the combinations of the factors <code>temp</code>, <code>time</code> and <code>solvent</code> occuring equally often (twice here). Hence, the <strong>main effect</strong> of <code>reagent</code> is averaged over the levels of the other three factors.</p>
+<p>As in Chapter <a href="crd.html#crd">2</a>, we can estimate this treatment contrast by applying the same contrast coefficients to the treatment means,</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{i=1}^tc_i\bar{y}_{i.}\,,
+\]</span>
+where, for this experiment, each <span class="math inline">\(\bar{y}_{i.}\)</span> is the mean of a single observation (as there is no treatment replication). We see that inference about this contrast is not possible, as no standard error can be obtained.</p>
+<div class="definition">
+<p><span id="def:main-effect" class="definition"><strong>Definition 4.1  </strong></span>The <strong>main effect</strong> of a factor <span class="math inline">\(A\)</span> is defined as the difference in the average response from the high and low levels of the factor</p>
+<p><span class="math display">\[
+\mbox{ME}(A) = \bar{y}(A+) - \bar{y}(A-)\,,
+\]</span>
+where <span class="math inline">\(\bar{y}(A+)\)</span> is the average response when factor <span class="math inline">\(A\)</span> is set to its high level, averaged across all combinations of levels of the other factors (with <span class="math inline">\(\bar{y}(A+)\)</span> defined similarly for the low level of <span class="math inline">\(A\)</span>).</p>
+</div>
+<p>As we have averaged the response across the levels of the other factors, the intepretation of the main effect extends beyond this experiment. That is, we can use it to infer something about the system under study. Assuming model <a href="factorial.html#eq:factorial-utm">(4.1)</a> is correct, any variation in the main effect can only come from random error in the observations. In fact,</p>
+<p><span class="math display">\[\begin{align*}
+\mbox{var}\{ME(A)\} &amp; = \frac{\sigma^2}{n/2} + \frac{\sigma^2}{n/2} \\
+&amp; = \frac{4\sigma^2}{n}\,,
+\end{align*}\]</span></p>
+<p>and assuming <span class="math inline">\(r&gt;1\)</span>,</p>
+<p><span class="math display" id="eq:factorial-sigma-hat-2">\[\begin{equation}
+\hat{\sigma}^2 = \frac{1}{2^f(r-1)} \sum_{i=1}^{2^f}\sum_{j=1}^r(y_{ij} - \bar{y}_{i.})^2\,,
+\tag{4.2}
+\end{equation}\]</span></p>
+<p>which is the residual mean square.</p>
+<p>For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, we can also calculate main effect estimates for the other three factors by defining appropriate contrasts in the treatments.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="factorial.html#cb109-1"></a>contrast.mat &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">16</span>, <span class="dt">nfactors =</span> <span class="dv">4</span>, <span class="dt">randomize =</span> F, </span>
+<span id="cb109-2"><a href="factorial.html#cb109-2"></a>                           <span class="dt">factor.names =</span> <span class="kw">c</span>(<span class="st">&quot;temp&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;solvent&quot;</span>, <span class="st">&quot;reagent&quot;</span>))</span>
+<span id="cb109-3"><a href="factorial.html#cb109-3"></a>fac.contrasts.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) </span>
+<span id="cb109-4"><a href="factorial.html#cb109-4"></a>  dplyr<span class="op">::</span><span class="kw">mutate_all</span>(contrast.mat, <span class="cf">function</span>(x) <span class="kw">scale</span>(<span class="kw">as.numeric</span>(x), <span class="dt">scale =</span> <span class="dv">4</span>))</span>
+<span id="cb109-5"><a href="factorial.html#cb109-5"></a>main_effect_contrasts &lt;-<span class="st"> </span><span class="kw">fac.contrasts.emmc</span>()</span>
+<span id="cb109-6"><a href="factorial.html#cb109-6"></a><span class="kw">rownames</span>(main_effect_contrasts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Trt&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">16</span>)</span>
+<span id="cb109-7"><a href="factorial.html#cb109-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(main_effect_contrasts, <span class="dt">caption =</span> <span class="st">&#39;Desilylation experiment: main effect contrast coefficients&#39;</span>, <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Temperature&quot;</span>, <span class="st">&quot;Time&quot;</span>, <span class="st">&quot;Solvent&quot;</span>, <span class="st">&quot;Reagent&quot;</span>))</span></code></pre></div>
+<table>
+<caption><span id="tab:desilylation-all-me-contrasts">Table 4.2: </span>Desilylation experiment: main effect contrast coefficients</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Temperature</th>
+<th align="right">Time</th>
+<th align="right">Solvent</th>
+<th align="right">Reagent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Trt 1</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 2</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 3</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 4</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 5</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 6</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 7</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 8</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 9</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 10</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 11</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 12</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 13</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 14</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 15</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 16</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+</tbody>
+</table>
+<p>Estimates can be obtained by applying these coefficients to the observed treatment means.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="factorial.html#cb110-1"></a><span class="kw">t</span>(<span class="kw">as.matrix</span>(main_effect_contrasts)) <span class="op">%*%</span><span class="st"> </span>yield</span></code></pre></div>
+<pre><code>##           [,1]
+## temp     8.120
+## time     2.567
+## solvent -2.218
+## reagent  3.087</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="factorial.html#cb112-1"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;fac.contrasts&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate  SE df t.ratio p.value
+##  temp         8.12 NaN  0     NaN     NaN
+##  time         2.57 NaN  0     NaN     NaN
+##  solvent     -2.22 NaN  0     NaN     NaN
+##  reagent      3.09 NaN  0     NaN     NaN</code></pre>
+<p>Main effects are often displayed graphically, using <strong>main effect plots</strong> which simply plot the average response for each factor level, joined by a line. The larger the main effect, the larger the slope of the line (or the bigger the difference between the averages). Figure <a href="factorial.html#fig:desilylation-me-plots">4.1</a> presents the four main effect plots for Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="factorial.html#cb114-1"></a><span class="co">## calculate the means</span></span>
+<span id="cb114-2"><a href="factorial.html#cb114-2"></a>temp_bar &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>temp, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb114-3"><a href="factorial.html#cb114-3"></a>time_bar &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>time, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb114-4"><a href="factorial.html#cb114-4"></a>solvent_bar &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>solvent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb114-5"><a href="factorial.html#cb114-5"></a>reagent_bar &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>reagent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb114-6"><a href="factorial.html#cb114-6"></a></span>
+<span id="cb114-7"><a href="factorial.html#cb114-7"></a><span class="co">## convert factors to numeric</span></span>
+<span id="cb114-8"><a href="factorial.html#cb114-8"></a>fac_to_num &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(x))</span>
+<span id="cb114-9"><a href="factorial.html#cb114-9"></a>temp_bar<span class="op">$</span>temp &lt;-<span class="st"> </span><span class="kw">fac_to_num</span>(temp_bar<span class="op">$</span>temp)</span>
+<span id="cb114-10"><a href="factorial.html#cb114-10"></a>time_bar<span class="op">$</span>time &lt;-<span class="st"> </span><span class="kw">fac_to_num</span>(time_bar<span class="op">$</span>time)</span>
+<span id="cb114-11"><a href="factorial.html#cb114-11"></a>solvent_bar<span class="op">$</span>solvent &lt;-<span class="st"> </span><span class="kw">fac_to_num</span>(solvent_bar<span class="op">$</span>solvent)</span>
+<span id="cb114-12"><a href="factorial.html#cb114-12"></a>reagent_bar<span class="op">$</span>reagent &lt;-<span class="st"> </span><span class="kw">fac_to_num</span>(reagent_bar<span class="op">$</span>reagent)</span>
+<span id="cb114-13"><a href="factorial.html#cb114-13"></a></span>
+<span id="cb114-14"><a href="factorial.html#cb114-14"></a><span class="co">## main effect plots</span></span>
+<span id="cb114-15"><a href="factorial.html#cb114-15"></a>plotmin &lt;-<span class="st"> </span><span class="kw">min</span>(temp_bar<span class="op">$</span>yield, time_bar<span class="op">$</span>yield, solvent_bar<span class="op">$</span>yield, reagent_bar<span class="op">$</span>yield)</span>
+<span id="cb114-16"><a href="factorial.html#cb114-16"></a>plotmax &lt;-<span class="st"> </span><span class="kw">max</span>(temp_bar<span class="op">$</span>yield, time_bar<span class="op">$</span>yield, solvent_bar<span class="op">$</span>yield, reagent_bar<span class="op">$</span>yield)</span>
+<span id="cb114-17"><a href="factorial.html#cb114-17"></a><span class="kw">par</span>(<span class="dt">cex =</span> <span class="dv">2</span>)</span>
+<span id="cb114-18"><a href="factorial.html#cb114-18"></a><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>), <span class="dt">respect =</span> T)</span>
+<span id="cb114-19"><a href="factorial.html#cb114-19"></a><span class="kw">plot</span>(temp_bar, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax))</span>
+<span id="cb114-20"><a href="factorial.html#cb114-20"></a><span class="kw">plot</span>(time_bar, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax))</span>
+<span id="cb114-21"><a href="factorial.html#cb114-21"></a><span class="kw">plot</span>(solvent_bar, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax))</span>
+<span id="cb114-22"><a href="factorial.html#cb114-22"></a><span class="kw">plot</span>(reagent_bar, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:desilylation-me-plots"></span>
+<img src="bookdown_math3014-6027_files/figure-html/desilylation-me-plots-1.png" alt="Desilylation experiment: main effect plots" width="672" />
+<p class="caption">
+Figure 4.1: Desilylation experiment: main effect plots
+</p>
+</div>
 
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Owen2001">
+<p>Owen, M. R., Luscombe, C., Lai, L., et al. (2001) Efficiency by design: Optimisation in process research. <em>Organic Process Research and Development</em>, <strong>5</strong>, 308–323.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="24">
+<li id="fn24"><p>Desilylation is a process of removing silyl, SiH<span class="math inline">\(_3\)</span> a silicon hydride, from a compound.<a href="factorial.html#fnref24" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
