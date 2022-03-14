@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-13" />
+<meta name="date" content="2022-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,6 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a><ul>
 <li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#factorial-contrasts"><i class="fa fa-check"></i><b>4.1</b> Factorial contrasts</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
+<li class="chapter" data-level="4.1.2" data-path="factorial.html"><a href="factorial.html#interactions"><i class="fa fa-check"></i><b>4.1.2</b> Interactions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
@@ -611,6 +612,296 @@ where <span class="math inline">\(\bar{y}(A+)\)</span> is the average response w
 Figure 4.1: Desilylation experiment: main effect plots
 </p>
 </div>
+</div>
+<div id="interactions" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Interactions</h3>
+<p>Another contrast that could be of interest in Example <a href="factorial.html#exm:factorial-desilylation">4.1</a> has coefficients</p>
+<p><span class="math display">\[
+\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
+\]</span>
+This contrast measures the different between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table <a href="factorial.html#tab:factorial-desilylation-data">4.1</a>, we see this is comparing those treatments where <code>solvent</code> and <code>reagent</code> are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).</p>
+<p>Focusing on <code>reagent</code>, if the effect of this factor on the response was independent of the level to which <code>solvent</code> has been set, you would expect this contrast to be zero - changing from the high to low level of <code>reagent</code> should affect the response in the same way, regardless of the setting of <code>solvent</code>. This argument can be reversed, focussing on the effect of <code>solvent</code>. Therefore, if this contrast is large, we say the two factors <strong>interact</strong>.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="factorial.html#cb115-1"></a>sol_reg_int.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levels) </span>
+<span id="cb115-2"><a href="factorial.html#cb115-2"></a>  <span class="kw">data.frame</span>(<span class="st">&#39;reagent x solvent&#39;</span> =<span class="st"> </span><span class="fl">.125</span> <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">8</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>)))</span>
+<span id="cb115-3"><a href="factorial.html#cb115-3"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;sol_reg_int&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast          estimate  SE df t.ratio p.value
+##  reagent.x.solvent     0.49 NaN  0     NaN     NaN</code></pre>
+<p>For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, this interaction contrast seems quite small, although of course without an estimate of the standard error we are still lacking a formal method to judge this.</p>
+<p>It is somewhat more informative to consider the above interaction contrast as the average difference in two “sub-contrasts”</p>
+<p><span class="math display">\[
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \frac{1}{2}\left\{\frac{1}{4}\left(\tau_{13} + \tau_{14} + \tau_{15} + \tau_{16} - \tau_5 - \tau_6 - \tau_7 - \tau_8\right)
+- \frac{1}{4}\left(\tau_9 + \tau_{10} + \tau_{11} + \tau_{12} - \tau_1 - \tau_2 - \tau_3 - \tau_4\right) \right\}\,,
+\]</span>
+The first component in the above expression is the effect of changing <code>reagent</code> from high to low <strong>given <code>solvent</code> is set to it’s high level</strong>. The second component the effect of changing <code>reagent</code> from high to low <strong>given <code>solvent</code> is set to it’s low level</strong>. This leads to our definition of a two-factor interaction.</p>
+<div class="definition">
+<p><span id="def:two-factor-interaction" class="definition"><strong>Definition 4.2  </strong></span>The <strong>two-factor interaction</strong> between factors <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is defined as the average difference in main effect of factor <span class="math inline">\(A\)</span> when computed at the high and low levels of factor <span class="math inline">\(B\)</span>.</p>
+<p><span class="math display">\[\begin{align*}
+\mbox{Int}(A, B) &amp; = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
+&amp; = \frac{1}{2}\left\{\mbox{ME}(B \mid A+) - \mbox{ME}(B \mid A-)\right\} \\
+&amp; = \bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\,,
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(\bar{y}(A+, B-)\)</span> is the average response when factor <span class="math inline">\(A\)</span> is set to its high level and factor <span class="math inline">\(B\)</span> is set to its low level, averaged across all combinations of levels of the other factors, and other averages are defined similarly. The conditional main effects of factor <span class="math inline">\(A\)</span> when factor <span class="math inline">\(B\)</span> is set to its high level is defined as</p>
+<p><span class="math display">\[
+\mbox{ME}(A\mid B+) = \bar{y}(A+, B+) - \bar{y}(A-, B+)\,,
+\]</span></p>
+<p>with similar definitions for other conditional main effects.</p>
+</div>
+<p>As the sum of the squared contrast coefficients is the same for two-factor interactions as for main effects, the variance of the contrast estimator is also the same.</p>
+<p><span class="math display">\[
+\mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
+\]</span>
+For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a> we can calculate two-factor interactions for all <span class="math inline">\({4 \choose 2} = 6\)</span> pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Schur, product of the unscaled main effect contrasts (before dividing by <span class="math inline">\(n/2\)</span>).</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="factorial.html#cb117-1"></a>fac.contrasts.int.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) {</span>
+<span id="cb117-2"><a href="factorial.html#cb117-2"></a>  <span class="kw">with</span>(<span class="kw">sqrt</span>(<span class="dv">8</span>) <span class="op">*</span><span class="st"> </span>main_effect_contrasts, {</span>
+<span id="cb117-3"><a href="factorial.html#cb117-3"></a>    <span class="kw">data.frame</span>(<span class="st">&#39;tem_x_tim&#39;</span> =<span class="st"> </span>temp <span class="op">*</span><span class="st"> </span>time,</span>
+<span id="cb117-4"><a href="factorial.html#cb117-4"></a>               <span class="st">&#39;tem_x_sol&#39;</span> =<span class="st"> </span>temp <span class="op">*</span><span class="st"> </span>solvent,</span>
+<span id="cb117-5"><a href="factorial.html#cb117-5"></a>               <span class="st">&#39;tem_x_rea&#39;</span> =<span class="st"> </span>temp <span class="op">*</span><span class="st"> </span>reagent,</span>
+<span id="cb117-6"><a href="factorial.html#cb117-6"></a>               <span class="st">&#39;tim_x_sol&#39;</span> =<span class="st"> </span>time <span class="op">*</span><span class="st"> </span>solvent,</span>
+<span id="cb117-7"><a href="factorial.html#cb117-7"></a>               <span class="st">&#39;tim_x_rea&#39;</span> =<span class="st"> </span>time <span class="op">*</span><span class="st"> </span>reagent,</span>
+<span id="cb117-8"><a href="factorial.html#cb117-8"></a>               <span class="st">&#39;sol_x_rea&#39;</span> =<span class="st"> </span>solvent <span class="op">*</span><span class="st"> </span>reagent)</span>
+<span id="cb117-9"><a href="factorial.html#cb117-9"></a>  })</span>
+<span id="cb117-10"><a href="factorial.html#cb117-10"></a>}</span>
+<span id="cb117-11"><a href="factorial.html#cb117-11"></a>two_fi_contrasts &lt;-<span class="st"> </span><span class="kw">fac.contrasts.int.emmc</span>()</span>
+<span id="cb117-12"><a href="factorial.html#cb117-12"></a><span class="kw">rownames</span>(two_fi_contrasts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Trt&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">16</span>)</span>
+<span id="cb117-13"><a href="factorial.html#cb117-13"></a>knitr<span class="op">::</span><span class="kw">kable</span>(two_fi_contrasts, <span class="dt">caption =</span> <span class="st">&#39;Desilylation experiment: two-factor interaction contrast coefficients&#39;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:desilylation-2fi-interactions">Table 4.3: </span>Desilylation experiment: two-factor interaction contrast coefficients</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">tem_x_tim</th>
+<th align="right">tem_x_sol</th>
+<th align="right">tem_x_rea</th>
+<th align="right">tim_x_sol</th>
+<th align="right">tim_x_rea</th>
+<th align="right">sol_x_rea</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Trt 1</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 2</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 3</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 4</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 5</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 6</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 7</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 8</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 9</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 10</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 11</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 12</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 13</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 14</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Trt 15</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">-0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Trt 16</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+<td align="right">0.125</td>
+</tr>
+</tbody>
+</table>
+<p>Estimates of the interaction contrasts can again by found by considering the equivalent contrasts in the observed treatment means.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="factorial.html#cb118-1"></a><span class="kw">t</span>(<span class="kw">as.matrix</span>(two_fi_contrasts)) <span class="op">%*%</span><span class="st"> </span>yield</span></code></pre></div>
+<pre><code>##             [,1]
+## tem_x_tim -2.357
+## tem_x_sol  2.358
+## tem_x_rea -2.773
+## tim_x_sol  0.440
+## tim_x_rea -0.645
+## sol_x_rea  0.490</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="factorial.html#cb120-1"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;fac.contrasts.int&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast  estimate  SE df t.ratio p.value
+##  tem_x_tim   -2.357 NaN  0     NaN     NaN
+##  tem_x_sol    2.357 NaN  0     NaN     NaN
+##  tem_x_rea   -2.772 NaN  0     NaN     NaN
+##  tim_x_sol    0.440 NaN  0     NaN     NaN
+##  tim_x_rea   -0.645 NaN  0     NaN     NaN
+##  sol_x_rea    0.490 NaN  0     NaN     NaN</code></pre>
+<p>As with main effects, interactions are often displayed graphically using <strong>interaction</strong> plots, plotting average responses for each pairwise combination of factors, joined by lines.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="factorial.html#cb122-1"></a><span class="co">## calculate the means</span></span>
+<span id="cb122-2"><a href="factorial.html#cb122-2"></a>temp_time &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>time, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean, <span class="dt">simplify =</span> T)</span>
+<span id="cb122-3"><a href="factorial.html#cb122-3"></a>temp_solvent &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>solvent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb122-4"><a href="factorial.html#cb122-4"></a>temp_reagent &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>reagent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb122-5"><a href="factorial.html#cb122-5"></a>time_solvent &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>solvent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb122-6"><a href="factorial.html#cb122-6"></a>time_reagent &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>reagent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb122-7"><a href="factorial.html#cb122-7"></a>solvent_reagent &lt;-<span class="st"> </span><span class="kw">aggregate</span>(yield <span class="op">~</span><span class="st"> </span>solvent <span class="op">+</span><span class="st"> </span>reagent, <span class="dt">data =</span> desilylation, <span class="dt">FUN =</span> mean)</span>
+<span id="cb122-8"><a href="factorial.html#cb122-8"></a></span>
+<span id="cb122-9"><a href="factorial.html#cb122-9"></a><span class="co">## convert factors to numeric</span></span>
+<span id="cb122-10"><a href="factorial.html#cb122-10"></a>temp_time[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">apply</span>(temp_time[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">2</span>, fac_to_num)</span>
+<span id="cb122-11"><a href="factorial.html#cb122-11"></a>temp_solvent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">apply</span>(temp_solvent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">2</span>, fac_to_num)</span>
+<span id="cb122-12"><a href="factorial.html#cb122-12"></a>temp_reagent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">apply</span>(temp_reagent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">2</span>, fac_to_num)</span>
+<span id="cb122-13"><a href="factorial.html#cb122-13"></a>time_solvent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">apply</span>(time_solvent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">2</span>, fac_to_num)</span>
+<span id="cb122-14"><a href="factorial.html#cb122-14"></a>time_reagent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">apply</span>(time_reagent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">2</span>, fac_to_num)</span>
+<span id="cb122-15"><a href="factorial.html#cb122-15"></a>solvent_reagent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">apply</span>(solvent_reagent[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">2</span>, fac_to_num)</span>
+<span id="cb122-16"><a href="factorial.html#cb122-16"></a></span>
+<span id="cb122-17"><a href="factorial.html#cb122-17"></a><span class="co">## interaction plots</span></span>
+<span id="cb122-18"><a href="factorial.html#cb122-18"></a>plotmin &lt;-<span class="st"> </span><span class="kw">min</span>(temp_time<span class="op">$</span>yield, temp_solvent<span class="op">$</span>yield, temp_reagent<span class="op">$</span>yield,</span>
+<span id="cb122-19"><a href="factorial.html#cb122-19"></a>               time_solvent<span class="op">$</span>yield, time_reagent<span class="op">$</span>yield, solvent_reagent<span class="op">$</span>yield)</span>
+<span id="cb122-20"><a href="factorial.html#cb122-20"></a>plotmax &lt;-<span class="st"> </span><span class="kw">max</span>(temp_time<span class="op">$</span>yield, temp_solvent<span class="op">$</span>yield, temp_reagent<span class="op">$</span>yield,</span>
+<span id="cb122-21"><a href="factorial.html#cb122-21"></a>               time_solvent<span class="op">$</span>yield, time_reagent<span class="op">$</span>yield, solvent_reagent<span class="op">$</span>yield)</span>
+<span id="cb122-22"><a href="factorial.html#cb122-22"></a><span class="kw">par</span>(<span class="dt">cex =</span> <span class="dv">2</span>)</span>
+<span id="cb122-23"><a href="factorial.html#cb122-23"></a><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>), <span class="dt">respect =</span> T)</span>
+<span id="cb122-24"><a href="factorial.html#cb122-24"></a></span>
+<span id="cb122-25"><a href="factorial.html#cb122-25"></a><span class="kw">plot</span>(yield <span class="op">~</span><span class="st"> </span>temp, <span class="dt">data =</span> temp_time, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax)) <span class="co"># temp x time</span></span>
+<span id="cb122-26"><a href="factorial.html#cb122-26"></a><span class="kw">lines</span>(temp_time[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], temp_time[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb122-27"><a href="factorial.html#cb122-27"></a><span class="kw">lines</span>(temp_time[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], temp_time[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb122-28"><a href="factorial.html#cb122-28"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Time = low&quot;</span>, <span class="st">&quot;Time = high&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">.75</span>)</span>
+<span id="cb122-29"><a href="factorial.html#cb122-29"></a></span>
+<span id="cb122-30"><a href="factorial.html#cb122-30"></a><span class="kw">plot</span>(yield <span class="op">~</span><span class="st"> </span>temp, <span class="dt">data =</span> temp_solvent, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax)) <span class="co"># temp x solvent</span></span>
+<span id="cb122-31"><a href="factorial.html#cb122-31"></a><span class="kw">lines</span>(temp_solvent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], temp_solvent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb122-32"><a href="factorial.html#cb122-32"></a><span class="kw">lines</span>(temp_solvent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], temp_solvent[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb122-33"><a href="factorial.html#cb122-33"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Solvent = low&quot;</span>, <span class="st">&quot;Solvent = high&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">.75</span>)</span>
+<span id="cb122-34"><a href="factorial.html#cb122-34"></a></span>
+<span id="cb122-35"><a href="factorial.html#cb122-35"></a><span class="kw">plot</span>(yield <span class="op">~</span><span class="st"> </span>temp, <span class="dt">data =</span> temp_reagent, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax)) <span class="co"># temp x reagent</span></span>
+<span id="cb122-36"><a href="factorial.html#cb122-36"></a><span class="kw">lines</span>(temp_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], temp_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb122-37"><a href="factorial.html#cb122-37"></a><span class="kw">lines</span>(temp_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], temp_reagent[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb122-38"><a href="factorial.html#cb122-38"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Reagent = low&quot;</span>, <span class="st">&quot;Reagent = high&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">.75</span>)</span>
+<span id="cb122-39"><a href="factorial.html#cb122-39"></a></span>
+<span id="cb122-40"><a href="factorial.html#cb122-40"></a><span class="kw">plot</span>(yield <span class="op">~</span><span class="st"> </span>time, <span class="dt">data =</span> time_solvent, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax)) <span class="co"># time x solvent</span></span>
+<span id="cb122-41"><a href="factorial.html#cb122-41"></a><span class="kw">lines</span>(time_solvent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], time_solvent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb122-42"><a href="factorial.html#cb122-42"></a><span class="kw">lines</span>(time_solvent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], time_solvent[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb122-43"><a href="factorial.html#cb122-43"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Solvent = low&quot;</span>, <span class="st">&quot;Solvent = high&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">.75</span>)</span>
+<span id="cb122-44"><a href="factorial.html#cb122-44"></a></span>
+<span id="cb122-45"><a href="factorial.html#cb122-45"></a><span class="kw">plot</span>(yield <span class="op">~</span><span class="st"> </span>time, <span class="dt">data =</span> time_reagent, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax)) <span class="co"># time x reagent</span></span>
+<span id="cb122-46"><a href="factorial.html#cb122-46"></a><span class="kw">lines</span>(time_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], time_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb122-47"><a href="factorial.html#cb122-47"></a><span class="kw">lines</span>(time_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], time_reagent[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb122-48"><a href="factorial.html#cb122-48"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Reagent = low&quot;</span>, <span class="st">&quot;Reagent = high&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">.75</span>)</span>
+<span id="cb122-49"><a href="factorial.html#cb122-49"></a></span>
+<span id="cb122-50"><a href="factorial.html#cb122-50"></a><span class="kw">plot</span>(yield <span class="op">~</span><span class="st"> </span>solvent, <span class="dt">data =</span> solvent_reagent, <span class="dt">ylim =</span> <span class="kw">c</span>(plotmin, plotmax)) <span class="co"># solvent x reagent</span></span>
+<span id="cb122-51"><a href="factorial.html#cb122-51"></a><span class="kw">lines</span>(solvent_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], solvent_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb122-52"><a href="factorial.html#cb122-52"></a><span class="kw">lines</span>(solvent_reagent[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span>], solvent_reagent[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb122-53"><a href="factorial.html#cb122-53"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Reagent = low&quot;</span>, <span class="st">&quot;Reagent = high&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">.75</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:desilylation-2fi-plots"></span>
+<img src="bookdown_math3014-6027_files/figure-html/desilylation-2fi-plots-1.png" alt="Desilylation experiment: two-factor interaction plots" width="672" />
+<p class="caption">
+Figure 4.2: Desilylation experiment: two-factor interaction plots
+</p>
+</div>
+<p>Parallel lines in an interaction plot indicate no interaction</p>
 
 </div>
 </div>

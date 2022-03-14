@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-03-13}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-03-14}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,10 +181,6 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
-
-\begin{verbatim}
-## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
-\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -784,27 +780,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -907,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Milk first"
-## [6] "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Tea first" 
+## [6] "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -932,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1083,15 +1063,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1130,15 +1102,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1177,15 +1141,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2825,15 +2781,7 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Degrees of freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Sums of squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean square
-\end{minipage} \\
+Source & Degrees of freedom & Sums of squares & Mean square \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3163,9 +3111,9 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    0    1    1
+## [1,]    1    1    0    1
 ## [2,]    0    1    1    1
-## [3,]    1    1    0    1
+## [3,]    1    0    1    1
 ## [4,]    1    1    1    0
 \end{verbatim}
 
@@ -3180,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    0    0    0    0    1    1    1     1     0     1     0     0
-## [2,]    0    0    1    0    0    0    0    0    1     1     1     1     1     1
-## [3,]    1    0    0    0    0    1    1    1    0     0     1     0     1     1
-## [4,]    1    1    1    0    1    1    0    0    0     0     0     1     0     1
-## [5,]    0    0    0    1    1    1    0    1    0     1     0     1     1     0
-## [6,]    1    0    1    1    1    0    0    1    1     0     1     0     0     0
-## [7,]    0    1    1    1    0    1    1    0    1     0     0     0     1     0
-## [8,]    0    1    0    1    1    0    1    0    0     1     1     0     0     1
+## [1,]    0    1    1    1    0    0    0    1    1     1     0     0     0     1
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    0    1    0    1    0    1    0    1    0     0     1     1     1     0
+## [4,]    0    1    1    0    1    1    1    0    0     0     0     0     1     1
+## [5,]    1    0    1    1    1    0    0    0    0     1     0     1     1     0
+## [6,]    1    1    0    1    1    0    1    0    1     0     1     0     0     0
+## [7,]    1    0    0    0    1    1    0    1    1     0     0     1     0     1
+## [8,]    1    0    1    0    0    1    1    1    0     1     1     0     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4078,6 +4026,235 @@ Main effects are often displayed graphically, using \textbf{main effect plots} w
 
 \caption{Desilylation experiment: main effect plots}\label{fig:desilylation-me-plots}
 \end{figure}
+
+\hypertarget{interactions}{%
+\subsection{Interactions}\label{interactions}}
+
+Another contrast that could be of interest in Example \ref{exm:factorial-desilylation} has coefficients
+
+\[
+\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
+\]
+This contrast measures the different between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \ref{tab:factorial-desilylation-data}, we see this is comparing those treatments where \texttt{solvent} and \texttt{reagent} are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
+
+Focusing on \texttt{reagent}, if the effect of this factor on the response was independent of the level to which \texttt{solvent} has been set, you would expect this contrast to be zero - changing from the high to low level of \texttt{reagent} should affect the response in the same way, regardless of the setting of \texttt{solvent}. This argument can be reversed, focussing on the effect of \texttt{solvent}. Therefore, if this contrast is large, we say the two factors \textbf{interact}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol\_reg\_int.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levels) }
+  \FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}reagent x solvent\textquotesingle{}} \OtherTok{=}\NormalTok{ .}\DecValTok{125} \SpecialCharTok{*} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)))}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(desilylation.emm, }\StringTok{\textquotesingle{}sol\_reg\_int\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast          estimate  SE df t.ratio p.value
+##  reagent.x.solvent     0.49 NaN  0     NaN     NaN
+\end{verbatim}
+
+For Example \ref{exm:factorial-desilylation}, this interaction contrast seems quite small, although of course without an estimate of the standard error we are still lacking a formal method to judge this.
+
+It is somewhat more informative to consider the above interaction contrast as the average difference in two ``sub-contrasts''
+
+\[
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \frac{1}{2}\left\{\frac{1}{4}\left(\tau_{13} + \tau_{14} + \tau_{15} + \tau_{16} - \tau_5 - \tau_6 - \tau_7 - \tau_8\right)
+- \frac{1}{4}\left(\tau_9 + \tau_{10} + \tau_{11} + \tau_{12} - \tau_1 - \tau_2 - \tau_3 - \tau_4\right) \right\}\,,
+\]
+The first component in the above expression is the effect of changing \texttt{reagent} from high to low \textbf{given \texttt{solvent} is set to it's high level}. The second component the effect of changing \texttt{reagent} from high to low \textbf{given \texttt{solvent} is set to it's low level}. This leads to our definition of a two-factor interaction.
+
+\begin{definition}
+\protect\hypertarget{def:two-factor-interaction}{}\label{def:two-factor-interaction}
+
+The \textbf{two-factor interaction} between factors \(A\) and \(B\) is defined as the average difference in main effect of factor \(A\) when computed at the high and low levels of factor \(B\).
+
+\begin{align*}
+\mbox{Int}(A, B) & = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
+& = \frac{1}{2}\left\{\mbox{ME}(B \mid A+) - \mbox{ME}(B \mid A-)\right\} \\
+& = \bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\,,
+\end{align*}
+
+where \(\bar{y}(A+, B-)\) is the average response when factor \(A\) is set to its high level and factor \(B\) is set to its low level, averaged across all combinations of levels of the other factors, and other averages are defined similarly. The conditional main effects of factor \(A\) when factor \(B\) is set to its high level is defined as
+
+\[
+\mbox{ME}(A\mid B+) = \bar{y}(A+, B+) - \bar{y}(A-, B+)\,,
+\]
+
+with similar definitions for other conditional main effects.
+
+\end{definition}
+
+As the sum of the squared contrast coefficients is the same for two-factor interactions as for main effects, the variance of the contrast estimator is also the same.
+
+\[
+\mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
+\]
+For Example \ref{exm:factorial-desilylation} we can calculate two-factor interactions for all \({4 \choose 2} = 6\) pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Schur, product of the unscaled main effect contrasts (before dividing by \(n/2\)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fac.contrasts.int.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ main\_effect\_contrasts, \{}
+    \FunctionTok{data.frame}\NormalTok{(}\StringTok{\textquotesingle{}tem\_x\_tim\textquotesingle{}} \OtherTok{=}\NormalTok{ temp }\SpecialCharTok{*}\NormalTok{ time,}
+               \StringTok{\textquotesingle{}tem\_x\_sol\textquotesingle{}} \OtherTok{=}\NormalTok{ temp }\SpecialCharTok{*}\NormalTok{ solvent,}
+               \StringTok{\textquotesingle{}tem\_x\_rea\textquotesingle{}} \OtherTok{=}\NormalTok{ temp }\SpecialCharTok{*}\NormalTok{ reagent,}
+               \StringTok{\textquotesingle{}tim\_x\_sol\textquotesingle{}} \OtherTok{=}\NormalTok{ time }\SpecialCharTok{*}\NormalTok{ solvent,}
+               \StringTok{\textquotesingle{}tim\_x\_rea\textquotesingle{}} \OtherTok{=}\NormalTok{ time }\SpecialCharTok{*}\NormalTok{ reagent,}
+               \StringTok{\textquotesingle{}sol\_x\_rea\textquotesingle{}} \OtherTok{=}\NormalTok{ solvent }\SpecialCharTok{*}\NormalTok{ reagent)}
+\NormalTok{  \})}
+\NormalTok{\}}
+\NormalTok{two\_fi\_contrasts }\OtherTok{\textless{}{-}} \FunctionTok{fac.contrasts.int.emmc}\NormalTok{()}
+\FunctionTok{rownames}\NormalTok{(two\_fi\_contrasts) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"Trt"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(two\_fi\_contrasts, }\AttributeTok{caption =} \StringTok{\textquotesingle{}Desilylation experiment: two{-}factor interaction contrast coefficients\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:desilylation-2fi-interactions}Desilylation experiment: two-factor interaction contrast coefficients}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r|r}
+\hline
+  & tem\_x\_tim & tem\_x\_sol & tem\_x\_rea & tim\_x\_sol & tim\_x\_rea & sol\_x\_rea\\
+\hline
+Trt 1 & 0.125 & 0.125 & 0.125 & 0.125 & 0.125 & 0.125\\
+\hline
+Trt 2 & -0.125 & -0.125 & -0.125 & 0.125 & 0.125 & 0.125\\
+\hline
+Trt 3 & -0.125 & 0.125 & 0.125 & -0.125 & -0.125 & 0.125\\
+\hline
+Trt 4 & 0.125 & -0.125 & -0.125 & -0.125 & -0.125 & 0.125\\
+\hline
+Trt 5 & 0.125 & -0.125 & 0.125 & -0.125 & 0.125 & -0.125\\
+\hline
+Trt 6 & -0.125 & 0.125 & -0.125 & -0.125 & 0.125 & -0.125\\
+\hline
+Trt 7 & -0.125 & -0.125 & 0.125 & 0.125 & -0.125 & -0.125\\
+\hline
+Trt 8 & 0.125 & 0.125 & -0.125 & 0.125 & -0.125 & -0.125\\
+\hline
+Trt 9 & 0.125 & 0.125 & -0.125 & 0.125 & -0.125 & -0.125\\
+\hline
+Trt 10 & -0.125 & -0.125 & 0.125 & 0.125 & -0.125 & -0.125\\
+\hline
+Trt 11 & -0.125 & 0.125 & -0.125 & -0.125 & 0.125 & -0.125\\
+\hline
+Trt 12 & 0.125 & -0.125 & 0.125 & -0.125 & 0.125 & -0.125\\
+\hline
+Trt 13 & 0.125 & -0.125 & -0.125 & -0.125 & -0.125 & 0.125\\
+\hline
+Trt 14 & -0.125 & 0.125 & 0.125 & -0.125 & -0.125 & 0.125\\
+\hline
+Trt 15 & -0.125 & -0.125 & -0.125 & 0.125 & 0.125 & 0.125\\
+\hline
+Trt 16 & 0.125 & 0.125 & 0.125 & 0.125 & 0.125 & 0.125\\
+\hline
+\end{tabular}
+\end{table}
+
+Estimates of the interaction contrasts can again by found by considering the equivalent contrasts in the observed treatment means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(two\_fi\_contrasts)) }\SpecialCharTok{\%*\%}\NormalTok{ yield}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]
+## tem_x_tim -2.357
+## tem_x_sol  2.358
+## tem_x_rea -2.773
+## tim_x_sol  0.440
+## tim_x_rea -0.645
+## sol_x_rea  0.490
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(desilylation.emm, }\StringTok{\textquotesingle{}fac.contrasts.int\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast  estimate  SE df t.ratio p.value
+##  tem_x_tim   -2.357 NaN  0     NaN     NaN
+##  tem_x_sol    2.357 NaN  0     NaN     NaN
+##  tem_x_rea   -2.772 NaN  0     NaN     NaN
+##  tim_x_sol    0.440 NaN  0     NaN     NaN
+##  tim_x_rea   -0.645 NaN  0     NaN     NaN
+##  sol_x_rea    0.490 NaN  0     NaN     NaN
+\end{verbatim}
+
+As with main effects, interactions are often displayed graphically using \textbf{interaction} plots, plotting average responses for each pairwise combination of factors, joined by lines.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# calculate the means}
+\NormalTok{temp\_time }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp }\SpecialCharTok{+}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean, }\AttributeTok{simplify =}\NormalTok{ T)}
+\NormalTok{temp\_solvent }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp }\SpecialCharTok{+}\NormalTok{ solvent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{temp\_reagent }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp }\SpecialCharTok{+}\NormalTok{ reagent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{time\_solvent }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time }\SpecialCharTok{+}\NormalTok{ solvent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{time\_reagent }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time }\SpecialCharTok{+}\NormalTok{ reagent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{solvent\_reagent }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ solvent }\SpecialCharTok{+}\NormalTok{ reagent, }\AttributeTok{data =}\NormalTok{ desilylation, }\AttributeTok{FUN =}\NormalTok{ mean)}
+
+\DocumentationTok{\#\# convert factors to numeric}
+\NormalTok{temp\_time[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(temp\_time[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, fac\_to\_num)}
+\NormalTok{temp\_solvent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(temp\_solvent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, fac\_to\_num)}
+\NormalTok{temp\_reagent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(temp\_reagent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, fac\_to\_num)}
+\NormalTok{time\_solvent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(time\_solvent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, fac\_to\_num)}
+\NormalTok{time\_reagent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(time\_reagent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, fac\_to\_num)}
+\NormalTok{solvent\_reagent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(solvent\_reagent[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, fac\_to\_num)}
+
+\DocumentationTok{\#\# interaction plots}
+\NormalTok{plotmin }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(temp\_time}\SpecialCharTok{$}\NormalTok{yield, temp\_solvent}\SpecialCharTok{$}\NormalTok{yield, temp\_reagent}\SpecialCharTok{$}\NormalTok{yield,}
+\NormalTok{               time\_solvent}\SpecialCharTok{$}\NormalTok{yield, time\_reagent}\SpecialCharTok{$}\NormalTok{yield, solvent\_reagent}\SpecialCharTok{$}\NormalTok{yield)}
+\NormalTok{plotmax }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(temp\_time}\SpecialCharTok{$}\NormalTok{yield, temp\_solvent}\SpecialCharTok{$}\NormalTok{yield, temp\_reagent}\SpecialCharTok{$}\NormalTok{yield,}
+\NormalTok{               time\_solvent}\SpecialCharTok{$}\NormalTok{yield, time\_reagent}\SpecialCharTok{$}\NormalTok{yield, solvent\_reagent}\SpecialCharTok{$}\NormalTok{yield)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{cex =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{layout}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{respect =}\NormalTok{ T)}
+
+\FunctionTok{plot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ temp\_time, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax)) }\CommentTok{\# temp x time}
+\FunctionTok{lines}\NormalTok{(temp\_time[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], temp\_time[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(temp\_time[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], temp\_time[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Time = low"}\NormalTok{, }\StringTok{"Time = high"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex =}\NormalTok{ .}\DecValTok{75}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ temp\_solvent, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax)) }\CommentTok{\# temp x solvent}
+\FunctionTok{lines}\NormalTok{(temp\_solvent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], temp\_solvent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(temp\_solvent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], temp\_solvent[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Solvent = low"}\NormalTok{, }\StringTok{"Solvent = high"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex =}\NormalTok{ .}\DecValTok{75}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ temp\_reagent, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax)) }\CommentTok{\# temp x reagent}
+\FunctionTok{lines}\NormalTok{(temp\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], temp\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(temp\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], temp\_reagent[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Reagent = low"}\NormalTok{, }\StringTok{"Reagent = high"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex =}\NormalTok{ .}\DecValTok{75}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ time\_solvent, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax)) }\CommentTok{\# time x solvent}
+\FunctionTok{lines}\NormalTok{(time\_solvent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], time\_solvent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(time\_solvent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], time\_solvent[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Solvent = low"}\NormalTok{, }\StringTok{"Solvent = high"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex =}\NormalTok{ .}\DecValTok{75}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ time\_reagent, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax)) }\CommentTok{\# time x reagent}
+\FunctionTok{lines}\NormalTok{(time\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], time\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(time\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], time\_reagent[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Reagent = low"}\NormalTok{, }\StringTok{"Reagent = high"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex =}\NormalTok{ .}\DecValTok{75}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ solvent, }\AttributeTok{data =}\NormalTok{ solvent\_reagent, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(plotmin, plotmax)) }\CommentTok{\# solvent x reagent}
+\FunctionTok{lines}\NormalTok{(solvent\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], solvent\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(solvent\_reagent[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{], solvent\_reagent[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Reagent = low"}\NormalTok{, }\StringTok{"Reagent = high"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{cex =}\NormalTok{ .}\DecValTok{75}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{bookdown_math3014-6027_files/figure-latex/desilylation-2fi-plots-1} 
+
+}
+
+\caption{Desilylation experiment: two-factor interaction plots}\label{fig:desilylation-2fi-plots}
+\end{figure}
+
+Parallel lines in an interaction plot indicate no interaction
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}

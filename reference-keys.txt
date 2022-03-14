@@ -71,6 +71,9 @@ def:main-effect
 eq:factorial-sigma-hat-2
 tab:desilylation-all-me-contrasts
 fig:desilylation-me-plots
+def:two-factor-interaction
+tab:desilylation-2fi-interactions
+fig:desilylation-2fi-plots
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -109,6 +112,7 @@ exercises-2
 factorial
 factorial-contrasts
 main-effects
+interactions
 block-factorial
 fractional-factorial
 response-surface-methodology
