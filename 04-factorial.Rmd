@@ -224,61 +224,35 @@ emmeans::contrast(desilylation.emm, 'fac.contrasts.int')
 As with main effects, interactions are often displayed graphically using **interaction** plots, plotting average responses for each pairwise combination of factors, joined by lines. 
 
 ```{r desilylation-2fi-plots, fig.align = 'center', fig.cap = 'Desilylation experiment: two-factor interaction plots', fig.width = 7, fig.height = 7, fig.show = 'hold'}
-## calculate the means
-temp_time <- aggregate(yield ~ temp + time, data = desilylation, FUN = mean, simplify = T)
-temp_solvent <- aggregate(yield ~ temp + solvent, data = desilylation, FUN = mean)
-temp_reagent <- aggregate(yield ~ temp + reagent, data = desilylation, FUN = mean)
-time_solvent <- aggregate(yield ~ time + solvent, data = desilylation, FUN = mean)
-time_reagent <- aggregate(yield ~ time + reagent, data = desilylation, FUN = mean)
-solvent_reagent <- aggregate(yield ~ solvent + reagent, data = desilylation, FUN = mean)
-
-## convert factors to numeric
-temp_time[, 1:2] <- apply(temp_time[, 1:2], 2, fac_to_num)
-temp_solvent[, 1:2] <- apply(temp_solvent[, 1:2], 2, fac_to_num)
-temp_reagent[, 1:2] <- apply(temp_reagent[, 1:2], 2, fac_to_num)
-time_solvent[, 1:2] <- apply(time_solvent[, 1:2], 2, fac_to_num)
-time_reagent[, 1:2] <- apply(time_reagent[, 1:2], 2, fac_to_num)
-solvent_reagent[, 1:2] <- apply(solvent_reagent[, 1:2], 2, fac_to_num)
-
-## interaction plots
-plotmin <- min(temp_time$yield, temp_solvent$yield, temp_reagent$yield,
-               time_solvent$yield, time_reagent$yield, solvent_reagent$yield)
-plotmax <- max(temp_time$yield, temp_solvent$yield, temp_reagent$yield,
-               time_solvent$yield, time_reagent$yield, solvent_reagent$yield)
+plotmin <- min(desilylation$yield)
+plotmax <- max(desilylation$yield)
 par(cex = 2)
 layout(matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2, byrow = TRUE), respect = T)
 
-plot(yield ~ temp, data = temp_time, ylim = c(plotmin, plotmax)) # temp x time
-lines(temp_time[1:2, 1], temp_time[1:2, 3], lty = 1)
-lines(temp_time[1:2, 1], temp_time[3:4, 3], lty = 2)
-legend("bottomright", legend = c("Time = low", "Time = high"), lty = 1:2, cex = .75)
-
-plot(yield ~ temp, data = temp_solvent, ylim = c(plotmin, plotmax)) # temp x solvent
-lines(temp_solvent[1:2, 1], temp_solvent[1:2, 3], lty = 1)
-lines(temp_solvent[1:2, 1], temp_solvent[3:4, 3], lty = 2)
-legend("bottomright", legend = c("Solvent = low", "Solvent = high"), lty = 1:2, cex = .75)
-
-plot(yield ~ temp, data = temp_reagent, ylim = c(plotmin, plotmax)) # temp x reagent
-lines(temp_reagent[1:2, 1], temp_reagent[1:2, 3], lty = 1)
-lines(temp_reagent[1:2, 1], temp_reagent[3:4, 3], lty = 2)
-legend("bottomright", legend = c("Reagent = low", "Reagent = high"), lty = 1:2, cex = .75)
-
-plot(yield ~ time, data = time_solvent, ylim = c(plotmin, plotmax)) # time x solvent
-lines(time_solvent[1:2, 1], time_solvent[1:2, 3], lty = 1)
-lines(time_solvent[1:2, 1], time_solvent[3:4, 3], lty = 2)
-legend("bottomright", legend = c("Solvent = low", "Solvent = high"), lty = 1:2, cex = .75)
-
-plot(yield ~ time, data = time_reagent, ylim = c(plotmin, plotmax)) # time x reagent
-lines(time_reagent[1:2, 1], time_reagent[1:2, 3], lty = 1)
-lines(time_reagent[1:2, 1], time_reagent[3:4, 3], lty = 2)
-legend("bottomright", legend = c("Reagent = low", "Reagent = high"), lty = 1:2, cex = .75)
-
-plot(yield ~ solvent, data = solvent_reagent, ylim = c(plotmin, plotmax)) # solvent x reagent
-lines(solvent_reagent[1:2, 1], solvent_reagent[1:2, 3], lty = 1)
-lines(solvent_reagent[1:2, 1], solvent_reagent[3:4, 3], lty = 2)
-legend("bottomright", legend = c("Reagent = low", "Reagent = high"), lty = 1:2, cex = .75)
+with(desilylation, {
+  interaction.plot(temp, time, yield, type = "b", pch = 16, legend = F, 
+                   ylim = c(plotmin, plotmax))
+  legend("bottomright", legend = c("Time = 19", "Time = 25"), lty = 2:1, cex = .75)
+  interaction.plot(temp, solvent, yield, type = "b", pch = 16, legend = F, 
+                   ylim = c(plotmin, plotmax))
+  legend("bottomright", legend = c("Solvent = 5", "Solvent = 7"), lty = 2:1, cex = .75)
+  interaction.plot(temp, reagent, yield, type = "b", pch = 16, legend = F, 
+                   ylim = c(plotmin, plotmax))
+  legend("bottomright", legend = c("Reagent = 1", "Reagent = 1.33"), lty = 2:1, cex = .75)
+  interaction.plot(time, solvent, yield, type = "b", pch = 16, legend = F, 
+                   ylim = c(plotmin, plotmax))
+  legend("bottomright", legend = c("Solvent = 5", "Solvent = 7"), lty = 2:1, cex = .75)
+  interaction.plot(time, reagent, yield, type = "b", pch = 16, legend = F, 
+                   ylim = c(plotmin, plotmax))
+  legend("bottomright", legend = c("Reagent = 1", "Reagent = 1.33"), lty = 2:1, cex = .75)
+  interaction.plot(solvent, reagent, yield, type = "b", pch = 16, legend = F, 
+                   ylim = c(plotmin, plotmax))
+  legend("bottomright", legend = c("Reagent = 1", "Reagent = 1.33"), lty = 2:1, cex = .75)
+})
 ```
 
-Parallel lines in an interaction plot indicate no interaction 
+Parallel lines in an interaction plot indicate no (or very small) interaction (`time` and `solvent`, `time` and `reagent`, `solvent` and `reagent`). The three interactions with `temp` all demonstrate much more robust behaviour at the high level; changing `time`, `solvent` or `reagent` makes little difference to the response at the high level of `temp`, and much less difference than at the low level of `temp`.
+
+If a system displays important interactions, the main effects of factors involved in those interactions should no longer be interpreted. For example, it makes little sense to discuss the main effect of `temp` when is changes so much with the level of `reagent` (from strongly positive when `reagent` is low to quite small when `reagent` is high).
 
 
