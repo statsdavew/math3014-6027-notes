@@ -123,7 +123,7 @@ emmeans::contrast(desilylation.emm, 'fac.contrasts')
 ```
 Main effects are often displayed graphically, using **main effect plots** which simply plot the average response for each factor level, joined by a line. The larger the main effect, the larger the slope of the line (or the bigger the difference between the averages). Figure \@ref(fig:desilylation-me-plots) presents the four main effect plots for Example \@ref(exm:factorial-desilylation).
 
-```{r desilylation-me-plots, fig.align = 'center', fig.keep = T, fig.cap = 'Desilylation experiment: main effect plots', fig.width = 7, fig.height = 7}
+```{r desilylation-me-plots, fig.align = 'center', fig.keep = T, fig.cap = 'Desilylation experiment: main effect plots', fig.width = 7, fig.height = 7, , fig.show = 'hold'}
 ## calculate the means
 temp_bar <- aggregate(yield ~ temp, data = desilylation, FUN = mean)
 time_bar <- aggregate(yield ~ time, data = desilylation, FUN = mean)
@@ -148,6 +148,137 @@ plot(solvent_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
 plot(reagent_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
 ```
 
+### Interactions
 
+Another contrast that could be of interest in Example \@ref(exm:factorial-desilylation) has coefficients
+
+$$
+\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
+$$
+This contrast measures the different between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \@ref(tab:factorial-desilylation-data), we see this is comparing those treatments where `solvent` and `reagent` are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
+
+Focusing on `reagent`, if the effect of this factor on the response was independent of the level to which `solvent` has been set, you would expect this contrast to be zero - changing from the high to low level of `reagent` should affect the response in the same way, regardless of the setting of `solvent`. This argument can be reversed, focussing on the effect of `solvent`. Therefore, if this contrast is large, we say the two factors **interact**.
+
+```{r desilylation-solvent-reagent-interaction}
+sol_reg_int.emmc <- function(levels) 
+  data.frame('reagent x solvent' = .125 * c(rep(1, 4), rep(-1, 8), rep(1, 4)))
+emmeans::contrast(desilylation.emm, 'sol_reg_int')
+
+```
+For Example \@ref(exm:factorial-desilylation), this interaction contrast seems quite small, although of course without an estimate of the standard error we are still lacking a formal method to judge this.
+
+It is somewhat more informative to consider the above interaction contrast as the average difference in two "sub-contrasts"
+
+$$
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = \frac{1}{2}\left\{\frac{1}{4}\left(\tau_{13} + \tau_{14} + \tau_{15} + \tau_{16} - \tau_5 - \tau_6 - \tau_7 - \tau_8\right)
+- \frac{1}{4}\left(\tau_9 + \tau_{10} + \tau_{11} + \tau_{12} - \tau_1 - \tau_2 - \tau_3 - \tau_4\right) \right\}\,,
+$$
+The first component in the above expression is the effect of changing `reagent` from high to low **given `solvent` is set to it's high level**. The second component the effect of changing `reagent` from high to low **given `solvent` is set to it's low level**. This leads to our definition of a two-factor interaction.
+
+::: {.definition #two-factor-interaction}
+The **two-factor interaction** between factors $A$ and $B$ is defined as the average difference in main effect of factor $A$ when computed at the high and low levels of factor $B$.
+
+\begin{align*}
+\mbox{Int}(A, B) & = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
+& = \frac{1}{2}\left\{\mbox{ME}(B \mid A+) - \mbox{ME}(B \mid A-)\right\} \\
+& = \bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\,,
+\end{align*}
+
+where $\bar{y}(A+, B-)$ is the average response when factor $A$ is set to its high level and factor $B$ is set to its low level, averaged across all combinations of levels of the other factors, and other averages are defined similarly. The conditional main effects of factor $A$ when factor $B$ is set to its high level is defined as
+
+$$
+\mbox{ME}(A\mid B+) = \bar{y}(A+, B+) - \bar{y}(A-, B+)\,,
+$$
+
+with similar definitions for other conditional main effects.
+:::
+
+As the sum of the squared contrast coefficients is the same for two-factor interactions as for main effects, the variance of the contrast estimator is also the same.
+
+$$
+\mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
+$$
+For Example \@ref(exm:factorial-desilylation) we can calculate two-factor interactions for all ${4 \choose 2} = `r choose(4, 2)`$ pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Schur, product of the unscaled main effect contrasts (before dividing by $n/2$).
+
+```{r desilylation-2fi-interactions}
+fac.contrasts.int.emmc <- function(levs) {
+  with(sqrt(8) * main_effect_contrasts, {
+    data.frame('tem_x_tim' = temp * time,
+               'tem_x_sol' = temp * solvent,
+               'tem_x_rea' = temp * reagent,
+               'tim_x_sol' = time * solvent,
+               'tim_x_rea' = time * reagent,
+               'sol_x_rea' = solvent * reagent)
+  })
+}
+two_fi_contrasts <- fac.contrasts.int.emmc()
+rownames(two_fi_contrasts) <- paste("Trt", 1:16)
+knitr::kable(two_fi_contrasts, caption = 'Desilylation experiment: two-factor interaction contrast coefficients')
+```
+Estimates of the interaction contrasts can again by found by considering the equivalent contrasts in the observed treatment means.
+
+```{r desilylation-all-2fi-estimates}
+t(as.matrix(two_fi_contrasts)) %*% yield
+emmeans::contrast(desilylation.emm, 'fac.contrasts.int')
+```
+As with main effects, interactions are often displayed graphically using **interaction** plots, plotting average responses for each pairwise combination of factors, joined by lines. 
+
+```{r desilylation-2fi-plots, fig.align = 'center', fig.cap = 'Desilylation experiment: two-factor interaction plots', fig.width = 7, fig.height = 7, fig.show = 'hold'}
+## calculate the means
+temp_time <- aggregate(yield ~ temp + time, data = desilylation, FUN = mean, simplify = T)
+temp_solvent <- aggregate(yield ~ temp + solvent, data = desilylation, FUN = mean)
+temp_reagent <- aggregate(yield ~ temp + reagent, data = desilylation, FUN = mean)
+time_solvent <- aggregate(yield ~ time + solvent, data = desilylation, FUN = mean)
+time_reagent <- aggregate(yield ~ time + reagent, data = desilylation, FUN = mean)
+solvent_reagent <- aggregate(yield ~ solvent + reagent, data = desilylation, FUN = mean)
+
+## convert factors to numeric
+temp_time[, 1:2] <- apply(temp_time[, 1:2], 2, fac_to_num)
+temp_solvent[, 1:2] <- apply(temp_solvent[, 1:2], 2, fac_to_num)
+temp_reagent[, 1:2] <- apply(temp_reagent[, 1:2], 2, fac_to_num)
+time_solvent[, 1:2] <- apply(time_solvent[, 1:2], 2, fac_to_num)
+time_reagent[, 1:2] <- apply(time_reagent[, 1:2], 2, fac_to_num)
+solvent_reagent[, 1:2] <- apply(solvent_reagent[, 1:2], 2, fac_to_num)
+
+## interaction plots
+plotmin <- min(temp_time$yield, temp_solvent$yield, temp_reagent$yield,
+               time_solvent$yield, time_reagent$yield, solvent_reagent$yield)
+plotmax <- max(temp_time$yield, temp_solvent$yield, temp_reagent$yield,
+               time_solvent$yield, time_reagent$yield, solvent_reagent$yield)
+par(cex = 2)
+layout(matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2, byrow = TRUE), respect = T)
+
+plot(yield ~ temp, data = temp_time, ylim = c(plotmin, plotmax)) # temp x time
+lines(temp_time[1:2, 1], temp_time[1:2, 3], lty = 1)
+lines(temp_time[1:2, 1], temp_time[3:4, 3], lty = 2)
+legend("bottomright", legend = c("Time = low", "Time = high"), lty = 1:2, cex = .75)
+
+plot(yield ~ temp, data = temp_solvent, ylim = c(plotmin, plotmax)) # temp x solvent
+lines(temp_solvent[1:2, 1], temp_solvent[1:2, 3], lty = 1)
+lines(temp_solvent[1:2, 1], temp_solvent[3:4, 3], lty = 2)
+legend("bottomright", legend = c("Solvent = low", "Solvent = high"), lty = 1:2, cex = .75)
+
+plot(yield ~ temp, data = temp_reagent, ylim = c(plotmin, plotmax)) # temp x reagent
+lines(temp_reagent[1:2, 1], temp_reagent[1:2, 3], lty = 1)
+lines(temp_reagent[1:2, 1], temp_reagent[3:4, 3], lty = 2)
+legend("bottomright", legend = c("Reagent = low", "Reagent = high"), lty = 1:2, cex = .75)
+
+plot(yield ~ time, data = time_solvent, ylim = c(plotmin, plotmax)) # time x solvent
+lines(time_solvent[1:2, 1], time_solvent[1:2, 3], lty = 1)
+lines(time_solvent[1:2, 1], time_solvent[3:4, 3], lty = 2)
+legend("bottomright", legend = c("Solvent = low", "Solvent = high"), lty = 1:2, cex = .75)
+
+plot(yield ~ time, data = time_reagent, ylim = c(plotmin, plotmax)) # time x reagent
+lines(time_reagent[1:2, 1], time_reagent[1:2, 3], lty = 1)
+lines(time_reagent[1:2, 1], time_reagent[3:4, 3], lty = 2)
+legend("bottomright", legend = c("Reagent = low", "Reagent = high"), lty = 1:2, cex = .75)
+
+plot(yield ~ solvent, data = solvent_reagent, ylim = c(plotmin, plotmax)) # solvent x reagent
+lines(solvent_reagent[1:2, 1], solvent_reagent[1:2, 3], lty = 1)
+lines(solvent_reagent[1:2, 1], solvent_reagent[3:4, 3], lty = 2)
+legend("bottomright", legend = c("Reagent = low", "Reagent = high"), lty = 1:2, cex = .75)
+```
+
+Parallel lines in an interaction plot indicate no interaction 
 
 

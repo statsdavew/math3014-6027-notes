@@ -3,7 +3,6 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
-eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -55,6 +54,8 @@ eq:factorial-utm
 eq:factorial-sigma-hat-2
 tab:desilylation-all-me-contrasts
 fig:desilylation-me-plots
+tab:desilylation-2fi-interactions
+fig:desilylation-2fi-plots
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -93,6 +94,7 @@ exercises-2
 factorial
 factorial-contrasts
 main-effects
+interactions
 block-factorial
 fractional-factorial
 response-surface-methodology
