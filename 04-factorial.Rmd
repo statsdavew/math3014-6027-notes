@@ -276,12 +276,14 @@ A **factorial effect** is a main effect or interaction contrast defined on a fac
 For Example \@ref(exm:factorial-desilylation), we can now calculate all the factorial effects.
 
 ```{r desilylation-fe}
-# hadamard products
+## hadamard products
 unscaled_me_contrasts <- 8 * main_effect_contrasts
 factorial_contrasts <- model.matrix(~.^4, unscaled_me_contrasts)[, -1] / 8
 
+## all factorial effects - directly, as there is no treatment replication
 t(factorial_contrasts) %*% yield
 
+## using emmeans
 factorial_contrasts.emmc <- function(levs) data.frame(factorial_contrasts)
 emmeans::contrast(desilylation.emm, 'factorial_contrasts')
 ```
