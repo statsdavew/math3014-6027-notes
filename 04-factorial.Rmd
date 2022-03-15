@@ -181,7 +181,7 @@ The **two-factor interaction** between factors $A$ and $B$ is defined as the ave
 \begin{align*}
 \mbox{Int}(A, B) & = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
 & = \frac{1}{2}\left\{\mbox{ME}(B \mid A+) - \mbox{ME}(B \mid A-)\right\} \\
-& = \bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\,,
+& = \frac{1}{2}\left\{\bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\right\}\,,
 \end{align*}
 
 where $\bar{y}(A+, B-)$ is the average response when factor $A$ is set to its high level and factor $B$ is set to its low level, averaged across all combinations of levels of the other factors, and other averages are defined similarly. The conditional main effects of factor $A$ when factor $B$ is set to its high level is defined as
