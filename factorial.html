@@ -890,11 +890,12 @@ is the interaction between factors <span class="math inline">\(A\)</span> and <s
 A <strong>factorial effect</strong> is a main effect or interaction contrast defined on a factorial experiment. For a <span class="math inline">\(2^f\)</span> factorial experiment with <span class="math inline">\(f\)</span> factors, there are <span class="math inline">\(2^f-1\)</span> factorial effects, ranging from main effects to the interaction between all <span class="math inline">\(f\)</span> factors.
 :::</p>
 <p>For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, we can now calculate all the factorial effects.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="factorial.html#cb123-1"></a><span class="co"># hadamard products</span></span>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="factorial.html#cb123-1"></a><span class="co">## hadamard products</span></span>
 <span id="cb123-2"><a href="factorial.html#cb123-2"></a>unscaled_me_contrasts &lt;-<span class="st"> </span><span class="dv">8</span> <span class="op">*</span><span class="st"> </span>main_effect_contrasts</span>
 <span id="cb123-3"><a href="factorial.html#cb123-3"></a>factorial_contrasts &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>.<span class="op">^</span><span class="dv">4</span>, unscaled_me_contrasts)[, <span class="dv">-1</span>] <span class="op">/</span><span class="st"> </span><span class="dv">8</span></span>
 <span id="cb123-4"><a href="factorial.html#cb123-4"></a></span>
-<span id="cb123-5"><a href="factorial.html#cb123-5"></a><span class="kw">t</span>(factorial_contrasts) <span class="op">%*%</span><span class="st"> </span>yield</span></code></pre></div>
+<span id="cb123-5"><a href="factorial.html#cb123-5"></a><span class="co">## all factorial effects - directly, as there is no treatment replication</span></span>
+<span id="cb123-6"><a href="factorial.html#cb123-6"></a><span class="kw">t</span>(factorial_contrasts) <span class="op">%*%</span><span class="st"> </span>yield</span></code></pre></div>
 <pre><code>##                              [,1]
 ## temp                       8.1200
 ## time                       2.5675
@@ -911,8 +912,9 @@ A <strong>factorial effect</strong> is a main effect or interaction contrast def
 ## temp:solvent:reagent      -0.0300
 ## time:solvent:reagent      -0.2375
 ## temp:time:solvent:reagent  0.1925</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="factorial.html#cb125-1"></a>factorial_contrasts.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) <span class="kw">data.frame</span>(factorial_contrasts)</span>
-<span id="cb125-2"><a href="factorial.html#cb125-2"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;factorial_contrasts&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="factorial.html#cb125-1"></a><span class="co">## using emmeans</span></span>
+<span id="cb125-2"><a href="factorial.html#cb125-2"></a>factorial_contrasts.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) <span class="kw">data.frame</span>(factorial_contrasts)</span>
+<span id="cb125-3"><a href="factorial.html#cb125-3"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;factorial_contrasts&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast                  estimate  SE df t.ratio p.value
 ##  temp                         8.120 NaN  0     NaN     NaN
 ##  time                         2.567 NaN  0     NaN     NaN
