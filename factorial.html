@@ -440,7 +440,7 @@ where <span class="math inline">\(\bar{y}(A+)\)</span> is the average response w
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="factorial.html#cb109-1"></a>contrast.mat &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">16</span>, <span class="dt">nfactors =</span> <span class="dv">4</span>, <span class="dt">randomize =</span> F, </span>
 <span id="cb109-2"><a href="factorial.html#cb109-2"></a>                           <span class="dt">factor.names =</span> <span class="kw">c</span>(<span class="st">&quot;temp&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;solvent&quot;</span>, <span class="st">&quot;reagent&quot;</span>))</span>
 <span id="cb109-3"><a href="factorial.html#cb109-3"></a>fac.contrasts.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) </span>
-<span id="cb109-4"><a href="factorial.html#cb109-4"></a>  dplyr<span class="op">::</span><span class="kw">mutate_all</span>(contrast.mat, <span class="cf">function</span>(x) <span class="kw">scale</span>(<span class="kw">as.numeric</span>(x), <span class="dt">scale =</span> <span class="dv">4</span>))</span>
+<span id="cb109-4"><a href="factorial.html#cb109-4"></a>  dplyr<span class="op">::</span><span class="kw">mutate_all</span>(<span class="kw">data.frame</span>(contrast.mat), <span class="cf">function</span>(x) <span class="kw">scale</span>(<span class="kw">as.numeric</span>(<span class="kw">as.character</span>(x)), <span class="dt">scale =</span> <span class="dv">8</span>))</span>
 <span id="cb109-5"><a href="factorial.html#cb109-5"></a>main_effect_contrasts &lt;-<span class="st"> </span><span class="kw">fac.contrasts.emmc</span>()</span>
 <span id="cb109-6"><a href="factorial.html#cb109-6"></a><span class="kw">rownames</span>(main_effect_contrasts) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Trt&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">16</span>)</span>
 <span id="cb109-7"><a href="factorial.html#cb109-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(main_effect_contrasts, <span class="dt">caption =</span> <span class="st">&#39;Desilylation experiment: main effect contrast coefficients&#39;</span>, <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Temperature&quot;</span>, <span class="st">&quot;Time&quot;</span>, <span class="st">&quot;Solvent&quot;</span>, <span class="st">&quot;Reagent&quot;</span>))</span></code></pre></div>
@@ -875,6 +875,60 @@ Figure 4.2: Desilylation experiment: two-factor interaction plots
 </div>
 <p>Parallel lines in an interaction plot indicate no (or very small) interaction (<code>time</code> and <code>solvent</code>, <code>time</code> and <code>reagent</code>, <code>solvent</code> and <code>reagent</code>). The three interactions with <code>temp</code> all demonstrate much more robust behaviour at the high level; changing <code>time</code>, <code>solvent</code> or <code>reagent</code> makes little difference to the response at the high level of <code>temp</code>, and much less difference than at the low level of <code>temp</code>.</p>
 <p>If a system displays important interactions, the main effects of factors involved in those interactions should no longer be interpreted. For example, it makes little sense to discuss the main effect of <code>temp</code> when is changes so much with the level of <code>reagent</code> (from strongly positive when <code>reagent</code> is low to quite small when <code>reagent</code> is high).</p>
+<p>Higher order interactions can be defined similarly, as average differences in lower-order effects. For example, a three-factor interaction measures how a two-factor interaction changes with the levels of a third factor.</p>
+<p><span class="math display">\[\begin{align*}
+\mbox{Int}(A, B, C) &amp; = \frac{1}{2}\left\{\mbox{Int}(A, B \mid C+) - \mbox{Int}(A, B \mid C-)\right\} \\
+&amp; = \frac{1}{2}\left\{\mbox{Int}(A, C \mid B+) - \mbox{Int}(A, C \mid B-)\right\} \\
+&amp; = \frac{1}{2}\left\{\mbox{Int}(B, C \mid A+) - \mbox{Int}(B, C \mid A-)\right\}\,, \\
+\end{align*}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\mbox{Int}(A, B \mid C+) = \frac{1}{2}\left\{\bar{y}(A+, B+, C+) - \bar{y}(A-, B+, C+) + \bar{y}(A+, B-, C+) - \bar{y}(A-, B-, C+)\right\}
+\]</span>
+is the interaction between factors <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> using only those treatments where factor <span class="math inline">\(C\)</span> is set to it’s high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.</p>
+<p>::: {.definition #factorial effects}
+A <strong>factorial effect</strong> is a main effect or interaction contrast defined on a factorial experiment. For a <span class="math inline">\(2^f\)</span> factorial experiment with <span class="math inline">\(f\)</span> factors, there are <span class="math inline">\(2^f-1\)</span> factorial effects, ranging from main effects to the interaction between all <span class="math inline">\(f\)</span> factors.
+:::</p>
+<p>For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, we can now calculate all the factorial effects.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="factorial.html#cb123-1"></a><span class="co"># hadamard products</span></span>
+<span id="cb123-2"><a href="factorial.html#cb123-2"></a>unscaled_me_contrasts &lt;-<span class="st"> </span><span class="dv">8</span> <span class="op">*</span><span class="st"> </span>main_effect_contrasts</span>
+<span id="cb123-3"><a href="factorial.html#cb123-3"></a>factorial_contrasts &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>.<span class="op">^</span><span class="dv">4</span>, unscaled_me_contrasts)[, <span class="dv">-1</span>] <span class="op">/</span><span class="st"> </span><span class="dv">8</span></span>
+<span id="cb123-4"><a href="factorial.html#cb123-4"></a></span>
+<span id="cb123-5"><a href="factorial.html#cb123-5"></a><span class="kw">t</span>(factorial_contrasts) <span class="op">%*%</span><span class="st"> </span>yield</span></code></pre></div>
+<pre><code>##                              [,1]
+## temp                       8.1200
+## time                       2.5675
+## solvent                   -2.2175
+## reagent                    3.0875
+## temp:time                 -2.3575
+## temp:solvent               2.3575
+## temp:reagent              -2.7725
+## time:solvent               0.4400
+## time:reagent              -0.6450
+## solvent:reagent            0.4900
+## temp:time:solvent          0.2450
+## temp:time:reagent          0.1950
+## temp:solvent:reagent      -0.0300
+## time:solvent:reagent      -0.2375
+## temp:time:solvent:reagent  0.1925</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="factorial.html#cb125-1"></a>factorial_contrasts.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) <span class="kw">data.frame</span>(factorial_contrasts)</span>
+<span id="cb125-2"><a href="factorial.html#cb125-2"></a>emmeans<span class="op">::</span><span class="kw">contrast</span>(desilylation.emm, <span class="st">&#39;factorial_contrasts&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast                  estimate  SE df t.ratio p.value
+##  temp                         8.120 NaN  0     NaN     NaN
+##  time                         2.567 NaN  0     NaN     NaN
+##  solvent                     -2.218 NaN  0     NaN     NaN
+##  reagent                      3.087 NaN  0     NaN     NaN
+##  temp.time                   -2.357 NaN  0     NaN     NaN
+##  temp.solvent                 2.358 NaN  0     NaN     NaN
+##  temp.reagent                -2.772 NaN  0     NaN     NaN
+##  time.solvent                 0.440 NaN  0     NaN     NaN
+##  time.reagent                -0.645 NaN  0     NaN     NaN
+##  solvent.reagent              0.490 NaN  0     NaN     NaN
+##  temp.time.solvent            0.245 NaN  0     NaN     NaN
+##  temp.time.reagent            0.195 NaN  0     NaN     NaN
+##  temp.solvent.reagent        -0.030 NaN  0     NaN     NaN
+##  time.solvent.reagent        -0.238 NaN  0     NaN     NaN
+##  temp.time.solvent.reagent    0.193 NaN  0     NaN     NaN</code></pre>
 
 </div>
 </div>
