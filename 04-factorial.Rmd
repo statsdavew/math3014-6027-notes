@@ -198,7 +198,7 @@ As the sum of the squared contrast coefficients is the same for two-factor inter
 $$
 \mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
 $$
-For Example \@ref(exm:factorial-desilylation) we can calculate two-factor interactions for all ${4 \choose 2} = `r choose(4, 2)`$ pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Schur, product of the unscaled main effect contrasts (before dividing by $n/2$).
+For Example \@ref(exm:factorial-desilylation) we can calculate two-factor interactions for all ${4 \choose 2} = `r choose(4, 2)`$ pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product^[For two matrices $A$ and $B$ of the same dimension $m\times n$, the Hadamard product $A\odot B$ is a matrix of the same dimension with elements given by the elementwise product, $(A\odot B)_{ij} = A_{ij}B_{ij}$.] of the unscaled main effect contrasts (before dividing by $n/2$).
 
 ```{r desilylation-2fi-interactions}
 fac.contrasts.int.emmc <- function(levs) {
