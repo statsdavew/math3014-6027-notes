@@ -650,7 +650,7 @@ The first component in the above expression is the effect of changing <code>reag
 <p><span class="math display">\[
 \mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
 \]</span>
-For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a> we can calculate two-factor interactions for all <span class="math inline">\({4 \choose 2} = 6\)</span> pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Schur, product of the unscaled main effect contrasts (before dividing by <span class="math inline">\(n/2\)</span>).</p>
+For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a> we can calculate two-factor interactions for all <span class="math inline">\({4 \choose 2} = 6\)</span> pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> of the unscaled main effect contrasts (before dividing by <span class="math inline">\(n/2\)</span>).</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="factorial.html#cb117-1"></a>fac.contrasts.int.emmc &lt;-<span class="st"> </span><span class="cf">function</span>(levs) {</span>
 <span id="cb117-2"><a href="factorial.html#cb117-2"></a>  <span class="kw">with</span>(<span class="kw">sqrt</span>(<span class="dv">8</span>) <span class="op">*</span><span class="st"> </span>main_effect_contrasts, {</span>
 <span id="cb117-3"><a href="factorial.html#cb117-3"></a>    <span class="kw">data.frame</span>(<span class="st">&#39;tem_x_tim&#39;</span> =<span class="st"> </span>temp <span class="op">*</span><span class="st"> </span>time,</span>
@@ -889,6 +889,7 @@ Figure 4.2: Desilylation experiment: two-factor interaction plots
 <hr />
 <ol start="24">
 <li id="fn24"><p>Desilylation is a process of removing silyl, SiH<span class="math inline">\(_3\)</span> a silicon hydride, from a compound.<a href="factorial.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>For two matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> of the same dimension <span class="math inline">\(m\times n\)</span>, the Hadamard product <span class="math inline">\(A\odot B\)</span> is a matrix of the same dimension with elements given by the elementwise product, <span class="math inline">\((A\odot B)_{ij} = A_{ij}B_{ij}\)</span>.<a href="factorial.html#fnref25" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
