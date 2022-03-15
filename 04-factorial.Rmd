@@ -110,7 +110,7 @@ For Example \@ref(exm:factorial-desilylation), we can also calculate main effect
 contrast.mat <- FrF2::FrF2(nruns = 16, nfactors = 4, randomize = F, 
                            factor.names = c("temp", "time", "solvent", "reagent"))
 fac.contrasts.emmc <- function(levs) 
-  dplyr::mutate_all(contrast.mat, function(x) scale(as.numeric(x), scale = 4))
+  dplyr::mutate_all(data.frame(contrast.mat), function(x) scale(as.numeric(as.character(x)), scale = 8))
 main_effect_contrasts <- fac.contrasts.emmc()
 rownames(main_effect_contrasts) <- paste("Trt", 1:16)
 knitr::kable(main_effect_contrasts, caption = 'Desilylation experiment: main effect contrast coefficients', col.names = c("Temperature", "Time", "Solvent", "Reagent"))
@@ -163,7 +163,6 @@ Focusing on `reagent`, if the effect of this factor on the response was independ
 sol_reg_int.emmc <- function(levels) 
   data.frame('reagent x solvent' = .125 * c(rep(1, 4), rep(-1, 8), rep(1, 4)))
 emmeans::contrast(desilylation.emm, 'sol_reg_int')
-
 ```
 For Example \@ref(exm:factorial-desilylation), this interaction contrast seems quite small, although of course without an estimate of the standard error we are still lacking a formal method to judge this.
 
@@ -255,4 +254,34 @@ Parallel lines in an interaction plot indicate no (or very small) interaction (`
 
 If a system displays important interactions, the main effects of factors involved in those interactions should no longer be interpreted. For example, it makes little sense to discuss the main effect of `temp` when is changes so much with the level of `reagent` (from strongly positive when `reagent` is low to quite small when `reagent` is high).
 
+Higher order interactions can be defined similarly, as average differences in lower-order effects. For example, a three-factor interaction measures how a two-factor interaction changes with the levels of a third factor.
 
+\begin{align*}
+\mbox{Int}(A, B, C) & = \frac{1}{2}\left\{\mbox{Int}(A, B \mid C+) - \mbox{Int}(A, B \mid C-)\right\} \\
+& = \frac{1}{2}\left\{\mbox{Int}(A, C \mid B+) - \mbox{Int}(A, C \mid B-)\right\} \\
+& = \frac{1}{2}\left\{\mbox{Int}(B, C \mid A+) - \mbox{Int}(B, C \mid A-)\right\}\,, \\
+\end{align*}
+
+where 
+
+$$
+\mbox{Int}(A, B \mid C+) = \frac{1}{2}\left\{\bar{y}(A+, B+, C+) - \bar{y}(A-, B+, C+) + \bar{y}(A+, B-, C+) - \bar{y}(A-, B-, C+)\right\}
+$$
+is the interaction between factors $A$ and $B$ using only those treatments where factor $C$ is set to it's high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.
+
+::: {.definition #factorial effects}
+A **factorial effect** is a main effect or interaction contrast defined on a factorial experiment. For a $2^f$ factorial experiment with $f$ factors, there are $2^f-1$ factorial effects, ranging from main effects to the interaction between all $f$ factors.
+:::
+
+For Example \@ref(exm:factorial-desilylation), we can now calculate all the factorial effects.
+
+```{r desilylation-fe}
+# hadamard products
+unscaled_me_contrasts <- 8 * main_effect_contrasts
+factorial_contrasts <- model.matrix(~.^4, unscaled_me_contrasts)[, -1] / 8
+
+t(factorial_contrasts) %*% yield
+
+factorial_contrasts.emmc <- function(levs) data.frame(factorial_contrasts)
+emmeans::contrast(desilylation.emm, 'factorial_contrasts')
+```
