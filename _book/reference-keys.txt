@@ -3,6 +3,7 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
+eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -49,6 +50,11 @@ fig:ex2-eda
 fig:ex2-interaction
 fig:ex2-residual-plots-1
 fig:ex2-residual-plots-2
+tab:naive-bibd-construction
+eq:rc-normal-1
+eq:rc-normal-2
+eq:rc-normal-3
+eq:rc-normal-4
 tab:factorial-desilylation-data
 eq:factorial-utm
 eq:factorial-sigma-hat-2
@@ -95,6 +101,7 @@ factorial
 factorial-contrasts
 main-effects
 interactions
+unreplicated-normal-plots
 block-factorial
 fractional-factorial
 response-surface-methodology

@@ -757,7 +757,53 @@ d. There is no evidence of a difference between treatments, so we would not norm
 
 3. Prove that $2k/\lambda t > 2/b$, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size $k$ and an RCBD, both with $t$ treatments in $b$ blocks.
 
-4. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $k$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+<details><summary><b>Solution</b></summary>
+
+From the notes, $r = bk / t$ and hence $k = rt / b$. Therefore
+
+\begin{align*}
+\frac{2k}{\lambda t} & = \frac{2rt}{\lambda b t} \\
+& = \frac{2r}{\lambda b} \\
+& = \frac{2}{b}\times\frac{r}{\lambda} \\
+& > \frac{2}{b}\,,
+\end{align*}
+
+as $r / \lambda > 1$. The variance of the estimator of a pairwise comparison is
+
+$$
+\mbox{var}_{\mbox{RCBD}}\left(\tau_i - \tau_j\right) = \frac{2\sigma^2}{b}\,,
+$$
+
+for a RCBD with $b$ blocks, and
+
+$$
+\mbox{var}_{\mbox{BIBD}}\left(\tau_i - \tau_j\right) = \frac{2k\sigma^2}{\lambda t}\,,
+$$
+
+for a BIBD. Hence, we can see that the ratio of these variances is 
+
+$$
+\frac{kb}{\lambda t} > 1\,,
+$$
+
+and hence the variance for a BIBD is larger, i.e. incomplete blocks results in less precise treatment comparisons.
+
+</details>
+
+4. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $\lambda$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+
+<details><summary><b>Solution</b></summary>
+Here, $b = {t \choose k} = {5 \choose 4} = 5$, and hence we can use the "naive" construction method from the notes, where we can form one block from each possible subset of $k=4$ treatments. This design will have $r = {4 \choose 3} = 3$ and $\lambda = {3 \choose 2} = 3$.
+
+```{r naive-bibd-construction}
+bibd <- t(combn(1:5, 4))
+rownames(bibd) <- paste("Block", 1:5)
+knitr::kable(bibd, caption = "BIBD for $t = 5$ treatments in $b=5$ blocks of size $k=4$.")
+```
+
+From Question 3, the efficiency of this BIBD compared to a RCBD with $b=5$ blocks of size $k=5$ is given by $\frac{\lambda t}{kb} = `r (3 * 5) / (4 * 5)`$. So variances will be 25% larger under the BIBD.
+
+</details>
 
 5. Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, "Position" and "Application". For this experiment, we use a **latin square** design, as follows.
 
@@ -778,7 +824,7 @@ knitr::kable(
     ```
 
 
-    The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order $k$ is a $k\times k$ square of $k$ latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters.
+    The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order $k$ is a $k\times k$ square of $k$ latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters. A latin square design is a special case of the more general class of **row column** designs for two blocking factors.
 
     A suitable unit-block-treatment model for a latin square design has the form
     
@@ -808,7 +854,60 @@ knitr::kable(
    
     c. For this data, test if there is a significant difference between materials. If there is, conduct multiple comparisons of all pairs at an experimentwise type I error rate of 5%.
 
+<details><summary><b>Solution</b></summary>
 
+a. We start by writing the model in matrix form:
+
+    \begin{align*}
+    \bY & = \boldsymbol{1}_n\mu + X_1\boldsymbol{\beta} + X_2\boldsymbol{\gamma} + X_3\boldsymbol{\tau} + \boldsymbol{\varepsilon}\\
+    & = W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}\,, 
+    \end{align*}
+    
+    with $W = (\boldsymbol{1}_n, X_1, X_2, X_3)$, $X_1$, $X_2$ and $X_3$ being $n \times t$ model matrices for row blocks, column blocks and treatments, respectively, $\boldsymbol{\alpha}^{\mathrm{T}} = (\mu, \boldsymbol{\beta}^{\mathrm{T}}, \boldsymbol{\gamma}^{\mathrm{T}}, \boldsymbol{\tau}^{\mathrm{T}})$ being a $(1+3t)$-vector of parameters, and $\boldsymbol{\varepsilon}\sim N(\boldsymbol{0}_n, I_n\sigma^2)$.
+    
+    The normal equations are given by $W^{\mathrm{T}}W\hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\bY$, which can be expanded out to give the following four matrix equations:
+    
+    \begin{align}
+n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + \boldsymbol{1}_n^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = \boldsymbol{1}_n^{\mathrm{T}}\bY\,, (\#eq:rc-normal-1)\\
+X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_1^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\bY\,, (\#eq:rc-normal-2)\\
+X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_2^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\bY\,, (\#eq:rc-normal-3)\\
+X_3^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_3^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_3^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_3^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = X_3^{\mathrm{T}}\bY\,. (\#eq:rc-normal-4)\\
+    \end{align}
+    
+b. From the reduced normal equations given in the question, we have
+
+    \begin{align*}
+    \sum_{k=1}^tc_k\left(\hat{\tau}_k - \hat{\tau}_w\right) & = \sum_{k=1}^tc_k\hat{\tau}_k \\
+    & = \sum_{k=1}^tc_k\left(\bar{y}_{..k} - \bar{y}_{...}\right) \\
+    & = \sum_{k=1}^tc_k\bar{y}_{..k}\,,
+    \end{align*}
+    
+    as $\sum_{k=1}^tc_k\hat{\tau}_w = \sum_{k=1}^tc_k\bar{y}_{...} = 0$, as neither $\hat{\tau}_w$ or $\bar{y}_{...}$ depend on $k$. Hence,
+    
+    $$
+    \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{k=1}^tc_k\bar{y}_{..k}\,.
+    $$
+
+    Or notice that the reduced  normal equations for this design are the same as for a CRD with each treatment replicated $t$ times.
+    
+c. We conduct these hypothesis tests using `R`.
+
+    ```{r rc-anova}
+    fabric.lm <- lm(weight ~ position + application + material, data = fabric)
+    anova(fabric.lm)
+    ```
+
+    The "material" line of the ANOVA table compares the models with and without the effects for material (but both models including the blocking factors). There is clearly a significant effect of material.
+    
+    ```{r rc-mc}
+    fabric.emm <- emmeans::emmeans(fabric.lm, ~ material)
+    fabric.pairs <- transform(pairs(fabric.emm))
+    dplyr::mutate(fabric.pairs, reject = p.value < 0.05)
+    ```
+
+Using an experiment-wise error rate of 5%, we see significant differences between materials A and B, A and C, A and D, and B and C.
+
+</details>
 
 
 

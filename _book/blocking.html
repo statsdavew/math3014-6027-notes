@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-14" />
+<meta name="date" content="2022-03-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -216,6 +216,7 @@ div.csl-indent {
 <li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
 <li class="chapter" data-level="4.1.2" data-path="factorial.html"><a href="factorial.html#interactions"><i class="fa fa-check"></i><b>4.1.2</b> Interactions</a></li>
 </ul></li>
+<li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.2</b> Normal effect plots for unreplicated factorial designs</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
@@ -785,22 +786,22 @@ N &amp; = J_{t \times b}
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="blocking.html#cb76-1" aria-hidden="true" tabindex="-1"></a>tyre.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">4</span>, <span class="at">b =</span> <span class="dv">4</span>, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">lambda =</span> <span class="dv">2</span>) <span class="co"># note, v is the notation for the number of treatments</span></span>
 <span id="cb76-2"><a href="blocking.html#cb76-2" aria-hidden="true" tabindex="-1"></a>tyre.bibd<span class="sc">$</span>N <span class="co"># incidence matrix</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    0    1
-## [2,]    0    1    1    1
-## [3,]    1    0    1    1
+## [1,]    0    1    1    1
+## [2,]    1    0    1    1
+## [3,]    1    1    0    1
 ## [4,]    1    1    1    0</code></pre>
 <p>We can also use the package to find a design for bigger experiments, for example <span class="math inline">\(t=8\)</span> treatments in <span class="math inline">\(b=14\)</span> blocks of size <span class="math inline">\(k=4\)</span>. Here, <span class="math inline">\(r = 14\times 4 / 8 = 7\)</span> and <span class="math inline">\(\lambda = 7 \times 3 / 7 = 3\)</span>.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="blocking.html#cb78-1" aria-hidden="true" tabindex="-1"></a>larger.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">b =</span> <span class="dv">14</span>, <span class="at">r =</span> <span class="dv">7</span>, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">lambda =</span> <span class="dv">3</span>) </span>
 <span id="cb78-2"><a href="blocking.html#cb78-2" aria-hidden="true" tabindex="-1"></a>larger.bibd<span class="sc">$</span>N</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    0    1    1    1    0    1    1     0     0     0     1     0
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    1    0    0     0     1     1     0     1
-## [4,]    0    1    1    1    0    0    1    0    0     1     0     0     1     1
-## [5,]    1    0    1    1    1    0    0    0    1     1     0     1     0     0
-## [6,]    1    1    1    0    0    1    0    0    0     0     1     1     1     0
-## [7,]    1    1    0    0    1    0    1    1    0     1     1     0     0     0
-## [8,]    1    0    1    0    0    1    1    1    1     0     0     0     0     1</code></pre>
+## [1,]    0    1    1    0    0    1    0    1    0     0     0     1     1     1
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    0    1    0    0    1    1    0    1    1     1     1     0     0     0
+## [4,]    0    1    1    1    1    0    1    0    1     0     0     0     0     1
+## [5,]    1    1    0    1    1    0    0    0    0     0     1     1     1     0
+## [6,]    1    0    1    0    1    0    1    1    0     1     0     1     0     0
+## [7,]    1    0    0    1    0    1    1    1    0     0     1     0     0     1
+## [8,]    1    0    1    1    0    1    0    0    1     1     0     0     1     0</code></pre>
 <p>Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with <span class="math inline">\(b = {t \choose k} = {8 \choose 4} = 70\)</span> blocks.</p>
 </div>
 <div id="reduced-normal-equations" class="section level3" number="3.6.2">
@@ -1179,22 +1180,101 @@ Figure 3.6: Blackcurrent experiment: Normal probability plot for standardised re
 </ol>
 </details>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Prove that <span class="math inline">\(2k/\lambda t &gt; 2/b\)</span>, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size <span class="math inline">\(k\)</span> and an RCBD, both with <span class="math inline">\(t\)</span> treatments in <span class="math inline">\(b\)</span> blocks.</p></li>
-<li><p>Construct a BIBD for <span class="math inline">\(t=5\)</span> treatments in <span class="math inline">\(b=5\)</span> blocks of size <span class="math inline">\(k=4\)</span> units. What are <span class="math inline">\(r\)</span> and <span class="math inline">\(k\)</span> for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.</p></li>
+<li>Prove that <span class="math inline">\(2k/\lambda t &gt; 2/b\)</span>, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size <span class="math inline">\(k\)</span> and an RCBD, both with <span class="math inline">\(t\)</span> treatments in <span class="math inline">\(b\)</span> blocks.</li>
+</ol>
+<details>
+<summary>
+<b>Solution</b>
+</summary>
+<p>From the notes, <span class="math inline">\(r = bk / t\)</span> and hence <span class="math inline">\(k = rt / b\)</span>. Therefore</p>
+<p><span class="math display">\[\begin{align*}
+\frac{2k}{\lambda t} &amp; = \frac{2rt}{\lambda b t} \\
+&amp; = \frac{2r}{\lambda b} \\
+&amp; = \frac{2}{b}\times\frac{r}{\lambda} \\
+&amp; &gt; \frac{2}{b}\,,
+\end{align*}\]</span></p>
+<p>as <span class="math inline">\(r / \lambda &gt; 1\)</span>. The variance of the estimator of a pairwise comparison is</p>
+<p><span class="math display">\[
+\mbox{var}_{\mbox{RCBD}}\left(\tau_i - \tau_j\right) = \frac{2\sigma^2}{b}\,,
+\]</span></p>
+<p>for a RCBD with <span class="math inline">\(b\)</span> blocks, and</p>
+<p><span class="math display">\[
+\mbox{var}_{\mbox{BIBD}}\left(\tau_i - \tau_j\right) = \frac{2k\sigma^2}{\lambda t}\,,
+\]</span></p>
+<p>for a BIBD. Hence, we can see that the ratio of these variances is</p>
+<p><span class="math display">\[
+\frac{kb}{\lambda t} &gt; 1\,,
+\]</span></p>
+<p>and hence the variance for a BIBD is larger, i.e. incomplete blocks results in less precise treatment comparisons.</p>
+</details>
+<ol start="4" style="list-style-type: decimal">
+<li>Construct a BIBD for <span class="math inline">\(t=5\)</span> treatments in <span class="math inline">\(b=5\)</span> blocks of size <span class="math inline">\(k=4\)</span> units. What are <span class="math inline">\(r\)</span> and <span class="math inline">\(\lambda\)</span> for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.</li>
+</ol>
+<details>
+<summary>
+<b>Solution</b>
+</summary>
+<p>Here, <span class="math inline">\(b = {t \choose k} = {5 \choose 4} = 5\)</span>, and hence we can use the “naive” construction method from the notes, where we can form one block from each possible subset of <span class="math inline">\(k=4\)</span> treatments. This design will have <span class="math inline">\(r = {4 \choose 3} = 3\)</span> and <span class="math inline">\(\lambda = {3 \choose 2} = 3\)</span>.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="blocking.html#cb100-1" aria-hidden="true" tabindex="-1"></a>bibd <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">combn</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">4</span>))</span>
+<span id="cb100-2"><a href="blocking.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(bibd) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;Block&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb100-3"><a href="blocking.html#cb100-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(bibd, <span class="at">caption =</span> <span class="st">&quot;BIBD for $t = 5$ treatments in $b=5$ blocks of size $k=4$.&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:naive-bibd-construction">Table 3.4: </span>BIBD for <span class="math inline">\(t = 5\)</span> treatments in <span class="math inline">\(b=5\)</span> blocks of size <span class="math inline">\(k=4\)</span>.</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Block 1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Block 2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Block 3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Block 4</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Block 5</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>From Question 3, the efficiency of this BIBD compared to a RCBD with <span class="math inline">\(b=5\)</span> blocks of size <span class="math inline">\(k=5\)</span> is given by <span class="math inline">\(\frac{\lambda t}{kb} = 0.75\)</span>. So variances will be 25% larger under the BIBD.</p>
+</details>
+<ol start="5" style="list-style-type: decimal">
 <li><p>Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, “Position” and “Application”. For this experiment, we use a <strong>latin square</strong> design, as follows.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="blocking.html#cb100-1" aria-hidden="true" tabindex="-1"></a>fabric <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">material =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, </span>
-<span id="cb100-2"><a href="blocking.html#cb100-2" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>)),</span>
-<span id="cb100-3"><a href="blocking.html#cb100-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="dv">4</span>),</span>
-<span id="cb100-4"><a href="blocking.html#cb100-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">application =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">4</span>)),</span>
-<span id="cb100-5"><a href="blocking.html#cb100-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">235</span>, <span class="dv">236</span>, <span class="dv">218</span>, <span class="dv">268</span>,</span>
-<span id="cb100-6"><a href="blocking.html#cb100-6" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">251</span>, <span class="dv">241</span>, <span class="dv">227</span>, <span class="dv">229</span>, </span>
-<span id="cb100-7"><a href="blocking.html#cb100-7" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">234</span>, <span class="dv">273</span>, <span class="dv">274</span>, <span class="dv">226</span>,</span>
-<span id="cb100-8"><a href="blocking.html#cb100-8" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">195</span>, <span class="dv">270</span>, <span class="dv">230</span>, <span class="dv">225</span>)</span>
-<span id="cb100-9"><a href="blocking.html#cb100-9" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb100-10"><a href="blocking.html#cb100-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb100-11"><a href="blocking.html#cb100-11" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(fabric, <span class="at">id_cols =</span> application, <span class="at">names_from =</span> position, </span>
-<span id="cb100-12"><a href="blocking.html#cb100-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> material),</span>
-<span id="cb100-13"><a href="blocking.html#cb100-13" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="blocking.html#cb101-1" aria-hidden="true" tabindex="-1"></a>fabric <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">material =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, </span>
+<span id="cb101-2"><a href="blocking.html#cb101-2" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;C&#39;</span>, <span class="st">&#39;D&#39;</span>)),</span>
+<span id="cb101-3"><a href="blocking.html#cb101-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="dv">4</span>),</span>
+<span id="cb101-4"><a href="blocking.html#cb101-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">application =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">4</span>)),</span>
+<span id="cb101-5"><a href="blocking.html#cb101-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">235</span>, <span class="dv">236</span>, <span class="dv">218</span>, <span class="dv">268</span>,</span>
+<span id="cb101-6"><a href="blocking.html#cb101-6" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">251</span>, <span class="dv">241</span>, <span class="dv">227</span>, <span class="dv">229</span>, </span>
+<span id="cb101-7"><a href="blocking.html#cb101-7" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">234</span>, <span class="dv">273</span>, <span class="dv">274</span>, <span class="dv">226</span>,</span>
+<span id="cb101-8"><a href="blocking.html#cb101-8" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">195</span>, <span class="dv">270</span>, <span class="dv">230</span>, <span class="dv">225</span>)</span>
+<span id="cb101-9"><a href="blocking.html#cb101-9" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb101-10"><a href="blocking.html#cb101-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb101-11"><a href="blocking.html#cb101-11" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(fabric, <span class="at">id_cols =</span> application, <span class="at">names_from =</span> position, </span>
+<span id="cb101-12"><a href="blocking.html#cb101-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> material),</span>
+<span id="cb101-13"><a href="blocking.html#cb101-13" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1236,7 +1316,7 @@ Figure 3.6: Blackcurrent experiment: Normal probability plot for standardised re
 </tr>
 </tbody>
 </table>
-<p>The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order <span class="math inline">\(k\)</span> is a <span class="math inline">\(k\times k\)</span> square of <span class="math inline">\(k\)</span> latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters.</p>
+<p>The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order <span class="math inline">\(k\)</span> is a <span class="math inline">\(k\times k\)</span> square of <span class="math inline">\(k\)</span> latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters. A latin square design is a special case of the more general class of <strong>row column</strong> designs for two blocking factors.</p>
 <p>A suitable unit-block-treatment model for a latin square design has the form</p>
 <p><span class="math display">\[
  y_{ijk} = \mu + \beta_i + \gamma_j + \tau_k + \varepsilon_{ijk}\,,\qquad i,j,k = 1,\ldots, t\,,
@@ -1252,10 +1332,10 @@ with <span class="math inline">\(\hat{\tau}_w = \frac{1}{t}\sum_{k=1}^t\hat{\tau
 <p>Demonstrate that any contrast can therefore be estimated from this design, and derive the variance of the estimator of <span class="math inline">\(\sum_{k=1}^tc_k\tau_k\)</span>.</p></li>
 </ol>
 <p>The data for this experiment is as follows, where the entries in the table give the response for the corresponding treatment:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="blocking.html#cb101-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb101-2"><a href="blocking.html#cb101-2" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(fabric, <span class="at">id_cols =</span> application, <span class="at">names_from =</span> position, </span>
-<span id="cb101-3"><a href="blocking.html#cb101-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> weight),</span>
-<span id="cb101-4"><a href="blocking.html#cb101-4" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="blocking.html#cb102-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb102-2"><a href="blocking.html#cb102-2" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(fabric, <span class="at">id_cols =</span> application, <span class="at">names_from =</span> position, </span>
+<span id="cb102-3"><a href="blocking.html#cb102-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> weight),</span>
+<span id="cb102-4"><a href="blocking.html#cb102-4" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Application&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Position&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1301,6 +1381,62 @@ with <span class="math inline">\(\hat{\tau}_w = \frac{1}{t}\sum_{k=1}^t\hat{\tau
 <li>For this data, test if there is a significant difference between materials. If there is, conduct multiple comparisons of all pairs at an experimentwise type I error rate of 5%.</li>
 </ol></li>
 </ol>
+<details>
+<summary>
+<b>Solution</b>
+</summary>
+<ol style="list-style-type: lower-alpha">
+<li><p>We start by writing the model in matrix form:</p>
+<p><span class="math display">\[\begin{align*}
+ \boldsymbol{y}&amp; = \boldsymbol{1}_n\mu + X_1\boldsymbol{\beta} + X_2\boldsymbol{\gamma} + X_3\boldsymbol{\tau} + \boldsymbol{\varepsilon}\\
+ &amp; = W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}\,, 
+ \end{align*}\]</span></p>
+<p>with <span class="math inline">\(W = (\boldsymbol{1}_n, X_1, X_2, X_3)\)</span>, <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span> and <span class="math inline">\(X_3\)</span> being <span class="math inline">\(n \times t\)</span> model matrices for row blocks, column blocks and treatments, respectively, <span class="math inline">\(\boldsymbol{\alpha}^{\mathrm{T}} = (\mu, \boldsymbol{\beta}^{\mathrm{T}}, \boldsymbol{\gamma}^{\mathrm{T}}, \boldsymbol{\tau}^{\mathrm{T}})\)</span> being a <span class="math inline">\((1+3t)\)</span>-vector of parameters, and <span class="math inline">\(\boldsymbol{\varepsilon}\sim N(\boldsymbol{0}_n, I_n\sigma^2)\)</span>.</p>
+<p>The normal equations are given by <span class="math inline">\(W^{\mathrm{T}}W\hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\boldsymbol{y}\)</span>, which can be expanded out to give the following four matrix equations:</p>
+<p><span class="math display" id="eq:rc-normal-4" id="eq:rc-normal-3" id="eq:rc-normal-2" id="eq:rc-normal-1">\[\begin{align}
+n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + \boldsymbol{1}_n^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} &amp; = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \tag{3.16}\\
+X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_1^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} &amp; = X_1^{\mathrm{T}}\boldsymbol{y}\,, \tag{3.17}\\
+X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_2^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} &amp; = X_2^{\mathrm{T}}\boldsymbol{y}\,, \tag{3.18}\\
+X_3^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_3^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_3^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_3^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} &amp; = X_3^{\mathrm{T}}\boldsymbol{y}\,. \tag{3.19}\\
+ \end{align}\]</span></p></li>
+<li><p>From the reduced normal equations given in the question, we have</p>
+<p><span class="math display">\[\begin{align*}
+ \sum_{k=1}^tc_k\left(\hat{\tau}_k - \hat{\tau}_w\right) &amp; = \sum_{k=1}^tc_k\hat{\tau}_k \\
+ &amp; = \sum_{k=1}^tc_k\left(\bar{y}_{..k} - \bar{y}_{...}\right) \\
+ &amp; = \sum_{k=1}^tc_k\bar{y}_{..k}\,,
+ \end{align*}\]</span></p>
+<p>as <span class="math inline">\(\sum_{k=1}^tc_k\hat{\tau}_w = \sum_{k=1}^tc_k\bar{y}_{...} = 0\)</span>, as neither <span class="math inline">\(\hat{\tau}_w\)</span> or <span class="math inline">\(\bar{y}_{...}\)</span> depend on <span class="math inline">\(k\)</span>. Hence,</p>
+<p><span class="math display">\[
+ \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{k=1}^tc_k\bar{y}_{..k}\,.
+ \]</span></p>
+<p>Or notice that the reduced normal equations for this design are the same as for a CRD with each treatment replicated <span class="math inline">\(t\)</span> times.</p></li>
+<li><p>We conduct these hypothesis tests using <code>R</code>.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="blocking.html#cb103-1" aria-hidden="true" tabindex="-1"></a>fabric.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> position <span class="sc">+</span> application <span class="sc">+</span> material, <span class="at">data =</span> fabric)</span>
+<span id="cb103-2"><a href="blocking.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fabric.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: weight
+##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## position     3   1468     489    7.99 0.01617 *  
+## application  3    986     329    5.37 0.03901 *  
+## material     3   4621    1540   25.15 0.00085 ***
+## Residuals    6    368      61                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The “material” line of the ANOVA table compares the models with and without the effects for material (but both models including the blocking factors). There is clearly a significant effect of material.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="blocking.html#cb105-1" aria-hidden="true" tabindex="-1"></a>fabric.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fabric.lm, <span class="sc">~</span> material)</span>
+<span id="cb105-2"><a href="blocking.html#cb105-2" aria-hidden="true" tabindex="-1"></a>fabric.pairs <span class="ot">&lt;-</span> <span class="fu">transform</span>(<span class="fu">pairs</span>(fabric.emm))</span>
+<span id="cb105-3"><a href="blocking.html#cb105-3" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">mutate</span>(fabric.pairs, <span class="at">reject =</span> p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>##   contrast estimate    SE df t.ratio  p.value reject
+## 1    A - B    45.75 5.534  6   8.267 0.000703   TRUE
+## 2    A - C    24.00 5.534  6   4.337 0.019036   TRUE
+## 3    A - D    35.25 5.534  6   6.370 0.002866   TRUE
+## 4    B - C   -21.75 5.534  6  -3.930 0.029477   TRUE
+## 5    B - D   -10.50 5.534  6  -1.897 0.320631  FALSE
+## 6    C - D    11.25 5.534  6   2.033 0.274277  FALSE</code></pre></li>
+</ol>
+<p>Using an experiment-wise error rate of 5%, we see significant differences between materials A and B, A and C, A and D, and B and C.</p>
+</details>
 
 </div>
 </div>
