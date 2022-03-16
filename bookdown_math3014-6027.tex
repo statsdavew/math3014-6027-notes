@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-03-14}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-03-16}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,10 +181,6 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
-
-\begin{verbatim}
-## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
-\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -784,27 +780,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -907,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Tea first"  "Milk first"
-## [6] "Milk first" "Milk first" "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Milk first"
+## [6] "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -921,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -932,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1083,15 +1063,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1130,15 +1102,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1177,15 +1141,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2825,15 +2781,7 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Degrees of freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Sums of squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean square
-\end{minipage} \\
+Source & Degrees of freedom & Sums of squares & Mean square \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3163,10 +3111,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
+## [1,]    1    1    0    1
 ## [2,]    0    1    1    1
 ## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3180,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    1    1    0    0    0    0    1     0     1     1     0     1
-## [2,]    0    0    0    0    0    0    1    1    0     1     1     1     1     1
-## [3,]    1    0    0    1    0    1    0    1    1     1     0     0     1     0
-## [4,]    1    0    1    0    1    1    1    0    0     0     0     0     1     1
-## [5,]    1    1    0    0    1    1    0    0    0     1     1     1     0     0
-## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
-## [7,]    0    1    0    1    1    0    1    0    1     1     0     0     0     1
-## [8,]    0    1    1    1    1    0    0    1    0     0     0     1     1     0
+## [1,]    0    0    0    1    0    0    1    0    1     1     1     0     1     1
+## [2,]    1    1    0    0    0    0    0    1    0     0     1     1     1     1
+## [3,]    1    0    0    0    0    1    1    1    1     1     0     1     0     0
+## [4,]    0    1    0    1    1    1    1    0    0     0     0     1     0     1
+## [5,]    0    0    1    0    1    1    0    0    0     1     1     1     1     0
+## [6,]    0    1    1    1    0    1    0    1    1     0     1     0     0     0
+## [7,]    1    0    1    1    1    0    0    1    0     1     0     0     0     1
+## [8,]    1    1    1    0    1    0    1    0    1     0     0     0     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3676,10 +3624,86 @@ Solution
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
+\tightlist
 \item
   Prove that \(2k/\lambda t > 2/b\), and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size \(k\) and an RCBD, both with \(t\) treatments in \(b\) blocks.
+\end{enumerate}
+
+Solution
+
+From the notes, \(r = bk / t\) and hence \(k = rt / b\). Therefore
+
+\begin{align*}
+\frac{2k}{\lambda t} & = \frac{2rt}{\lambda b t} \\
+& = \frac{2r}{\lambda b} \\
+& = \frac{2}{b}\times\frac{r}{\lambda} \\
+& > \frac{2}{b}\,,
+\end{align*}
+
+as \(r / \lambda > 1\). The variance of the estimator of a pairwise comparison is
+
+\[
+\mbox{var}_{\mbox{RCBD}}\left(\tau_i - \tau_j\right) = \frac{2\sigma^2}{b}\,,
+\]
+
+for a RCBD with \(b\) blocks, and
+
+\[
+\mbox{var}_{\mbox{BIBD}}\left(\tau_i - \tau_j\right) = \frac{2k\sigma^2}{\lambda t}\,,
+\]
+
+for a BIBD. Hence, we can see that the ratio of these variances is
+
+\[
+\frac{kb}{\lambda t} > 1\,,
+\]
+
+and hence the variance for a BIBD is larger, i.e.~incomplete blocks results in less precise treatment comparisons.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
 \item
-  Construct a BIBD for \(t=5\) treatments in \(b=5\) blocks of size \(k=4\) units. What are \(r\) and \(k\) for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+  Construct a BIBD for \(t=5\) treatments in \(b=5\) blocks of size \(k=4\) units. What are \(r\) and \(\lambda\) for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+\end{enumerate}
+
+Solution
+
+Here, \(b = {t \choose k} = {5 \choose 4} = 5\), and hence we can use the ``naive'' construction method from the notes, where we can form one block from each possible subset of \(k=4\) treatments. This design will have \(r = {4 \choose 3} = 3\) and \(\lambda = {3 \choose 2} = 3\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bibd }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(}\FunctionTok{combn}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\FunctionTok{rownames}\NormalTok{(bibd) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"Block"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(bibd, }\AttributeTok{caption =} \StringTok{"BIBD for $t = 5$ treatments in $b=5$ blocks of size $k=4$."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:naive-bibd-construction}BIBD for $t = 5$ treatments in $b=5$ blocks of size $k=4$.}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+Block 1 & 1 & 2 & 3 & 4\\
+\hline
+Block 2 & 1 & 2 & 3 & 5\\
+\hline
+Block 3 & 1 & 2 & 4 & 5\\
+\hline
+Block 4 & 1 & 3 & 4 & 5\\
+\hline
+Block 5 & 2 & 3 & 4 & 5\\
+\hline
+\end{tabular}
+\end{table}
+
+From Question 3, the efficiency of this BIBD compared to a RCBD with \(b=5\) blocks of size \(k=5\) is given by \(\frac{\lambda t}{kb} = 0.75\). So variances will be 25\% larger under the BIBD.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
 \item
   Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, ``Position'' and ``Application''. For this experiment, we use a \textbf{latin square} design, as follows.
 
@@ -3715,7 +3739,7 @@ Solution
    \hline
    \end{tabular}
 
-  The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order \(k\) is a \(k\times k\) square of \(k\) latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters.
+  The blocking variables are represented as the rows and columns of the square; the latin letters represent the different treatments. A latin square of order \(k\) is a \(k\times k\) square of \(k\) latin letters arranged so that each letter appears exactly once in each row and column (Sudoko squares are also examples of latin squares). To perform the experiment, the levels of the blocking factors are randomly assigned to the rows and the columns, and the different treatments to the letters. A latin square design is a special case of the more general class of \textbf{row column} designs for two blocking factors.
 
   A suitable unit-block-treatment model for a latin square design has the form
 
@@ -3772,6 +3796,90 @@ Solution
     For this data, test if there is a significant difference between materials. If there is, conduct multiple comparisons of all pairs at an experimentwise type I error rate of 5\%.
   \end{enumerate}
 \end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  We start by writing the model in matrix form:
+
+  \begin{align*}
+   \boldsymbol{y}& = \boldsymbol{1}_n\mu + X_1\boldsymbol{\beta} + X_2\boldsymbol{\gamma} + X_3\boldsymbol{\tau} + \boldsymbol{\varepsilon}\\
+   & = W\boldsymbol{\alpha} + \boldsymbol{\varepsilon}\,, 
+   \end{align*}
+
+  with \(W = (\boldsymbol{1}_n, X_1, X_2, X_3)\), \(X_1\), \(X_2\) and \(X_3\) being \(n \times t\) model matrices for row blocks, column blocks and treatments, respectively, \(\boldsymbol{\alpha}^{\mathrm{T}} = (\mu, \boldsymbol{\beta}^{\mathrm{T}}, \boldsymbol{\gamma}^{\mathrm{T}}, \boldsymbol{\tau}^{\mathrm{T}})\) being a \((1+3t)\)-vector of parameters, and \(\boldsymbol{\varepsilon}\sim N(\boldsymbol{0}_n, I_n\sigma^2)\).
+
+  The normal equations are given by \(W^{\mathrm{T}}W\hat{\boldsymbol{\alpha}} = W^{\mathrm{T}}\boldsymbol{y}\), which can be expanded out to give the following four matrix equations:
+
+  \begin{align}
+  n\hat{\mu} + \boldsymbol{1}_n^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + \boldsymbol{1}_n^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:rc-normal-1}\\
+  X_1^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_1^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_1^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = X_1^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:rc-normal-2}\\
+  X_2^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_2^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_2^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = X_2^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:rc-normal-3}\\
+  X_3^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + X_3^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}} + X_3^{\mathrm{T}}X_2\hat{\boldsymbol{\gamma}} + X_3^{\mathrm{T}}X_3\hat{\boldsymbol{\tau}} & = X_3^{\mathrm{T}}\boldsymbol{y}\,. \label{eq:rc-normal-4}\\
+   \end{align}
+\item
+  From the reduced normal equations given in the question, we have
+
+  \begin{align*}
+   \sum_{k=1}^tc_k\left(\hat{\tau}_k - \hat{\tau}_w\right) & = \sum_{k=1}^tc_k\hat{\tau}_k \\
+   & = \sum_{k=1}^tc_k\left(\bar{y}_{..k} - \bar{y}_{...}\right) \\
+   & = \sum_{k=1}^tc_k\bar{y}_{..k}\,,
+   \end{align*}
+
+  as \(\sum_{k=1}^tc_k\hat{\tau}_w = \sum_{k=1}^tc_k\bar{y}_{...} = 0\), as neither \(\hat{\tau}_w\) or \(\bar{y}_{...}\) depend on \(k\). Hence,
+
+  \[
+   \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}} = \sum_{k=1}^tc_k\bar{y}_{..k}\,.
+   \]
+
+  Or notice that the reduced normal equations for this design are the same as for a CRD with each treatment replicated \(t\) times.
+\item
+  We conduct these hypothesis tests using \texttt{R}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fabric.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(weight }\SpecialCharTok{\textasciitilde{}}\NormalTok{ position }\SpecialCharTok{+}\NormalTok{ application }\SpecialCharTok{+}\NormalTok{ material, }\AttributeTok{data =}\NormalTok{ fabric)}
+\FunctionTok{anova}\NormalTok{(fabric.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: weight
+##             Df Sum Sq Mean Sq F value  Pr(>F)    
+## position     3   1468     489    7.99 0.01617 *  
+## application  3    986     329    5.37 0.03901 *  
+## material     3   4621    1540   25.15 0.00085 ***
+## Residuals    6    368      61                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+  The ``material'' line of the ANOVA table compares the models with and without the effects for material (but both models including the blocking factors). There is clearly a significant effect of material.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fabric.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(fabric.lm, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ material)}
+\NormalTok{fabric.pairs }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(}\FunctionTok{pairs}\NormalTok{(fabric.emm))}
+\NormalTok{dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(fabric.pairs, }\AttributeTok{reject =}\NormalTok{ p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   contrast estimate    SE df t.ratio  p.value reject
+## 1    A - B    45.75 5.534  6   8.267 0.000703   TRUE
+## 2    A - C    24.00 5.534  6   4.337 0.019036   TRUE
+## 3    A - D    35.25 5.534  6   6.370 0.002866   TRUE
+## 4    B - C   -21.75 5.534  6  -3.930 0.029477   TRUE
+## 5    B - D   -10.50 5.534  6  -1.897 0.320631  FALSE
+## 6    C - D    11.25 5.534  6   2.033 0.274277  FALSE
+\end{verbatim}
+\end{enumerate}
+
+Using an experiment-wise error rate of 5\%, we see significant differences between materials A and B, A and C, A and D, and B and C.
 
 \hypertarget{factorial}{%
 \chapter{Factorial experiments}\label{factorial}}
@@ -3961,7 +4069,7 @@ For Example \ref{exm:factorial-desilylation}, we can also calculate main effect 
 \NormalTok{contrast.mat }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{4}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F, }
                            \AttributeTok{factor.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"temp"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"solvent"}\NormalTok{, }\StringTok{"reagent"}\NormalTok{))}
 \NormalTok{fac.contrasts.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate\_all}\NormalTok{(contrast.mat, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{scale}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(x), }\AttributeTok{scale =} \DecValTok{4}\NormalTok{))}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate\_all}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(contrast.mat), }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{scale}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x)), }\AttributeTok{scale =} \DecValTok{8}\NormalTok{))}
 \NormalTok{main\_effect\_contrasts }\OtherTok{\textless{}{-}} \FunctionTok{fac.contrasts.emmc}\NormalTok{()}
 \FunctionTok{rownames}\NormalTok{(main\_effect\_contrasts) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"Trt"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{)}
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(main\_effect\_contrasts, }\AttributeTok{caption =} \StringTok{\textquotesingle{}Desilylation experiment: main effect contrast coefficients\textquotesingle{}}\NormalTok{, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Temperature"}\NormalTok{, }\StringTok{"Time"}\NormalTok{, }\StringTok{"Solvent"}\NormalTok{, }\StringTok{"Reagent"}\NormalTok{))}
@@ -4087,7 +4195,7 @@ Another contrast that could be of interest in Example \ref{exm:factorial-desilyl
 \[
 \boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
 \]
-This contrast measures the different between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \ref{tab:factorial-desilylation-data}, we see this is comparing those treatments where \texttt{solvent} and \texttt{reagent} are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
+This contrast measures the difference between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \ref{tab:factorial-desilylation-data}, we see this is comparing those treatments where \texttt{solvent} and \texttt{reagent} are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
 
 Focusing on \texttt{reagent}, if the effect of this factor on the response was independent of the level to which \texttt{solvent} has been set, you would expect this contrast to be zero - changing from the high to low level of \texttt{reagent} should affect the response in the same way, regardless of the setting of \texttt{solvent}. This argument can be reversed, focussing on the effect of \texttt{solvent}. Therefore, if this contrast is large, we say the two factors \textbf{interact}.
 
@@ -4122,7 +4230,7 @@ The \textbf{two-factor interaction} between factors \(A\) and \(B\) is defined a
 \begin{align*}
 \mbox{Int}(A, B) & = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
 & = \frac{1}{2}\left\{\mbox{ME}(B \mid A+) - \mbox{ME}(B \mid A-)\right\} \\
-& = \bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\,,
+& = \frac{1}{2}\left\{\bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\right\}\,,
 \end{align*}
 
 where \(\bar{y}(A+, B-)\) is the average response when factor \(A\) is set to its high level and factor \(B\) is set to its low level, averaged across all combinations of levels of the other factors, and other averages are defined similarly. The conditional main effects of factor \(A\) when factor \(B\) is set to its high level is defined as
@@ -4140,7 +4248,7 @@ As the sum of the squared contrast coefficients is the same for two-factor inter
 \[
 \mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
 \]
-For Example \ref{exm:factorial-desilylation} we can calculate two-factor interactions for all \({4 \choose 2} = 6\) pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Schur, product of the unscaled main effect contrasts (before dividing by \(n/2\)).
+For Example \ref{exm:factorial-desilylation} we can calculate two-factor interactions for all \({4 \choose 2} = 6\) pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product\footnote{For two matrices \(A\) and \(B\) of the same dimension \(m\times n\), the Hadamard product \(A\odot B\) is a matrix of the same dimension with elements given by the elementwise product, \((A\odot B)_{ij} = A_{ij}B_{ij}\).} of the unscaled main effect contrasts (before dividing by \(n/2\)).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4281,6 +4389,108 @@ As with main effects, interactions are often displayed graphically using \textbf
 Parallel lines in an interaction plot indicate no (or very small) interaction (\texttt{time} and \texttt{solvent}, \texttt{time} and \texttt{reagent}, \texttt{solvent} and \texttt{reagent}). The three interactions with \texttt{temp} all demonstrate much more robust behaviour at the high level; changing \texttt{time}, \texttt{solvent} or \texttt{reagent} makes little difference to the response at the high level of \texttt{temp}, and much less difference than at the low level of \texttt{temp}.
 
 If a system displays important interactions, the main effects of factors involved in those interactions should no longer be interpreted. For example, it makes little sense to discuss the main effect of \texttt{temp} when is changes so much with the level of \texttt{reagent} (from strongly positive when \texttt{reagent} is low to quite small when \texttt{reagent} is high).
+
+Higher order interactions can be defined similarly, as average differences in lower-order effects. For example, a three-factor interaction measures how a two-factor interaction changes with the levels of a third factor.
+
+\begin{align*}
+\mbox{Int}(A, B, C) & = \frac{1}{2}\left\{\mbox{Int}(A, B \mid C+) - \mbox{Int}(A, B \mid C-)\right\} \\
+& = \frac{1}{2}\left\{\mbox{Int}(A, C \mid B+) - \mbox{Int}(A, C \mid B-)\right\} \\
+& = \frac{1}{2}\left\{\mbox{Int}(B, C \mid A+) - \mbox{Int}(B, C \mid A-)\right\}\,, \\
+\end{align*}
+
+where
+
+\[
+\mbox{Int}(A, B \mid C+) = \frac{1}{2}\left\{\bar{y}(A+, B+, C+) - \bar{y}(A-, B+, C+) + \bar{y}(A+, B-, C+) - \bar{y}(A-, B-, C+)\right\}
+\]
+is the interaction between factors \(A\) and \(B\) using only those treatments where factor \(C\) is set to it's high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.
+
+\begin{definition}
+\protect\hypertarget{def:factorial-effects}{}\label{def:factorial-effects}
+
+A \textbf{factorial effect} is a main effect or interaction contrast defined on a factorial experiment. For a \(2^f\) factorial experiment with \(f\) factors, there are \(2^f-1\) factorial effects, ranging from main effects to the interaction between all \(f\) factors.
+
+\end{definition}
+
+For Example \ref{exm:factorial-desilylation}, we can now calculate all the factorial effects.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# hadamard products}
+\NormalTok{unscaled\_me\_contrasts }\OtherTok{\textless{}{-}} \DecValTok{8} \SpecialCharTok{*}\NormalTok{ main\_effect\_contrasts}
+\NormalTok{factorial\_contrasts }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{, unscaled\_me\_contrasts)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/} \DecValTok{8}
+
+\DocumentationTok{\#\# all factorial effects {-} directly, as there is no treatment replication}
+\FunctionTok{t}\NormalTok{(factorial\_contrasts) }\SpecialCharTok{\%*\%}\NormalTok{ yield}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                              [,1]
+## temp                       8.1200
+## time                       2.5675
+## solvent                   -2.2175
+## reagent                    3.0875
+## temp:time                 -2.3575
+## temp:solvent               2.3575
+## temp:reagent              -2.7725
+## time:solvent               0.4400
+## time:reagent              -0.6450
+## solvent:reagent            0.4900
+## temp:time:solvent          0.2450
+## temp:time:reagent          0.1950
+## temp:solvent:reagent      -0.0300
+## time:solvent:reagent      -0.2375
+## temp:time:solvent:reagent  0.1925
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# using emmeans}
+\NormalTok{factorial\_contrasts.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(levs) }\FunctionTok{data.frame}\NormalTok{(factorial\_contrasts)}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(desilylation.emm, }\StringTok{\textquotesingle{}factorial\_contrasts\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                  estimate  SE df t.ratio p.value
+##  temp                         8.120 NaN  0     NaN     NaN
+##  time                         2.567 NaN  0     NaN     NaN
+##  solvent                     -2.218 NaN  0     NaN     NaN
+##  reagent                      3.087 NaN  0     NaN     NaN
+##  temp.time                   -2.357 NaN  0     NaN     NaN
+##  temp.solvent                 2.358 NaN  0     NaN     NaN
+##  temp.reagent                -2.772 NaN  0     NaN     NaN
+##  time.solvent                 0.440 NaN  0     NaN     NaN
+##  time.reagent                -0.645 NaN  0     NaN     NaN
+##  solvent.reagent              0.490 NaN  0     NaN     NaN
+##  temp.time.solvent            0.245 NaN  0     NaN     NaN
+##  temp.time.reagent            0.195 NaN  0     NaN     NaN
+##  temp.solvent.reagent        -0.030 NaN  0     NaN     NaN
+##  time.solvent.reagent        -0.238 NaN  0     NaN     NaN
+##  temp.time.solvent.reagent    0.193 NaN  0     NaN     NaN
+\end{verbatim}
+
+\hypertarget{unreplicated-normal-plots}{%
+\section{Normal effect plots for unreplicated factorial designs}\label{unreplicated-normal-plots}}
+
+The lack of an estmate for \(\sigma^2\) means alternatives to formal inference methods (e.g.~hypothesis tests) must be found to assess the size of factorial effects. We will discuss a method that essentially treats the identification of large factorial effects as an outlier identification problem.
+
+Let \(\theta_j\) be the \(j\)th factorial effect, with \(\theta_j = \sum_{i=1}^tc_{ij}\tau_i\) for \(\boldsymbol{c}_j^{\mathrm{T}} = (c_{1j}, \ldots, c_{tj})\) a vector of factorial contrast coefficients (defining a main effect or interaction). Then the estimator
+
+\[
+\hat{\theta}_j \sim N\left(\theta_j, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,,
+\]
+for \(j = 1,\ldots, 2^f\). Further more, for \(l, j = 1, \ldots 2^f-1; \, j\ne l\),
+
+\begin{align*}
+\mbox{cov}(\hat{\theta}_j, \hat{\theta}_l) & =  \mbox{cov}\left(\sum_{i=1}^tc_{ij}\bar{y}_{i.}, \sum_{i=1}^tc_{il}\bar{y}_{i.}\right) \\
+& = \sum_{i=1}^tc_{ij}c_{il}\mbox{var}(\bar{y}_{i.}) \\
+& = \frac{\sigma^2}{r} \sum_{i=1}^tc_{ij}c_{il} \\
+& = 0\,, \\
+\end{align*}
+
+as \(\sum_{i=1}^tc_{ij}c_{il} = 0\) for \(j\ne l\). That is, the factorial contrasts are independent as the contrast cofficient vectors are orthogonal.
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}

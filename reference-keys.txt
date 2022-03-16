@@ -64,6 +64,11 @@ fig:ex2-eda
 fig:ex2-interaction
 fig:ex2-residual-plots-1
 fig:ex2-residual-plots-2
+tab:naive-bibd-construction
+eq:rc-normal-1
+eq:rc-normal-2
+eq:rc-normal-3
+eq:rc-normal-4
 exm:factorial-desilylation
 tab:factorial-desilylation-data
 eq:factorial-utm
