@@ -793,7 +793,7 @@ and hence the variance for a BIBD is larger, i.e. incomplete blocks results in l
 4. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $\lambda$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
 
 <details><summary><b>Solution</b></summary>
-Here, $b = {t \choose k} = {5 \choose 4} = 5$, and hence we can use the "naive" construction method from the notes, where we can form one block from each possible subset of $k=4$ treatments. This design will have $r = {4 \choose 3} = 3$ and $\lambda = {3 \choose 2} = 3$.
+Here, $b = {t \choose k} = {5 \choose 4} = 5$, and hence we can use the "naive" construction method from the notes, where we can form one block from each possible subset of $k=4$ treatments. This design will have $r = {4 \choose 3} = 4$ and $\lambda = {3 \choose 2} = 3$.
 
 ```{r naive-bibd-construction}
 bibd <- t(combn(1:5, 4))
