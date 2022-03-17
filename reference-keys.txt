@@ -78,6 +78,7 @@ fig:desilylation-me-plots
 def:two-factor-interaction
 tab:desilylation-2fi-interactions
 fig:desilylation-2fi-plots
+def:factorial-effects
 intro
 motivation
 aims-of-experimentation-and-some-examples
