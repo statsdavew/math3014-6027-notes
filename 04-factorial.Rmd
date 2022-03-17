@@ -155,7 +155,7 @@ Another contrast that could be of interest in Example \@ref(exm:factorial-desily
 $$
 \boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
 $$
-This contrast measures the different between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \@ref(tab:factorial-desilylation-data), we see this is comparing those treatments where `solvent` and `reagent` are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
+This contrast measures the difference between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \@ref(tab:factorial-desilylation-data), we see this is comparing those treatments where `solvent` and `reagent` are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
 
 Focusing on `reagent`, if the effect of this factor on the response was independent of the level to which `solvent` has been set, you would expect this contrast to be zero - changing from the high to low level of `reagent` should affect the response in the same way, regardless of the setting of `solvent`. This argument can be reversed, focussing on the effect of `solvent`. Therefore, if this contrast is large, we say the two factors **interact**.
 
@@ -180,7 +180,7 @@ The **two-factor interaction** between factors $A$ and $B$ is defined as the ave
 \begin{align*}
 \mbox{Int}(A, B) & = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
 & = \frac{1}{2}\left\{\mbox{ME}(B \mid A+) - \mbox{ME}(B \mid A-)\right\} \\
-& = \frac{1}{2}\left\{\bar{y}(A+, B+) - \bar{y}(A-, B+) + \bar{y}(A+, B-) - \bar{y}(A-, B-)\right\}\,,
+& = \frac{1}{2}\left\{\bar{y}(A+, B+) - \bar{y}(A-, B+) - \bar{y}(A+, B-) + \bar{y}(A-, B-)\right\}\,,
 \end{align*}
 
 where $\bar{y}(A+, B-)$ is the average response when factor $A$ is set to its high level and factor $B$ is set to its low level, averaged across all combinations of levels of the other factors, and other averages are defined similarly. The conditional main effects of factor $A$ when factor $B$ is set to its high level is defined as
@@ -265,11 +265,11 @@ Higher order interactions can be defined similarly, as average differences in lo
 where 
 
 $$
-\mbox{Int}(A, B \mid C+) = \frac{1}{2}\left\{\bar{y}(A+, B+, C+) - \bar{y}(A-, B+, C+) + \bar{y}(A+, B-, C+) - \bar{y}(A-, B-, C+)\right\}
+\mbox{Int}(A, B \mid C+) = \frac{1}{2}\left\{\bar{y}(A+, B+, C+) - \bar{y}(A-, B+, C+) - \bar{y}(A+, B-, C+) + \bar{y}(A-, B-, C+)\right\}
 $$
 is the interaction between factors $A$ and $B$ using only those treatments where factor $C$ is set to it's high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.
 
-::: {.definition #factorial effects}
+::: {.definition #factorial-effects}
 A **factorial effect** is a main effect or interaction contrast defined on a factorial experiment. For a $2^f$ factorial experiment with $f$ factors, there are $2^f-1$ factorial effects, ranging from main effects to the interaction between all $f$ factors.
 :::
 
@@ -287,3 +287,26 @@ t(factorial_contrasts) %*% yield
 factorial_contrasts.emmc <- function(levs) data.frame(factorial_contrasts)
 emmeans::contrast(desilylation.emm, 'factorial_contrasts')
 ```
+
+<!--
+## Normal effect plots for unreplicated factorial designs {#unreplicated-normal-plots}
+
+The lack of an estmate for $\sigma^2$ means alternatives to formal inference methods (e.g. hypothesis tests) must be found to assess the size of factorial effects. We will discuss a method that essentially treats the identification of large factorial effects as an outlier identification problem.
+
+Let $\theta_j$ be the $j$th factorial effect, with $\theta_j = \sum_{i=1}^tc_{ij}\tau_i$ for $\boldsymbol{c}_j^{\mathrm{T}} = (c_{1j}, \ldots, c_{tj})$ a vector of factorial contrast coefficients (defining a main effect or interaction). Then the estimator
+
+$$
+\hat{\theta}_j \sim N\left(\theta_j, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,,
+$$
+for $j = 1,\ldots, 2^f$. Further more, for $l, j = 1, \ldots 2^f-1; \, j\ne l$,
+
+\begin{align*}
+\mbox{cov}(\hat{\theta}_j, \hat{\theta}_l) & =  \mbox{cov}\left(\sum_{i=1}^tc_{ij}\bar{y}_{i.}, \sum_{i=1}^tc_{il}\bar{y}_{i.}\right) \\
+& = \sum_{i=1}^tc_{ij}c_{il}\mbox{var}(\bar{y}_{i.}) \\
+& = \frac{\sigma^2}{r} \sum_{i=1}^tc_{ij}c_{il} \\
+& = 0\,, \\
+\end{align*}
+
+as $\sum_{i=1}^tc_{ij}c_{il} = 0$ for $j\ne l$. That is, the factorial contrasts are independent as the contrast cofficient vectors are orthogonal.
+-->
+
