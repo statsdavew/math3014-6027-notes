@@ -610,8 +610,8 @@ For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are signi
 i. The unit-block-treatment model for this RCBD is given by
 
     \begin{equation}
-y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,,
-(\#eq:exercises-rcbd-model)
+    y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,,
+    (\#eq:exercises-rcbd-model)
     \end{equation}
 
     where $y_{ij}$ is the yield from the application of catalyst $j$ to block $i$, $\mu$ is a constant parameter, $\beta_i$ is the effect of block $i$ and $\tau_j$ is the effect of treatment $j$. The errors follow a normal distribution $\varepsilon_{ij}\sim N(0, \sigma^2)$ with mean 0 and constant variance, and are assumed independent for different experimental units.
