@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -216,7 +216,11 @@ div.csl-indent {
 <li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
 <li class="chapter" data-level="4.1.2" data-path="factorial.html"><a href="factorial.html#interactions"><i class="fa fa-check"></i><b>4.1.2</b> Interactions</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.2</b> Normal effect plots for unreplicated factorial designs</a></li>
+<li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#three-principles-for-factorial-effects"><i class="fa fa-check"></i><b>4.2</b> Three principles for factorial effects</a></li>
+<li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="factorial.html"><a href="factorial.html#lenths-method-for-approximate-hypothesis-testing"><i class="fa fa-check"></i><b>4.3.1</b> Lenth’s method for approximate hypothesis testing</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
@@ -794,14 +798,14 @@ N &amp; = J_{t \times b}
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="blocking.html#cb78-1" aria-hidden="true" tabindex="-1"></a>larger.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">b =</span> <span class="dv">14</span>, <span class="at">r =</span> <span class="dv">7</span>, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">lambda =</span> <span class="dv">3</span>) </span>
 <span id="cb78-2"><a href="blocking.html#cb78-2" aria-hidden="true" tabindex="-1"></a>larger.bibd<span class="sc">$</span>N</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    1    0    0    1    0    1    0     0     0     1     1     1
+## [1,]    0    0    1    0    1    1    0    1    0     0     0     1     1     1
 ## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    0    1    0    0    1    1    0    1    1     1     1     0     0     0
+## [3,]    0    0    0    1    1    1    0    1    1     1     1     0     0     0
 ## [4,]    0    1    1    1    1    0    1    0    1     0     0     0     0     1
 ## [5,]    1    1    0    1    1    0    0    0    0     0     1     1     1     0
-## [6,]    1    0    1    0    1    0    1    1    0     1     0     1     0     0
-## [7,]    1    0    0    1    0    1    1    1    0     0     1     0     0     1
-## [8,]    1    0    1    1    0    1    0    0    1     1     0     0     1     0</code></pre>
+## [6,]    1    0    1    1    0    0    1    1    0     1     0     1     0     0
+## [7,]    1    1    0    0    0    1    1    1    0     0     1     0     0     1
+## [8,]    1    1    1    0    0    1    0    0    1     1     0     0     1     0</code></pre>
 <p>Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with <span class="math inline">\(b = {t \choose k} = {8 \choose 4} = 70\)</span> blocks.</p>
 </div>
 <div id="reduced-normal-equations" class="section level3" number="3.6.2">
@@ -948,8 +952,8 @@ Recalling that <span class="math inline">\(NN^{\mathrm{T}}\)</span> is the treat
 <ol style="list-style-type: lower-roman">
 <li><p>The unit-block-treatment model for this RCBD is given by</p>
 <p><span class="math display" id="eq:exercises-rcbd-model">\[\begin{equation}
-y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,,
-\tag{3.14}
+ y_{ij} = \mu + \beta_i + \tau_j + \varepsilon_{ij}\,\qquad i = 1, \ldots, 6; j = \mathrm{A}, \mathrm{B}\,,
+ \tag{3.14}
  \end{equation}\]</span></p>
 <p>where <span class="math inline">\(y_{ij}\)</span> is the yield from the application of catalyst <span class="math inline">\(j\)</span> to block <span class="math inline">\(i\)</span>, <span class="math inline">\(\mu\)</span> is a constant parameter, <span class="math inline">\(\beta_i\)</span> is the effect of block <span class="math inline">\(i\)</span> and <span class="math inline">\(\tau_j\)</span> is the effect of treatment <span class="math inline">\(j\)</span>. The errors follow a normal distribution <span class="math inline">\(\varepsilon_{ij}\sim N(0, \sigma^2)\)</span> with mean 0 and constant variance, and are assumed independent for different experimental units.</p></li>
 <li><p>To test if there is a difference between catalysts, we compare model <a href="blocking.html#eq:exercises-rcbd-model">(3.14)</a> with the model that only includes block effects:</p>
@@ -1214,7 +1218,7 @@ Figure 3.6: Blackcurrent experiment: Normal probability plot for standardised re
 <summary>
 <b>Solution</b>
 </summary>
-<p>Here, <span class="math inline">\(b = {t \choose k} = {5 \choose 4} = 5\)</span>, and hence we can use the “naive” construction method from the notes, where we can form one block from each possible subset of <span class="math inline">\(k=4\)</span> treatments. This design will have <span class="math inline">\(r = {4 \choose 3} = 3\)</span> and <span class="math inline">\(\lambda = {3 \choose 2} = 3\)</span>.</p>
+<p>Here, <span class="math inline">\(b = {t \choose k} = {5 \choose 4} = 5\)</span>, and hence we can use the “naive” construction method from the notes, where we can form one block from each possible subset of <span class="math inline">\(k=4\)</span> treatments. This design will have <span class="math inline">\(r = {4 \choose 3} = 4\)</span> and <span class="math inline">\(\lambda = {3 \choose 2} = 3\)</span>.</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="blocking.html#cb100-1" aria-hidden="true" tabindex="-1"></a>bibd <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">combn</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">4</span>))</span>
 <span id="cb100-2"><a href="blocking.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(bibd) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;Block&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
 <span id="cb100-3"><a href="blocking.html#cb100-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(bibd, <span class="at">caption =</span> <span class="st">&quot;BIBD for $t = 5$ treatments in $b=5$ blocks of size $k=4$.&quot;</span>)</span></code></pre></div>

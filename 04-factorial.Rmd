@@ -285,20 +285,43 @@ t(factorial_contrasts) %*% yield
 
 ## using emmeans
 factorial_contrasts.emmc <- function(levs) data.frame(factorial_contrasts)
-emmeans::contrast(desilylation.emm, 'factorial_contrasts')
+desilylation.effs <- emmeans::contrast(desilylation.emm, 'factorial_contrasts')
+desilylation.effs
 ```
 
-<!--
+## Three principles for factorial effects
+
+Empirical study of many experiments [@BoxMeyer1986; Li2006] have demonstrated that the following three principles **often** hold when analysing factorial experiments.
+
+
+::: {.definition #effect-hierarchy}
+**Effect hierarchy**: lower-order factorial effects are more likely to be important than higher-order effects; factorial effects of the same order are equally likely to be important.
+
+For example, we would anticipate more large main effects from the analysis of a factorial experiment than two-factor interactions.
+:::
+
+::: {.defintion #effect-sparsity}
+**Effect sparsity**: the number of large factorial effects is likely to be small, relative to the total number under study.
+
+This is sometimes called the **pareto principle**.
+:::
+
+::: {.definition #effect-heredity}
+**Effect heredity**: interactions are more likely to be important if at least one parent factor also has a large main effect.
+:::
+
+These three principles will provide us with some useful guidelines when analysing, and eventually constructing, factorial experiments.
+
 ## Normal effect plots for unreplicated factorial designs {#unreplicated-normal-plots}
 
 The lack of an estmate for $\sigma^2$ means alternatives to formal inference methods (e.g. hypothesis tests) must be found to assess the size of factorial effects. We will discuss a method that essentially treats the identification of large factorial effects as an outlier identification problem.
 
-Let $\theta_j$ be the $j$th factorial effect, with $\theta_j = \sum_{i=1}^tc_{ij}\tau_i$ for $\boldsymbol{c}_j^{\mathrm{T}} = (c_{1j}, \ldots, c_{tj})$ a vector of factorial contrast coefficients (defining a main effect or interaction). Then the estimator
+Let $\hat{\theta}_j$ be the $j$th estimated factorial effect, with $\hat{\theta}_j = \sum_{i=1}^tc_{ij}\bar{y}_{i.}$ for $\boldsymbol{c}_j^{\mathrm{T}} = (c_{1j}, \ldots, c_{tj})$ a vector of factorial contrast coefficients (defining a main effect or interaction). Then the estimator follows a normal distribution
 
 $$
 \hat{\theta}_j \sim N\left(\theta_j, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,,
 $$
-for $j = 1,\ldots, 2^f$. Further more, for $l, j = 1, \ldots 2^f-1; \, j\ne l$,
+for $\theta_j$ the true, unknown, value of the factorial effect, $j = 1,\ldots, 2^f$. Further more, for $j, l = 1, \ldots 2^f-1; \, j\ne l$,
 
 \begin{align*}
 \mbox{cov}(\hat{\theta}_j, \hat{\theta}_l) & =  \mbox{cov}\left(\sum_{i=1}^tc_{ij}\bar{y}_{i.}, \sum_{i=1}^tc_{il}\bar{y}_{i.}\right) \\
@@ -307,6 +330,78 @@ for $j = 1,\ldots, 2^f$. Further more, for $l, j = 1, \ldots 2^f-1; \, j\ne l$,
 & = 0\,, \\
 \end{align*}
 
-as $\sum_{i=1}^tc_{ij}c_{il} = 0$ for $j\ne l$. That is, the factorial contrasts are independent as the contrast cofficient vectors are orthogonal.
--->
+as $\sum_{i=1}^tc_{ij}c_{il} = 0$ for $j\ne l$. That is, the factorial contrasts are independent as the contrast coefficient vectors are orthogonal.
 
+Hence, under the null hypothesis $H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0$ (all factorial effects are zero), the $\hat{theta}_j$ form a sample from **independent** normally distributed random variables from the distribution
+
+\begin{equation}
+\hat{\theta}_j \sim N\left(0, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,.
+(\#eq:npph0)
+\end{equation}
+
+To assess evidence against $H_0$, we can plot the ordered estimates of the factorial effects against the ordered quantiles of a standard normal distribution. Under $H_0$, the points in this plot should lie on a straightline (the slope of the line will depend on the unknown $\sigma^2$). We anticipate that the majority of the effects will be small (*effect sparsity*), and hence any large effects that lie away from the line are unlikely to come from distribution \@ref(eq:npph0) and may be significantly different from zero. We have essentially turned the problem into an outlier identification problem.
+
+For Example \@ref(exm:factorial-desilylation), we can easily produce this plot in `R`. Table \@ref(tab:desilylation-effects-plot1) gives the ordered factorial effects, which are then plotted against standard normal quantiles in Figure \@ref(fig:desilylation-effects-plot1).
+
+```{r desilylation-effects-plot1, fig.align = 'center', fig.cap = 'Desilylation experiment: normal effects plot', results = 'hold', fig.show = 'hold'}
+effs <- dplyr::arrange(transform(desilylation.effs)[,1:2], dplyr::desc(estimate))
+knitr::kable(effs, caption = "Desilylation experiment: sorted estimated factorial effects")
+par(pty = "s")
+qqnorm(sort(effs[ ,2]), ylab = "Factorial effects", main = "")
+qqline(sort(effs[ ,2]))
+```
+In fact, it is more usual to use a **half-normal** plot to assess the size of factorial effects, where we plot the sorted absolute values of the estimated effects against the quantiles of a half-normal distribution^[The absolute value of a normally distributed random variable follows a half-normal distribution.]
+
+```{r desilylation-half-normal-plot, fig.align = 'center', fig.cap = 'Desilylation experiment: half-normal effects plot'}
+p <- .5 + .5 * (1:16 - .5) /16 # probabilities we will plot against
+qqplot(x = qnorm(p), y = sort(abs(effs[,2])), ylab = "Factorial effects", 
+       xlab = "Half-normal quantiles")
+```
+
+The advantage of a half-normal plot such as Figure \@ref(fig:desilylation-half-normal-plot) is that we only need to look at effects appearing in the top right corner (significant effects will always appear "above" a hypothetical straight line) and we do not need to worry about comparing large positive and negative values. For these reason, they are usually preferred over normal plots.
+
+For the desilylation experiment, we can see the effects fall into three groups: one effect standing well away from the line, and almost certainly significant (`temp`, from Table \@ref(desilylation-effects-plot1)), then a group of six effects (`reagent`, `time`, `temp.solvent`, `solvent`, `temp.time`, `temp.reagent`) which may be significant, and then a group of 8 much smaller effects. 
+
+### Lenth's method for approximate hypothesis testing
+
+The assessment of normal or half-normal effect plots can be quite subjective. @Lenth1989 introduced a simple method for conducting more formal hypothesis testing in unreplicated factorial experiments.
+
+Lenth's method uses a **pseudo standard error** (PSE):
+
+$$
+\mbox{PSE} = 1.5 \times \mbox{median}_{|\hat{\theta}_i| < 2.5s_0}|\hat{\theta}_i|\,,
+$$
+where $s_0 = 1.5\times \mbox{median} |\hat{\theta}_i|$ is a *consistent*^[Essentially, $s_0$ tends in probability to $\sigma$ as the number of factorial effects tends to infinity.] estimator of the standard deviation of the $\hat{\theta}_i$ under $H_0: \theta_1 = \cdots=\theta_{2^f-1}=0$. The PSE trims approximately 1%^[Under $H_0$, the $\hat{\theta}_i$ come from a mean-zero normal distribution, and about 1% of deviates fall outside $\pm 2.57\sigma^2$.] of the $\hat{\theta}_i$ to produce a **robust** estimator of the standard deviation, in the sense that it is not influenced by large $\hat{\theta}_i$ belonging to important effects.
+
+For Example \@ref(exm:factorial-desilylation), we can construct the PSE as follows.
+
+```{r desilylation-pse}
+s0 <- 1.5 * median(abs(effs[, 2]))
+trimmed <- abs(effs[, 2]) < 2.5 * s0
+pse <- 1.5 * median(abs(effs[trimmed, 2]))
+pse
+```
+
+The PSE can be used to construct test statistics
+
+$$
+t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
+$$
+
+which mimic the usual $t$-statistics used when an estimate of $\sigma^2$ is available. These quantities can be compared to reference distribution which was tabulated by @Lenth1989 and simulated in `R` using the `unrepx` package.
+
+```{r desilylation-lenth}
+eff_est <- effs[, 2]
+names(eff_est) <- effs[, 1]
+lenth_tests <- unrepx::eff.test(eff_est, method = "Lenth")
+knitr::kable(lenth_tests, caption = "Desilylation experiment: hypothesis tests using Lenth's method.")
+```
+
+The function `eff.test` calculates unadjusted p-values (`p.value`) and simultaneous p-values (`simult.pval`) adjusted to account for multiple testing. Using the latter, from Table \@ref(tab:desilylation-lenth) we see that the main effects of `temp` and `reagent` are significant at the experiment-wise 5% level and, obeying *effect heredity*, their interaction (the p-value is borderline, and hovers around 0.05 depending on simulation error). 
+
+The package `unrepx` also provides the function `hnplot` to display these results graphically by adding a reference line to a half-normal plot; see Figure \@ref(fig:desilylation-lenth-plot). The `ME` and `SME` lines indicate the absolute size of effects that would be required to reject $H_0: \theta_i = 0$ at an individual or experimentwise $100\alpha$% level, respectively.
+
+```{r desilylation-lenth-plot, fig.cap = "Desilylation experiment: half-normal plot with reference lines from Lenth's method."}
+unrepx::hnplot(eff_est, method = "Lenth", horiz = F, ID = 2.7, alpha = 0.05)
+```
+Informally, factorial effects with estimates greater than `SME` are thought highly likely to be significant, and effects between `ME` and `SME` are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).
