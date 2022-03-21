@@ -79,6 +79,14 @@ def:two-factor-interaction
 tab:desilylation-2fi-interactions
 fig:desilylation-2fi-plots
 def:factorial-effects
+def:effect-hierarchy
+def:effect-heredity
+eq:npph0
+tab:desilylation-effects-plot1
+fig:desilylation-effects-plot1
+fig:desilylation-half-normal-plot
+tab:desilylation-lenth
+fig:desilylation-lenth-plot
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -118,6 +126,9 @@ factorial
 factorial-contrasts
 main-effects
 interactions
+three-principles-for-factorial-effects
+unreplicated-normal-plots
+lenths-method-for-approximate-hypothesis-testing
 block-factorial
 fractional-factorial
 response-surface-methodology
