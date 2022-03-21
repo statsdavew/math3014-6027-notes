@@ -737,6 +737,13 @@
       "Repository": "CRAN",
       "Hash": "130fe4c61e55b271a2655b3a284a205f"
     },
+    "unrepx": {
+      "Package": "unrepx",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8d19a0c8af6cf49ac20ddeae8a859bb6"
+    },
     "utf8": {
       "Package": "utf8",
       "Version": "1.2.2",
