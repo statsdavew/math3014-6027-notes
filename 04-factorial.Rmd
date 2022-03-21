@@ -332,7 +332,7 @@ for $\theta_j$ the true, unknown, value of the factorial effect, $j = 1,\ldots, 
 
 as $\sum_{i=1}^tc_{ij}c_{il} = 0$ for $j\ne l$. That is, the factorial contrasts are independent as the contrast coefficient vectors are orthogonal.
 
-Hence, under the null hypothesis $H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0$ (all factorial effects are zero), the $\hat{theta}_j$ form a sample from **independent** normally distributed random variables from the distribution
+Hence, under the null hypothesis $H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0$ (all factorial effects are zero), the $\hat{\theta}_j$ form a sample from **independent** normally distributed random variables from the distribution
 
 \begin{equation}
 \hat{\theta}_j \sim N\left(0, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,.
