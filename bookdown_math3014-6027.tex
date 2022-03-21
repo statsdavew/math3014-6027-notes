@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-03-20}
+\date{2022-03-21}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -907,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "Milk first"
-## [6] "Milk first" "Milk first" "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Tea first" 
+## [6] "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -921,7 +921,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -932,7 +932,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3163,10 +3163,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
+## [1,]    1    1    0    1
 ## [2,]    0    1    1    1
 ## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3180,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    0    0    0    1    0    1    0     0     1     1     1     1
-## [2,]    0    1    0    0    0    0    1    0    1     1     0     1     1     1
-## [3,]    0    0    0    0    1    1    1    1    1     1     1     0     0     0
-## [4,]    1    1    0    1    1    1    1    0    0     0     0     0     0     1
-## [5,]    0    0    1    1    1    0    0    0    0     1     1     0     1     1
-## [6,]    0    1    1    1    0    1    0    0    1     0     1     1     0     0
-## [7,]    1    1    1    0    1    0    0    1    1     0     0     0     1     0
-## [8,]    1    0    1    1    0    0    1    1    0     1     0     1     0     0
+## [1,]    1    0    1    0    1    1    0    0    1     1     0     0     0     1
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    1    0    0    0    1    1    1    0    0     0     1     1     1     0
+## [4,]    1    0    1    1    0    0    1    1    0     0     0     0     1     1
+## [5,]    1    1    1    1    0    0    0    0    0     1     1     1     0     0
+## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
+## [7,]    0    1    0    1    1    0    1    0    1     0     0     1     0     1
+## [8,]    0    1    0    1    1    1    0    1    0     1     0     0     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4527,7 +4527,7 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 \hypertarget{three-principles-for-factorial-effects}{%
 \section{Three principles for factorial effects}\label{three-principles-for-factorial-effects}}
 
-Empirical study of many experiments {[}\citet{BoxMeyer1986}; Li2006{]} have demonstrated that the following three principles \textbf{often} hold when analysing factorial experiments.
+Empirical study of many experiments \citep{BoxMeyer1986, Li2006} have demonstrated that the following three principles \textbf{often} hold when analysing factorial experiments.
 
 \begin{definition}
 \protect\hypertarget{def:effect-hierarchy}{}\label{def:effect-hierarchy}
@@ -4588,7 +4588,6 @@ For Example \ref{exm:factorial-desilylation}, we can easily produce this plot in
 \begin{Highlighting}[]
 \NormalTok{effs }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}\FunctionTok{transform}\NormalTok{(desilylation.effs)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], dplyr}\SpecialCharTok{::}\FunctionTok{desc}\NormalTok{(estimate))}
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(effs, }\AttributeTok{caption =} \StringTok{"Desilylation experiment: sorted estimated factorial effects"}\NormalTok{)}
-\FunctionTok{par}\NormalTok{(}\AttributeTok{pty =} \StringTok{"s"}\NormalTok{)}
 \FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{sort}\NormalTok{(effs[ ,}\DecValTok{2}\NormalTok{]), }\AttributeTok{ylab =} \StringTok{"Factorial effects"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
 \FunctionTok{qqline}\NormalTok{(}\FunctionTok{sort}\NormalTok{(effs[ ,}\DecValTok{2}\NormalTok{]))}
 \end{Highlighting}
@@ -4649,7 +4648,7 @@ In fact, it is more usual to use a \textbf{half-normal} plot to assess the size 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{5} \SpecialCharTok{+}\NormalTok{ .}\DecValTok{5} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16} \SpecialCharTok{{-}}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{/}\DecValTok{16} \CommentTok{\# probabilities we will plot against}
-\FunctionTok{qqplot}\NormalTok{(}\AttributeTok{x =} \FunctionTok{qnorm}\NormalTok{(p), }\AttributeTok{y =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{abs}\NormalTok{(effs[,}\DecValTok{2}\NormalTok{])), }\AttributeTok{ylab =} \StringTok{"Factorial effects"}\NormalTok{, }
+\FunctionTok{qqplot}\NormalTok{(}\AttributeTok{x =} \FunctionTok{qnorm}\NormalTok{(p), }\AttributeTok{y =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{abs}\NormalTok{(effs[,}\DecValTok{2}\NormalTok{])), }\AttributeTok{ylab =} \StringTok{"Absolute factorial effects"}\NormalTok{, }
        \AttributeTok{xlab =} \StringTok{"Half{-}normal quantiles"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4719,35 +4718,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0039 & 0.0341\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0030 & 0.0289\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0058 & 0.0532\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0045 & 0.0416\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0077 & 0.0709\\
+time & 2.5675 & 0.66 & 3.890 & 0.0060 & 0.0570\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0105 & 0.0979\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0087 & 0.0821\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0105 & 0.0979\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0087 & 0.0821\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0127 & 0.1174\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0111 & 0.1042\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3057 & 0.9963\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3022 & 0.9955\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4315 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4274 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5398 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5387 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7331 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7306 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7411 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7382 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7870 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7833 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7896 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7858 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9685 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9648 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
