@@ -291,7 +291,7 @@ desilylation.effs
 
 ## Three principles for factorial effects
 
-Empirical study of many experiments [@BoxMeyer1986; Li2006] have demonstrated that the following three principles **often** hold when analysing factorial experiments.
+Empirical study of many experiments [@BoxMeyer1986; @Li2006] have demonstrated that the following three principles **often** hold when analysing factorial experiments.
 
 
 ::: {.definition #effect-hierarchy}
@@ -346,7 +346,6 @@ For Example \@ref(exm:factorial-desilylation), we can easily produce this plot i
 ```{r desilylation-effects-plot1, fig.align = 'center', fig.cap = 'Desilylation experiment: normal effects plot', results = 'hold', fig.show = 'hold'}
 effs <- dplyr::arrange(transform(desilylation.effs)[,1:2], dplyr::desc(estimate))
 knitr::kable(effs, caption = "Desilylation experiment: sorted estimated factorial effects")
-par(pty = "s")
 qqnorm(sort(effs[ ,2]), ylab = "Factorial effects", main = "")
 qqline(sort(effs[ ,2]))
 ```
@@ -354,7 +353,7 @@ In fact, it is more usual to use a **half-normal** plot to assess the size of fa
 
 ```{r desilylation-half-normal-plot, fig.align = 'center', fig.cap = 'Desilylation experiment: half-normal effects plot'}
 p <- .5 + .5 * (1:16 - .5) /16 # probabilities we will plot against
-qqplot(x = qnorm(p), y = sort(abs(effs[,2])), ylab = "Factorial effects", 
+qqplot(x = qnorm(p), y = sort(abs(effs[,2])), ylab = "Absolute factorial effects", 
        xlab = "Half-normal quantiles")
 ```
 

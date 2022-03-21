@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-20" />
+<meta name="date" content="2022-03-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -972,7 +972,7 @@ is the interaction between factors <span class="math inline">\(A\)</span> and <s
 </div>
 <div id="three-principles-for-factorial-effects" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Three principles for factorial effects</h2>
-<p>Empirical study of many experiments [<span class="citation"><a href="#ref-BoxMeyer1986" role="doc-biblioref">Box and Meyer</a> (<a href="#ref-BoxMeyer1986" role="doc-biblioref">1986</a>)</span>; Li2006] have demonstrated that the following three principles <strong>often</strong> hold when analysing factorial experiments.</p>
+<p>Empirical study of many experiments <span class="citation">(<a href="#ref-BoxMeyer1986" role="doc-biblioref">Box and Meyer, 1986</a>; <a href="#ref-Li2006" role="doc-biblioref">Li <em>et al.</em>, 2006</a>)</span> have demonstrated that the following three principles <strong>often</strong> hold when analysing factorial experiments.</p>
 <div class="definition">
 <p><span id="def:effect-hierarchy" class="definition"><strong>Definition 4.4  </strong></span><strong>Effect hierarchy</strong>: lower-order factorial effects are more likely to be important than higher-order effects; factorial effects of the same order are equally likely to be important.</p>
 <p>For example, we would anticipate more large main effects from the analysis of a factorial experiment than two-factor interactions.</p>
@@ -1010,9 +1010,8 @@ for <span class="math inline">\(\theta_j\)</span> the true, unknown, value of th
 <p>For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, we can easily produce this plot in <code>R</code>. Table <a href="factorial.html#tab:desilylation-effects-plot1">4.4</a> gives the ordered factorial effects, which are then plotted against standard normal quantiles in Figure <a href="factorial.html#fig:desilylation-effects-plot1">4.3</a>.</p>
 <div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="factorial.html#cb130-1" aria-hidden="true" tabindex="-1"></a>effs <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">transform</span>(desilylation.effs)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], dplyr<span class="sc">::</span><span class="fu">desc</span>(estimate))</span>
 <span id="cb130-2"><a href="factorial.html#cb130-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(effs, <span class="at">caption =</span> <span class="st">&quot;Desilylation experiment: sorted estimated factorial effects&quot;</span>)</span>
-<span id="cb130-3"><a href="factorial.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
-<span id="cb130-4"><a href="factorial.html#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">sort</span>(effs[ ,<span class="dv">2</span>]), <span class="at">ylab =</span> <span class="st">&quot;Factorial effects&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb130-5"><a href="factorial.html#cb130-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">sort</span>(effs[ ,<span class="dv">2</span>]))</span></code></pre></div>
+<span id="cb130-3"><a href="factorial.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">sort</span>(effs[ ,<span class="dv">2</span>]), <span class="at">ylab =</span> <span class="st">&quot;Factorial effects&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb130-4"><a href="factorial.html#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">sort</span>(effs[ ,<span class="dv">2</span>]))</span></code></pre></div>
 <table>
 <caption><span id="tab:desilylation-effects-plot1">Table 4.4: </span>Desilylation experiment: sorted estimated factorial effects</caption>
 <thead>
@@ -1092,7 +1091,7 @@ Figure 4.3: Desilylation experiment: normal effects plot
 </div>
 <p>In fact, it is more usual to use a <strong>half-normal</strong> plot to assess the size of factorial effects, where we plot the sorted absolute values of the estimated effects against the quantiles of a half-normal distribution<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a></p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="factorial.html#cb131-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> .<span class="dv">5</span> <span class="sc">+</span> .<span class="dv">5</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span> <span class="sc">-</span> .<span class="dv">5</span>) <span class="sc">/</span><span class="dv">16</span> <span class="co"># probabilities we will plot against</span></span>
-<span id="cb131-2"><a href="factorial.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqplot</span>(<span class="at">x =</span> <span class="fu">qnorm</span>(p), <span class="at">y =</span> <span class="fu">sort</span>(<span class="fu">abs</span>(effs[,<span class="dv">2</span>])), <span class="at">ylab =</span> <span class="st">&quot;Factorial effects&quot;</span>, </span>
+<span id="cb131-2"><a href="factorial.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqplot</span>(<span class="at">x =</span> <span class="fu">qnorm</span>(p), <span class="at">y =</span> <span class="fu">sort</span>(<span class="fu">abs</span>(effs[,<span class="dv">2</span>])), <span class="at">ylab =</span> <span class="st">&quot;Absolute factorial effects&quot;</span>, </span>
 <span id="cb131-3"><a href="factorial.html#cb131-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Half-normal quantiles&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:desilylation-half-normal-plot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/desilylation-half-normal-plot-1.png" alt="Desilylation experiment: half-normal effects plot" width="672" />
@@ -1143,48 +1142,48 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">8.1200</td>
 <td align="right">0.66</td>
 <td align="right">12.303</td>
-<td align="right">0.0000</td>
-<td align="right">0.0004</td>
+<td align="right">0.0001</td>
+<td align="right">0.0011</td>
 </tr>
 <tr class="even">
 <td align="left">reagent</td>
 <td align="right">3.0875</td>
 <td align="right">0.66</td>
 <td align="right">4.678</td>
-<td align="right">0.0039</td>
-<td align="right">0.0375</td>
+<td align="right">0.0041</td>
+<td align="right">0.0352</td>
 </tr>
 <tr class="odd">
 <td align="left">temp.reagent</td>
 <td align="right">-2.7725</td>
 <td align="right">0.66</td>
 <td align="right">-4.201</td>
-<td align="right">0.0055</td>
-<td align="right">0.0514</td>
+<td align="right">0.0060</td>
+<td align="right">0.0521</td>
 </tr>
 <tr class="even">
 <td align="left">time</td>
 <td align="right">2.5675</td>
 <td align="right">0.66</td>
 <td align="right">3.890</td>
-<td align="right">0.0075</td>
-<td align="right">0.0679</td>
+<td align="right">0.0076</td>
+<td align="right">0.0686</td>
 </tr>
 <tr class="odd">
 <td align="left">temp.solvent</td>
 <td align="right">2.3575</td>
 <td align="right">0.66</td>
 <td align="right">3.572</td>
-<td align="right">0.0101</td>
-<td align="right">0.0907</td>
+<td align="right">0.0103</td>
+<td align="right">0.0900</td>
 </tr>
 <tr class="even">
 <td align="left">temp.time</td>
 <td align="right">-2.3575</td>
 <td align="right">0.66</td>
 <td align="right">-3.572</td>
-<td align="right">0.0101</td>
-<td align="right">0.0907</td>
+<td align="right">0.0103</td>
+<td align="right">0.0900</td>
 </tr>
 <tr class="odd">
 <td align="left">solvent</td>
@@ -1192,22 +1191,22 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.66</td>
 <td align="right">-3.360</td>
 <td align="right">0.0129</td>
-<td align="right">0.1189</td>
+<td align="right">0.1136</td>
 </tr>
 <tr class="even">
 <td align="left">time.reagent</td>
 <td align="right">-0.6450</td>
 <td align="right">0.66</td>
 <td align="right">-0.977</td>
-<td align="right">0.3047</td>
-<td align="right">0.9948</td>
+<td align="right">0.3034</td>
+<td align="right">0.9959</td>
 </tr>
 <tr class="odd">
 <td align="left">solvent.reagent</td>
 <td align="right">0.4900</td>
 <td align="right">0.66</td>
 <td align="right">0.742</td>
-<td align="right">0.4311</td>
+<td align="right">0.4275</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1215,7 +1214,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.4400</td>
 <td align="right">0.66</td>
 <td align="right">0.667</td>
-<td align="right">0.5393</td>
+<td align="right">0.5392</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1223,7 +1222,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.2450</td>
 <td align="right">0.66</td>
 <td align="right">0.371</td>
-<td align="right">0.7325</td>
+<td align="right">0.7327</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1231,7 +1230,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">-0.2375</td>
 <td align="right">0.66</td>
 <td align="right">-0.360</td>
-<td align="right">0.7410</td>
+<td align="right">0.7407</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1239,7 +1238,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.1950</td>
 <td align="right">0.66</td>
 <td align="right">0.295</td>
-<td align="right">0.7850</td>
+<td align="right">0.7838</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1247,7 +1246,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.1925</td>
 <td align="right">0.66</td>
 <td align="right">0.292</td>
-<td align="right">0.7875</td>
+<td align="right">0.7867</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1255,7 +1254,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">-0.0300</td>
 <td align="right">0.66</td>
 <td align="right">-0.045</td>
-<td align="right">0.9659</td>
+<td align="right">0.9657</td>
 <td align="right">1.0000</td>
 </tr>
 </tbody>
@@ -1281,6 +1280,9 @@ Box, G. E. P. and Meyer, R. D. (1986) An analysis of unreplicated fractional fac
 </div>
 <div id="ref-Lenth1989" class="csl-entry">
 Lenth, R. V. (1989) Quick and easy analysis of unreplicated factorials. <em>Technometrics</em>, <strong>31</strong>, 469–473.
+</div>
+<div id="ref-Li2006" class="csl-entry">
+Li, X., Sudarsanam, N. and Frey, D. D. (2006) Regularities in data from factorial experiments. <em>Complexity</em>, <strong>11</strong>, 32–45.
 </div>
 <div id="ref-Owen2001" class="csl-entry">
 Owen, M. R., Luscombe, C., Lai, L., et al. (2001) Efficiency by design: Optimisation in process research. <em>Organic Process Research and Development</em>, <strong>5</strong>, 308–323.
