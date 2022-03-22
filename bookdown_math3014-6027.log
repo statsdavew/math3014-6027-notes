@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.12.11)  22 MAR 2022 13:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.12.11)  22 MAR 2022 15:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -775,7 +775,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [17] [18] [19]
 Overfull \hbox (47.49896pt too wide) in paragraph at lines 892--892
- []\T1/lmtt/m/n/10 ## [1] "Tea first"  "Milk first" "Milk first" "Milk first" "
+ []\T1/lmtt/m/n/10 ## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "
 Tea first"[] 
  []
 
@@ -1064,50 +1064,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [1,]    0    0    0    1    0    1    0    1    1     1   
-  1     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [1,]    1    1    0    1    0    1    0    1    0     0   
+  0     1     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    1    0    0     1   
+[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    0    1    1     1   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    0    1    1    1    1    1     0   
-  0     1     0     1[] 
+[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    1    0    1    1    0    0     1   
+  1     0     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    1    0    0    0     0   
+[]\T1/lmtt/m/n/10 ## [4,]    1    1    0    0    1    0    1    0    1     0   
   0     0     1     1[] 
  []
 
 [69]
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [5,]    0    1    1    0    1    0    0    0    1     0   
-  1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    0    1    0    0    0    0     1   
+  1     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    1    0    0    1    0    1     1   
-  0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    0    0    1    1    1    1     1   
+  0     0     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [7,]    1    1    1    0    0    1    0    1    0     1   
-  0     1     0     0[] 
+[]\T1/lmtt/m/n/10 ## [7,]    0    0    1    1    1    0    1    1    0     0   
+  1     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [8,]    1    1    0    1    1    0    1    1    0     0   
-  1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    0    0    1    1    1    1    0    0    1     0   
+  0     1     0     1[] 
  []
 
 [70] [71] [72]
@@ -1339,63 +1339,63 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [109 <./bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf>]
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##               (Intercept)                      temp       
-               time[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                      temp                      time       
+            solvent[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##               129434.4529                  263.7376       
-            26.3682[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                  263.7376                   26.3682       
+            19.6692[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##                   solvent                   reagent       
-          temp:time[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                   reagent                 temp:time       
+       temp:solvent[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##                   19.6692                   38.1306       
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                   38.1306                   22.2312       
             22.2312[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##              temp:solvent              temp:reagent       
-       time:solvent[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##              temp:reagent              time:solvent       
+       time:reagent[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##                   22.2312                   30.7470       
-             0.7744[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                   30.7470                    0.7744       
+             1.6641[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##              time:reagent           solvent:reagent       
-  temp:time:solvent[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##           solvent:reagent         temp:time:solvent       
+  temp:time:reagent[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##                    1.6641                    0.9604       
-             0.2401[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                    0.9604                    0.2401       
+             0.1521[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##         temp:time:reagent      temp:solvent:reagent      t
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##      temp:solvent:reagent      time:solvent:reagent temp:t
 ime:solvent:reagent[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 4941--4941
-[]\T1/lmtt/m/n/10 ##                    0.1521                    0.0036       
-             0.2256[] 
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 4939--4939
+[]\T1/lmtt/m/n/10 ##                    0.0036                    0.2256       
+             0.1482[] 
  []
 
 [110] [111] [112
@@ -1417,16 +1417,16 @@ Chapter 8.
 (./bookdown_math3014-6027.bbl [119] [120
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 4986.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 4984.
 [121]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 4986.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 4984.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 4986.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 4986.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 4984.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 4984.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 4986.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 4984.
  ) 
 Here is how much of TeX's memory you used:
  14898 strings out of 492649
@@ -1478,7 +1478,7 @@ ype1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/publi
 c/lm/lmtt8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtti1
 0.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (121 pages, 3676169 bytes).
+Output written on bookdown_math3014-6027.pdf (121 pages, 3676167 bytes).
 PDF statistics:
  1699 PDF objects out of 1728 (max. 8388607)
  1468 compressed objects within 15 object streams

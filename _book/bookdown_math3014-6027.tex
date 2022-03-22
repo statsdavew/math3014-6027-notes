@@ -887,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Milk first" "Tea first" 
-## [6] "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Tea first" 
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -912,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3111,10 +3111,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    0    1
+## [1,]    1    1    1    0
 ## [2,]    0    1    1    1
 ## [3,]    1    0    1    1
-## [4,]    1    1    1    0
+## [4,]    1    1    0    1
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3128,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    0    1    0    1    0    1    1     1     1     0     1     0
-## [2,]    1    0    0    0    0    0    1    0    0     1     1     1     1     1
-## [3,]    0    0    0    0    1    1    1    1    1     0     0     1     0     1
-## [4,]    1    0    1    1    1    1    0    0    0     0     0     0     1     1
-## [5,]    0    1    1    0    1    0    0    0    1     0     1     1     1     0
-## [6,]    0    1    1    1    0    0    1    0    1     1     0     0     0     1
-## [7,]    1    1    1    0    0    1    0    1    0     1     0     1     0     0
-## [8,]    1    1    0    1    1    0    1    1    0     0     1     0     0     0
+## [1,]    1    1    0    1    0    1    0    1    0     0     0     1     1     0
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    1    0    0    1    0    1    1    0    0     1     1     0     0     1
+## [4,]    1    1    0    0    1    0    1    0    1     0     0     0     1     1
+## [5,]    1    1    1    0    1    0    0    0    0     1     1     1     0     0
+## [6,]    0    1    1    0    0    1    1    1    1     1     0     0     0     0
+## [7,]    0    0    1    1    1    0    1    1    0     0     1     0     1     0
+## [8,]    0    0    1    1    1    1    0    0    1     0     0     1     0     1
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4666,35 +4666,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0011\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0036 & 0.0322\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0037 & 0.0337\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0056 & 0.0487\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0051 & 0.0476\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0080 & 0.0701\\
+time & 2.5675 & 0.66 & 3.890 & 0.0071 & 0.0682\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0105 & 0.0937\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0102 & 0.0967\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0105 & 0.0937\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0102 & 0.0967\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0129 & 0.1129\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0125 & 0.1166\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3065 & 0.9959\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3037 & 0.9936\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4303 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4296 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5396 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5393 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7336 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7300 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7413 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7374 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7853 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7834 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7876 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7856 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9660 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9665 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4921,23 +4921,21 @@ as \(X^{\mathrm{T}}X = nI_{2^f}\). Hence, the \(j\)th factorial effect contribut
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ss}
+\NormalTok{ss[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##               (Intercept)                      temp                      time 
-##               129434.4529                  263.7376                   26.3682 
-##                   solvent                   reagent                 temp:time 
-##                   19.6692                   38.1306                   22.2312 
-##              temp:solvent              temp:reagent              time:solvent 
-##                   22.2312                   30.7470                    0.7744 
-##              time:reagent           solvent:reagent         temp:time:solvent 
-##                    1.6641                    0.9604                    0.2401 
-##         temp:time:reagent      temp:solvent:reagent      time:solvent:reagent 
-##                    0.1521                    0.0036                    0.2256 
-## temp:time:solvent:reagent 
-##                    0.1482
+##                      temp                      time                   solvent 
+##                  263.7376                   26.3682                   19.6692 
+##                   reagent                 temp:time              temp:solvent 
+##                   38.1306                   22.2312                   22.2312 
+##              temp:reagent              time:solvent              time:reagent 
+##                   30.7470                    0.7744                    1.6641 
+##           solvent:reagent         temp:time:solvent         temp:time:reagent 
+##                    0.9604                    0.2401                    0.1521 
+##      temp:solvent:reagent      time:solvent:reagent temp:time:solvent:reagent 
+##                    0.0036                    0.2256                    0.1482
 \end{verbatim}
 
 \begin{Shaded}

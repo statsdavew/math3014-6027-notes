@@ -499,6 +499,6 @@ as $X^{\mathrm{T}}X = nI_{2^f}$. Hence, the $j$th factorial effect contributes $
 ss <- nrow(desilylation) * coef(desilylation_reg.lm)^2
 regss <- sum(ss) - nrow(desilylation) * mean(desilylation$yield)^2
 regss
-ss
+ss[-1]
 anova(desilylation_reg.lm)
 ```
