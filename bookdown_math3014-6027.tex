@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-03-21}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-03-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,10 +181,6 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
-
-\begin{verbatim}
-## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
-\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -699,8 +695,8 @@ Similarly, we can find the variance-covariance matrix of the fitted values:
 \textrm{Var}(\hat{Y})=\textrm{Var}(X\hat{\boldsymbol{\beta}})=X(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\sigma^{2}\,.
 \]
 
-\hypertarget{analysis-of-variance-and-r2-as-model-comparison}{%
-\subsection{\texorpdfstring{Analysis of Variance and R\(^{2}\) as Model Comparison}{Analysis of Variance and R\^{}\{2\} as Model Comparison}}\label{analysis-of-variance-and-r2-as-model-comparison}}
+\hypertarget{anova-revision}{%
+\subsection{\texorpdfstring{Analysis of Variance and R\(^{2}\) as Model Comparison}{Analysis of Variance and R\^{}\{2\} as Model Comparison}}\label{anova-revision}}
 
 To assess the goodness-of-fit of a model, we can use the residual sum of squares
 
@@ -784,27 +780,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -907,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Milk first" "Tea first" 
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -921,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -932,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1083,15 +1063,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1130,15 +1102,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1177,15 +1141,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2825,15 +2781,7 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Degrees of freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Sums of squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean square
-\end{minipage} \\
+Source & Degrees of freedom & Sums of squares & Mean square \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3180,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    1    0    1    1    0    0    1     1     0     0     0     1
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    1    0    0    0    1    1    1    0    0     0     1     1     1     0
-## [4,]    1    0    1    1    0    0    1    1    0     0     0     0     1     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     1     0     0
-## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
-## [7,]    0    1    0    1    1    0    1    0    1     0     0     1     0     1
-## [8,]    0    1    0    1    1    1    0    1    0     1     0     0     1     0
+## [1,]    0    0    0    1    0    1    0    1    1     1     1     0     1     0
+## [2,]    1    0    0    0    0    0    1    0    0     1     1     1     1     1
+## [3,]    0    0    0    0    1    1    1    1    1     0     0     1     0     1
+## [4,]    1    0    1    1    1    1    0    0    0     0     0     0     1     1
+## [5,]    0    1    1    0    1    0    0    0    1     0     1     1     1     0
+## [6,]    0    1    1    1    0    0    1    0    1     1     0     0     0     1
+## [7,]    1    1    1    0    0    1    0    1    0     1     0     1     0     0
+## [8,]    1    1    0    1    1    0    1    1    0     0     1     0     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4538,7 +4486,7 @@ For example, we would anticipate more large main effects from the analysis of a 
 
 \end{definition}
 
-\leavevmode\vadjust pre{\hypertarget{effect-sparsity}{}}%
+\leavevmode\hypertarget{effect-sparsity}{}%
 \textbf{Effect sparsity}: the number of large factorial effects is likely to be small, relative to the total number under study.
 
 This is sometimes called the \textbf{pareto principle}.
@@ -4573,7 +4521,7 @@ for \(\theta_j\) the true, unknown, value of the factorial effect, \(j = 1,\ldot
 
 as \(\sum_{i=1}^tc_{ij}c_{il} = 0\) for \(j\ne l\). That is, the factorial contrasts are independent as the contrast coefficient vectors are orthogonal.
 
-Hence, under the null hypothesis \(H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0\) (all factorial effects are zero), the \(\hat{theta}_j\) form a sample from \textbf{independent} normally distributed random variables from the distribution
+Hence, under the null hypothesis \(H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0\) (all factorial effects are zero), the \(\hat{\theta}_j\) form a sample from \textbf{independent} normally distributed random variables from the distribution
 
 \begin{equation}
 \hat{\theta}_j \sim N\left(0, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,.
@@ -4718,35 +4666,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0011\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0030 & 0.0289\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0036 & 0.0322\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0045 & 0.0416\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0056 & 0.0487\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0060 & 0.0570\\
+time & 2.5675 & 0.66 & 3.890 & 0.0080 & 0.0701\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0087 & 0.0821\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0105 & 0.0937\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0087 & 0.0821\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0105 & 0.0937\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0111 & 0.1042\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0129 & 0.1129\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3022 & 0.9955\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3065 & 0.9959\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4274 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4303 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5387 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5396 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7306 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7336 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7382 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7413 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7833 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7853 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7858 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7876 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9648 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9660 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4763,6 +4711,263 @@ The package \texttt{unrepx} also provides the function \texttt{hnplot} to displa
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/desilylation-lenth-plot-1.pdf}
 Informally, factorial effects with estimates greater than \texttt{SME} are thought highly likely to be significant, and effects between \texttt{ME} and \texttt{SME} are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).
+
+\hypertarget{regression-modelling-for-factorial-experiments}{%
+\section{Regression modelling for factorial experiments}\label{regression-modelling-for-factorial-experiments}}
+
+We have identified \(d = 2^f-1\) factorial effects that we wish to estimate from our experiment. As \(d < n = 2^fr\), even for an unreplicated design with \(r=1\), we can estimate these factorial effects using a full-rank linear regression model.
+
+Let \(t\times d\) matrix \(C\) hold each factorial contrast as a column. Then
+
+\[
+\hat{\boldsymbol{\theta}} = C^{\mathrm{T}}\bar{\boldsymbol{y}}\,,
+\]
+
+with \(\hat{\boldsymbol{\theta}}^{\mathrm{T}} = (\hat{\theta}_1, \ldots, \hat{\theta}_d)\) being the vector of estimated factorial effects and \(\bar{\boldsymbol{y}}^{\mathrm{T}} = (\bar{y}_{1.}, \ldots, \bar{y}_{t.})\) being the vector of treatment means.
+
+We can define an \(n\times d\) expanded contrast matrix as \(\tilde{C} = C \otimes \boldsymbol{1}_r\), where each row of \(\tilde{C}\) gives the contrast coefficients for each run of the experiment. Then,
+
+\[
+\hat{\boldsymbol{\theta}} = \frac{1}{r}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\,.
+\]
+To illustrate, we will imagine a hypothetical version of Example \ref{exm:factorial-desilylation} where each treatment was repeated three times (with \(y_{i1} = y_{i2} = y_{i3}\)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{kronecker}\NormalTok{(desilylation}\SpecialCharTok{$}\NormalTok{yield, }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)) }\CommentTok{\# hypothetical response vector}
+\NormalTok{C }\OtherTok{\textless{}{-}}\NormalTok{ factorial\_contrasts}
+\NormalTok{Ctilde }\OtherTok{\textless{}{-}} \FunctionTok{kronecker}\NormalTok{(C, }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\FunctionTok{t}\NormalTok{(Ctilde) }\SpecialCharTok{\%*\%}\NormalTok{ y }\SpecialCharTok{/} \DecValTok{3} \CommentTok{\# to check}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+##  [1,]  8.1200
+##  [2,]  2.5675
+##  [3,] -2.2175
+##  [4,]  3.0875
+##  [5,] -2.3575
+##  [6,]  2.3575
+##  [7,] -2.7725
+##  [8,]  0.4400
+##  [9,] -0.6450
+## [10,]  0.4900
+## [11,]  0.2450
+## [12,]  0.1950
+## [13,] -0.0300
+## [14,] -0.2375
+## [15,]  0.1925
+\end{verbatim}
+
+If we define a model matrix \(X = \frac{2^{f}}{2}\tilde{C}\), then \(X\) is a \(n\times d\) matrix with entries \(\pm 1\) and columns equal to unscaled factorial contrasts. Then
+
+\begin{align}
+\left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}& = \frac{1}{n} \times \frac{2^f}{2}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\label{eq:factorial-ls}\\
+& = \frac{1}{2r}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\\
+& = \frac{1}{2}\hat{\boldsymbol{\theta}}\,. \\
+\end{align}
+
+The left-hand side of equation \eqref{eq:factorial-ls} is the least squares estimator \(\hat{\boldsymbol{\beta}}\) from the model
+
+\[
+\boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + \boldsymbol{\varepsilon}\,,
+\]
+where \(\boldsymbol{y}\) is the response vector and \(\boldsymbol{\varepsilon}\) the error vector from unit-treatment model \eqref{eq:factorial-utm}. We have simply re-expressed the mean response as \(\mu + \tau_i = \beta_0 + \boldsymbol{x}_i^{\mathrm{T}}\boldsymbol{\beta}\), where \(d\)-vector \(\boldsymbol{x}_i\) holds the unscaled contrast coefficients for the main effects and interactions.
+
+We can illustrate these connections for Example \ref{exm:factorial-desilylation}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OtherTok{\textless{}{-}} \DecValTok{8} \SpecialCharTok{*}\NormalTok{ C}
+\NormalTok{Xt }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X)}
+\NormalTok{XtX }\OtherTok{\textless{}{-}}\NormalTok{ Xt }\SpecialCharTok{\%*\%}\NormalTok{ X}
+\DecValTok{2} \SpecialCharTok{*} \FunctionTok{solve}\NormalTok{(XtX) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ desilylation}\SpecialCharTok{$}\NormalTok{yield}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                              [,1]
+## temp                       8.1200
+## time                       2.5675
+## solvent                   -2.2175
+## reagent                    3.0875
+## temp:time                 -2.3575
+## temp:solvent               2.3575
+## temp:reagent              -2.7725
+## time:solvent               0.4400
+## time:reagent              -0.6450
+## solvent:reagent            0.4900
+## temp:time:solvent          0.2450
+## temp:time:reagent          0.1950
+## temp:solvent:reagent      -0.0300
+## time:solvent:reagent      -0.2375
+## temp:time:solvent:reagent  0.1925
+\end{verbatim}
+
+The more usual way to think about this modelling approach is as a regression model with \(f\) (quantitative\footnote{When qualitative factors only have two levels, each regression term only has 1 degree of freedom, and so there is practically little difference from a quantitative variable.}) variables, labelled \(x_1, \ldots, x_{2^f-1}\), scaled to lie in the interval \([-1, 1]\) (in fact, they just take values \(\pm 1\)). We can then fit a regression model in these variables, and include products of these variables to represent interactions. We usually also include the intercept term. For Example \ref{exm:factorial-desilylation}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{desilylation.df }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(desilylation, }
+                                      \FunctionTok{across}\NormalTok{(}\AttributeTok{.cols =}\NormalTok{ temp}\SpecialCharTok{:}\NormalTok{reagent, }
+                                             \SpecialCharTok{\textasciitilde{}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(.x))))}
+\NormalTok{desilylation.df }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(desilylation.df, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(trt))}
+\NormalTok{desilylation.df }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(desilylation.df, }\FunctionTok{across}\NormalTok{(}\AttributeTok{.cols =}\NormalTok{ temp}\SpecialCharTok{:}\NormalTok{reagent, }
+                                               \SpecialCharTok{\textasciitilde{}}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{rescale}\NormalTok{(.x, }\AttributeTok{to =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))))}
+\NormalTok{desilylation\_reg.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(yield }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (.) }\SpecialCharTok{\^{}} \DecValTok{4}\NormalTok{, }\AttributeTok{data =}\NormalTok{ desilylation.df)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{coef}\NormalTok{(desilylation\_reg.lm)[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{], }\AttributeTok{caption =} \StringTok{"Desilylation example: factorial effects calculated using a regression model."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:desilylation-reg}Desilylation example: factorial effects calculated using a regression model.}
+\centering
+\begin{tabular}[t]{l|r}
+\hline
+  & x\\
+\hline
+temp & 8.1200\\
+\hline
+time & 2.5675\\
+\hline
+solvent & -2.2175\\
+\hline
+reagent & 3.0875\\
+\hline
+temp:time & -2.3575\\
+\hline
+temp:solvent & 2.3575\\
+\hline
+temp:reagent & -2.7725\\
+\hline
+time:solvent & 0.4400\\
+\hline
+time:reagent & -0.6450\\
+\hline
+solvent:reagent & 0.4900\\
+\hline
+temp:time:solvent & 0.2450\\
+\hline
+temp:time:reagent & 0.1950\\
+\hline
+temp:solvent:reagent & -0.0300\\
+\hline
+time:solvent:reagent & -0.2375\\
+\hline
+temp:time:solvent:reagent & 0.1925\\
+\hline
+\end{tabular}
+\end{table}
+
+A regression modelling approach is usually more straightfoward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the \texttt{effects} package in \texttt{R} to quickly produce main effect and interaction plots.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp\_x\_time }\OtherTok{\textless{}{-}}\NormalTok{ effects}\SpecialCharTok{::}\FunctionTok{Effect}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"temp"}\NormalTok{, }\StringTok{"time"}\NormalTok{), desilylation\_reg.lm, }\AttributeTok{xlevels =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\AttributeTok{se =}\NormalTok{ F)}
+\FunctionTok{plot}\NormalTok{(temp\_x\_time, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{rug =}\NormalTok{ F, }\AttributeTok{x.var =} \StringTok{"temp"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf}
+
+\hypertarget{anova-for-factorial-experiments}{%
+\subsection{ANOVA for factorial experiments}\label{anova-for-factorial-experiments}}
+
+The basic ANOVA table has the following form.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
+\caption{\label{tab:anova-fact} The ANOVA table for a full factorial experiment}\tabularnewline
+\toprule
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\midrule
+\endfirsthead
+\toprule
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\midrule
+\endhead
+Regression & \(2^f-1\) & \(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\) & Reg SS/\((2^f-1)\) \\
+Residual & \(2^f(r-1)\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\) & RSS/\((2^f(r-1))\) \\
+Total & \(2^fr-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\) & \\
+\bottomrule
+\end{longtable}
+
+The regression sum of squares for a factorial experiment has a very simple form. If we include an intercept column in \(X\), from Section \ref{anova-revision},
+
+\begin{align*}
+\mbox{Regression SS} & = \mbox{RSS(null)} - \mbox{RSS} \\
+& = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{y}^2 \\
+& = \sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\,,
+\end{align*}
+
+as \(X^{\mathrm{T}}X = nI_{2^f}\). Hence, the \(j\)th factorial effect contributes \(n\hat{\beta}_j^2\) to the regression sum if squares, and this quantity can be used to construct a test statistic \textbf{if} \(r>1\) and hence an estimate of \(\sigma^2\) is available. For Example \ref{exm:factorial-desilylation}, the ANOVA table is as follows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ss }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(desilylation) }\SpecialCharTok{*} \FunctionTok{coef}\NormalTok{(desilylation\_reg.lm)}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{regss }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(ss) }\SpecialCharTok{{-}} \FunctionTok{nrow}\NormalTok{(desilylation) }\SpecialCharTok{*} \FunctionTok{mean}\NormalTok{(desilylation}\SpecialCharTok{$}\NormalTok{yield)}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{regss}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 427.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ss}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept)                      temp                      time 
+##               129434.4529                  263.7376                   26.3682 
+##                   solvent                   reagent                 temp:time 
+##                   19.6692                   38.1306                   22.2312 
+##              temp:solvent              temp:reagent              time:solvent 
+##                   22.2312                   30.7470                    0.7744 
+##              time:reagent           solvent:reagent         temp:time:solvent 
+##                    1.6641                    0.9604                    0.2401 
+##         temp:time:reagent      temp:solvent:reagent      time:solvent:reagent 
+##                    0.1521                    0.0036                    0.2256 
+## temp:time:solvent:reagent 
+##                    0.1482
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(desilylation\_reg.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: yield
+##                           Df Sum Sq Mean Sq F value Pr(>F)
+## temp                       1  263.7   263.7     NaN    NaN
+## time                       1   26.4    26.4     NaN    NaN
+## solvent                    1   19.7    19.7     NaN    NaN
+## reagent                    1   38.1    38.1     NaN    NaN
+## temp:time                  1   22.2    22.2     NaN    NaN
+## temp:solvent               1   22.2    22.2     NaN    NaN
+## temp:reagent               1   30.7    30.7     NaN    NaN
+## time:solvent               1    0.8     0.8     NaN    NaN
+## time:reagent               1    1.7     1.7     NaN    NaN
+## solvent:reagent            1    1.0     1.0     NaN    NaN
+## temp:time:solvent          1    0.2     0.2     NaN    NaN
+## temp:time:reagent          1    0.2     0.2     NaN    NaN
+## temp:solvent:reagent       1    0.0     0.0     NaN    NaN
+## time:solvent:reagent       1    0.2     0.2     NaN    NaN
+## temp:time:solvent:reagent  1    0.1     0.1     NaN    NaN
+## Residuals                  0    0.0     NaN
+\end{verbatim}
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}
