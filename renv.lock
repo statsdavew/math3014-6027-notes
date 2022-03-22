@@ -9,6 +9,13 @@
     ]
   },
   "Packages": {
+    "DBI": {
+      "Package": "DBI",
+      "Version": "1.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "dcd1743af4336156873e3ce3c950b8b9"
+    },
     "DoE.base": {
       "Package": "DoE.base",
       "Version": "1.2",
@@ -191,13 +198,6 @@
       "Repository": "CRAN",
       "Hash": "27d96d977991eb8f72a7cadaa2b4e5a2"
     },
-    "cpp11": {
-      "Package": "cpp11",
-      "Version": "0.4.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "fa53ce256cd280f468c080a58ea5ba8c"
-    },
     "crayon": {
       "Package": "crayon",
       "Version": "1.4.1",
@@ -232,6 +232,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "36f1ae62f026c8ba9f9b5c9a08c03297"
+    },
+    "effects": {
+      "Package": "effects",
+      "Version": "4.2-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "95f7eaa1d95e7df00f1c2452e359a4fb"
     },
     "ellipsis": {
       "Package": "ellipsis",
@@ -352,6 +359,13 @@
       "Repository": "CRAN",
       "Hash": "1d10cd31c2979f9c819ffe4d16b9dc2b"
     },
+    "insight": {
+      "Package": "insight",
+      "Version": "0.16.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "644277ecf3273b961046cdace55c39e9"
+    },
     "isoband": {
       "Package": "isoband",
       "Version": "0.2.5",
@@ -463,6 +477,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "eaee7d2a6f3ed4491df868611cb064cc"
+    },
+    "mitools": {
+      "Package": "mitools",
+      "Version": "2.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a4b659bd0528226724d55034f11ed7cb"
     },
     "multcomp": {
       "Package": "multcomp",
@@ -694,6 +715,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "0759e6b6c0957edb1311028a49a35e76"
+    },
+    "survey": {
+      "Package": "survey",
+      "Version": "4.1-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8aec2bc6533a6d1e6ef43bbf0c20205a"
     },
     "survival": {
       "Package": "survival",

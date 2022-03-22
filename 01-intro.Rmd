@@ -418,7 +418,7 @@ $$
 \textrm{Var}(\hat{Y})=\textrm{Var}(X\hat{\boldsymbol{\beta}})=X(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\sigma^{2}\,.
 $$
 
-### Analysis of Variance and R$^{2}$ as Model Comparison
+### Analysis of Variance and R$^{2}$ as Model Comparison {#anova-revision}
 
 To assess the goodness-of-fit of a model, we can use the residual sum of squares
 

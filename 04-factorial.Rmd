@@ -404,3 +404,101 @@ The package `unrepx` also provides the function `hnplot` to display these result
 unrepx::hnplot(eff_est, method = "Lenth", horiz = F, ID = 2.7, alpha = 0.05)
 ```
 Informally, factorial effects with estimates greater than `SME` are thought highly likely to be significant, and effects between `ME` and `SME` are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).
+
+## Regression modelling for factorial experiments
+
+We have identified $d = 2^f-1$ factorial effects that we wish to estimate from our experiment. As $d < n = 2^fr$, even for an unreplicated design with $r=1$, we can estimate these factorial effects using a full-rank linear regression model.
+
+Let $t\times d$ matrix $C$ hold each factorial contrast as a column. Then 
+
+$$
+\hat{\boldsymbol{\theta}} = C^{\mathrm{T}}\bar{\boldsymbol{y}}\,,
+$$
+
+with $\hat{\boldsymbol{\theta}}^{\mathrm{T}} = (\hat{\theta}_1, \ldots, \hat{\theta}_d)$ being the vector of estimated factorial effects and $\bar{\boldsymbol{y}}^{\mathrm{T}} = (\bar{y}_{1.}, \ldots, \bar{y}_{t.})$ being the vector of treatment means.
+
+We can define an $n\times d$ expanded contrast matrix as $\tilde{C} = C \otimes \boldsymbol{1}_r$, where each row of $\tilde{C}$ gives the contrast coefficients for each run of the experiment. Then,
+
+$$
+\hat{\boldsymbol{\theta}} = \frac{1}{r}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\,.
+$$
+To illustrate, we will imagine a hypothetical version of Example \@ref(exm:factorial-desilylation) where each treatment was repeated three times (with $y_{i1} = y_{i2} = y_{i3}$).
+
+```{r factorial-regression-c-matrix}
+y <- kronecker(desilylation$yield, rep(1, 3)) # hypothetical response vector
+C <- factorial_contrasts
+Ctilde <- kronecker(C, rep(1, 3))
+t(Ctilde) %*% y / 3 # to check
+```
+If we define a model matrix $X = \frac{2^{f}}{2}\tilde{C}$, then $X$ is a $n\times d$ matrix with entries $\pm 1$ and columns equal to unscaled factorial contrasts. Then
+
+\begin{align}
+\left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\bY & = \frac{1}{n} \times \frac{2^f}{2}\tilde{C}^{\mathrm{T}}\bY (\#eq:factorial-ls)\\
+& = \frac{1}{2r}\tilde{C}^{\mathrm{T}}\bY \\
+& = \frac{1}{2}\hat{\boldsymbol{\theta}}\,. \\
+\end{align}
+
+The left-hand side of equation \@ref(eq:factorial-ls) is the least squares estimator $\hat{\boldsymbol{\beta}}$ from the model
+
+$$
+\bY = \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + \boldsymbol{\varepsilon}\,,
+$$
+where $\bY$ is the response vector and $\boldsymbol{\varepsilon}$ the error vector from unit-treatment model \@ref(eq:factorial-utm). We have simply re-expressed the mean response as $\mu + \tau_i = \beta_0 + \boldsymbol{x}_i^{\mathrm{T}}\boldsymbol{\beta}$, where $d$-vector $\boldsymbol{x}_i$ holds the unscaled contrast coefficients for the main effects and interactions.
+
+We can illustrate these connections for Example \@ref(exm:factorial-desilylation).
+
+
+```{r desilylation-X-C}
+X <- 8 * C
+Xt <- t(X)
+XtX <- Xt %*% X
+2 * solve(XtX) %*% t(X) %*% desilylation$yield
+```
+The more usual way to think about this modelling approach is as a regression model with $f$ (quantitative^[When qualitative factors only have two levels, each regression term only has 1 degree of freedom, and so there is practically little difference from a quantitative variable.]) variables, labelled $x_1, \ldots, x_{2^f-1}$, scaled to lie in the interval $[-1, 1]$ (in fact, they just take values $\pm 1$). We can then fit a regression model in these variables, and include products of these variables to represent interactions. We usually also include the intercept term. For Example \@ref(exm:factorial-desilylation):
+
+```{r desilylation-reg}
+desilylation.df <- dplyr::mutate(desilylation, 
+                                      across(.cols = temp:reagent, 
+                                             ~ as.numeric(as.character(.x))))
+desilylation.df <- dplyr::select(desilylation.df, -c(trt))
+desilylation.df <- dplyr::mutate(desilylation.df, across(.cols = temp:reagent, 
+                                               ~ scales::rescale(.x, to = c(-1, 1))))
+desilylation_reg.lm <- lm(yield ~ (.) ^ 4, data = desilylation.df)
+knitr::kable(2 * coef(desilylation_reg.lm)[-1], caption = "Desilylation example: factorial effects calculated using a regression model.")
+```
+A regression modelling approach is usually more straightfoward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the `effects` package in `R` to quickly produce main effect and interaction plots. 
+
+```{r desilylation-effects}
+temp_x_time <- effects::Effect(c("temp", "time"), desilylation_reg.lm, xlevels = list(time = c(-1, 1)), se = F)
+plot(temp_x_time, main = "", rug = F, x.var = "temp", ylim = c(80, 100))
+```
+
+### ANOVA for factorial experiments
+
+The basic ANOVA table has the following form.
+
+Table: (\#tab:anova-fact) The ANOVA table for a full factorial experiment
+
+| Source      | Degress of Freedom  | (Sequential) Sum of Squares                                                                                | Mean Square    |
+| :---        | :---                | :---                                                                                                       | :---           |   
+| Regression  | $2^f-1$               | $\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2$                                                                          | Reg SS/$(2^f-1)$ |
+| Residual    | $2^f(r-1)$               | $(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})$ | RSS/$(2^f(r-1))$ |
+| Total       | $2^fr-1$               | $\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}$     |             |
+
+The regression sum of squares for a factorial experiment has a very simple form. If we include an intercept column in $X$, from Section \@ref(anova-revision),
+
+\begin{align*}
+\mbox{Regression SS} & = \mbox{RSS(null)} - \mbox{RSS} \\
+& = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{y}^2 \\
+& = \sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\,,
+\end{align*}
+
+as $X^{\mathrm{T}}X = nI_{2^f}$. Hence, the $j$th factorial effect contributes $n\hat{\beta}_j^2$ to the regression sum if squares, and this quantity can be used to construct a test statistic **if** $r>1$ and hence an estimate of $\sigma^2$ is available. For Example \@ref(exm:factorial-desilylation), the ANOVA table is as follows.
+
+```{r desilylation, warning = F}
+ss <- nrow(desilylation) * coef(desilylation_reg.lm)^2
+regss <- sum(ss) - nrow(desilylation) * mean(desilylation$yield)^2
+regss
+ss
+anova(desilylation_reg.lm)
+```

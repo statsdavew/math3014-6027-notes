@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-21" />
+<meta name="date" content="2022-03-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -174,7 +174,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
 <ul>
 <li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#variance-of-a-predictionfitted-value"><i class="fa fa-check"></i><b>1.5.1</b> Variance of a Prediction/Fitted Value</a></li>
-<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#analysis-of-variance-and-r2-as-model-comparison"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
+<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
@@ -220,6 +220,10 @@ div.csl-indent {
 <li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="factorial.html"><a href="factorial.html#lenths-method-for-approximate-hypothesis-testing"><i class="fa fa-check"></i><b>4.3.1</b> Lenth’s method for approximate hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#regression-modelling-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="factorial.html"><a href="factorial.html#anova-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4.1</b> ANOVA for factorial experiments</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
@@ -1001,7 +1005,7 @@ for <span class="math inline">\(\theta_j\)</span> the true, unknown, value of th
 &amp; = 0\,, \\
 \end{align*}\]</span></p>
 <p>as <span class="math inline">\(\sum_{i=1}^tc_{ij}c_{il} = 0\)</span> for <span class="math inline">\(j\ne l\)</span>. That is, the factorial contrasts are independent as the contrast coefficient vectors are orthogonal.</p>
-<p>Hence, under the null hypothesis <span class="math inline">\(H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0\)</span> (all factorial effects are zero), the <span class="math inline">\(\hat{theta}_j\)</span> form a sample from <strong>independent</strong> normally distributed random variables from the distribution</p>
+<p>Hence, under the null hypothesis <span class="math inline">\(H_0: \theta_1 = \cdots = \theta_{2^f-1} = 0\)</span> (all factorial effects are zero), the <span class="math inline">\(\hat{\theta}_j\)</span> form a sample from <strong>independent</strong> normally distributed random variables from the distribution</p>
 <p><span class="math display" id="eq:npph0">\[\begin{equation}
 \hat{\theta}_j \sim N\left(0, \frac{4\sigma^2}{n}\right)\,,\qquad j = 1, \ldots, 2^f-1\,.
 \tag{4.3}
@@ -1142,71 +1146,71 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">8.1200</td>
 <td align="right">0.66</td>
 <td align="right">12.303</td>
-<td align="right">0.0001</td>
-<td align="right">0.0011</td>
+<td align="right">0.0000</td>
+<td align="right">0.0004</td>
 </tr>
 <tr class="even">
 <td align="left">reagent</td>
 <td align="right">3.0875</td>
 <td align="right">0.66</td>
 <td align="right">4.678</td>
-<td align="right">0.0041</td>
-<td align="right">0.0352</td>
+<td align="right">0.0033</td>
+<td align="right">0.0277</td>
 </tr>
 <tr class="odd">
 <td align="left">temp.reagent</td>
 <td align="right">-2.7725</td>
 <td align="right">0.66</td>
 <td align="right">-4.201</td>
-<td align="right">0.0060</td>
-<td align="right">0.0521</td>
+<td align="right">0.0049</td>
+<td align="right">0.0412</td>
 </tr>
 <tr class="even">
 <td align="left">time</td>
 <td align="right">2.5675</td>
 <td align="right">0.66</td>
 <td align="right">3.890</td>
-<td align="right">0.0076</td>
-<td align="right">0.0686</td>
+<td align="right">0.0065</td>
+<td align="right">0.0566</td>
 </tr>
 <tr class="odd">
 <td align="left">temp.solvent</td>
 <td align="right">2.3575</td>
 <td align="right">0.66</td>
 <td align="right">3.572</td>
-<td align="right">0.0103</td>
-<td align="right">0.0900</td>
+<td align="right">0.0090</td>
+<td align="right">0.0832</td>
 </tr>
 <tr class="even">
 <td align="left">temp.time</td>
 <td align="right">-2.3575</td>
 <td align="right">0.66</td>
 <td align="right">-3.572</td>
-<td align="right">0.0103</td>
-<td align="right">0.0900</td>
+<td align="right">0.0090</td>
+<td align="right">0.0832</td>
 </tr>
 <tr class="odd">
 <td align="left">solvent</td>
 <td align="right">-2.2175</td>
 <td align="right">0.66</td>
 <td align="right">-3.360</td>
-<td align="right">0.0129</td>
-<td align="right">0.1136</td>
+<td align="right">0.0110</td>
+<td align="right">0.1001</td>
 </tr>
 <tr class="even">
 <td align="left">time.reagent</td>
 <td align="right">-0.6450</td>
 <td align="right">0.66</td>
 <td align="right">-0.977</td>
-<td align="right">0.3034</td>
-<td align="right">0.9959</td>
+<td align="right">0.3044</td>
+<td align="right">0.9966</td>
 </tr>
 <tr class="odd">
 <td align="left">solvent.reagent</td>
 <td align="right">0.4900</td>
 <td align="right">0.66</td>
 <td align="right">0.742</td>
-<td align="right">0.4275</td>
+<td align="right">0.4303</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1214,7 +1218,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.4400</td>
 <td align="right">0.66</td>
 <td align="right">0.667</td>
-<td align="right">0.5392</td>
+<td align="right">0.5388</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1222,7 +1226,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.2450</td>
 <td align="right">0.66</td>
 <td align="right">0.371</td>
-<td align="right">0.7327</td>
+<td align="right">0.7337</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1230,7 +1234,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">-0.2375</td>
 <td align="right">0.66</td>
 <td align="right">-0.360</td>
-<td align="right">0.7407</td>
+<td align="right">0.7411</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1238,7 +1242,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.1950</td>
 <td align="right">0.66</td>
 <td align="right">0.295</td>
-<td align="right">0.7838</td>
+<td align="right">0.7872</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1246,7 +1250,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.1925</td>
 <td align="right">0.66</td>
 <td align="right">0.292</td>
-<td align="right">0.7867</td>
+<td align="right">0.7895</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1254,7 +1258,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">-0.0300</td>
 <td align="right">0.66</td>
 <td align="right">-0.045</td>
-<td align="right">0.9657</td>
+<td align="right">0.9683</td>
 <td align="right">1.0000</td>
 </tr>
 </tbody>
@@ -1269,6 +1273,242 @@ Figure 4.5: Desilylation experiment: half-normal plot with reference lines from 
 </p>
 </div>
 <p>Informally, factorial effects with estimates greater than <code>SME</code> are thought highly likely to be significant, and effects between <code>ME</code> and <code>SME</code> are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).</p>
+</div>
+</div>
+<div id="regression-modelling-for-factorial-experiments" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Regression modelling for factorial experiments</h2>
+<p>We have identified <span class="math inline">\(d = 2^f-1\)</span> factorial effects that we wish to estimate from our experiment. As <span class="math inline">\(d &lt; n = 2^fr\)</span>, even for an unreplicated design with <span class="math inline">\(r=1\)</span>, we can estimate these factorial effects using a full-rank linear regression model.</p>
+<p>Let <span class="math inline">\(t\times d\)</span> matrix <span class="math inline">\(C\)</span> hold each factorial contrast as a column. Then</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\theta}} = C^{\mathrm{T}}\bar{\boldsymbol{y}}\,,
+\]</span></p>
+<p>with <span class="math inline">\(\hat{\boldsymbol{\theta}}^{\mathrm{T}} = (\hat{\theta}_1, \ldots, \hat{\theta}_d)\)</span> being the vector of estimated factorial effects and <span class="math inline">\(\bar{\boldsymbol{y}}^{\mathrm{T}} = (\bar{y}_{1.}, \ldots, \bar{y}_{t.})\)</span> being the vector of treatment means.</p>
+<p>We can define an <span class="math inline">\(n\times d\)</span> expanded contrast matrix as <span class="math inline">\(\tilde{C} = C \otimes \boldsymbol{1}_r\)</span>, where each row of <span class="math inline">\(\tilde{C}\)</span> gives the contrast coefficients for each run of the experiment. Then,</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\theta}} = \frac{1}{r}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\,.
+\]</span>
+To illustrate, we will imagine a hypothetical version of Example <a href="factorial.html#exm:factorial-desilylation">4.1</a> where each treatment was repeated three times (with <span class="math inline">\(y_{i1} = y_{i2} = y_{i3}\)</span>).</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="factorial.html#cb136-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">kronecker</span>(desilylation<span class="sc">$</span>yield, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">3</span>)) <span class="co"># hypothetical response vector</span></span>
+<span id="cb136-2"><a href="factorial.html#cb136-2" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> factorial_contrasts</span>
+<span id="cb136-3"><a href="factorial.html#cb136-3" aria-hidden="true" tabindex="-1"></a>Ctilde <span class="ot">&lt;-</span> <span class="fu">kronecker</span>(C, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb136-4"><a href="factorial.html#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(Ctilde) <span class="sc">%*%</span> y <span class="sc">/</span> <span class="dv">3</span> <span class="co"># to check</span></span></code></pre></div>
+<pre><code>##          [,1]
+##  [1,]  8.1200
+##  [2,]  2.5675
+##  [3,] -2.2175
+##  [4,]  3.0875
+##  [5,] -2.3575
+##  [6,]  2.3575
+##  [7,] -2.7725
+##  [8,]  0.4400
+##  [9,] -0.6450
+## [10,]  0.4900
+## [11,]  0.2450
+## [12,]  0.1950
+## [13,] -0.0300
+## [14,] -0.2375
+## [15,]  0.1925</code></pre>
+<p>If we define a model matrix <span class="math inline">\(X = \frac{2^{f}}{2}\tilde{C}\)</span>, then <span class="math inline">\(X\)</span> is a <span class="math inline">\(n\times d\)</span> matrix with entries <span class="math inline">\(\pm 1\)</span> and columns equal to unscaled factorial contrasts. Then</p>
+<p><span class="math display" id="eq:factorial-ls">\[\begin{align}
+\left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}&amp; = \frac{1}{n} \times \frac{2^f}{2}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\tag{4.4}\\
+&amp; = \frac{1}{2r}\tilde{C}^{\mathrm{T}}\boldsymbol{y}\\
+&amp; = \frac{1}{2}\hat{\boldsymbol{\theta}}\,. \\
+\end{align}\]</span></p>
+<p>The left-hand side of equation <a href="factorial.html#eq:factorial-ls">(4.4)</a> is the least squares estimator <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> from the model</p>
+<p><span class="math display">\[
+\boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + \boldsymbol{\varepsilon}\,,
+\]</span>
+where <span class="math inline">\(\boldsymbol{y}\)</span> is the response vector and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> the error vector from unit-treatment model <a href="factorial.html#eq:factorial-utm">(4.1)</a>. We have simply re-expressed the mean response as <span class="math inline">\(\mu + \tau_i = \beta_0 + \boldsymbol{x}_i^{\mathrm{T}}\boldsymbol{\beta}\)</span>, where <span class="math inline">\(d\)</span>-vector <span class="math inline">\(\boldsymbol{x}_i\)</span> holds the unscaled contrast coefficients for the main effects and interactions.</p>
+<p>We can illustrate these connections for Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="factorial.html#cb138-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="sc">*</span> C</span>
+<span id="cb138-2"><a href="factorial.html#cb138-2" aria-hidden="true" tabindex="-1"></a>Xt <span class="ot">&lt;-</span> <span class="fu">t</span>(X)</span>
+<span id="cb138-3"><a href="factorial.html#cb138-3" aria-hidden="true" tabindex="-1"></a>XtX <span class="ot">&lt;-</span> Xt <span class="sc">%*%</span> X</span>
+<span id="cb138-4"><a href="factorial.html#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">solve</span>(XtX) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> desilylation<span class="sc">$</span>yield</span></code></pre></div>
+<pre><code>##                              [,1]
+## temp                       8.1200
+## time                       2.5675
+## solvent                   -2.2175
+## reagent                    3.0875
+## temp:time                 -2.3575
+## temp:solvent               2.3575
+## temp:reagent              -2.7725
+## time:solvent               0.4400
+## time:reagent              -0.6450
+## solvent:reagent            0.4900
+## temp:time:solvent          0.2450
+## temp:time:reagent          0.1950
+## temp:solvent:reagent      -0.0300
+## time:solvent:reagent      -0.2375
+## temp:time:solvent:reagent  0.1925</code></pre>
+<p>The more usual way to think about this modelling approach is as a regression model with <span class="math inline">\(f\)</span> (quantitative<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>) variables, labelled <span class="math inline">\(x_1, \ldots, x_{2^f-1}\)</span>, scaled to lie in the interval <span class="math inline">\([-1, 1]\)</span> (in fact, they just take values <span class="math inline">\(\pm 1\)</span>). We can then fit a regression model in these variables, and include products of these variables to represent interactions. We usually also include the intercept term. For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="factorial.html#cb140-1" aria-hidden="true" tabindex="-1"></a>desilylation.df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(desilylation, </span>
+<span id="cb140-2"><a href="factorial.html#cb140-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">across</span>(<span class="at">.cols =</span> temp<span class="sc">:</span>reagent, </span>
+<span id="cb140-3"><a href="factorial.html#cb140-3" aria-hidden="true" tabindex="-1"></a>                                             <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(.x))))</span>
+<span id="cb140-4"><a href="factorial.html#cb140-4" aria-hidden="true" tabindex="-1"></a>desilylation.df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(desilylation.df, <span class="sc">-</span><span class="fu">c</span>(trt))</span>
+<span id="cb140-5"><a href="factorial.html#cb140-5" aria-hidden="true" tabindex="-1"></a>desilylation.df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(desilylation.df, <span class="fu">across</span>(<span class="at">.cols =</span> temp<span class="sc">:</span>reagent, </span>
+<span id="cb140-6"><a href="factorial.html#cb140-6" aria-hidden="true" tabindex="-1"></a>                                               <span class="sc">~</span> scales<span class="sc">::</span><span class="fu">rescale</span>(.x, <span class="at">to =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))))</span>
+<span id="cb140-7"><a href="factorial.html#cb140-7" aria-hidden="true" tabindex="-1"></a>desilylation_reg.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> (.) <span class="sc">^</span> <span class="dv">4</span>, <span class="at">data =</span> desilylation.df)</span>
+<span id="cb140-8"><a href="factorial.html#cb140-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">coef</span>(desilylation_reg.lm)[<span class="sc">-</span><span class="dv">1</span>], <span class="at">caption =</span> <span class="st">&quot;Desilylation example: factorial effects calculated using a regression model.&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:desilylation-reg">Table 4.6: </span>Desilylation example: factorial effects calculated using a regression model.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">temp</td>
+<td align="right">8.1200</td>
+</tr>
+<tr class="even">
+<td align="left">time</td>
+<td align="right">2.5675</td>
+</tr>
+<tr class="odd">
+<td align="left">solvent</td>
+<td align="right">-2.2175</td>
+</tr>
+<tr class="even">
+<td align="left">reagent</td>
+<td align="right">3.0875</td>
+</tr>
+<tr class="odd">
+<td align="left">temp:time</td>
+<td align="right">-2.3575</td>
+</tr>
+<tr class="even">
+<td align="left">temp:solvent</td>
+<td align="right">2.3575</td>
+</tr>
+<tr class="odd">
+<td align="left">temp:reagent</td>
+<td align="right">-2.7725</td>
+</tr>
+<tr class="even">
+<td align="left">time:solvent</td>
+<td align="right">0.4400</td>
+</tr>
+<tr class="odd">
+<td align="left">time:reagent</td>
+<td align="right">-0.6450</td>
+</tr>
+<tr class="even">
+<td align="left">solvent:reagent</td>
+<td align="right">0.4900</td>
+</tr>
+<tr class="odd">
+<td align="left">temp:time:solvent</td>
+<td align="right">0.2450</td>
+</tr>
+<tr class="even">
+<td align="left">temp:time:reagent</td>
+<td align="right">0.1950</td>
+</tr>
+<tr class="odd">
+<td align="left">temp:solvent:reagent</td>
+<td align="right">-0.0300</td>
+</tr>
+<tr class="even">
+<td align="left">time:solvent:reagent</td>
+<td align="right">-0.2375</td>
+</tr>
+<tr class="odd">
+<td align="left">temp:time:solvent:reagent</td>
+<td align="right">0.1925</td>
+</tr>
+</tbody>
+</table>
+<p>A regression modelling approach is usually more straightfoward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the <code>effects</code> package in <code>R</code> to quickly produce main effect and interaction plots.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="factorial.html#cb141-1" aria-hidden="true" tabindex="-1"></a>temp_x_time <span class="ot">&lt;-</span> effects<span class="sc">::</span><span class="fu">Effect</span>(<span class="fu">c</span>(<span class="st">&quot;temp&quot;</span>, <span class="st">&quot;time&quot;</span>), desilylation_reg.lm, <span class="at">xlevels =</span> <span class="fu">list</span>(<span class="at">time =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)), <span class="at">se =</span> F)</span>
+<span id="cb141-2"><a href="factorial.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp_x_time, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">rug =</span> F, <span class="at">x.var =</span> <span class="st">&quot;temp&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">100</span>))</span></code></pre></div>
+<p><img src="bookdown_math3014-6027_files/figure-html/desilylation-effects-1.png" width="672" /></p>
+<div id="anova-for-factorial-experiments" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> ANOVA for factorial experiments</h3>
+<p>The basic ANOVA table has the following form.</p>
+<table>
+<caption><span id="tab:anova-fact">Table 4.7: </span> The ANOVA table for a full factorial experiment</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Source</th>
+<th align="left">Degress of Freedom</th>
+<th align="left">(Sequential) Sum of Squares</th>
+<th align="left">Mean Square</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Regression</td>
+<td align="left"><span class="math inline">\(2^f-1\)</span></td>
+<td align="left"><span class="math inline">\(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\)</span></td>
+<td align="left">Reg SS/<span class="math inline">\((2^f-1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Residual</td>
+<td align="left"><span class="math inline">\(2^f(r-1)\)</span></td>
+<td align="left"><span class="math inline">\((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)</span></td>
+<td align="left">RSS/<span class="math inline">\((2^f(r-1))\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="left"><span class="math inline">\(2^fr-1\)</span></td>
+<td align="left"><span class="math inline">\(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\)</span></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>The regression sum of squares for a factorial experiment has a very simple form. If we include an intercept column in <span class="math inline">\(X\)</span>, from Section <a href="intro.html#anova-revision">1.5.2</a>,</p>
+<p><span class="math display">\[\begin{align*}
+\mbox{Regression SS} &amp; = \mbox{RSS(null)} - \mbox{RSS} \\
+&amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{y}^2 \\
+&amp; = \sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\,,
+\end{align*}\]</span></p>
+<p>as <span class="math inline">\(X^{\mathrm{T}}X = nI_{2^f}\)</span>. Hence, the <span class="math inline">\(j\)</span>th factorial effect contributes <span class="math inline">\(n\hat{\beta}_j^2\)</span> to the regression sum if squares, and this quantity can be used to construct a test statistic <strong>if</strong> <span class="math inline">\(r&gt;1\)</span> and hence an estimate of <span class="math inline">\(\sigma^2\)</span> is available. For Example <a href="factorial.html#exm:factorial-desilylation">4.1</a>, the ANOVA table is as follows.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="factorial.html#cb142-1" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">nrow</span>(desilylation) <span class="sc">*</span> <span class="fu">coef</span>(desilylation_reg.lm)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb142-2"><a href="factorial.html#cb142-2" aria-hidden="true" tabindex="-1"></a>regss <span class="ot">&lt;-</span> <span class="fu">sum</span>(ss) <span class="sc">-</span> <span class="fu">nrow</span>(desilylation) <span class="sc">*</span> <span class="fu">mean</span>(desilylation<span class="sc">$</span>yield)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb142-3"><a href="factorial.html#cb142-3" aria-hidden="true" tabindex="-1"></a>regss</span></code></pre></div>
+<pre><code>## [1] 427.3</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="factorial.html#cb144-1" aria-hidden="true" tabindex="-1"></a>ss</span></code></pre></div>
+<pre><code>##               (Intercept)                      temp                      time 
+##               129434.4529                  263.7376                   26.3682 
+##                   solvent                   reagent                 temp:time 
+##                   19.6692                   38.1306                   22.2312 
+##              temp:solvent              temp:reagent              time:solvent 
+##                   22.2312                   30.7470                    0.7744 
+##              time:reagent           solvent:reagent         temp:time:solvent 
+##                    1.6641                    0.9604                    0.2401 
+##         temp:time:reagent      temp:solvent:reagent      time:solvent:reagent 
+##                    0.1521                    0.0036                    0.2256 
+## temp:time:solvent:reagent 
+##                    0.1482</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="factorial.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(desilylation_reg.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: yield
+##                           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## temp                       1  263.7   263.7     NaN    NaN
+## time                       1   26.4    26.4     NaN    NaN
+## solvent                    1   19.7    19.7     NaN    NaN
+## reagent                    1   38.1    38.1     NaN    NaN
+## temp:time                  1   22.2    22.2     NaN    NaN
+## temp:solvent               1   22.2    22.2     NaN    NaN
+## temp:reagent               1   30.7    30.7     NaN    NaN
+## time:solvent               1    0.8     0.8     NaN    NaN
+## time:reagent               1    1.7     1.7     NaN    NaN
+## solvent:reagent            1    1.0     1.0     NaN    NaN
+## temp:time:solvent          1    0.2     0.2     NaN    NaN
+## temp:time:reagent          1    0.2     0.2     NaN    NaN
+## temp:solvent:reagent       1    0.0     0.0     NaN    NaN
+## time:solvent:reagent       1    0.2     0.2     NaN    NaN
+## temp:time:solvent:reagent  1    0.1     0.1     NaN    NaN
+## Residuals                  0    0.0     NaN</code></pre>
 
 </div>
 </div>
@@ -1296,6 +1536,7 @@ Owen, M. R., Luscombe, C., Lai, L., et al. (2001) Efficiency by design: Optimisa
 <li id="fn26"><p>The absolute value of a normally distributed random variable follows a half-normal distribution.<a href="factorial.html#fnref26" class="footnote-back">↩︎</a></p></li>
 <li id="fn27"><p>Essentially, <span class="math inline">\(s_0\)</span> tends in probability to <span class="math inline">\(\sigma\)</span> as the number of factorial effects tends to infinity.<a href="factorial.html#fnref27" class="footnote-back">↩︎</a></p></li>
 <li id="fn28"><p>Under <span class="math inline">\(H_0\)</span>, the <span class="math inline">\(\hat{\theta}_i\)</span> come from a mean-zero normal distribution, and about 1% of deviates fall outside <span class="math inline">\(\pm 2.57\sigma^2\)</span>.<a href="factorial.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>When qualitative factors only have two levels, each regression term only has 1 degree of freedom, and so there is practically little difference from a quantitative variable.<a href="factorial.html#fnref29" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

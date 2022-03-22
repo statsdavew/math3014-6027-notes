@@ -68,6 +68,9 @@ fig:desilylation-effects-plot1
 fig:desilylation-half-normal-plot
 tab:desilylation-lenth
 fig:desilylation-lenth-plot
+eq:factorial-ls
+tab:desilylation-reg
+tab:anova-fact
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -78,7 +81,7 @@ randomisation
 intro-blocking
 lin-model-rev
 variance-of-a-predictionfitted-value
-analysis-of-variance-and-r2-as-model-comparison
+anova-revision
 exercises
 crd
 a-unit-treatment-linear-model
@@ -110,6 +113,8 @@ interactions
 three-principles-for-factorial-effects
 unreplicated-normal-plots
 lenths-method-for-approximate-hypothesis-testing
+regression-modelling-for-factorial-experiments
+anova-for-factorial-experiments
 block-factorial
 fractional-factorial
 response-surface-methodology
