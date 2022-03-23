@@ -80,6 +80,7 @@ tab:desilylation-2fi-interactions
 fig:desilylation-2fi-plots
 def:factorial-effects
 def:effect-hierarchy
+def:effect-sparsity
 def:effect-heredity
 eq:npph0
 tab:desilylation-effects-plot1
@@ -89,7 +90,15 @@ tab:desilylation-lenth
 fig:desilylation-lenth-plot
 eq:factorial-ls
 tab:desilylation-reg
+fig:desilylation-effects
 tab:anova-fact
+tab:desilylation-regss
+tab:desilylation-anova-ss
+tab:reactor-expt
+tab:reactor-data
+tab:reactor-estimate
+tab:reactor-largest
+fig:reactor-plots
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -134,6 +143,7 @@ unreplicated-normal-plots
 lenths-method-for-approximate-hypothesis-testing
 regression-modelling-for-factorial-experiments
 anova-for-factorial-experiments
+exercises-3
 block-factorial
 fractional-factorial
 response-surface-methodology
