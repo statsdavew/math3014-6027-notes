@@ -300,7 +300,7 @@ Empirical study of many experiments [@BoxMeyer1986; @Li2006] have demonstrated t
 For example, we would anticipate more large main effects from the analysis of a factorial experiment than two-factor interactions.
 :::
 
-::: {.defintion #effect-sparsity}
+::: {.definition #effect-sparsity}
 **Effect sparsity**: the number of large factorial effects is likely to be small, relative to the total number under study.
 
 This is sometimes called the **pareto principle**.
@@ -346,14 +346,14 @@ For Example \@ref(exm:factorial-desilylation), we can easily produce this plot i
 ```{r desilylation-effects-plot1, fig.align = 'center', fig.cap = 'Desilylation experiment: normal effects plot', results = 'hold', fig.show = 'hold'}
 effs <- dplyr::arrange(transform(desilylation.effs)[,1:2], dplyr::desc(estimate))
 knitr::kable(effs, caption = "Desilylation experiment: sorted estimated factorial effects")
-qqnorm(sort(effs[ ,2]), ylab = "Factorial effects", main = "")
-qqline(sort(effs[ ,2]))
+qqnorm(effs[ ,2], ylab = "Factorial effects", main = "") # note that qqnorm/qqline/qqplot don't require sorted data
+qqline(effs[ ,2])
 ```
 In fact, it is more usual to use a **half-normal** plot to assess the size of factorial effects, where we plot the sorted absolute values of the estimated effects against the quantiles of a half-normal distribution^[The absolute value of a normally distributed random variable follows a half-normal distribution.]
 
 ```{r desilylation-half-normal-plot, fig.align = 'center', fig.cap = 'Desilylation experiment: half-normal effects plot'}
 p <- .5 + .5 * (1:16 - .5) /16 # probabilities we will plot against
-qqplot(x = qnorm(p), y = sort(abs(effs[,2])), ylab = "Absolute factorial effects", 
+qqplot(x = qnorm(p), y = abs(effs[,2]), ylab = "Absolute factorial effects", 
        xlab = "Half-normal quantiles")
 ```
 
@@ -396,7 +396,7 @@ lenth_tests <- unrepx::eff.test(eff_est, method = "Lenth")
 knitr::kable(lenth_tests, caption = "Desilylation experiment: hypothesis tests using Lenth's method.")
 ```
 
-The function `eff.test` calculates unadjusted p-values (`p.value`) and simultaneous p-values (`simult.pval`) adjusted to account for multiple testing. Using the latter, from Table \@ref(tab:desilylation-lenth) we see that the main effects of `temp` and `reagent` are significant at the experiment-wise 5% level and, obeying *effect heredity*, their interaction (the p-value is borderline, and hovers around 0.05 depending on simulation error). 
+The function `eff.test` calculates unadjusted p-values (`p.value`) and simultaneous p-values (`simult.pval`) adjusted to account for multiple testing. Using the latter, from Table \@ref(tab:desilylation-lenth) we see that the main effects of `temp` and `reagent` are significant at the experiment-wise 5% level and, obeying **effect heredity**, their interaction (the p-value is borderline, and hovers around 0.05 depending on simulation error). 
 
 The package `unrepx` also provides the function `hnplot` to display these results graphically by adding a reference line to a half-normal plot; see Figure \@ref(fig:desilylation-lenth-plot). The `ME` and `SME` lines indicate the absolute size of effects that would be required to reject $H_0: \theta_i = 0$ at an individual or experimentwise $100\alpha$% level, respectively.
 
@@ -407,7 +407,7 @@ Informally, factorial effects with estimates greater than `SME` are thought high
 
 ## Regression modelling for factorial experiments
 
-We have identified $d = 2^f-1$ factorial effects that we wish to estimate from our experiment. As $d < n = 2^fr$, even for an unreplicated design with $r=1$, we can estimate these factorial effects using a full-rank linear regression model.
+We have identified $d = 2^f-1$ factorial effects that we wish to estimate from our experiment. As $d < t = 2^f$, we can estimate these factorial effects using a full-rank linear regression model.
 
 Let $t\times d$ matrix $C$ hold each factorial contrast as a column. Then 
 
@@ -447,13 +447,13 @@ where $\bY$ is the response vector and $\boldsymbol{\varepsilon}$ the error vect
 
 We can illustrate these connections for Example \@ref(exm:factorial-desilylation).
 
-
 ```{r desilylation-X-C}
 X <- 8 * C
 Xt <- t(X)
 XtX <- Xt %*% X
 2 * solve(XtX) %*% t(X) %*% desilylation$yield
 ```
+
 The more usual way to think about this modelling approach is as a regression model with $f$ (quantitative^[When qualitative factors only have two levels, each regression term only has 1 degree of freedom, and so there is practically little difference from a quantitative variable.]) variables, labelled $x_1, \ldots, x_{2^f-1}$, scaled to lie in the interval $[-1, 1]$ (in fact, they just take values $\pm 1$). We can then fit a regression model in these variables, and include products of these variables to represent interactions. We usually also include the intercept term. For Example \@ref(exm:factorial-desilylation):
 
 ```{r desilylation-reg}
@@ -466,9 +466,10 @@ desilylation.df <- dplyr::mutate(desilylation.df, across(.cols = temp:reagent,
 desilylation_reg.lm <- lm(yield ~ (.) ^ 4, data = desilylation.df)
 knitr::kable(2 * coef(desilylation_reg.lm)[-1], caption = "Desilylation example: factorial effects calculated using a regression model.")
 ```
-A regression modelling approach is usually more straightfoward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the `effects` package in `R` to quickly produce main effect and interaction plots. 
 
-```{r desilylation-effects}
+A regression modelling approach is usually more straightforward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the `effects` package in `R` to quickly produce main effect and interaction plots. 
+
+```{r desilylation-effects, fig.cap = "Desilylation experiment: interaction plot generated using the `effects` package."}
 temp_x_time <- effects::Effect(c("temp", "time"), desilylation_reg.lm, xlevels = list(time = c(-1, 1)), se = F)
 plot(temp_x_time, main = "", rug = F, x.var = "temp", ylim = c(80, 100))
 ```
@@ -493,12 +494,109 @@ The regression sum of squares for a factorial experiment has a very simple form.
 & = \sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\,,
 \end{align*}
 
-as $X^{\mathrm{T}}X = nI_{2^f}$. Hence, the $j$th factorial effect contributes $n\hat{\beta}_j^2$ to the regression sum if squares, and this quantity can be used to construct a test statistic **if** $r>1$ and hence an estimate of $\sigma^2$ is available. For Example \@ref(exm:factorial-desilylation), the ANOVA table is as follows.
+as $X^{\mathrm{T}}X = nI_{2^f}$. Hence, the $j$th factorial effect contributes $n\hat{\beta}_j^2$ to the regression sum if squares, and this quantity can be used to construct a test statistic **if** $r>1$ and hence an estimate of $\sigma^2$ is available. For Example \@ref(exm:factorial-desilylation), the regression sum of squares and ANOVA table are given in Tables \@ref(tab:desilylation-regss) and \@ref(tab:desilylation-anova-ss).
 
-```{r desilylation, warning = F}
+```{r desilylation-regss, warning = F, results = 'hold'}
 ss <- nrow(desilylation) * coef(desilylation_reg.lm)^2
 regss <- sum(ss) - nrow(desilylation) * mean(desilylation$yield)^2
-regss
-ss[-1]
-anova(desilylation_reg.lm)
+names(regss) <- "Regression"
+knitr::kable(c(regss, ss[-1]), col.names = "Sum Sq.", caption = "Desilylation experiment: regression sums of squares for each factorial effect calculated directly.")
 ```
+```{r desilylation-anova-ss}
+knitr::kable(anova(desilylation_reg.lm)[, 1:2], caption = "Desilylation experiment: ANOVA table from `anova` function.")
+```
+
+## Exercises
+
+1. A reactor experiment that was presented by Box, Hunter and Hunter (2005, pp259-261) that used a full factorial design for $m=5$ factors, each at two levels, to investigate the effect of *feed rate* (litres/min), *catalyst* (%), *agitation rate* (rpm), *temperature* (C) and *concentration* (%) on the *percentage reacted*. The levels of the experimental factors will be coded as $-1$ for low level, and $1$ for high level. Table \@ref(tab:reactor-expt) presents the true factor settings corresponding to these coded values. 
+
+
+    Table: (\#tab:reactor-expt) Factor levels for the full factorial reactor experiment
+
+    | Factor | Low level ($-1$) | High level ($1$) |
+    | :----: | :--------------: | :--------------: |
+    | Feed Rate (litres/min) | 10	| 15 |
+    | Catalyst (%)	| 1	| 2 |
+    | Agitation Rate (rpm) | 100 | 120 |
+    | Temperature (C) | 140 | 180 |
+    | Concentration (\%) | 3 | 6 |
+    
+    The data from this experiment is given in Table \@ref(tab:reactor-data).
+    
+    ```{r reactor-data, message = F}
+    reactor.frf2 <- FrF2::FrF2(nruns = 32, nfactors = 5, randomize = F,
+                               factor.names = c("FR", "Cat", "AR", "Temp", "Conc"))
+    y <- c(61, 53, 63, 61, 53, 56, 54, 61, 69, 61, 94, 93, 66, 60, 95, 98, 56, 63,
+           70, 65, 59, 55, 67, 65, 44, 45, 78, 77, 49, 42, 81, 82)
+    reactor <- data.frame(reactor.frf2, pre.react = y)
+    knitr::kable(reactor, caption = "Reactor experiment.")
+    ```
+    a. Estimate all the factorial effects from this experiment, and use a half-normal plot and Lenth's method to decide which are significantly different from zero.
+    
+    b. Use the `effects` package to produce main effect and/or interaction plots for each significant factorial effect from part a.
+    
+    c. Now fit a regression model that only includes terms corresponding to main effects and two-factor interactions. How many degrees of freedom does this model use? What does this mean for the estimation of $\sigma^2$? How does the estimate of $\sigma^2$ from this model relate to your analysis in part a?
+    
+<details><summary><b>Solution</b></summary>
+
+a. We will estimate the factorial effects as twice the corresponding regression parameters.
+
+```{r reactor-estimate}
+reactor <- dplyr::mutate(reactor, across(.cols = FR:Conc, 
+                                         ~ as.numeric(as.character(.x))))
+reactor.lm <- lm(pre.react ~ (.) ^ 5, data = reactor)
+fac.effects <- 2 * coef(reactor.lm)[-1]
+knitr::kable(fac.effects, caption = "Reactor experiment: estimated factorial effects.")
+```
+
+There are several large factorial effects, including the main effects of Catalyst and Temperature and the interaction between these factors, and the interaction between Concentration and Temperature. We can assess their significance using a half-normal plot and Lenth's method.
+
+```{r reactor-lenth}
+unrepx::hnplot(fac.effects, horiz = F, method = "Lenth", alpha = 0.05)
+```
+
+We see that PSE = `r unrepx::PSE(fac.effects, method = "Lenth")`, giving individual and simultaneous margins of error of `r unrepx::ME(fac.effects, method = "Lenth")[1]` and `r unrepx::ME(fac.effects, method = "Lenth")[2]`, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \@ref(tab:reactor-largest), are all greater than both margins of error and can be declared as significant. 
+
+```{r reactor-largest}
+knitr::kable(fac.effects[abs(fac.effects) > unrepx::ME(fac.effects, 
+                                                       method = "Lenth")[2]],
+             caption = "Reactor experiment: factorial effects significantly different from zero via Lenth's method.")
+```
+
+b. We will produce plots for the interactions between Catalyst and Temperature and Temperature and Concentration. We will not produce main effect plots for Catalyst and Temperature, as these are involved in the large interactions.
+
+```{r reactor-plots, warning = F, fig.show = 'hold', fig.cap = "Reactor experiment: interaction plots."}
+Cat_x_Temp <- effects::Effect(c("Cat", "Temp"), reactor.lm, 
+                              xlevels = list(Cat = c(-1, 1), Temp = c(-1, 1)), 
+                              se = F)
+Temp_x_Conc <- effects::Effect(c("Temp", "Conc"), reactor.lm, 
+                               xlevels = list(Conc = c(-1, 1), Temp = c(-1, 1)),
+                               se = F)
+plot(Cat_x_Temp, style = "stacked", main = "", rug = F, x.var = "Cat", 
+     ylim = c(50, 90))
+plot(Temp_x_Conc, style = "stacked", main = "", rug = F, x.var = "Conc", 
+     ylim = c(50, 90))
+```
+Notice that changing the level of Temperature changes substantial the effect of both Catalyst and Concentration on the response; in particular, the effect of Concentration changes sign depending on the level of Temperature.
+
+c. We start by fiting the reduced regression model.
+
+```{r reactor-reduced}
+reactor2.lm <- lm(pre.react ~ (.) ^ 2, data = reactor)
+summary(reactor2.lm)
+```
+This model includes regression parameters corresponding to $5 + {5 \choose 2} = `r length(reactor2.lm$coefficients) - 1`$ factorial effects, plus the intercept, and hence uses `r length(reactor2.lm$coefficients)` degrees of freedom. The remaining 16 degrees of freedom, which were previously used to estimate three-factor and higher interactions, is now used to estimate $\sigma^2$, the background variation.
+
+The residual mean square in the reduced model, used to estimate $\sigma^2$, is the sum of the sums of squares for the higher-order interactions in the original model, divided by 16 (the remaining degrees of freedom). 
+
+```{r reactor-compare-sigma2, warning = F}
+sum(anova(reactor.lm)[16:31, 3]) / 16
+summary(reactor2.lm)$sigma^2
+
+```
+
+This "pooling" of higher-order effects to estimate $\sigma^2$ maybe a reasonable strategy here, given that the high-order interactions are all small, but could be biased if one or more interactions were large.
+
+
+</details>
+    

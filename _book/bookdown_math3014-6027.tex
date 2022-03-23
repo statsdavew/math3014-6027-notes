@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{book}
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-03-23}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -109,15 +113,11 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-03-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,6 +181,10 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
+
+\begin{verbatim}
+## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
+\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -780,11 +784,27 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -887,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Tea first" 
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Milk first"
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +921,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1063,7 +1083,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1102,7 +1130,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1141,7 +1177,15 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\centering
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2781,7 +2825,15 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-Source & Degrees of freedom & Sums of squares & Mean square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Degrees of freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sums of squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean square
+\end{minipage} \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3111,10 +3163,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
+## [1,]    1    0    1    1
 ## [2,]    0    1    1    1
-## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [3,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3128,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    0    1    0    1    0    1    0     0     0     1     1     0
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    1    0    0    1    0    1    1    0    0     1     1     0     0     1
-## [4,]    1    1    0    0    1    0    1    0    1     0     0     0     1     1
-## [5,]    1    1    1    0    1    0    0    0    0     1     1     1     0     0
-## [6,]    0    1    1    0    0    1    1    1    1     1     0     0     0     0
-## [7,]    0    0    1    1    1    0    1    1    0     0     1     0     1     0
-## [8,]    0    0    1    1    1    1    0    0    1     0     0     1     0     1
+## [1,]    0    0    0    1    0    1    1    1    0     0     0     1     1     1
+## [2,]    1    0    0    0    0    0    0    0    1     1     1     1     1     1
+## [3,]    0    0    0    0    1    1    1    1    1     1     1     0     0     0
+## [4,]    1    0    1    1    1    1    0    0    1     0     0     0     0     1
+## [5,]    0    1    1    0    1    0    0    1    0     0     1     0     1     1
+## [6,]    0    1    1    1    0    1    0    0    0     1     1     1     0     0
+## [7,]    1    1    1    0    0    0    1    1    1     0     0     1     0     0
+## [8,]    1    1    0    1    1    0    1    0    0     1     0     0     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4486,10 +4538,14 @@ For example, we would anticipate more large main effects from the analysis of a 
 
 \end{definition}
 
-\leavevmode\hypertarget{effect-sparsity}{}%
+\begin{definition}
+\protect\hypertarget{def:effect-sparsity}{}\label{def:effect-sparsity}
+
 \textbf{Effect sparsity}: the number of large factorial effects is likely to be small, relative to the total number under study.
 
 This is sometimes called the \textbf{pareto principle}.
+
+\end{definition}
 
 \begin{definition}
 \protect\hypertarget{def:effect-heredity}{}\label{def:effect-heredity}
@@ -4536,8 +4592,8 @@ For Example \ref{exm:factorial-desilylation}, we can easily produce this plot in
 \begin{Highlighting}[]
 \NormalTok{effs }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}\FunctionTok{transform}\NormalTok{(desilylation.effs)[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], dplyr}\SpecialCharTok{::}\FunctionTok{desc}\NormalTok{(estimate))}
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(effs, }\AttributeTok{caption =} \StringTok{"Desilylation experiment: sorted estimated factorial effects"}\NormalTok{)}
-\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{sort}\NormalTok{(effs[ ,}\DecValTok{2}\NormalTok{]), }\AttributeTok{ylab =} \StringTok{"Factorial effects"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
-\FunctionTok{qqline}\NormalTok{(}\FunctionTok{sort}\NormalTok{(effs[ ,}\DecValTok{2}\NormalTok{]))}
+\FunctionTok{qqnorm}\NormalTok{(effs[ ,}\DecValTok{2}\NormalTok{], }\AttributeTok{ylab =} \StringTok{"Factorial effects"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{) }\CommentTok{\# note that qqnorm/qqline/qqplot don\textquotesingle{}t require sorted data}
+\FunctionTok{qqline}\NormalTok{(effs[ ,}\DecValTok{2}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4596,7 +4652,7 @@ In fact, it is more usual to use a \textbf{half-normal} plot to assess the size 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{5} \SpecialCharTok{+}\NormalTok{ .}\DecValTok{5} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16} \SpecialCharTok{{-}}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{/}\DecValTok{16} \CommentTok{\# probabilities we will plot against}
-\FunctionTok{qqplot}\NormalTok{(}\AttributeTok{x =} \FunctionTok{qnorm}\NormalTok{(p), }\AttributeTok{y =} \FunctionTok{sort}\NormalTok{(}\FunctionTok{abs}\NormalTok{(effs[,}\DecValTok{2}\NormalTok{])), }\AttributeTok{ylab =} \StringTok{"Absolute factorial effects"}\NormalTok{, }
+\FunctionTok{qqplot}\NormalTok{(}\AttributeTok{x =} \FunctionTok{qnorm}\NormalTok{(p), }\AttributeTok{y =} \FunctionTok{abs}\NormalTok{(effs[,}\DecValTok{2}\NormalTok{]), }\AttributeTok{ylab =} \StringTok{"Absolute factorial effects"}\NormalTok{, }
        \AttributeTok{xlab =} \StringTok{"Half{-}normal quantiles"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4666,40 +4722,40 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0007\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0002 & 0.0015\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0037 & 0.0337\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0041 & 0.0360\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0051 & 0.0476\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0060 & 0.0521\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0071 & 0.0682\\
+time & 2.5675 & 0.66 & 3.890 & 0.0083 & 0.0727\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0102 & 0.0967\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0111 & 0.0945\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0102 & 0.0967\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0111 & 0.0945\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0125 & 0.1166\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0139 & 0.1226\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3037 & 0.9936\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3071 & 0.9951\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4296 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4312 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5393 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5397 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7300 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7337 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7374 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7408 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7834 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7883 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7856 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7906 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9665 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9682 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
 
-The function \texttt{eff.test} calculates unadjusted p-values (\texttt{p.value}) and simultaneous p-values (\texttt{simult.pval}) adjusted to account for multiple testing. Using the latter, from Table \ref{tab:desilylation-lenth} we see that the main effects of \texttt{temp} and \texttt{reagent} are significant at the experiment-wise 5\% level and, obeying \emph{effect heredity}, their interaction (the p-value is borderline, and hovers around 0.05 depending on simulation error).
+The function \texttt{eff.test} calculates unadjusted p-values (\texttt{p.value}) and simultaneous p-values (\texttt{simult.pval}) adjusted to account for multiple testing. Using the latter, from Table \ref{tab:desilylation-lenth} we see that the main effects of \texttt{temp} and \texttt{reagent} are significant at the experiment-wise 5\% level and, obeying \textbf{effect heredity}, their interaction (the p-value is borderline, and hovers around 0.05 depending on simulation error).
 
 The package \texttt{unrepx} also provides the function \texttt{hnplot} to display these results graphically by adding a reference line to a half-normal plot; see Figure \ref{fig:desilylation-lenth-plot}. The \texttt{ME} and \texttt{SME} lines indicate the absolute size of effects that would be required to reject \(H_0: \theta_i = 0\) at an individual or experimentwise \(100\alpha\)\% level, respectively.
 
@@ -4715,7 +4771,7 @@ Informally, factorial effects with estimates greater than \texttt{SME} are thoug
 \hypertarget{regression-modelling-for-factorial-experiments}{%
 \section{Regression modelling for factorial experiments}\label{regression-modelling-for-factorial-experiments}}
 
-We have identified \(d = 2^f-1\) factorial effects that we wish to estimate from our experiment. As \(d < n = 2^fr\), even for an unreplicated design with \(r=1\), we can estimate these factorial effects using a full-rank linear regression model.
+We have identified \(d = 2^f-1\) factorial effects that we wish to estimate from our experiment. As \(d < t = 2^f\), we can estimate these factorial effects using a full-rank linear regression model.
 
 Let \(t\times d\) matrix \(C\) hold each factorial contrast as a column. Then
 
@@ -4861,7 +4917,7 @@ temp:time:solvent:reagent & 0.1925\\
 \end{tabular}
 \end{table}
 
-A regression modelling approach is usually more straightfoward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the \texttt{effects} package in \texttt{R} to quickly produce main effect and interaction plots.
+A regression modelling approach is usually more straightforward to apply than defining contrasts in the unit-treatment model, and makes clearer the connection between interaction contrasts and products of main effect contrasts (automatically defined in a regression model). It also enables us to make use of the \texttt{effects} package in \texttt{R} to quickly produce main effect and interaction plots.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4870,7 +4926,11 @@ A regression modelling approach is usually more straightfoward to apply than def
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf}
+\caption{\label{fig:desilylation-effects}Desilylation experiment: interaction plot generated using the \texttt{effects} package.}
+\end{figure}
 
 \hypertarget{anova-for-factorial-experiments}{%
 \subsection{ANOVA for factorial experiments}\label{anova-for-factorial-experiments}}
@@ -4884,11 +4944,27 @@ The basic ANOVA table has the following form.
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova-fact} The ANOVA table for a full factorial experiment}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(2^f-1\) & \(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\) & Reg SS/\((2^f-1)\) \\
@@ -4905,67 +4981,473 @@ The regression sum of squares for a factorial experiment has a very simple form.
 & = \sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\,,
 \end{align*}
 
-as \(X^{\mathrm{T}}X = nI_{2^f}\). Hence, the \(j\)th factorial effect contributes \(n\hat{\beta}_j^2\) to the regression sum if squares, and this quantity can be used to construct a test statistic \textbf{if} \(r>1\) and hence an estimate of \(\sigma^2\) is available. For Example \ref{exm:factorial-desilylation}, the ANOVA table is as follows.
+as \(X^{\mathrm{T}}X = nI_{2^f}\). Hence, the \(j\)th factorial effect contributes \(n\hat{\beta}_j^2\) to the regression sum if squares, and this quantity can be used to construct a test statistic \textbf{if} \(r>1\) and hence an estimate of \(\sigma^2\) is available. For Example \ref{exm:factorial-desilylation}, the regression sum of squares and ANOVA table are given in Tables \ref{tab:desilylation-regss} and \ref{tab:desilylation-anova-ss}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{ss }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(desilylation) }\SpecialCharTok{*} \FunctionTok{coef}\NormalTok{(desilylation\_reg.lm)}\SpecialCharTok{\^{}}\DecValTok{2}
 \NormalTok{regss }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(ss) }\SpecialCharTok{{-}} \FunctionTok{nrow}\NormalTok{(desilylation) }\SpecialCharTok{*} \FunctionTok{mean}\NormalTok{(desilylation}\SpecialCharTok{$}\NormalTok{yield)}\SpecialCharTok{\^{}}\DecValTok{2}
-\NormalTok{regss}
+\FunctionTok{names}\NormalTok{(regss) }\OtherTok{\textless{}{-}} \StringTok{"Regression"}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{c}\NormalTok{(regss, ss[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{col.names =} \StringTok{"Sum Sq."}\NormalTok{, }\AttributeTok{caption =} \StringTok{"Desilylation experiment: regression sums of squares for each factorial effect calculated directly."}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] 427.3
-\end{verbatim}
+\begin{table}
+
+\caption{\label{tab:desilylation-regss}Desilylation experiment: regression sums of squares for each factorial effect calculated directly.}
+\centering
+\begin{tabular}[t]{l|r}
+\hline
+  & Sum Sq.\\
+\hline
+Regression & 427.2837\\
+\hline
+temp & 263.7376\\
+\hline
+time & 26.3682\\
+\hline
+solvent & 19.6692\\
+\hline
+reagent & 38.1306\\
+\hline
+temp:time & 22.2312\\
+\hline
+temp:solvent & 22.2312\\
+\hline
+temp:reagent & 30.7470\\
+\hline
+time:solvent & 0.7744\\
+\hline
+time:reagent & 1.6641\\
+\hline
+solvent:reagent & 0.9604\\
+\hline
+temp:time:solvent & 0.2401\\
+\hline
+temp:time:reagent & 0.1521\\
+\hline
+temp:solvent:reagent & 0.0036\\
+\hline
+time:solvent:reagent & 0.2256\\
+\hline
+temp:time:solvent:reagent & 0.1482\\
+\hline
+\end{tabular}
+\end{table}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ss[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{anova}\NormalTok{(desilylation\_reg.lm)[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{caption =} \StringTok{"Desilylation experiment: ANOVA table from \textasciigrave{}anova\textasciigrave{} function."}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##                      temp                      time                   solvent 
-##                  263.7376                   26.3682                   19.6692 
-##                   reagent                 temp:time              temp:solvent 
-##                   38.1306                   22.2312                   22.2312 
-##              temp:reagent              time:solvent              time:reagent 
-##                   30.7470                    0.7744                    1.6641 
-##           solvent:reagent         temp:time:solvent         temp:time:reagent 
-##                    0.9604                    0.2401                    0.1521 
-##      temp:solvent:reagent      time:solvent:reagent temp:time:solvent:reagent 
-##                    0.0036                    0.2256                    0.1482
+## Warning in anova.lm(desilylation_reg.lm): ANOVA F-tests on an essentially
+## perfect fit are unreliable
 \end{verbatim}
+
+\begin{table}
+
+\caption{\label{tab:desilylation-anova-ss}Desilylation experiment: ANOVA table from `anova` function.}
+\centering
+\begin{tabular}[t]{l|r|r}
+\hline
+  & Df & Sum Sq\\
+\hline
+temp & 1 & 263.7376\\
+\hline
+time & 1 & 26.3682\\
+\hline
+solvent & 1 & 19.6692\\
+\hline
+reagent & 1 & 38.1306\\
+\hline
+temp:time & 1 & 22.2312\\
+\hline
+temp:solvent & 1 & 22.2312\\
+\hline
+temp:reagent & 1 & 30.7470\\
+\hline
+time:solvent & 1 & 0.7744\\
+\hline
+time:reagent & 1 & 1.6641\\
+\hline
+solvent:reagent & 1 & 0.9604\\
+\hline
+temp:time:solvent & 1 & 0.2401\\
+\hline
+temp:time:reagent & 1 & 0.1521\\
+\hline
+temp:solvent:reagent & 1 & 0.0036\\
+\hline
+time:solvent:reagent & 1 & 0.2256\\
+\hline
+temp:time:solvent:reagent & 1 & 0.1482\\
+\hline
+Residuals & 0 & 0.0000\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{exercises-3}{%
+\section{Exercises}\label{exercises-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  A reactor experiment that was presented by Box, Hunter and Hunter (2005, pp259-261) that used a full factorial design for \(m=5\) factors, each at two levels, to investigate the effect of \emph{feed rate} (litres/min), \emph{catalyst} (\%), \emph{agitation rate} (rpm), \emph{temperature} (C) and \emph{concentration} (\%) on the \emph{percentage reacted}. The levels of the experimental factors will be coded as \(-1\) for low level, and \(1\) for high level. Table \ref{tab:reactor-expt} presents the true factor settings corresponding to these coded values.
+
+  \begin{longtable}[]{@{}ccc@{}}
+  \caption{\label{tab:reactor-expt} Factor levels for the full factorial reactor experiment}\tabularnewline
+  \toprule
+  Factor & Low level (\(-1\)) & High level (\(1\)) \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Factor & Low level (\(-1\)) & High level (\(1\)) \\
+  \midrule
+  \endhead
+  Feed Rate (litres/min) & 10 & 15 \\
+  Catalyst (\%) & 1 & 2 \\
+  Agitation Rate (rpm) & 100 & 120 \\
+  Temperature (C) & 140 & 180 \\
+  Concentration (\%) & 3 & 6 \\
+  \bottomrule
+  \end{longtable}
+
+  The data from this experiment is given in Table \ref{tab:reactor-data}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{anova}\NormalTok{(desilylation\_reg.lm)}
+\NormalTok{reactor.frf2 }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{32}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{5}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F,}
+                           \AttributeTok{factor.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"FR"}\NormalTok{, }\StringTok{"Cat"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"Temp"}\NormalTok{, }\StringTok{"Conc"}\NormalTok{))}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{61}\NormalTok{, }\DecValTok{53}\NormalTok{, }\DecValTok{63}\NormalTok{, }\DecValTok{61}\NormalTok{, }\DecValTok{53}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{54}\NormalTok{, }\DecValTok{61}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{61}\NormalTok{, }\DecValTok{94}\NormalTok{, }\DecValTok{93}\NormalTok{, }\DecValTok{66}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{95}\NormalTok{, }\DecValTok{98}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{63}\NormalTok{,}
+       \DecValTok{70}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DecValTok{59}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{67}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DecValTok{44}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{78}\NormalTok{, }\DecValTok{77}\NormalTok{, }\DecValTok{49}\NormalTok{, }\DecValTok{42}\NormalTok{, }\DecValTok{81}\NormalTok{, }\DecValTok{82}\NormalTok{)}
+\NormalTok{reactor }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(reactor.frf2, }\AttributeTok{pre.react =}\NormalTok{ y)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(reactor, }\AttributeTok{caption =} \StringTok{"Reactor experiment."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{table}
+
+   \caption{\label{tab:reactor-data}Reactor experiment.}
+   \centering
+   \begin{tabular}[t]{l|l|l|l|l|r}
+   \hline
+   FR & Cat & AR & Temp & Conc & pre.react\\
+   \hline
+   -1 & -1 & -1 & -1 & -1 & 61\\
+   \hline
+   1 & -1 & -1 & -1 & -1 & 53\\
+   \hline
+   -1 & 1 & -1 & -1 & -1 & 63\\
+   \hline
+   1 & 1 & -1 & -1 & -1 & 61\\
+   \hline
+   -1 & -1 & 1 & -1 & -1 & 53\\
+   \hline
+   1 & -1 & 1 & -1 & -1 & 56\\
+   \hline
+   -1 & 1 & 1 & -1 & -1 & 54\\
+   \hline
+   1 & 1 & 1 & -1 & -1 & 61\\
+   \hline
+   -1 & -1 & -1 & 1 & -1 & 69\\
+   \hline
+   1 & -1 & -1 & 1 & -1 & 61\\
+   \hline
+   -1 & 1 & -1 & 1 & -1 & 94\\
+   \hline
+   1 & 1 & -1 & 1 & -1 & 93\\
+   \hline
+   -1 & -1 & 1 & 1 & -1 & 66\\
+   \hline
+   1 & -1 & 1 & 1 & -1 & 60\\
+   \hline
+   -1 & 1 & 1 & 1 & -1 & 95\\
+   \hline
+   1 & 1 & 1 & 1 & -1 & 98\\
+   \hline
+   -1 & -1 & -1 & -1 & 1 & 56\\
+   \hline
+   1 & -1 & -1 & -1 & 1 & 63\\
+   \hline
+   -1 & 1 & -1 & -1 & 1 & 70\\
+   \hline
+   1 & 1 & -1 & -1 & 1 & 65\\
+   \hline
+   -1 & -1 & 1 & -1 & 1 & 59\\
+   \hline
+   1 & -1 & 1 & -1 & 1 & 55\\
+   \hline
+   -1 & 1 & 1 & -1 & 1 & 67\\
+   \hline
+   1 & 1 & 1 & -1 & 1 & 65\\
+   \hline
+   -1 & -1 & -1 & 1 & 1 & 44\\
+   \hline
+   1 & -1 & -1 & 1 & 1 & 45\\
+   \hline
+   -1 & 1 & -1 & 1 & 1 & 78\\
+   \hline
+   1 & 1 & -1 & 1 & 1 & 77\\
+   \hline
+   -1 & -1 & 1 & 1 & 1 & 49\\
+   \hline
+   1 & -1 & 1 & 1 & 1 & 42\\
+   \hline
+   -1 & 1 & 1 & 1 & 1 & 81\\
+   \hline
+   1 & 1 & 1 & 1 & 1 & 82\\
+   \hline
+   \end{tabular}
+   \end{table}
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    Estimate all the factorial effects from this experiment, and use a half-normal plot and Lenth's method to decide which are significantly different from zero.
+  \item
+    Use the \texttt{effects} package to produce main effect and/or interaction plots for each significant factorial effect from part a.
+  \item
+    Now fit a regression model that only includes terms corresponding to main effects and two-factor interactions. How many degrees of freedom does this model use? What does this mean for the estimation of \(\sigma^2\)? How does the estimate of \(\sigma^2\) from this model relate to your analysis in part a?
+  \end{enumerate}
+\end{enumerate}
+
+Solution
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  We will estimate the factorial effects as twice the corresponding regression parameters.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reactor }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(reactor, }\FunctionTok{across}\NormalTok{(}\AttributeTok{.cols =}\NormalTok{ FR}\SpecialCharTok{:}\NormalTok{Conc, }
+                                         \SpecialCharTok{\textasciitilde{}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(.x))))}
+\NormalTok{reactor.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pre.react }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (.) }\SpecialCharTok{\^{}} \DecValTok{5}\NormalTok{, }\AttributeTok{data =}\NormalTok{ reactor)}
+\NormalTok{fac.effects }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*} \FunctionTok{coef}\NormalTok{(reactor.lm)[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(fac.effects, }\AttributeTok{caption =} \StringTok{"Reactor experiment: estimated factorial effects."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:reactor-estimate}Reactor experiment: estimated factorial effects.}
+\centering
+\begin{tabular}[t]{l|r}
+\hline
+  & x\\
+\hline
+FR & -1.375\\
+\hline
+Cat & 19.500\\
+\hline
+AR & -0.625\\
+\hline
+Temp & 10.750\\
+\hline
+Conc & -6.250\\
+\hline
+FR:Cat & 1.375\\
+\hline
+FR:AR & 0.750\\
+\hline
+FR:Temp & -0.875\\
+\hline
+FR:Conc & 0.125\\
+\hline
+Cat:AR & 0.875\\
+\hline
+Cat:Temp & 13.250\\
+\hline
+Cat:Conc & 2.000\\
+\hline
+AR:Temp & 2.125\\
+\hline
+AR:Conc & 0.875\\
+\hline
+Temp:Conc & -11.000\\
+\hline
+FR:Cat:AR & 1.500\\
+\hline
+FR:Cat:Temp & 1.375\\
+\hline
+FR:Cat:Conc & -1.875\\
+\hline
+FR:AR:Temp & -0.750\\
+\hline
+FR:AR:Conc & -2.500\\
+\hline
+FR:Temp:Conc & 0.625\\
+\hline
+Cat:AR:Temp & 1.125\\
+\hline
+Cat:AR:Conc & 0.125\\
+\hline
+Cat:Temp:Conc & -0.250\\
+\hline
+AR:Temp:Conc & 0.125\\
+\hline
+FR:Cat:AR:Temp & 0.000\\
+\hline
+FR:Cat:AR:Conc & 1.500\\
+\hline
+FR:Cat:Temp:Conc & 0.625\\
+\hline
+FR:AR:Temp:Conc & 1.000\\
+\hline
+Cat:AR:Temp:Conc & -0.625\\
+\hline
+FR:Cat:AR:Temp:Conc & -0.500\\
+\hline
+\end{tabular}
+\end{table}
+
+There are several large factorial effects, including the main effects of Catalyst and Temperature and the interaction between these factors, and the interaction between Concentration and Temperature. We can assess their significance using a half-normal plot and Lenth's method.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unrepx}\SpecialCharTok{::}\FunctionTok{hnplot}\NormalTok{(fac.effects, }\AttributeTok{horiz =}\NormalTok{ F, }\AttributeTok{method =} \StringTok{"Lenth"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
+
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6797 and 4.9868, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(fac.effects[}\FunctionTok{abs}\NormalTok{(fac.effects) }\SpecialCharTok{\textgreater{}}\NormalTok{ unrepx}\SpecialCharTok{::}\FunctionTok{ME}\NormalTok{(fac.effects, }
+                                                       \AttributeTok{method =} \StringTok{"Lenth"}\NormalTok{)[}\DecValTok{2}\NormalTok{]],}
+             \AttributeTok{caption =} \StringTok{"Reactor experiment: factorial effects significantly different from zero via Lenth\textquotesingle{}s method."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:reactor-largest}Reactor experiment: factorial effects significantly different from zero via Lenth's method.}
+\centering
+\begin{tabular}[t]{l|r}
+\hline
+  & x\\
+\hline
+Cat & 19.50\\
+\hline
+Temp & 10.75\\
+\hline
+Conc & -6.25\\
+\hline
+Cat:Temp & 13.25\\
+\hline
+Temp:Conc & -11.00\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  We will produce plots for the interactions between Catalyst and Temperature and Temperature and Concentration. We will not produce main effect plots for Catalyst and Temperature, as these are involved in the large interactions.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Cat\_x\_Temp }\OtherTok{\textless{}{-}}\NormalTok{ effects}\SpecialCharTok{::}\FunctionTok{Effect}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Cat"}\NormalTok{, }\StringTok{"Temp"}\NormalTok{), reactor.lm, }
+                              \AttributeTok{xlevels =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Cat =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{Temp =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)), }
+                              \AttributeTok{se =}\NormalTok{ F)}
+\NormalTok{Temp\_x\_Conc }\OtherTok{\textless{}{-}}\NormalTok{ effects}\SpecialCharTok{::}\FunctionTok{Effect}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Temp"}\NormalTok{, }\StringTok{"Conc"}\NormalTok{), reactor.lm, }
+                               \AttributeTok{xlevels =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Conc =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{Temp =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)),}
+                               \AttributeTok{se =}\NormalTok{ F)}
+\FunctionTok{plot}\NormalTok{(Cat\_x\_Temp, }\AttributeTok{style =} \StringTok{"stacked"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{rug =}\NormalTok{ F, }\AttributeTok{x.var =} \StringTok{"Cat"}\NormalTok{, }
+     \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{90}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(Temp\_x\_Conc, }\AttributeTok{style =} \StringTok{"stacked"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{rug =}\NormalTok{ F, }\AttributeTok{x.var =} \StringTok{"Conc"}\NormalTok{, }
+     \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{90}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf} \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf}
+Notice that changing the level of Temperature changes substantial the effect of both Catalyst and Concentration on the response; in particular, the effect of Concentration changes sign depending on the level of Temperature.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  We start by fiting the reduced regression model.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reactor2.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pre.react }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (.) }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{, }\AttributeTok{data =}\NormalTok{ reactor)}
+\FunctionTok{summary}\NormalTok{(reactor2.lm)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Analysis of Variance Table
 ## 
-## Response: yield
-##                           Df Sum Sq Mean Sq F value Pr(>F)
-## temp                       1  263.7   263.7     NaN    NaN
-## time                       1   26.4    26.4     NaN    NaN
-## solvent                    1   19.7    19.7     NaN    NaN
-## reagent                    1   38.1    38.1     NaN    NaN
-## temp:time                  1   22.2    22.2     NaN    NaN
-## temp:solvent               1   22.2    22.2     NaN    NaN
-## temp:reagent               1   30.7    30.7     NaN    NaN
-## time:solvent               1    0.8     0.8     NaN    NaN
-## time:reagent               1    1.7     1.7     NaN    NaN
-## solvent:reagent            1    1.0     1.0     NaN    NaN
-## temp:time:solvent          1    0.2     0.2     NaN    NaN
-## temp:time:reagent          1    0.2     0.2     NaN    NaN
-## temp:solvent:reagent       1    0.0     0.0     NaN    NaN
-## time:solvent:reagent       1    0.2     0.2     NaN    NaN
-## temp:time:solvent:reagent  1    0.1     0.1     NaN    NaN
-## Residuals                  0    0.0     NaN
+## Call:
+## lm(formula = pre.react ~ (.)^2, data = reactor)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -5.00  -1.62  -0.25   1.75   4.50 
+## 
+## Coefficients:
+##             Estimate Std. Error t value        Pr(>|t|)    
+## (Intercept)  65.5000     0.5660  115.73         < 2e-16 ***
+## FR           -0.6875     0.5660   -1.21           0.242    
+## Cat           9.7500     0.5660   17.23 0.0000000000094 ***
+## AR           -0.3125     0.5660   -0.55           0.588    
+## Temp          5.3750     0.5660    9.50 0.0000000560392 ***
+## Conc         -3.1250     0.5660   -5.52 0.0000464538196 ***
+## FR:Cat        0.6875     0.5660    1.21           0.242    
+## FR:AR         0.3750     0.5660    0.66           0.517    
+## FR:Temp      -0.4375     0.5660   -0.77           0.451    
+## FR:Conc       0.0625     0.5660    0.11           0.913    
+## Cat:AR        0.4375     0.5660    0.77           0.451    
+## Cat:Temp      6.6250     0.5660   11.71 0.0000000029456 ***
+## Cat:Conc      1.0000     0.5660    1.77           0.096 .  
+## AR:Temp       1.0625     0.5660    1.88           0.079 .  
+## AR:Conc       0.4375     0.5660    0.77           0.451    
+## Temp:Conc    -5.5000     0.5660   -9.72 0.0000000408373 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.2 on 16 degrees of freedom
+## Multiple R-squared:  0.976,  Adjusted R-squared:  0.954 
+## F-statistic: 44.1 on 15 and 16 DF,  p-value: 0.000000000376
 \end{verbatim}
+
+This model includes regression parameters corresponding to \(5 + {5 \choose 2} = 15\) factorial effects, plus the intercept, and hence uses 16 degrees of freedom. The remaining 16 degrees of freedom, which were previously used to estimate three-factor and higher interactions, is now used to estimate \(\sigma^2\), the background variation.
+
+The residual mean square in the reduced model, used to estimate \(\sigma^2\), is the sum of the sums of squares for the higher-order interactions in the original model, divided by 16 (the remaining degrees of freedom).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{anova}\NormalTok{(reactor.lm)[}\DecValTok{16}\SpecialCharTok{:}\DecValTok{31}\NormalTok{, }\DecValTok{3}\NormalTok{]) }\SpecialCharTok{/} \DecValTok{16}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10.25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(reactor2.lm)}\SpecialCharTok{$}\NormalTok{sigma}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10.25
+\end{verbatim}
+
+This ``pooling'' of higher-order effects to estimate \(\sigma^2\) maybe a reasonable strategy here, given that the high-order interactions are all small, but could be biased if one or more interactions were large.
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}
