@@ -496,7 +496,7 @@ The regression sum of squares for a factorial experiment has a very simple form.
 
 as $X^{\mathrm{T}}X = nI_{2^f}$. Hence, the $j$th factorial effect contributes $n\hat{\beta}_j^2$ to the regression sum if squares, and this quantity can be used to construct a test statistic **if** $r>1$ and hence an estimate of $\sigma^2$ is available. For Example \@ref(exm:factorial-desilylation), the regression sum of squares and ANOVA table are given in Tables \@ref(tab:desilylation-regss) and \@ref(tab:desilylation-anova-ss).
 
-```{r desilylation-regss, warning = F, results = 'hold'}
+```{r desilylation-regss, warning = F, message = F, results = 'hold'}
 ss <- nrow(desilylation) * coef(desilylation_reg.lm)^2
 regss <- sum(ss) - nrow(desilylation) * mean(desilylation$yield)^2
 names(regss) <- "Regression"
@@ -596,7 +596,144 @@ summary(reactor2.lm)$sigma^2
 ```
 
 This "pooling" of higher-order effects to estimate $\sigma^2$ maybe a reasonable strategy here, given that the high-order interactions are all small, but could be biased if one or more interactions were large.
+</details>
 
+2. [Adapted from @Morris2011] Consider an unreplicated ($r=1$) $2^6$ factorial experiment. The total sums of squares,
+
+    $$
+\mbox{Total SS} = \sum_{i=1}^n(y_i - \bar{y})^2\,,
+$$
+
+    has value 2856. Using Lenth's method, an informal analysis of the data suggests that there are only three important factorial effects, with least squares estimates 
+
+    - main effect of factor $A$ = 3
+    - interaction between factors $A$ and $B$ = 4
+    - interaction between factors $A$, $B$ and $C$ = 2.
+
+    If a linear model including only an intercept and these three effects is fitted to the data, what is the value of the residual sum of squares?
+  
+<details><summary><b>Solution</b></summary>
+The residual sum of squares has the form
+
+$$
+\mbox{RSS} = (\bY - X\hat
+{\boldsymbol{\beta}})^{\mathrm{T}}(\bY - X\hat
+{\boldsymbol{\beta}})\,,  
+$$
+
+where in this case $X$ is a $2^6\times 4$ model matrix, with columsn corresponding to the intercept, main effect of factor $A$, the interaction between factors $A$ and $B$, the interaction between factors $A$, $B$ and $C$. We can rewrite the RSS as
+
+\begin{equation*}
+\begin{split}
+\mbox{RSS} & = (\bY - X\hat
+{\boldsymbol{\beta}})^{\mathrm{T}}(\bY - X\hat
+{\boldsymbol{\beta}}) \\
+& = \bY^{\mathrm{T}}\bY - 2\bY^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} + \hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} \\
+& = \bY^{\mathrm{T}}\bY - 2\hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} + \hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} \\
+& = \bY^{\mathrm{T}}\bY - \hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}}\,, 
+\end{split}
+\end{equation*}
+
+as $\bY^{\mathrm{T}}X = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X$.
+
+Due the matrix $X$ having orthogonal columns, $X^{\mathrm{T}}X = 2^fI_{p+1}$, for a model containing coefficients corresponding to $p$ factorial effects; here, $p=3$. Hence,
+
+$$
+\mbox{RSS} = \bY^{\mathrm{T}}\bY - 2^f \sum_{i=0}^{p}\hat{\beta}_i^2\,.
+$$
+
+Finally, the estimate of the intercept takes the form $\hat{\beta}_0 = \bar{Y}$, and so
+
+\begin{equation*}
+\begin{split}
+\mbox{RSS} & = \bY^{\mathrm{T}}\bY - 2^f\bar{y} -  2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
+& = \sum_{i=1}^{2^f}(y_i - \bar{y})^2 - 2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
+& = \mbox{Total SS} - 2^f\sum_{i=1}^{p}\hat{\beta}_i^2\,
+\end{split}
+\end{equation*}
+
+Recalling that each regression coefficient is one-half of the corresponding factorial effect, for this example we have:
+
+$$
+\mbox{RSS} = 2856 - 2^6(1.5^2 + 2^2 + 1^2) = `r 2856 - 2^6*(1.5^2 + 2^2 + 1^2)`\,.
+$$
 
 </details>
+
+3. [Adapted from @Morris2011] Consider a $2^7$ experiment with each treatment applied to two units ($r=2$). Assume a linear regression model will be fitted containing terms corresponding to all factorial effects.
+
+    a. What is the variance of the estimator of each factorial effect, up to a constant factor $\sigma^2$?
+  
+    b. What is the variance of the least squares estimator of $E(y_{11})$, the expected value of an observation with the first treatment applied? You can assume the treatments are given in standard order, so the first treatment is defined by setting all factors to their low level. [The answer is, obviously, the same for $E(y_{12})$]. In a practical experimental setting, why is this not a useful quantity to estimate?
+  
+    c. What is the variance of the least squares estimator of $E(y_{11}) - E(y_{21})$? You may assume that the second treatment has all factors set to their low levels except for the seventh factor.
+
+<details><summary><b>Solutions</b></summary>
+
+a. Each factorial contrast is scaled so the variance for the estimator is equal to $4\sigma^2/n = \sigma^2 / 64$.
+
+b. $E(y_11) = \boldsymbol{x}_1^{\mathrm{T}}\boldsymbol{\beta}$, where $\boldsymbol{x}_1^{\mathrm{T}}$ is the row of the $X$ matrix corresponding to the first treatment and $\boldsymbol{\beta}$ are the regression coefficients. The estimator is given by
+
+    $$
+\hat{E}(y_{11}) = \boldsymbol{x}_1^{\mathrm{T}}\hat{\boldsymbol{\beta}}\,,
+$$
+
+    with variance
+
+    \begin{align*}
+\mathrm{var}\left\{\hat{E}(y_{11})\right\} & = \mathrm{var}\left\{\boldsymbol{x}_1^{\mathrm{T}}\hat{\boldsymbol{\beta}}\right\} \\
+& = \boldsymbol{x}_1^{\mathrm{T}}\mbox{var}(\hat{\boldsymbol{\beta}})\boldsymbol{x}_1 \\
+& = \boldsymbol{x}_1^{\mathrm{T}}\left(X^\mathrm{T}X\right)^{-1}\boldsymbol{x}_1\sigma^2 \\
+& = \frac{\boldsymbol{x}_1^{\mathrm{T}}\boldsymbol{x}_1\sigma^2}{2^8} \\
+& = \frac{2^7\sigma^2}{2^8} \\
+& = \sigma^2 / 2\,.
+\end{align*}
+
+    This holds for the expected response from any treatment, as $\boldsymbol{x}_j^{\mathrm{T}}\boldsymbol{x}_j = 2^7$ for all treatments, as each entry of $\boldsymbol{x}_j$ is equal to $\pm 1$.
+
+    This would not be a useful quantity to estimate in a practical experiment, as it is not a contrast in the treatments. In particular, it depends on the estimate of the overall mean, $\mu$ or $\beta_0$ (in the unit-treatment or regression model) that will vary from experiment to experiment.
+
+c. The expected values of $y_{11}$ and $y_{21}$ will only differ in terms involving the seventh factor, which is equal to its low level (-1) for the first treatment and its high level (+1) for the second treatment; all the other terms will cancel. Hence
+
+    $$
+E(y_{11}) - E(y_{21}) = -2\left(\beta_7 + \sum_{j=1}^6\beta_{j7} + \sum_{j=1}^6\sum_{k=j+1}^6\beta_{jk7} + \ldots + \beta_{1234567}\right)\,.
+$$
+
+    The variance of the estimator has the form
+
+    \begin{align*}
+\mathrm{var}\left\{\widehat{E(y_{11}) - E(y_{21})}\right\} & = 4\times\mathrm{var}\bigg(\hat{\beta}_7 + \sum_{j=1}^6\hat{\beta}_{j7} + \sum_{j=1}^6\sum_{k=j+1}^6\hat{\beta}_{jk7} + \\
+& \ldots + \hat{\beta}_{1234567}\bigg) \\
+& = \frac{4\sigma^2}{2\times 2^7}\sum_{j=0}^6{6 \choose j} \\
+& = \frac{\sigma^2}{2^6}\times `r sum(choose(6, 0:6))` \\
+& = \sigma^2\,.
+\end{align*}
+
+    Or, as this is a treatment comparison in a CRD, we have
+
+    $$
+    \hat{E}(y_{11}) - \hat{E}(y_{21}) = \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\,,
+$$
+
+    where $\boldsymbol{c}$ corresponds to a pairwise treatment comparison, and hence has one entry equal to +1 and one entry equal to -1. From Section \@ref(contrast-crd),
+
+    \begin{align*}
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
+& = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
+& = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+\end{align*}
+
+    where in this example $n_i = 2$ for all $i$ and $\sum_{i=1}^tc_i^2 = 2$. Hence, the variance is again equal to $\sigma^2$. 
+
+</details>
+
     

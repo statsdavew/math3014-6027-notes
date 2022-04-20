@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.12.11)  20 APR 2022 09:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.12.11)  20 APR 2022 19:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -774,9 +774,9 @@ l.802 \end{align}
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [17] [18] [19]
-Overfull \hbox (47.49896pt too wide) in paragraph at lines 892--892
- []\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Milk first" "Milk first" "
-Tea first"[] 
+Overfull \hbox (52.74895pt too wide) in paragraph at lines 892--892
+ []\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "
+Milk first"[] 
  []
 
 [20]
@@ -1064,50 +1064,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [1,]    0    1    0    0    0    0    1    1    1     0   
-  0     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [1,]    1    0    1    1    1    0    0    1    0     0   
+  0     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [2,]    1    0    1    0    0    0    0    0    0     1   
+[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    0    1    1     1   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    0    0    1    1    1    1     1   
-  1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    1    1    0    1    0    0     1   
+  1     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [4,]    1    1    1    0    1    1    1    0    0     0   
-  0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    0    0    1    1    0    1     0   
+  0     0     1     1[] 
  []
 
 [69]
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [5,]    0    0    0    1    1    1    0    0    1     0   
-  1     0     1     1[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [6,]    1    0    1    1    1    0    0    1    1     0   
-  0     1     0     0[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [7,]    0    1    1    1    0    1    0    1    0     1   
-  0     0     1     0[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
-[]\T1/lmtt/m/n/10 ## [8,]    0    1    0    1    1    0    1    0    0     1   
+[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    0    0    1    0    0    0     1   
   1     1     0     0[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    0    1    0    1    1    1     1   
+  0     0     0     0[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [7,]    0    1    0    1    0    1    1    1    0     0   
+  1     0     0     1[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3139--3139
+[]\T1/lmtt/m/n/10 ## [8,]    0    1    0    1    1    1    0    0    1     0   
+  0     1     1     0[] 
  []
 
 [70] [71] [72]
@@ -1388,44 +1388,44 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 1342) has occurred while \output is active []
 
 [116 <./bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf>] [117] [
-118
-
-]
+118] [119] [120]
 Chapter 5.
-[119] [120
+[121
+
+] [122
 
 ]
 Chapter 6.
-[121] [122
-
-]
-Chapter 7.
 [123] [124
 
 ]
+Chapter 7.
+[125] [126
+
+]
 Chapter 8.
-(./bookdown_math3014-6027.bbl [125] [126
+(./bookdown_math3014-6027.bbl [127] [128
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5398.
-[127]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 5398.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5557.
+[129]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 5557.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 5398.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 5398.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 5557.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 5557.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5398.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5557.
  ) 
 Here is how much of TeX's memory you used:
- 14951 strings out of 492649
- 220087 string characters out of 6129621
+ 14961 strings out of 492649
+ 220167 string characters out of 6129621
  337562 words of memory out of 5000000
  17793 multiletter control sequences out of 15000+600000
  125660 words of font info for 210 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,17n,38p,931b,549s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,20n,38p,931b,549s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{nap-black-ex} has been referenced but does not ex
 ist, replaced by a fixed one
 
@@ -1468,10 +1468,10 @@ ype1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/publi
 c/lm/lmtt8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtti1
 0.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (127 pages, 3706936 bytes).
+Output written on bookdown_math3014-6027.pdf (129 pages, 3714772 bytes).
 PDF statistics:
- 1781 PDF objects out of 2073 (max. 8388607)
- 1534 compressed objects within 16 object streams
- 531 named destinations out of 1000 (max. 500000)
+ 1805 PDF objects out of 2073 (max. 8388607)
+ 1556 compressed objects within 16 object streams
+ 541 named destinations out of 1000 (max. 500000)
  18841 words of extra memory for PDF output out of 20736 (max. 10000000)
 
