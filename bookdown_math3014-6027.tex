@@ -887,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Milk first" "Tea first" 
-## [6] "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "Milk first"
+## [6] "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -3111,10 +3111,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0
+## [1,]    1    1    1    0
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3128,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    0    0    0    0    1    1    1     0     0     1     1     1
-## [2,]    1    0    1    0    0    0    0    0    0     1     1     1     1     1
-## [3,]    1    0    0    0    0    1    1    1    1     1     1     0     0     0
-## [4,]    1    1    1    0    1    1    1    0    0     0     0     0     0     1
-## [5,]    0    0    0    1    1    1    0    0    1     0     1     0     1     1
-## [6,]    1    0    1    1    1    0    0    1    1     0     0     1     0     0
-## [7,]    0    1    1    1    0    1    0    1    0     1     0     0     1     0
-## [8,]    0    1    0    1    1    0    1    0    0     1     1     1     0     0
+## [1,]    1    0    1    1    1    0    0    1    0     0     0     1     0     1
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    1    0    0    1    1    0    1    0    0     1     1     0     1     0
+## [4,]    1    0    1    0    0    1    1    0    1     0     0     0     1     1
+## [5,]    1    1    1    0    0    1    0    0    0     1     1     1     0     0
+## [6,]    0    1    1    0    1    0    1    1    1     1     0     0     0     0
+## [7,]    0    1    0    1    0    1    1    1    0     0     1     0     0     1
+## [8,]    0    1    0    1    1    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4670,35 +4670,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0015\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0034 & 0.0315\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0036 & 0.0315\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0052 & 0.0480\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0056 & 0.0506\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0071 & 0.0656\\
+time & 2.5675 & 0.66 & 3.890 & 0.0073 & 0.0675\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0095 & 0.0896\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0107 & 0.0971\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0095 & 0.0896\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0107 & 0.0971\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0116 & 0.1099\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0135 & 0.1215\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3066 & 0.9974\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3029 & 0.9966\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4307 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4309 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5391 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5399 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7340 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7335 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7418 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7413 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7854 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7858 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7879 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7883 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9668 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9679 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5248,7 +5248,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6928 and 5.1625, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7067 and 5.0463, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5380,6 +5380,165 @@ The residual mean square in the reduced model, used to estimate \(\sigma^2\), is
 \end{verbatim}
 
 This ``pooling'' of higher-order effects to estimate \(\sigma^2\) maybe a reasonable strategy here, given that the high-order interactions are all small, but could be biased if one or more interactions were large.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \citep[Adapted from][]{Morris2011} Consider an unreplicated (\(r=1\)) \(2^6\) factorial experiment. The total sums of squares,
+
+  \[
+  \mbox{Total SS} = \sum_{i=1}^n(y_i - \bar{y})^2\,,
+  \]
+
+  has value 2856. Using Lenth's method, an informal analysis of the data suggests that there are only three important factorial effects, with least squares estimates
+
+  \begin{itemize}
+  \tightlist
+  \item
+    main effect of factor \(A\) = 3
+  \item
+    interaction between factors \(A\) and \(B\) = 4
+  \item
+    interaction between factors \(A\), \(B\) and \(C\) = 2.
+  \end{itemize}
+
+  If a linear model including only an intercept and these three effects is fitted to the data, what is the value of the residual sum of squares?
+\end{enumerate}
+
+Solution
+
+The residual sum of squares has the form
+
+\[
+\mbox{RSS} = (\boldsymbol{y}- X\hat
+{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat
+{\boldsymbol{\beta}})\,,  
+\]
+
+where in this case \(X\) is a \(2^6\times 4\) model matrix, with columsn corresponding to the intercept, main effect of factor \(A\), the interaction between factors \(A\) and \(B\), the interaction between factors \(A\), \(B\) and \(C\). We can rewrite the RSS as
+
+\begin{equation*}
+\begin{split}
+\mbox{RSS} & = (\boldsymbol{y}- X\hat
+{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat
+{\boldsymbol{\beta}}) \\
+& = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2\boldsymbol{y}^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} + \hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} \\
+& = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2\hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} + \hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}} \\
+& = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- \hat
+{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat
+{\boldsymbol{\beta}}\,, 
+\end{split}
+\end{equation*}
+
+as \(\boldsymbol{y}^{\mathrm{T}}X = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\).
+
+Due the matrix \(X\) having orthogonal columns, \(X^{\mathrm{T}}X = 2^fI_{p+1}\), for a model containing coefficients corresponding to \(p\) factorial effects; here, \(p=3\). Hence,
+
+\[
+\mbox{RSS} = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2^f \sum_{i=0}^{p}\hat{\beta}_i^2\,.
+\]
+
+Finally, the estimate of the intercept takes the form \(\hat{\beta}_0 = \bar{Y}\), and so
+
+\begin{equation*}
+\begin{split}
+\mbox{RSS} & = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2^f\bar{y} -  2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
+& = \sum_{i=1}^{2^f}(y_i - \bar{y})^2 - 2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
+& = \mbox{Total SS} - 2^f\sum_{i=1}^{p}\hat{\beta}_i^2\,
+\end{split}
+\end{equation*}
+
+Recalling that each regression coefficient is one-half of the corresponding factorial effect, for this example we have:
+
+\[
+\mbox{RSS} = 2856 - 2^6(1.5^2 + 2^2 + 1^2) = 2392\,.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  \citep[Adapted from][]{Morris2011} Consider a \(2^7\) experiment with each treatment applied to two units (\(r=2\)). Assume a linear regression model will be fitted containing terms corresponding to all factorial effects.
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \item
+    What is the variance of the estimator of each factorial effect, up to a constant factor \(\sigma^2\)?
+  \item
+    What is the variance of the least squares estimator of \(E(y_{11})\), the expected value of an observation with the first treatment applied? You can assume the treatments are given in standard order, so the first treatment is defined by setting all factors to their low level. {[}The answer is, obviously, the same for \(E(y_{12})\){]}. In a practical experimental setting, why is this not a useful quantity to estimate?
+  \item
+    What is the variance of the least squares estimator of \(E(y_{11}) - E(y_{21})\)? You may assume that the second treatment has all factors set to their low levels except for the seventh factor.
+  \end{enumerate}
+\end{enumerate}
+
+Solutions
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Each factorial contrast is scaled so the variance for the estimator is equal to \(4\sigma^2/n = \sigma^2 / 64\).
+\item
+  \(E(y_11) = \boldsymbol{x}_1^{\mathrm{T}}\boldsymbol{\beta}\), where \(\boldsymbol{x}_1^{\mathrm{T}}\) is the row of the \(X\) matrix corresponding to the first treatment and \(\boldsymbol{\beta}\) are the regression coefficients. The estimator is given by
+
+  \[
+  \hat{E}(y_{11}) = \boldsymbol{x}_1^{\mathrm{T}}\hat{\boldsymbol{\beta}}\,,
+  \]
+
+  with variance
+
+  \begin{align*}
+  \mathrm{var}\left\{\hat{E}(y_{11})\right\} & = \mathrm{var}\left\{\boldsymbol{x}_1^{\mathrm{T}}\hat{\boldsymbol{\beta}}\right\} \\
+  & = \boldsymbol{x}_1^{\mathrm{T}}\mbox{var}(\hat{\boldsymbol{\beta}})\boldsymbol{x}_1 \\
+  & = \boldsymbol{x}_1^{\mathrm{T}}\left(X^\mathrm{T}X\right)^{-1}\boldsymbol{x}_1\sigma^2 \\
+  & = \frac{\boldsymbol{x}_1^{\mathrm{T}}\boldsymbol{x}_1\sigma^2}{2^8} \\
+  & = \frac{2^7\sigma^2}{2^8} \\
+  & = \sigma^2 / 2\,.
+  \end{align*}
+
+  This holds for the expected response from any treatment, as \(\boldsymbol{x}_j^{\mathrm{T}}\boldsymbol{x}_j = 2^7\) for all treatments, as each entry of \(\boldsymbol{x}_j\) is equal to \(\pm 1\).
+
+  This would not be a useful quantity to estimate in a practical experiment, as it is not a contrast in the treatments. In particular, it depends on the estimate of the overall mean, \(\mu\) or \(\beta_0\) (in the unit-treatment or regression model) that will vary from experiment to experiment.
+\item
+  The expected values of \(y_{11}\) and \(y_{21}\) will only differ in terms involving the seventh factor, which is equal to its low level (-1) for the first treatment and its high level (+1) for the second treatment; all the other terms will cancel. Hence
+
+  \[
+  E(y_{11}) - E(y_{21}) = -2\left(\beta_7 + \sum_{j=1}^6\beta_{j7} + \sum_{j=1}^6\sum_{k=j+1}^6\beta_{jk7} + \ldots + \beta_{1234567}\right)\,.
+  \]
+
+  The variance of the estimator has the form
+
+  \begin{align*}
+  \mathrm{var}\left\{\widehat{E(y_{11}) - E(y_{21})}\right\} & = 4\times\mathrm{var}\bigg(\hat{\beta}_7 + \sum_{j=1}^6\hat{\beta}_{j7} + \sum_{j=1}^6\sum_{k=j+1}^6\hat{\beta}_{jk7} + \\
+  & \ldots + \hat{\beta}_{1234567}\bigg) \\
+  & = \frac{4\sigma^2}{2\times 2^7}\sum_{j=0}^6{6 \choose j} \\
+  & = \frac{\sigma^2}{2^6}\times 64 \\
+  & = \sigma^2\,.
+  \end{align*}
+
+  Or, as this is a treatment comparison in a CRD, we have
+
+  \[
+   \hat{E}(y_{11}) - \hat{E}(y_{21}) = \widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\,,
+  \]
+
+  where \(\boldsymbol{c}\) corresponds to a pairwise treatment comparison, and hence has one entry equal to +1 and one entry equal to -1. From Section \ref{contrast-crd},
+
+  \begin{align*}
+  \mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
+  & = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
+  & = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
+  \end{align*}
+
+  where in this example \(n_i = 2\) for all \(i\) and \(\sum_{i=1}^tc_i^2 = 2\). Hence, the variance is again equal to \(\sigma^2\).
+\end{enumerate}
 
 \hypertarget{block-factorial}{%
 \chapter{Blocking in factorial designs}\label{block-factorial}}
