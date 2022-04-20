@@ -126,10 +126,10 @@ X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\ha
 and subtracting from the final equation:
 
 \begin{multline}
-X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\hat{\boldsymbol{\beta}} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\hat{\boldsymbol{\tau}}\\
 = X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\bY\,.
 \end{multline}
-Clearly, a zero matrix is multiplying the block effects $\boldsymbol{\beta}$. Also,
+Clearly, a zero matrix is multiplying the block effects $\hat{\boldsymbol{\beta}}$. Also,
 
 $$
 X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{1}_n\,,
@@ -158,7 +158,7 @@ $$
 Writing $H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}$, we then get the reduced normal equations for $\boldsymbol{\tau}$:
 
 \begin{equation}
-X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\bY\,.
+X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\hat{\boldsymbol{\tau}}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\bY\,.
 (\#eq:block-rne)
 \end{equation}
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-03-23" />
+<meta name="date" content="2022-04-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -467,10 +467,10 @@ X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\ha
 \end{multline}\]</span></p>
 <p>and subtracting from the final equation:</p>
 <p><span class="math display">\[\begin{multline}
-X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\boldsymbol{\beta} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\boldsymbol{\tau}\\
+X_2^{\mathrm{T}}\left(\boldsymbol{1}_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n\right)\hat{\mu} + \left(X_2^{\mathrm{T}}X_1 - X_2^{\mathrm{T}}X_1\right)\hat{\boldsymbol{\beta}} \\ + X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)X_2\hat{\boldsymbol{\tau}}\\
 = X_2^{\mathrm{T}}\left(I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\right)\boldsymbol{y}\,.
 \end{multline}\]</span>
-Clearly, a zero matrix is multiplying the block effects <span class="math inline">\(\boldsymbol{\beta}\)</span>. Also,</p>
+Clearly, a zero matrix is multiplying the block effects <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. Also,</p>
 <p><span class="math display">\[
 X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{1}_n\,,
 \]</span>
@@ -494,7 +494,7 @@ X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}} = \bigoplus_{i = 1}^b \frac{1}{k_i
 \]</span></p>
 <p>Writing <span class="math inline">\(H_1 = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\)</span>, we then get the reduced normal equations for <span class="math inline">\(\boldsymbol{\tau}\)</span>:</p>
 <p><span class="math display" id="eq:block-rne">\[\begin{equation}
-X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\boldsymbol{\tau}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\boldsymbol{y}\,.
+X_2^{\mathrm{T}}\left(I_n - H_1\right)X_2\hat{\boldsymbol{\tau}}= X_2^{\mathrm{T}}\left(I_n - H_1\right)\boldsymbol{y}\,.
 \tag{3.7}
 \end{equation}\]</span></p>
 <p>We can demonstrate the form of these matrices through our two examples.</p>
@@ -795,22 +795,22 @@ N &amp; = J_{t \times b}
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="blocking.html#cb76-1" aria-hidden="true" tabindex="-1"></a>tyre.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">4</span>, <span class="at">b =</span> <span class="dv">4</span>, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">lambda =</span> <span class="dv">2</span>) <span class="co"># note, v is the notation for the number of treatments</span></span>
 <span id="cb76-2"><a href="blocking.html#cb76-2" aria-hidden="true" tabindex="-1"></a>tyre.bibd<span class="sc">$</span>N <span class="co"># incidence matrix</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    1    0    1    1
+## [1,]    1    1    1    0
 ## [2,]    0    1    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0</code></pre>
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1</code></pre>
 <p>We can also use the package to find a design for bigger experiments, for example <span class="math inline">\(t=8\)</span> treatments in <span class="math inline">\(b=14\)</span> blocks of size <span class="math inline">\(k=4\)</span>. Here, <span class="math inline">\(r = 14\times 4 / 8 = 7\)</span> and <span class="math inline">\(\lambda = 7 \times 3 / 7 = 3\)</span>.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="blocking.html#cb78-1" aria-hidden="true" tabindex="-1"></a>larger.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">b =</span> <span class="dv">14</span>, <span class="at">r =</span> <span class="dv">7</span>, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">lambda =</span> <span class="dv">3</span>) </span>
 <span id="cb78-2"><a href="blocking.html#cb78-2" aria-hidden="true" tabindex="-1"></a>larger.bibd<span class="sc">$</span>N</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    1    0    1    0    1    0    1     0     0     1     0     1
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    0    1    0    0    1    1    1    0    0     1     1     0     1     0
-## [4,]    0    1    1    1    0    1    0    1    0     0     0     0     1     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     1     0     0
-## [6,]    1    0    1    0    0    1    1    1    1     1     0     0     0     0
-## [7,]    1    0    0    1    1    0    1    1    0     0     1     0     0     1
-## [8,]    1    0    0    1    1    1    0    0    1     0     0     1     1     0</code></pre>
+## [1,]    0    1    0    0    1    1    0    1    1     0     1     0     1     0
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    0    0    0    1    1    1    0    1    0     1     0     1     0     1
+## [4,]    0    1    1    1    1    0    1    0    0     0     0     0     1     1
+## [5,]    1    1    1    0    1    0    0    0    0     1     1     1     0     0
+## [6,]    1    1    0    1    0    0    1    1    1     1     0     0     0     0
+## [7,]    1    0    1    0    0    1    1    1    0     0     1     0     0     1
+## [8,]    1    0    1    1    0    1    0    0    1     0     0     1     1     0</code></pre>
 <p>Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with <span class="math inline">\(b = {t \choose k} = {8 \choose 4} = 70\)</span> blocks.</p>
 </div>
 <div id="reduced-normal-equations" class="section level3" number="3.6.2">
