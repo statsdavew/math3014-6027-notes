@@ -405,7 +405,7 @@ unrepx::hnplot(eff_est, method = "Lenth", horiz = F, ID = 2.7, alpha = 0.05)
 ```
 Informally, factorial effects with estimates greater than `SME` are thought highly likely to be significant, and effects between `ME` and `SME` are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).
 
-## Regression modelling for factorial experiments
+## Regression modelling for factorial experiments {#fac-reg}
 
 We have identified $d = 2^f-1$ factorial effects that we wish to estimate from our experiment. As $d < t = 2^f$, we can estimate these factorial effects using a full-rank linear regression model.
 

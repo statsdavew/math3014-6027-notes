@@ -204,5 +204,109 @@ We obtain the other confounded effects by hadamard multiplication:
 \mathrm{Block}_{1}\odot \mathrm{Block}_{2} \odot \mathrm{Block}_{3} & = & ADFGH\,. \nonumber
 \end{eqnarray}
 
+It is also straightforward to find blocked fractional factorial designs using `FrF2` in `R`. For example, to find the two $2^3$ designs at the start of this chapter, with blocks of size $k=4$ and $k=2$, we simply set the `blocks` argument equal to the number of blocks $b$, see Tables \@ref(tab:frf2-block-1) and \@ref(tab:frf2-block-2)^[The additional `R` code is to tidy up the output.].
 
+```{r frf2-block-1}
+block1.frf2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 2, 
+                          alias.info = 3, randomize = F)
+block1 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block1.frf2))
+block1 <- dplyr::mutate(block1, Treatment = 1:8, .before = Blocks1)
+knitr::kable(block1[, -1], col.names = c("Treatment", "Block", "A", "B", "C", 
+                                         "A:B", "A:C", "B:C", "A:B:C"),
+             caption = "$2^3$ factorial design in two blocks of size four")
 
+```
+```{r frf2-block-2}
+block2.frf2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 4, 
+                          alias.info = 3, randomize = F, alias.block.2fis = T)
+block2 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block2.frf2))
+block2 <- dplyr::mutate(block2, Treatment = 1:8, .before = Blocks1)
+knitr::kable(block2[, -1], 
+             col.names = c("Treatment", "Block1", "Block2", "Block3", 
+                           "A", "B", "C", 
+                           "A:B", "A:C", "B:C", "A:B:C"),
+             caption = "$2^3$ factorial design in two blocks of size two")
+
+```
+In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.
+
+Setting `alias.info = 3` ensures `FrF2` returns information about confounding between blocks and three-factor interactions^[By default, `FrF2` only returns information about confounding involving two-factor interactions. Unfortunately, it is not possible to get `FrF2` to return information about confounding involving four-factor or higher interactions.] We extract this information using `design.info`^[We previously have not explicitly loaded packages before. However, `design.info` is actually extracting *attributes* of the `FrF2` object, and I couldn't find a way to make this work without loading the package!].
+
+```{r FrF2-info, message = F}
+library(FrF2)
+design.info(block1.frf2)$aliased.with.blocks
+design.info(block2.frf2)$aliased.with.blocks
+```
+
+We can also specify which factorial effects we wish to confound with blocks, rather than letting `FrF2` choose. For the $2^8$ example above, we can specify the three defining blocks
+
+$$
+\mathrm{Block}_{1}=ACEGH\,,\quad \mathrm{Block}_{2}=BCFGH\,,\quad \mathrm{Block}_{3}= BDEGH\,,
+$$
+ the `blocks` argument
+
+```{r FrF2-choose-confounding}
+block3.frf2 <- FrF2::FrF2(nruns = 2^8, nfactors = 8, 
+                     alias.info = 3, randomize = F, blocks = c("ACEGH", "BCFGH", "BDEGH"))
+```
+
+## Analysis of a confounded factorial design
+We can analyse a confounded design by by combining ideas from Chapters \@ref(blocking) and \@ref(factorial). The most straightforward approach is to add a block effect to the regression model introduced in Section \@ref(fac-reg). Let $X$ be the $n\times d$ model matrix with columns corresponding to the $d = 2^f - b +1$ unscaled contrast coefficients for the estimable factorial effects (i.e. those **not** confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the $X$ matrix cannot columns corresponding to these effects. We write a block-regression model as 
+
+$$
+\bY = \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + + Z\boldsymbol{\gamma} + \boldsymbol{\varepsilon}\,,
+$$
+where in a (necessary) change of notation, $Z$ is the $n \times b$ model matrix for blocks (previously referred to as $X_1$) and $\boldsymbol{\gamma} = (\gamma_1,\ldots, \gamma_b)^{\mathrm{T}}$ is the vector of block effects (previously called $\boldsymbol{\beta}$). The errors remain independent and identically normally distributed with constant variance. Recall that for equal block sizes
+
+$$
+Z = \bigoplus_{i = 1}^b \boldsymbol{1}_{k} = \begin{bmatrix}
+\boldsymbol{1}_{k} & \boldsymbol{0}_{k} & \cdots &  \boldsymbol{0}_{k} \\
+\boldsymbol{0}_{k} & \boldsymbol{1}_{k} & \cdots &  \boldsymbol{0}_{k} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k} & \boldsymbol{0}_{k} & \cdots &  \boldsymbol{1}_{k} \\
+\end{bmatrix}\,.
+$$
+
+The normal equations take the form
+
+\begin{align}
+n\hat{\beta}_0 + \boldsymbol{1}_n^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = \boldsymbol{1}_n^{\mathrm{T}}\bY\,, (\#eq:fact-blocks-normal-1)\\
+X^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta}_0 + X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + X^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = X^{\mathrm{T}}\bY\,, (\#eq:fact-blocks-normal-2)\\
+Z^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + Z^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + Z^{\mathrm{T}}Z\hat{\boldsymbol{\tau}} & = Z^{\mathrm{T}}\bY\,. (\#eq:fact-blocks-normal-3)\\
+\end{align}
+
+However, we have that $X^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}_{2^{f}-2^b}$, as all factorial contrasts are orthogonal to the constant vector. Also, $X^{\mathrm{T}}Z = \boldsymbol{0}_{d\times b}$, as each factorial contrasts takes values -1 and +1 an equal number of times in each block. Also, $X^{\mathrm{T}}X = nI_{d}$, as all the vectors of factorial contrast coefficients are orthogonal. Hence, the regression coefficients $\boldsymbol{\beta}$ can be estimated independently of the intercept and block effects, with reduced normal equations
+
+$$
+n\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\bY\,.
+$$
+Obviously, there is a unique solution for $\hat{\boldsymbol{\beta}}$,
+
+$$
+\hat{\boldsymbol{\beta}} = \frac{1}{n}X^{\mathrm{T}}\bY\,,
+$$
+with estimators of the factorial effects having the form $2\hat{\boldsymbol{\beta}}$ (see Section \@ref(fac-reg)).
+
+For a simulated response in Example \@ref(exm:block-frac-2), we can perform this analysis in `R` using `lm`.
+
+```{r confounded-analysis, message = F, warning = F}
+ex2.df <- dplyr::mutate_at(Xdf,c("Block"), factor)
+X <- model.matrix(~ Block + (A + B + C)^3, ex2.df)
+coef.values <- c(0, 2, 6, 12, 4, 0, 3, 0, 2, 0, 0)
+y <- X %*% coef.values + rnorm(8, 0, 1)
+betahat <- t(X[, c(5, 6, 7, 11)]) %*% y / nrow(X)
+betahat # coef estimates, obtained directly
+ex2.df <- data.frame(ex2.df, y = y)
+ex2.lm <- lm(y ~  Block + A + B + C + A:B:C, data = ex2.df)
+anova(ex2.lm)
+coef(ex2.lm)[5:8] # coef estimates
+2 * coef(ex2.lm)[5:8] # factorial effects
+```
+As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
+
+```{r fact-lm2, warning = F}
+ex2.lm2 <- lm(y ~  (A + B + C)^3, data = ex2.df)
+anova(ex2.lm2)
+coef(ex2.lm2)
+```
+But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.

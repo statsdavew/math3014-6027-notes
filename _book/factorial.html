@@ -221,7 +221,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="factorial.html"><a href="factorial.html#lenths-method-for-approximate-hypothesis-testing"><i class="fa fa-check"></i><b>4.3.1</b> Lenth’s method for approximate hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#regression-modelling-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a>
+<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#fac-reg"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a>
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="factorial.html"><a href="factorial.html#anova-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4.1</b> ANOVA for factorial experiments</a></li>
 </ul></li>
@@ -231,6 +231,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
 <li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
+<li class="chapter" data-level="5.3" data-path="block-factorial.html"><a href="block-factorial.html#analysis-of-a-confounded-factorial-design"><i class="fa fa-check"></i><b>5.3</b> Analysis of a confounded factorial design</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
@@ -1152,70 +1153,70 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.66</td>
 <td align="right">12.303</td>
 <td align="right">0.0001</td>
-<td align="right">0.0007</td>
+<td align="right">0.0011</td>
 </tr>
 <tr class="even">
 <td align="left">reagent</td>
 <td align="right">3.0875</td>
 <td align="right">0.66</td>
 <td align="right">4.678</td>
-<td align="right">0.0040</td>
-<td align="right">0.0322</td>
+<td align="right">0.0034</td>
+<td align="right">0.0292</td>
 </tr>
 <tr class="odd">
 <td align="left">temp.reagent</td>
 <td align="right">-2.7725</td>
 <td align="right">0.66</td>
 <td align="right">-4.201</td>
-<td align="right">0.0058</td>
-<td align="right">0.0476</td>
+<td align="right">0.0051</td>
+<td align="right">0.0442</td>
 </tr>
 <tr class="even">
 <td align="left">time</td>
 <td align="right">2.5675</td>
 <td align="right">0.66</td>
 <td align="right">3.890</td>
-<td align="right">0.0079</td>
-<td align="right">0.0679</td>
+<td align="right">0.0070</td>
+<td align="right">0.0615</td>
 </tr>
 <tr class="odd">
 <td align="left">temp.solvent</td>
 <td align="right">2.3575</td>
 <td align="right">0.66</td>
 <td align="right">3.572</td>
-<td align="right">0.0109</td>
-<td align="right">0.0919</td>
+<td align="right">0.0098</td>
+<td align="right">0.0866</td>
 </tr>
 <tr class="even">
 <td align="left">temp.time</td>
 <td align="right">-2.3575</td>
 <td align="right">0.66</td>
 <td align="right">-3.572</td>
-<td align="right">0.0109</td>
-<td align="right">0.0919</td>
+<td align="right">0.0098</td>
+<td align="right">0.0866</td>
 </tr>
 <tr class="odd">
 <td align="left">solvent</td>
 <td align="right">-2.2175</td>
 <td align="right">0.66</td>
 <td align="right">-3.360</td>
-<td align="right">0.0130</td>
-<td align="right">0.1125</td>
+<td align="right">0.0125</td>
+<td align="right">0.1136</td>
 </tr>
 <tr class="even">
 <td align="left">time.reagent</td>
 <td align="right">-0.6450</td>
 <td align="right">0.66</td>
 <td align="right">-0.977</td>
-<td align="right">0.3047</td>
-<td align="right">0.9985</td>
+<td align="right">0.3045</td>
+<td align="right">0.9974</td>
 </tr>
 <tr class="odd">
 <td align="left">solvent.reagent</td>
 <td align="right">0.4900</td>
 <td align="right">0.66</td>
 <td align="right">0.742</td>
-<td align="right">0.4317</td>
+<td align="right">0.4292</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1223,7 +1224,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.4400</td>
 <td align="right">0.66</td>
 <td align="right">0.667</td>
-<td align="right">0.5396</td>
+<td align="right">0.5388</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1231,7 +1232,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.2450</td>
 <td align="right">0.66</td>
 <td align="right">0.371</td>
-<td align="right">0.7360</td>
+<td align="right">0.7316</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1239,7 +1240,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">-0.2375</td>
 <td align="right">0.66</td>
 <td align="right">-0.360</td>
-<td align="right">0.7441</td>
+<td align="right">0.7393</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1247,7 +1248,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.1950</td>
 <td align="right">0.66</td>
 <td align="right">0.295</td>
-<td align="right">0.7893</td>
+<td align="right">0.7836</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="even">
@@ -1255,7 +1256,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">0.1925</td>
 <td align="right">0.66</td>
 <td align="right">0.292</td>
-<td align="right">0.7922</td>
+<td align="right">0.7864</td>
 <td align="right">1.0000</td>
 </tr>
 <tr class="odd">
@@ -1263,7 +1264,7 @@ t_{\mbox{PSE}, i} = \frac{\hat{\theta}_i}{\mbox{PSE}}\,,
 <td align="right">-0.0300</td>
 <td align="right">0.66</td>
 <td align="right">-0.045</td>
-<td align="right">0.9661</td>
+<td align="right">0.9659</td>
 <td align="right">1.0000</td>
 </tr>
 </tbody>
@@ -1280,7 +1281,7 @@ Figure 4.5: Desilylation experiment: half-normal plot with reference lines from 
 <p>Informally, factorial effects with estimates greater than <code>SME</code> are thought highly likely to be significant, and effects between <code>ME</code> and <code>SME</code> are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).</p>
 </div>
 </div>
-<div id="regression-modelling-for-factorial-experiments" class="section level2" number="4.4">
+<div id="fac-reg" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Regression modelling for factorial experiments</h2>
 <p>We have identified <span class="math inline">\(d = 2^f-1\)</span> factorial effects that we wish to estimate from our experiment. As <span class="math inline">\(d &lt; t = 2^f\)</span>, we can estimate these factorial effects using a full-rank linear regression model.</p>
 <p>Let <span class="math inline">\(t\times d\)</span> matrix <span class="math inline">\(C\)</span> hold each factorial contrast as a column. Then</p>
@@ -2132,7 +2133,7 @@ Figure 4.6: Desilylation experiment: interaction plot generated using the <code>
 <p>There are several large factorial effects, including the main effects of Catalyst and Temperature and the interaction between these factors, and the interaction between Concentration and Temperature. We can assess their significance using a half-normal plot and Lenth’s method.</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="factorial.html#cb147-1" aria-hidden="true" tabindex="-1"></a>unrepx<span class="sc">::</span><span class="fu">hnplot</span>(fac.effects, <span class="at">horiz =</span> F, <span class="at">method =</span> <span class="st">&quot;Lenth&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <p><img src="bookdown_math3014-6027_files/figure-html/reactor-lenth-1.png" width="672" /></p>
-<p>We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6912 and 5.1514, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table <a href="factorial.html#tab:reactor-largest">4.13</a>, are all greater than both margins of error and can be declared as significant.</p>
+<p>We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7001 and 5.1789, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table <a href="factorial.html#tab:reactor-largest">4.13</a>, are all greater than both margins of error and can be declared as significant.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="factorial.html#cb148-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(fac.effects[<span class="fu">abs</span>(fac.effects) <span class="sc">&gt;</span> unrepx<span class="sc">::</span><span class="fu">ME</span>(fac.effects, </span>
 <span id="cb148-2"><a href="factorial.html#cb148-2" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">method =</span> <span class="st">&quot;Lenth&quot;</span>)[<span class="dv">2</span>]],</span>
 <span id="cb148-3"><a href="factorial.html#cb148-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;Reactor experiment: factorial effects significantly different from zero via Lenth&#39;s method.&quot;</span>)</span></code></pre></div>
