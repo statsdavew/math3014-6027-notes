@@ -225,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="block-factorial" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Blocking in factorial designs</h1>
 <p>We now consider splitting the treatments in a factorial design into blocks. As in Chapter <a href="blocking.html#blocking">3</a>, the simplest factorial blocked design is a <strong>randomised complete block design</strong>, where the blocks are large enough for a complete replicate of the factorial treatments to occur in each block. Analysis then proceeds as in Chapter <a href="blocking.html#blocking">3</a>, with the contrasts of interest being those corresponding to the factorial effects (main effects and interactions).</p>
-<p>However, the number of treatments grows rapidly in a factorial design, and it is unusual for the block sizes to be sufficiently large to accomodate a complete replication within each block. Hence, <strong>incomplete block designs</strong> must be employed. While balanced incomplete block designs (Section<a href="blocking.html#sec-bibd">3.6</a>) can be used, they do not tend to have good statistical properties and their construction is complicated. In this chapter, we will focus on a class of methods specific to splitting a two-level factorial design in to blocks who common size <span class="math inline">\(k\)</span> is a power of two.</p>
+<p>However, the number of treatments grows rapidly in a factorial design, and it is unusual for the block sizes to be sufficiently large to accomodate a complete replication within each block. Hence, <strong>incomplete block designs</strong> must be employed. While balanced incomplete block designs (Section <a href="blocking.html#sec-bibd">3.6</a>) can be used, they do not tend to have good statistical properties and their construction is complicated. In this chapter, we will focus on a class of methods specific to splitting a two-level factorial design in to blocks who common size <span class="math inline">\(k\)</span> is a power of two.</p>
 <div id="two-examples" class="section level2">
 <h2><span class="header-section-number">5.1</span> Two examples</h2>
 <p>We will use two simple examples to illustrate this approach, based on a <span class="math inline">\(2^3\)</span> experiment with factors labelled <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> (Table <a href="block-factorial.html#tab:example-factorial">5.1</a>).</p>
@@ -985,66 +985,6 @@ Hence, the main effect of factor <span class="math inline">\(A\)</span> is also 
 \mathrm{Block}_{2}\odot \mathrm{Block}_{3} &amp; = &amp; CDEF \nonumber\\
 \mathrm{Block}_{1}\odot \mathrm{Block}_{2} \odot \mathrm{Block}_{3} &amp; = &amp; ADFGH\,. \nonumber
 \end{eqnarray}\]</span></p>
-<!--
-
-It is also straightforward to find blocked fractional factorial designs using `FrF2` in `R`. For example, to find the two $2^3$ designs at the start of this chapter, with blocks of size $k=4$ and $k=2$, we simply set the `blocks` argument equal to the number of blocks $b$, see Tables \@ref(tab:frf2-block-1) and \@ref(tab:frf2-block-2)^[The additional `R` code is to tidy up the output.].
-
-
-```r
-block1 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 2, 
-                     alias.info = 3, randomize = F)
-block1 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block1))
-block1 <- dplyr::mutate(block1, Treatment = 1:8, .before = Blocks1)
-knitr::kable(block1[, -1], col.names = c("Treatment", "Block", "A", "B", "C", 
-                                         "A:B", "A:C", "B:C", "A:B:C"),
-             caption = "$2^3$ factorial design in two blocks of size four")
-```
-
-
-
-Table: (\#tab:frf2-block-1)$2^3$ factorial design in two blocks of size four
-
-| Treatment| Block|  A|  B|  C| A:B| A:C| B:C| A:B:C|
-|---------:|-----:|--:|--:|--:|---:|---:|---:|-----:|
-|         1|    -1| -1| -1| -1|   1|   1|   1|    -1|
-|         2|    -1| -1|  1|  1|  -1|  -1|   1|    -1|
-|         3|    -1|  1| -1|  1|  -1|   1|  -1|    -1|
-|         4|    -1|  1|  1| -1|   1|  -1|  -1|    -1|
-|         5|     1| -1| -1|  1|   1|  -1|  -1|     1|
-|         6|     1| -1|  1| -1|  -1|   1|  -1|     1|
-|         7|     1|  1| -1| -1|  -1|  -1|   1|     1|
-|         8|     1|  1|  1|  1|   1|   1|   1|     1|
-
-```r
-block2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 4, 
-                     alias.info = 3, randomize = F, alias.block.2fis = T)
-block2 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block2))
-block2 <- dplyr::mutate(block2, Treatment = 1:8, .before = Blocks1)
-knitr::kable(block2[, -1], 
-             col.names = c("Treatment", "Block1", "Block2", "Block3", 
-                                         "A", "B", "C", 
-                                         "A:B", "A:C", "B:C", "A:B:C"),
-             caption = "$2^3$ factorial design in two blocks of size two")
-```
-
-
-
-Table: (\#tab:frf2-block-2)$2^3$ factorial design in two blocks of size two
-
-| Treatment| Block1| Block2| Block3|  A|  B|  C| A:B| A:C| B:C| A:B:C|
-|---------:|------:|------:|------:|--:|--:|--:|---:|---:|---:|-----:|
-|         1|     -1|     -1|      1| -1|  1|  1|  -1|  -1|   1|    -1|
-|         2|     -1|     -1|      1|  1| -1| -1|  -1|  -1|   1|     1|
-|         3|      1|     -1|     -1| -1|  1| -1|  -1|   1|  -1|     1|
-|         4|      1|     -1|     -1|  1| -1|  1|  -1|   1|  -1|    -1|
-|         5|     -1|      1|     -1| -1| -1|  1|   1|  -1|  -1|     1|
-|         6|     -1|      1|     -1|  1|  1| -1|   1|  -1|  -1|    -1|
-|         7|      1|      1|      1| -1| -1| -1|   1|   1|   1|    -1|
-|         8|      1|      1|      1|  1|  1|  1|   1|   1|   1|     1|
-In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.
-
-
--->
 
 </div>
 </div>
