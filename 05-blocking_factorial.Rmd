@@ -206,36 +206,3 @@ We obtain the other confounded effects by hadamard multiplication:
 
 
 
-It is also straightforward to find blocked fractional factorial designs using `FrF2` in `R`. For example, to find the two $2^3$ designs at the start of this chapter, with blocks of size $k=4$ and $k=2$, we simply set the `blocks` argument equal to the number of blocks $b$, see Tables \@ref(tab:frf2-block-1) and \@ref(tab:frf2-block-2)^[The additional `R` code is to tidy up the output.].
-
-```{r frf2-block-1}
-block1.frf2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 2, 
-                     alias.info = 3, randomize = F)
-block1 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block1.frf2))
-block1 <- dplyr::mutate(block1, Treatment = 1:8, .before = Blocks1)
-knitr::kable(block1[, -1], col.names = c("Treatment", "Block", "A", "B", "C", 
-                                         "A:B", "A:C", "B:C", "A:B:C"),
-             caption = "$2^3$ factorial design in two blocks of size four")
-
-```
-```{r frf2-block-2}
-block2.frf2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 4, 
-                     alias.info = 3, randomize = F, alias.block.2fis = T)
-block2 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block2.frf2))
-block2 <- dplyr::mutate(block2, Treatment = 1:8, .before = Blocks1)
-knitr::kable(block2[, -1], 
-             col.names = c("Treatment", "Block1", "Block2", "Block3", 
-                                         "A", "B", "C", 
-                                         "A:B", "A:C", "B:C", "A:B:C"),
-             caption = "$2^3$ factorial design in two blocks of size two")
-
-```
-In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.
-
-Setting `alias.info = 3` ensures `FrF2` returns information about confounding between blocks and three-factor interactions^[By default, `FrF2` only returns information about confounding involving two-factor interactions. Unfortunately, it is not possible to get `FrF2` to return information about confounding involving four-factor or higher interactions.] We extract this information using `design.info`^[We previously have not explicitly loaded packages before. However, `design.info` is actually extracting *attributes* of the `FrF2` object, and I couldn't find a way to make this work without loading the package!].
-
-```{r FrF2-info}
-library(FrF2)
-design.info(block1.frf2)
-design.info(block2.frf2)
-``
