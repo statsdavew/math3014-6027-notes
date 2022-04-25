@@ -1,1 +1,236 @@
 # Blocking in factorial designs {#block-factorial}
+
+We now consider splitting the treatments in a factorial design into blocks. As in Chapter \@ref(blocking), the simplest factorial blocked design is a **randomised complete block design**, where the blocks are large enough for a complete replicate of the factorial treatments to occur in each block. Analysis then proceeds as in Chapter \@ref(blocking), with the contrasts of interest being those corresponding to the factorial effects (main effects and interactions).
+
+However, the number of treatments grows rapidly in a factorial design, and it is unusual for the block sizes to be sufficiently large to accomodate a complete replication within each block. Hence, **incomplete block designs** must be employed. While balanced incomplete block designs (Section\@ref(sec-bibd)) can be used, they do not tend to have good statistical properties and their construction is complicated. In this chapter, we will focus on a class of methods specific to splitting a two-level factorial design in to blocks who common size $k$ is a power of two.
+
+## Two examples
+
+We will use two simple examples to illustrate this approach, based on a $2^3$ experiment with factors labelled $A$, $B$ and $C$ (Table \@ref(tab:example-factorial)).
+
+```{r example-factorial, message = F}
+example.design <- FrF2::FrF2(nruns = 8, nfactors = 3, randomize = F)
+knitr::kable(example.design, caption = "Treatments from a $2^3$ factorial design", align = rep("r", 3))
+```
+
+:::{.example #block-frac-1}
+Consider splitting the treatments between two blocks of size $2^{3-1}=4$. One choice is given in Table \@ref(tab:block-frac-1).
+
+```{r block-frac-1}
+block1 <- c(1, 2, 2, 1, 2, 1, 1, 2)
+example.design.a <- cbind(example.design, Block = block1)
+knitr::kable(example.design.a, caption = "Treatments from a $2^3$ factorial design split into two blocks of size four.", align = rep("r", 4))
+```
+
+To assess the impact of this choice of blocking scheme on the analysis of the experiment, we need to consider the (unscaled) contrasts corresponding to all the factorial effects, see Table \@ref(tab:block-frac-1-mm).
+
+```{r block-frac-1-mm}
+X <- model.matrix( ~ Block + (A + B + C)^3, data = example.design.a)
+Xdf <- data.frame(X[, -1])
+colnames(Xdf) <- c("Block", "A", "B", "C", "A:B", "A:C", "B:C", "A:B:C")
+Xdf <- dplyr::mutate(Xdf, Treatment = 1:8, .before = Block)
+knitr::kable(Xdf, caption = "Unscaled factorial effect contrasts for a $2^3$ design with one possible assignment of treatments to blocks")
+```
+Each contrast vector in Table \@ref(tab:block-frac-1-mm) is orthogonal, in the sense of -1 and +1 occuring equally often (twice) in each block, except for the contrast vector for the three-factor interaction. This vector has all -1 entries occuring in block 1, and all +1 entries occuring in block 2. 
+
+The difference in average response between blocks 1 and 2 in this design is estimated by
+
+$$
+\widehat{\beta_1 - \beta_2} = \frac{1}{4}\left\{(y_{11} + y_{14} + y_{16}+ y_{17}) - (y_{22} + y_{23} + y_{25} + y_{28})\right\}\,,
+$$
+
+where $\beta_i$ is the effect of the $i$th block in unit-block-treatment model \@ref(eq:block-model) and $y_{ij}$ is the response from applying treatment $j$ to a unit in block $i$ ($i = 1, 2;\, j = 1, \ldots, 8$).
+
+This contrast is **exactly** the same as the contrast for estimating the three-factor interaction.
+
+$$
+\mathrm{Int}(A, B, C) = \frac{1}{4}\left\{(y_{11} + y_{14} + y_{16}+ y_{17}) - (y_{22} + y_{23} + y_{25} + y_{28})\right\}\,.
+$$
+Hence this choice of blocking makes it impossible for us to estimate this interaction. If the contrast is large, we would anticipate it was because there is a large difference in average response between blocks, not because of the three-factor interaction.
+
+So why choose this particular blocking? Well, it is impossible to split this set of treatments into incomplete blocks (with $k<8$) and not lose some information about the factorial effects.
+
+1. From effect hierarchy, the three-factor interaction is the least likely factorial effect to be important, and hence this is the interaction we care least about losing information about. Choosing any of the other factorial effects to determine the blocking would be a worst choice^[In the absence of any prior information telling us that certain effects are of particular interest, we always favour losing information on higher order effects.]
+
+2. What about if we don't use a column of Table \@ref(tab:block-frac-1-mm) to assign treatments to blocks? We now longer lose all information about a particular factorial effect, but instead we lose some information about many, or even all, factorial effects.
+
+We can study this information lose by assessing all ${8 \choose 4}! = `r choose(8, 4)`$ possible assignments of treatments to blocks. For each, we will calculate the average variance of the main effect and two-factor interaction contrasts (up to a constant $\sigma^2$).
+
+```{r block-assignment, message = F, warning = F}
+no.assign <- choose(8, 4)
+assignments <- combinat::combn(8, 4)
+yfake <- rnorm(8)
+Xadf <- cbind(Xdf[, c(-1, -9)], y = yfake)
+avgvar <- NULL
+for(i in 1:no.assign) {
+  B <- rep(1, 8)
+  B[assignments[, i]] <- -1
+  Xadf$Block <- B
+  temp.lm <- lm(y ~ Block + (A + B + C)^2, data = Xadf)
+  temp.lm$residuals <- yfake
+  temp.lm$df.residual <- 8
+  vmat <- vcov(temp.lm) / (summary(temp.lm)$sigma^2)
+  vars <- (diag(vmat[-c(1:2), -c(1:2)]))
+  tidyr::replace_na(vars, Inf)
+  avgvar[i] <- sum(tidyr::replace_na(vars, Inf)) / 6
+}
+knitr::kable(table(avgvar), col.names = c("Avg. variance", "Freq."))
+```
+From our study, we see that there are two allocations of treatments to blocks that give us the smallest average variance of $0.125\sigma^2$. These two allocations are those that use the three-factor interaction column to assign treatments to blocks. For 32 other allocations, the average variance $0.188\sigma^2$, and hence an efficiency of $`r 0.125/0.188`$ compared to the first two allocations. There are also 36 allocations that have infinite average variance; these allocations use one of the six main effect or two-factor interaction columns to assign treatments to blocks. For any of these choices, the corresponding factorial effect cannot be estimated, equivalent to the estimator having infinite variance.
+
+We now compare our original design to one of the 32 allocations with average variance $0.188\sigma^2$ (chosen arbitrarily).
+
+```{r partial-confounding}
+Xa <- as.matrix(Xdf[, -c(1)])
+Xb <- Xa
+B <- rep(1, 8)
+B[assignments[, 2]] <- -1
+Xb[,1] <- B
+```
+
+```{r cor-optimal}
+knitr::kable(cor(Xa), caption = "Scaled inner-products between contrast vectors for $2^3$ with treatments assigned to blocks so $\\mathrm{Blocks} = ABC$.")
+```
+
+```{r cor-partial}
+knitr::kable(cor(Xb), caption = "Scaled inner-products between contrast vectors for $2^3$ with treatments assigned to blocks arbitrarily.")
+```
+
+From Table \@ref(tab:cor-optimal), we can see that the block contrast is orthogonal to (has zero inner product with) all the main effect and two-factor interaction contrasts. In comparison, the design with arbitrary treatment assignment has non-zero inner products between blocks and the main effect contrasts (Table \@ref(tab:cor-partial)). However, this design does allow estimation of the three-factor interaction (although it too has non-zero inner-product with the block contrast).^[Also, simultaneous estimation of the intercept, blocking effect and all 8 factorial effects is not possible, as there are insufficient degrees of freedom. In fact, the rank of the combined treatment and block model matrices for the unit-block-treatment model (\@ref(eq:eq:block-plm)) is t+b-3.]
+
+Clearly, if interest is in estimation of the main effects and two-factor interactions, it is best to use the design which assigns treatments to blocks via the three-factor interaction contrast coefficients.
+:::
+
+::: {.definition #confounding}
+A factorial effect is said to be **confounded** with blocks if the same contrast in the observations estimates both the factorial effect and a difference between blocks. 
+:::
+
+In Example \@ref(exm:block-frac-1), the three-factor interaction $ABC$ is confounded with blocks. We write $\mathrm{Blocks} = ABC$ as a shorthand to represent this confounding. 
+
+::: {.example #block-frac-2} 
+
+Now consider splitting the treatments between four blocks of size $2^{3-2}=2$. One choice is given in Table \@ref(tab:block-frac-2).
+
+```{r block-frac-2}
+block2 <- c(4, 3, 2, 1, 1, 2, 3, 4)
+example.design.b <- cbind(example.design, Block = block2)
+knitr::kable(example.design.b, caption = "Treatments from a $2^3$ factorial design split into four blocks of size two.", align = rep("r", 4))
+```
+
+Clearly, we cannot use a single factorial contrast (taking only two values) to divide treatments between four blocks. The obvious extension to the approach from Example \@ref(exm:block-frac-1) is to use the combination of two columns. Here, we have used the contrasts for the $AB$ and $AC$ interactions.
+
+```{r block-frac-2-mm}
+X <- model.matrix( ~ Block + (A + B + C)^3, data = example.design.b)
+Xdf <- data.frame(X[, -1])
+colnames(Xdf) <- c("Block", "A", "B", "C", "A:B", "A:C", "B:C", "A:B:C")
+Xdf <- dplyr::mutate(Xdf, Treatment = 1:8, .before = Block)
+knitr::kable(Xdf, caption = "Unscaled factorial effect contrasts for a $2^3$ design with one possible assignment of treatments to four blocks of size two.")
+```
+In Table \@ref(tab:block-frac-2-mm) we can see that the contrasts for $AB$ and $AC$ are confounded with blocks (the contrast coefficients are constant within each blocks).
+
+- Block 1 contains treatments 4 and 5, which have $AB = +1$ and $AC = -1$.
+
+- Block 2 contains treatments 3 and 6, which have $AB = -1$ and $AC = +1$.
+
+- Block 3 contains treatments 2 and 7, whicn have $AB = AC = -1$.
+
+- Block 4 contains treatments 1 and 8, which have $AB = AC = +1$.
+
+However, by confounding interactions $AB$ and $AC$ we have also confounded the elementwise (Hadamard) product of these two interactions: 
+
+$$
+AB \odot AC = A \odot B \odot A \odot C = B \odot C = BC\,.
+$$
+If the contrast vectors for $AB$ and $AC$ are constant, the contrast vector for interaction $BC$ must also be constant. Hence, interaction $BC$ is also confounded with blocks.
+
+We write this confounding as
+
+$$
+\mathrm{Block}_1 = AB\,,\quad \mathrm{Block}_2 = AC\,,\quad \mathrm{Block}_3 = \mathrm{Block}_1\times\mathrm{Block}_2 = BC\,.
+$$
+Clearly, alternative blocking schemes are possible. However, we must be careful not to inadvertently confound low-order factorial effects. For example, if we chose to confound the three-factor interaction $ABC$ with blocks, along with one two-factor interaction, say $BC$, then we also confound
+
+$$
+ABC \odot BC = A \odot B \odot C \odot B \odot C = A\,.
+$$
+Hence, the main effect of factor $A$ is also confounded with blocks. This is clearly undesirable, e.g. by effect hierarchy.
+
+We shouldn't be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model (\@ref(eq:block-plm)), the rank of the block model matrix $X_1$ is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.
+
+As in Example \@ref(exm:block-frac-1), we could also explore alternative blocking schemes that do not completely confound factorial effects with blocks. However, as before, these alternatives would lead to higher average variance for the estimation of main effects compared to the design that confounds the three two-factor interactions.^[This design is too small to split into four blocks and still be able to estimate all two-factor interactions clear of blocks.]
+:::
+
+::: {.definition #block-clear-effects}
+In a blocked factorial design, those effects which are not confounded with blocks are called **clear**.
+:::
+
+In Example \@ref(exm:block-frac-1) the clear effects are $A$, $B$, $C$, $AB$, $AC$ and $BC$. In Example \@ref(exm:block-frac-2), the clear effects are $A$, $B$, $C$ and $ABC$.
+
+
+## General method of constructing a confounded block design
+
+To arrange a $2^{f}$ design in $b=2^{q}$ blocks of size $k=2^{f-q}$:
+
+- choose $q$ independent factorial contrasts for the **defining blocks**.  Typically, we choose higher-order interactions (due to effect hierarchy):
+
+$$
+\mathrm{Block}_{1}=\boldsymbol{c}_{1},\ldots,\mathrm{Block}_{q} = \boldsymbol{c}_{q}\,.
+$$
+
+ - all the hadamard products of $\boldsymbol{c}_{1},\dots,\boldsymbol{c}_{q}$ are also confounded with blocks:
+
+$$
+\begin{array}{ccc}
+\mathrm{Block}_{1}\mathrm{Block}_{2}&=&\boldsymbol{c}_{1}\odot\boldsymbol{c}_{2} \\
+\mathrm{Block}_{1}\mathrm{Block}_{3}&=&\boldsymbol{c}_{1}\odot\boldsymbol{c}_{3} \\
+\vdots&=&\vdots\\
+\mathrm{Block}_{1}\mathrm{Block}_{2}\dots \mathrm{Block}_{q}&=&\boldsymbol{c}_{1}\odot\boldsymbol{c}_{2}\odot\dots\odot \boldsymbol{c}_{q}\
+\end{array}
+$$
+- in total, $2^q -1$ factorial effects will be confounded with blocks.
+
+For example, a $2^{8}$ design in $b = 2^{3}=8$ blocks of size $k = 2^{8-3}=2^{5}=32$. We choose the following $q=3$ defining blocks:
+
+$$
+\mathrm{Block}_{1}=ACEGH\,,\quad \mathrm{Block}_{2}=BCFGH\,,\quad \mathrm{Block}_{3}= BDEGH\,.
+$$
+
+We obtain the other confounded effects by hadamard multiplication:
+
+\begin{eqnarray}
+\mathrm{Block}_{1}\odot \mathrm{Block}_{2} & = & ABEF \nonumber\\
+\mathrm{Block}_{1}\odot \mathrm{Block}_{3} & = & ABCD \nonumber\\
+\mathrm{Block}_{2}\odot \mathrm{Block}_{3} & = & CDEF \nonumber\\
+\mathrm{Block}_{1}\odot \mathrm{Block}_{2} \odot \mathrm{Block}_{3} & = & ADFGH\,. \nonumber
+\end{eqnarray}
+
+It is also straightforward to find blocked fractional factorial designs using `FrF2` in `R`. For example, to find the two $2^3$ designs at the start of this chapter, with blocks of size $k=4$ and $k=2$, we simply set the `blocks` argument equal to the number of blocks $b$, see Tables \@ref(tab:frf2-block-1) and \@ref(tab:frf2-block-2)^[The additional `R` code is to tidy up the output.].
+
+```{r frf2-block-1}
+block1 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 2, 
+                     alias.info = 3, randomize = F)
+block1 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block1))
+block1 <- dplyr::mutate(block1, Treatment = 1:8, .before = Blocks1)
+knitr::kable(block1[, -1], col.names = c("Treatment", "Block", "A", "B", "C", 
+                                         "A:B", "A:C", "B:C", "A:B:C"),
+             caption = "$2^3$ factorial design in two blocks of size four")
+
+```
+```{r frf2-block-2}
+block2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 4, 
+                     alias.info = 3, randomize = F, alias.block.2fis = T)
+block2 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block2))
+block2 <- dplyr::mutate(block2, Treatment = 1:8, .before = Blocks1)
+knitr::kable(block2[, -1], 
+             col.names = c("Treatment", "Block1", "Block2", "Block3", 
+                                         "A", "B", "C", 
+                                         "A:B", "A:C", "B:C", "A:B:C"),
+             caption = "$2^3$ factorial design in two blocks of size two")
+
+```
+In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.
+
+```{r}
+library(FrF2)
+design.info(block1)
+```

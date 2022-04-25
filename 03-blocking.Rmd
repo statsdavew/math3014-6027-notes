@@ -438,7 +438,7 @@ N & = J_{t \times b}
 
 Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter \@ref(block-factorial).
 
-## Balanced incomplete block designs
+## Balanced incomplete block designs {#sec-bibd}
 
 When the blocks sizes are less than the number of treatments, i.e. $k_i < t$ for all $i=1,\ldots, b$, by necessity the design is incomplete, in that not all treatments can be allocated to every block. We will restrict ourselves now to considering binary designs with common block size $k<t$. In a binary design, each treatment occurs within a block either 0 or 1 times ($n_{ij}=0$ or $n_{ij}=1$).
 
