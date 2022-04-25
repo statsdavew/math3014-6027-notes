@@ -155,7 +155,7 @@ ABC \odot BC = A \odot B \odot C \odot B \odot C = A\,.
 $$
 Hence, the main effect of factor $A$ is also confounded with blocks. This is clearly undesirable, e.g. by effect hierarchy.
 
-We shouldn't be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model (\@ref(eq:block-plm)), the rank of the block model matrix $X_1$ is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.
+We shouldn't be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model \@ref(eq:block-plm), the rank of the block model matrix $X_1$ is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.
 
 As in Example \@ref(exm:block-frac-1), we could also explore alternative blocking schemes that do not completely confound factorial effects with blocks. However, as before, these alternatives would lead to higher average variance for the estimation of main effects compared to the design that confounds the three two-factor interactions.^[This design is too small to split into four blocks and still be able to estimate all two-factor interactions clear of blocks.]
 :::
@@ -204,6 +204,8 @@ We obtain the other confounded effects by hadamard multiplication:
 \mathrm{Block}_{1}\odot \mathrm{Block}_{2} \odot \mathrm{Block}_{3} & = & ADFGH\,. \nonumber
 \end{eqnarray}
 
+<!--
+
 It is also straightforward to find blocked fractional factorial designs using `FrF2` in `R`. For example, to find the two $2^3$ designs at the start of this chapter, with blocks of size $k=4$ and $k=2$, we simply set the `blocks` argument equal to the number of blocks $b$, see Tables \@ref(tab:frf2-block-1) and \@ref(tab:frf2-block-2)^[The additional `R` code is to tidy up the output.].
 
 ```{r frf2-block-1}
@@ -230,7 +232,5 @@ knitr::kable(block2[, -1],
 ```
 In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.
 
-```{r}
-library(FrF2)
-design.info(block1)
-```
+
+-->

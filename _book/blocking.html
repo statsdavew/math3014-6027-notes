@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-04-20" />
+<meta name="date" content="2022-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -201,7 +201,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#block-anova"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
 <li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
-<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#balanced-incomplete-block-designs"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a>
+<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#sec-bibd"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a>
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="blocking.html"><a href="blocking.html#construction-of-bibds"><i class="fa fa-check"></i><b>3.6.1</b> Construction of BIBDs</a></li>
 <li class="chapter" data-level="3.6.2" data-path="blocking.html"><a href="blocking.html#reduced-normal-equations"><i class="fa fa-check"></i><b>3.6.2</b> Reduced normal equations</a></li>
@@ -227,7 +227,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a></li>
+<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
+<li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
 <li class="chapter" data-level="8" data-path="optimal-design-of-experiments.html"><a href="optimal-design-of-experiments.html"><i class="fa fa-check"></i><b>8</b> Optimal design of experiments</a></li>
@@ -755,7 +759,7 @@ N &amp; = J_{t \times b}
 \end{align}\]</span></p>
 <p>Hence, the condition for orthogonality is met. In an orthogonal design, such as a RCBD, all information about the treatment comparisons is contained in comparisons made within blocks. For more complex blocking structures, such as incomplete block designs, this is not the case. We shall see orthogonal blocking again in Chapter <a href="block-factorial.html#block-factorial">5</a>.</p>
 </div>
-<div id="balanced-incomplete-block-designs" class="section level2" number="3.6">
+<div id="sec-bibd" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Balanced incomplete block designs</h2>
 <p>When the blocks sizes are less than the number of treatments, i.e. <span class="math inline">\(k_i &lt; t\)</span> for all <span class="math inline">\(i=1,\ldots, b\)</span>, by necessity the design is incomplete, in that not all treatments can be allocated to every block. We will restrict ourselves now to considering binary designs with common block size <span class="math inline">\(k&lt;t\)</span>. In a binary design, each treatment occurs within a block either 0 or 1 times (<span class="math inline">\(n_{ij}=0\)</span> or <span class="math inline">\(n_{ij}=1\)</span>).</p>
 <p>Example <a href="blocking.html#exm:blocks-tyres">3.2</a> is an example of an incomplete design with <span class="math inline">\(k=3&lt;t=4\)</span>. For incomplete designs, it is often useful to study the <em>treatment concurrence</em> matrix, given by <span class="math inline">\(NN^{\mathrm{T}}\)</span>.</p>
@@ -803,14 +807,14 @@ N &amp; = J_{t \times b}
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="blocking.html#cb78-1" aria-hidden="true" tabindex="-1"></a>larger.bibd <span class="ot">&lt;-</span> ibd<span class="sc">::</span><span class="fu">bibd</span>(<span class="at">v =</span> <span class="dv">8</span>, <span class="at">b =</span> <span class="dv">14</span>, <span class="at">r =</span> <span class="dv">7</span>, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">lambda =</span> <span class="dv">3</span>) </span>
 <span id="cb78-2"><a href="blocking.html#cb78-2" aria-hidden="true" tabindex="-1"></a>larger.bibd<span class="sc">$</span>N</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    1    0    1    1    0    1    0     0     0     1     1     1
+## [1,]    1    0    0    1    0    1    0    1    0     0     1     0     1     1
 ## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    0    1    1     1     1     0     0     0
-## [4,]    0    1    1    1    1    0    1    0    1     0     0     0     0     1
-## [5,]    1    1    0    1    1    0    0    0    0     0     1     1     1     0
-## [6,]    1    0    1    1    0    0    1    1    0     1     0     1     0     0
-## [7,]    1    1    0    0    0    1    1    1    0     0     1     0     0     1
-## [8,]    1    1    1    0    0    1    0    0    1     1     0     0     1     0</code></pre>
+## [3,]    0    0    0    1    1    1    0    1    1     1     0     1     0     0
+## [4,]    1    0    1    1    1    0    1    0    0     0     0     1     0     1
+## [5,]    0    1    1    1    1    0    0    0    0     1     1     0     1     0
+## [6,]    1    1    0    0    1    0    1    1    1     0     1     0     0     0
+## [7,]    0    1    1    0    0    1    1    1    0     1     0     0     0     1
+## [8,]    1    1    1    0    0    1    0    0    1     0     0     1     1     0</code></pre>
 <p>Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with <span class="math inline">\(b = {t \choose k} = {8 \choose 4} = 70\)</span> blocks.</p>
 </div>
 <div id="reduced-normal-equations" class="section level3" number="3.6.2">

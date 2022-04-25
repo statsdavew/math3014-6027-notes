@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-04-23" />
+<meta name="date" content="2022-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -241,8 +263,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="two-examples" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Two examples</h2>
 <p>We will use two simple examples to illustrate this approach, based on a <span class="math inline">\(2^3\)</span> experiment with factors labelled <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> (Table <a href="block-factorial.html#tab:example-factorial">5.1</a>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="block-factorial.html#cb1-1" aria-hidden="true" tabindex="-1"></a>example.design <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">8</span>, <span class="at">nfactors =</span> <span class="dv">3</span>, <span class="at">randomize =</span> F)</span>
-<span id="cb1-2"><a href="block-factorial.html#cb1-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="block-factorial.html#cb156-1" aria-hidden="true" tabindex="-1"></a>example.design <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">8</span>, <span class="at">nfactors =</span> <span class="dv">3</span>, <span class="at">randomize =</span> F)</span>
+<span id="cb156-2"><a href="block-factorial.html#cb156-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">3</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:example-factorial">Table 5.1: </span>Treatments from a <span class="math inline">\(2^3\)</span> factorial design</caption>
 <thead>
@@ -297,9 +319,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <div class="example">
 <p><span id="exm:block-frac-1" class="example"><strong>Example 5.1  </strong></span>Consider splitting the treatments between two blocks of size <span class="math inline">\(2^{3-1}=4\)</span>. One choice is given in Table <a href="block-factorial.html#tab:block-frac-1">5.2</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="block-factorial.html#cb2-1" aria-hidden="true" tabindex="-1"></a>block1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb2-2"><a href="block-factorial.html#cb2-2" aria-hidden="true" tabindex="-1"></a>example.design.a <span class="ot">&lt;-</span> <span class="fu">cbind</span>(example.design, <span class="at">Block =</span> block1)</span>
-<span id="cb2-3"><a href="block-factorial.html#cb2-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design.a, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design split into two blocks of size four.&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="block-factorial.html#cb157-1" aria-hidden="true" tabindex="-1"></a>block1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb157-2"><a href="block-factorial.html#cb157-2" aria-hidden="true" tabindex="-1"></a>example.design.a <span class="ot">&lt;-</span> <span class="fu">cbind</span>(example.design, <span class="at">Block =</span> block1)</span>
+<span id="cb157-3"><a href="block-factorial.html#cb157-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design.a, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design split into two blocks of size four.&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">4</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:block-frac-1">Table 5.2: </span>Treatments from a <span class="math inline">\(2^3\)</span> factorial design split into two blocks of size four.</caption>
 <thead>
@@ -362,15 +384,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>To assess the impact of this choice of blocking scheme on the analysis of the experiment, we need to consider the (unscaled) contrasts corresponding to all the factorial effects, see Table <a href="block-factorial.html#tab:block-frac-1-mm">5.3</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="block-factorial.html#cb3-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> Block, <span class="at">data =</span> example.design.a)</span>
-<span id="cb3-2"><a href="block-factorial.html#cb3-2" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[, <span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb3-3"><a href="block-factorial.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Xdf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;Block&quot;</span>, <span class="st">&quot;A:B&quot;</span>, <span class="st">&quot;A:C&quot;</span>, <span class="st">&quot;B:C&quot;</span>, <span class="st">&quot;A:B:C&quot;</span>)</span>
-<span id="cb3-4"><a href="block-factorial.html#cb3-4" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">relocate</span>(Xdf, Block) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(Xdf, <span class="at">Treatment =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">.before =</span> Block)</span></code></pre></div>
-<pre><code>## Warning: replacing previous import &#39;lifecycle::last_warnings&#39; by
-## &#39;rlang::last_warnings&#39; when loading &#39;pillar&#39;</code></pre>
-<pre><code>## Warning: replacing previous import &#39;lifecycle::last_warnings&#39; by
-## &#39;rlang::last_warnings&#39; when loading &#39;tibble&#39;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="block-factorial.html#cb6-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(Xdf, <span class="at">caption =</span> <span class="st">&quot;Unscaled factorial effect contrasts for a $2^3$ design with one possible assignment of treatments to blocks&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="block-factorial.html#cb158-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> Block <span class="sc">+</span> (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">3</span>, <span class="at">data =</span> example.design.a)</span>
+<span id="cb158-2"><a href="block-factorial.html#cb158-2" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb158-3"><a href="block-factorial.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Xdf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Block&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A:B&quot;</span>, <span class="st">&quot;A:C&quot;</span>, <span class="st">&quot;B:C&quot;</span>, <span class="st">&quot;A:B:C&quot;</span>)</span>
+<span id="cb158-4"><a href="block-factorial.html#cb158-4" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(Xdf, <span class="at">Treatment =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">.before =</span> Block)</span>
+<span id="cb158-5"><a href="block-factorial.html#cb158-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(Xdf, <span class="at">caption =</span> <span class="st">&quot;Unscaled factorial effect contrasts for a $2^3$ design with one possible assignment of treatments to blocks&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:block-frac-1-mm">Table 5.3: </span>Unscaled factorial effect contrasts for a <span class="math inline">\(2^3\)</span> design with one possible assignment of treatments to blocks</caption>
 <thead>
@@ -482,7 +500,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[
 \widehat{\beta_1 - \beta_2} = \frac{1}{4}\left\{(y_{11} + y_{14} + y_{16}+ y_{17}) - (y_{22} + y_{23} + y_{25} + y_{28})\right\}\,,
 \]</span></p>
-<p>where <span class="math inline">\(\beta_i\)</span> is the effect of the <span class="math inline">\(i\)</span>th block in unit-block-treatment model <a href="#eq:block-model">(<strong>??</strong>)</a> and <span class="math inline">\(y_{ij}\)</span> is the response from applying treatment <span class="math inline">\(j\)</span> to a unit in block <span class="math inline">\(i\)</span> (<span class="math inline">\(i = 1, 2;\, j = 1, \ldots, 8\)</span>).</p>
+<p>where <span class="math inline">\(\beta_i\)</span> is the effect of the <span class="math inline">\(i\)</span>th block in unit-block-treatment model <a href="blocking.html#eq:block-model">(3.1)</a> and <span class="math inline">\(y_{ij}\)</span> is the response from applying treatment <span class="math inline">\(j\)</span> to a unit in block <span class="math inline">\(i\)</span> (<span class="math inline">\(i = 1, 2;\, j = 1, \ldots, 8\)</span>).</p>
 <p>This contrast is <strong>exactly</strong> the same as the contrast for estimating the three-factor interaction.</p>
 <p><span class="math display">\[
 \mathrm{Int}(A, B, C) = \frac{1}{4}\left\{(y_{11} + y_{14} + y_{16}+ y_{17}) - (y_{22} + y_{23} + y_{25} + y_{28})\right\}\,.
@@ -490,28 +508,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Hence this choice of blocking makes it impossible for us to estimate this interaction. If the contrast is large, we would anticipate it was because there is a large difference in average response between blocks, not because of the three-factor interaction.</p>
 <p>So why choose this particular blocking? Well, it is impossible to split this set of treatments into incomplete blocks (with <span class="math inline">\(k&lt;8\)</span>) and not lose some information about the factorial effects.</p>
 <ol style="list-style-type: decimal">
-<li><p>From effect hierarchy, the three-factor interaction is the least likely factorial effect to be important, and hence this is the interaction we care least about losing information about. Choosing any of the other factorial effects to determine the blocking would be a worst choice<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+<li><p>From effect hierarchy, the three-factor interaction is the least likely factorial effect to be important, and hence this is the interaction we care least about losing information about. Choosing any of the other factorial effects to determine the blocking would be a worst choice<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a></p></li>
 <li><p>What about if we don’t use a column of Table <a href="block-factorial.html#tab:block-frac-1-mm">5.3</a> to assign treatments to blocks? We now longer lose all information about a particular factorial effect, but instead we lose some information about many, or even all, factorial effects.</p></li>
 </ol>
 <p>We can study this information lose by assessing all <span class="math inline">\({8 \choose 4}! = 70\)</span> possible assignments of treatments to blocks. For each, we will calculate the average variance of the main effect and two-factor interaction contrasts (up to a constant <span class="math inline">\(\sigma^2\)</span>).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="block-factorial.html#cb7-1" aria-hidden="true" tabindex="-1"></a>no.assign <span class="ot">&lt;-</span> <span class="fu">choose</span>(<span class="dv">8</span>, <span class="dv">4</span>)</span>
-<span id="cb7-2"><a href="block-factorial.html#cb7-2" aria-hidden="true" tabindex="-1"></a>assignments <span class="ot">&lt;-</span> combinat<span class="sc">::</span><span class="fu">combn</span>(<span class="dv">8</span>, <span class="dv">4</span>)</span>
-<span id="cb7-3"><a href="block-factorial.html#cb7-3" aria-hidden="true" tabindex="-1"></a>yfake <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">8</span>)</span>
-<span id="cb7-4"><a href="block-factorial.html#cb7-4" aria-hidden="true" tabindex="-1"></a>Xadf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(Xdf[, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">9</span>)], <span class="at">y =</span> yfake)</span>
-<span id="cb7-5"><a href="block-factorial.html#cb7-5" aria-hidden="true" tabindex="-1"></a>avgvar <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb7-6"><a href="block-factorial.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>no.assign) {</span>
-<span id="cb7-7"><a href="block-factorial.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  B <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>)</span>
-<span id="cb7-8"><a href="block-factorial.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  B[assignments[, i]] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb7-9"><a href="block-factorial.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  Xadf<span class="sc">$</span>Block <span class="ot">&lt;-</span> B</span>
-<span id="cb7-10"><a href="block-factorial.html#cb7-10" aria-hidden="true" tabindex="-1"></a>  temp.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> Block <span class="sc">+</span> (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">2</span>, <span class="at">data =</span> Xadf)</span>
-<span id="cb7-11"><a href="block-factorial.html#cb7-11" aria-hidden="true" tabindex="-1"></a>  temp.lm<span class="sc">$</span>residuals <span class="ot">&lt;-</span> yfake</span>
-<span id="cb7-12"><a href="block-factorial.html#cb7-12" aria-hidden="true" tabindex="-1"></a>  temp.lm<span class="sc">$</span>df.residual <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb7-13"><a href="block-factorial.html#cb7-13" aria-hidden="true" tabindex="-1"></a>  vmat <span class="ot">&lt;-</span> <span class="fu">vcov</span>(temp.lm) <span class="sc">/</span> (<span class="fu">summary</span>(temp.lm)<span class="sc">$</span>sigma<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb7-14"><a href="block-factorial.html#cb7-14" aria-hidden="true" tabindex="-1"></a>  vars <span class="ot">&lt;-</span> (<span class="fu">diag</span>(vmat[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]))</span>
-<span id="cb7-15"><a href="block-factorial.html#cb7-15" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">replace_na</span>(vars, <span class="cn">Inf</span>)</span>
-<span id="cb7-16"><a href="block-factorial.html#cb7-16" aria-hidden="true" tabindex="-1"></a>  avgvar[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(tidyr<span class="sc">::</span><span class="fu">replace_na</span>(vars, <span class="cn">Inf</span>)) <span class="sc">/</span> <span class="dv">6</span></span>
-<span id="cb7-17"><a href="block-factorial.html#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-18"><a href="block-factorial.html#cb7-18" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">table</span>(avgvar), <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Avg. variance&quot;</span>, <span class="st">&quot;Freq.&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="block-factorial.html#cb159-1" aria-hidden="true" tabindex="-1"></a>no.assign <span class="ot">&lt;-</span> <span class="fu">choose</span>(<span class="dv">8</span>, <span class="dv">4</span>)</span>
+<span id="cb159-2"><a href="block-factorial.html#cb159-2" aria-hidden="true" tabindex="-1"></a>assignments <span class="ot">&lt;-</span> combinat<span class="sc">::</span><span class="fu">combn</span>(<span class="dv">8</span>, <span class="dv">4</span>)</span>
+<span id="cb159-3"><a href="block-factorial.html#cb159-3" aria-hidden="true" tabindex="-1"></a>yfake <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">8</span>)</span>
+<span id="cb159-4"><a href="block-factorial.html#cb159-4" aria-hidden="true" tabindex="-1"></a>Xadf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(Xdf[, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">9</span>)], <span class="at">y =</span> yfake)</span>
+<span id="cb159-5"><a href="block-factorial.html#cb159-5" aria-hidden="true" tabindex="-1"></a>avgvar <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb159-6"><a href="block-factorial.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>no.assign) {</span>
+<span id="cb159-7"><a href="block-factorial.html#cb159-7" aria-hidden="true" tabindex="-1"></a>  B <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb159-8"><a href="block-factorial.html#cb159-8" aria-hidden="true" tabindex="-1"></a>  B[assignments[, i]] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb159-9"><a href="block-factorial.html#cb159-9" aria-hidden="true" tabindex="-1"></a>  Xadf<span class="sc">$</span>Block <span class="ot">&lt;-</span> B</span>
+<span id="cb159-10"><a href="block-factorial.html#cb159-10" aria-hidden="true" tabindex="-1"></a>  temp.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> Block <span class="sc">+</span> (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">2</span>, <span class="at">data =</span> Xadf)</span>
+<span id="cb159-11"><a href="block-factorial.html#cb159-11" aria-hidden="true" tabindex="-1"></a>  temp.lm<span class="sc">$</span>residuals <span class="ot">&lt;-</span> yfake</span>
+<span id="cb159-12"><a href="block-factorial.html#cb159-12" aria-hidden="true" tabindex="-1"></a>  temp.lm<span class="sc">$</span>df.residual <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb159-13"><a href="block-factorial.html#cb159-13" aria-hidden="true" tabindex="-1"></a>  vmat <span class="ot">&lt;-</span> <span class="fu">vcov</span>(temp.lm) <span class="sc">/</span> (<span class="fu">summary</span>(temp.lm)<span class="sc">$</span>sigma<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb159-14"><a href="block-factorial.html#cb159-14" aria-hidden="true" tabindex="-1"></a>  vars <span class="ot">&lt;-</span> (<span class="fu">diag</span>(vmat[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]))</span>
+<span id="cb159-15"><a href="block-factorial.html#cb159-15" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">replace_na</span>(vars, <span class="cn">Inf</span>)</span>
+<span id="cb159-16"><a href="block-factorial.html#cb159-16" aria-hidden="true" tabindex="-1"></a>  avgvar[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(tidyr<span class="sc">::</span><span class="fu">replace_na</span>(vars, <span class="cn">Inf</span>)) <span class="sc">/</span> <span class="dv">6</span></span>
+<span id="cb159-17"><a href="block-factorial.html#cb159-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb159-18"><a href="block-factorial.html#cb159-18" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">table</span>(avgvar), <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Avg. variance&quot;</span>, <span class="st">&quot;Freq.&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -534,14 +552,14 @@ Hence this choice of blocking makes it impossible for us to estimate this intera
 </tr>
 </tbody>
 </table>
-<p>From our study, we see that there are two allocations of treatments to blocks that give us the smallest average variance of <span class="math inline">\(0.125\sigma^2\)</span>. These two allocations are those that use the three-factor interaction column to assign treatments to blocks. For 32 other allocations, the average variance <span class="math inline">\(0.188\sigma^2\)</span>, and hence an efficiency of <span class="math inline">\(0.6648936\)</span> compared to the first two allocations. There are also 36 allocations that have infinite average variance; these allocations use one of the six main effect or two-factor interaction columns to assign treatments to blocks. For any of these choices, the corresponding factorial effect cannot be estimated, equivalent to the estimator having infinite variance.</p>
+<p>From our study, we see that there are two allocations of treatments to blocks that give us the smallest average variance of <span class="math inline">\(0.125\sigma^2\)</span>. These two allocations are those that use the three-factor interaction column to assign treatments to blocks. For 32 other allocations, the average variance <span class="math inline">\(0.188\sigma^2\)</span>, and hence an efficiency of <span class="math inline">\(0.6649\)</span> compared to the first two allocations. There are also 36 allocations that have infinite average variance; these allocations use one of the six main effect or two-factor interaction columns to assign treatments to blocks. For any of these choices, the corresponding factorial effect cannot be estimated, equivalent to the estimator having infinite variance.</p>
 <p>We now compare our original design to one of the 32 allocations with average variance <span class="math inline">\(0.188\sigma^2\)</span> (chosen arbitrarily).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="block-factorial.html#cb8-1" aria-hidden="true" tabindex="-1"></a>Xa <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Xdf[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)])</span>
-<span id="cb8-2"><a href="block-factorial.html#cb8-2" aria-hidden="true" tabindex="-1"></a>Xb <span class="ot">&lt;-</span> Xa</span>
-<span id="cb8-3"><a href="block-factorial.html#cb8-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>)</span>
-<span id="cb8-4"><a href="block-factorial.html#cb8-4" aria-hidden="true" tabindex="-1"></a>B[assignments[, <span class="dv">2</span>]] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb8-5"><a href="block-factorial.html#cb8-5" aria-hidden="true" tabindex="-1"></a>Xb[,<span class="dv">1</span>] <span class="ot">&lt;-</span> B</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="block-factorial.html#cb9-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">cor</span>(Xa), <span class="at">caption =</span> <span class="st">&quot;Scaled inner-products between contrast vectors for $2^3$ with treatments assigned to blocks so $</span><span class="sc">\\</span><span class="st">mathrm{Blocks} = ABC$.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="block-factorial.html#cb160-1" aria-hidden="true" tabindex="-1"></a>Xa <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Xdf[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>)])</span>
+<span id="cb160-2"><a href="block-factorial.html#cb160-2" aria-hidden="true" tabindex="-1"></a>Xb <span class="ot">&lt;-</span> Xa</span>
+<span id="cb160-3"><a href="block-factorial.html#cb160-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb160-4"><a href="block-factorial.html#cb160-4" aria-hidden="true" tabindex="-1"></a>B[assignments[, <span class="dv">2</span>]] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb160-5"><a href="block-factorial.html#cb160-5" aria-hidden="true" tabindex="-1"></a>Xb[,<span class="dv">1</span>] <span class="ot">&lt;-</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="block-factorial.html#cb161-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">cor</span>(Xa), <span class="at">caption =</span> <span class="st">&quot;Scaled inner-products between contrast vectors for $2^3$ with treatments assigned to blocks so $</span><span class="sc">\\</span><span class="st">mathrm{Blocks} = ABC$.&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:cor-optimal">Table 5.4: </span>Scaled inner-products between contrast vectors for <span class="math inline">\(2^3\)</span> with treatments assigned to blocks so <span class="math inline">\(\mathrm{Blocks} = ABC\)</span>.</caption>
 <thead>
@@ -648,7 +666,7 @@ Hence this choice of blocking makes it impossible for us to estimate this intera
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="block-factorial.html#cb10-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">cor</span>(Xb), <span class="at">caption =</span> <span class="st">&quot;Scaled inner-products between contrast vectors for $2^3$ with treatments assigned to blocks arbitrarily.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="block-factorial.html#cb162-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">cor</span>(Xb), <span class="at">caption =</span> <span class="st">&quot;Scaled inner-products between contrast vectors for $2^3$ with treatments assigned to blocks arbitrarily.&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:cor-partial">Table 5.5: </span>Scaled inner-products between contrast vectors for <span class="math inline">\(2^3\)</span> with treatments assigned to blocks arbitrarily.</caption>
 <thead>
@@ -755,7 +773,7 @@ Hence this choice of blocking makes it impossible for us to estimate this intera
 </tr>
 </tbody>
 </table>
-<p>From Table <a href="block-factorial.html#tab:cor-optimal">5.4</a>, we can see that the block contrast is orthogonal to (has zero inner product with) all the main effect and two-factor interaction contrasts. In comparison, the design with arbitrary treatment assignment has non-zero inner products between blocks and the main effect contrasts (Table <a href="block-factorial.html#tab:cor-partial">5.5</a>). However, this design does allow estimation of the three-factor interaction (although it too has non-zero inner-product with the block contrast).<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>From Table <a href="block-factorial.html#tab:cor-optimal">5.4</a>, we can see that the block contrast is orthogonal to (has zero inner product with) all the main effect and two-factor interaction contrasts. In comparison, the design with arbitrary treatment assignment has non-zero inner products between blocks and the main effect contrasts (Table <a href="block-factorial.html#tab:cor-partial">5.5</a>). However, this design does allow estimation of the three-factor interaction (although it too has non-zero inner-product with the block contrast).<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a></p>
 <p>Clearly, if interest is in estimation of the main effects and two-factor interactions, it is best to use the design which assigns treatments to blocks via the three-factor interaction contrast coefficients.</p>
 </div>
 <div class="definition">
@@ -764,9 +782,9 @@ Hence this choice of blocking makes it impossible for us to estimate this intera
 <p>In Example <a href="block-factorial.html#exm:block-frac-1">5.1</a>, the three-factor interaction <span class="math inline">\(ABC\)</span> is confounded with blocks. We write <span class="math inline">\(\mathrm{Blocks} = ABC\)</span> as a shorthand to represent this confounding.</p>
 <div class="example">
 <p><span id="exm:block-frac-2" class="example"><strong>Example 5.2  </strong></span>Now consider splitting the treatments between four blocks of size <span class="math inline">\(2^{3-2}=2\)</span>. One choice is given in Table <a href="block-factorial.html#tab:block-frac-2">5.6</a>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="block-factorial.html#cb11-1" aria-hidden="true" tabindex="-1"></a>block2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb11-2"><a href="block-factorial.html#cb11-2" aria-hidden="true" tabindex="-1"></a>example.design.b <span class="ot">&lt;-</span> <span class="fu">cbind</span>(example.design, <span class="at">Block =</span> block2)</span>
-<span id="cb11-3"><a href="block-factorial.html#cb11-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design.b, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design split into four blocks of size two.&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="block-factorial.html#cb163-1" aria-hidden="true" tabindex="-1"></a>block2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb163-2"><a href="block-factorial.html#cb163-2" aria-hidden="true" tabindex="-1"></a>example.design.b <span class="ot">&lt;-</span> <span class="fu">cbind</span>(example.design, <span class="at">Block =</span> block2)</span>
+<span id="cb163-3"><a href="block-factorial.html#cb163-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design.b, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design split into four blocks of size two.&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">4</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:block-frac-2">Table 5.6: </span>Treatments from a <span class="math inline">\(2^3\)</span> factorial design split into four blocks of size two.</caption>
 <thead>
@@ -829,11 +847,11 @@ Hence this choice of blocking makes it impossible for us to estimate this intera
 </tbody>
 </table>
 <p>Clearly, we cannot use a single factorial contrast (taking only two values) to divide treatments between four blocks. The obvious extension to the approach from Example <a href="block-factorial.html#exm:block-frac-1">5.1</a> is to use the combination of two columns. Here, we have used the contrasts for the <span class="math inline">\(AB\)</span> and <span class="math inline">\(AC\)</span> interactions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="block-factorial.html#cb12-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> Block, <span class="at">data =</span> example.design.b)</span>
-<span id="cb12-2"><a href="block-factorial.html#cb12-2" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[, <span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb12-3"><a href="block-factorial.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Xdf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;Block&quot;</span>, <span class="st">&quot;A:B&quot;</span>, <span class="st">&quot;A:C&quot;</span>, <span class="st">&quot;B:C&quot;</span>, <span class="st">&quot;A:B:C&quot;</span>)</span>
-<span id="cb12-4"><a href="block-factorial.html#cb12-4" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">relocate</span>(Xdf, Block) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(Xdf, <span class="at">Treatment =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">.before =</span> Block)</span>
-<span id="cb12-5"><a href="block-factorial.html#cb12-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(Xdf, <span class="at">caption =</span> <span class="st">&quot;Unscaled factorial effect contrasts for a $2^3$ design with one possible assignment of treatments to four blocks of size two.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="block-factorial.html#cb164-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> Block <span class="sc">+</span> (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">3</span>, <span class="at">data =</span> example.design.b)</span>
+<span id="cb164-2"><a href="block-factorial.html#cb164-2" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb164-3"><a href="block-factorial.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Xdf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Block&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A:B&quot;</span>, <span class="st">&quot;A:C&quot;</span>, <span class="st">&quot;B:C&quot;</span>, <span class="st">&quot;A:B:C&quot;</span>)</span>
+<span id="cb164-4"><a href="block-factorial.html#cb164-4" aria-hidden="true" tabindex="-1"></a>Xdf <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(Xdf, <span class="at">Treatment =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">.before =</span> Block)</span>
+<span id="cb164-5"><a href="block-factorial.html#cb164-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(Xdf, <span class="at">caption =</span> <span class="st">&quot;Unscaled factorial effect contrasts for a $2^3$ design with one possible assignment of treatments to four blocks of size two.&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:block-frac-2-mm">Table 5.7: </span>Unscaled factorial effect contrasts for a <span class="math inline">\(2^3\)</span> design with one possible assignment of treatments to four blocks of size two.</caption>
 <thead>
@@ -961,8 +979,8 @@ Clearly, alternative blocking schemes are possible. However, we must be careful 
 ABC \odot BC = A \odot B \odot C \odot B \odot C = A\,.
 \]</span>
 Hence, the main effect of factor <span class="math inline">\(A\)</span> is also confounded with blocks. This is clearly undesirable, e.g. by effect hierarchy.</p>
-<p>We shouldn’t be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model (<a href="#eq:block-plm">(<strong>??</strong>)</a>), the rank of the block model matrix <span class="math inline">\(X_1\)</span> is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.</p>
-<p>As in Example <a href="block-factorial.html#exm:block-frac-1">5.1</a>, we could also explore alternative blocking schemes that do not completely confound factorial effects with blocks. However, as before, these alternatives would lead to higher average variance for the estimation of main effects compared to the design that confounds the three two-factor interactions.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>We shouldn’t be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model (<a href="blocking.html#eq:block-plm">(3.2)</a>), the rank of the block model matrix <span class="math inline">\(X_1\)</span> is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.</p>
+<p>As in Example <a href="block-factorial.html#exm:block-frac-1">5.1</a>, we could also explore alternative blocking schemes that do not completely confound factorial effects with blocks. However, as before, these alternatives would lead to higher average variance for the estimation of main effects compared to the design that confounds the three two-factor interactions.<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a></p>
 </div>
 <div class="definition">
 <p><span id="def:block-clear-effects" class="definition"><strong>Definition 5.2  </strong></span>In a blocked factorial design, those effects which are not confounded with blocks are called <strong>clear</strong>.</p>
@@ -1001,15 +1019,75 @@ Hence, the main effect of factor <span class="math inline">\(A\)</span> is also 
 \mathrm{Block}_{2}\odot \mathrm{Block}_{3} &amp; = &amp; CDEF \nonumber\\
 \mathrm{Block}_{1}\odot \mathrm{Block}_{2} \odot \mathrm{Block}_{3} &amp; = &amp; ADFGH\,. \nonumber
 \end{eqnarray}\]</span></p>
+<!--
+
+It is also straightforward to find blocked fractional factorial designs using `FrF2` in `R`. For example, to find the two $2^3$ designs at the start of this chapter, with blocks of size $k=4$ and $k=2$, we simply set the `blocks` argument equal to the number of blocks $b$, see Tables \@ref(tab:frf2-block-1) and \@ref(tab:frf2-block-2)^[The additional `R` code is to tidy up the output.].
+
+
+```r
+block1 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 2, 
+                     alias.info = 3, randomize = F)
+block1 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block1))
+block1 <- dplyr::mutate(block1, Treatment = 1:8, .before = Blocks1)
+knitr::kable(block1[, -1], col.names = c("Treatment", "Block", "A", "B", "C", 
+                                         "A:B", "A:C", "B:C", "A:B:C"),
+             caption = "$2^3$ factorial design in two blocks of size four")
+```
+
+
+
+Table: (\#tab:frf2-block-1)$2^3$ factorial design in two blocks of size four
+
+| Treatment| Block|  A|  B|  C| A:B| A:C| B:C| A:B:C|
+|---------:|-----:|--:|--:|--:|---:|---:|---:|-----:|
+|         1|    -1| -1| -1| -1|   1|   1|   1|    -1|
+|         2|    -1| -1|  1|  1|  -1|  -1|   1|    -1|
+|         3|    -1|  1| -1|  1|  -1|   1|  -1|    -1|
+|         4|    -1|  1|  1| -1|   1|  -1|  -1|    -1|
+|         5|     1| -1| -1|  1|   1|  -1|  -1|     1|
+|         6|     1| -1|  1| -1|  -1|   1|  -1|     1|
+|         7|     1|  1| -1| -1|  -1|  -1|   1|     1|
+|         8|     1|  1|  1|  1|   1|   1|   1|     1|
+
+```r
+block2 <- FrF2::FrF2(nruns = 8, nfactors = 3, blocks = 4, 
+                     alias.info = 3, randomize = F, alias.block.2fis = T)
+block2 <- data.frame(model.matrix(~ Blocks + (A + B + C)^3, block2))
+block2 <- dplyr::mutate(block2, Treatment = 1:8, .before = Blocks1)
+knitr::kable(block2[, -1], 
+             col.names = c("Treatment", "Block1", "Block2", "Block3", 
+                                         "A", "B", "C", 
+                                         "A:B", "A:C", "B:C", "A:B:C"),
+             caption = "$2^3$ factorial design in two blocks of size two")
+```
+
+
+
+Table: (\#tab:frf2-block-2)$2^3$ factorial design in two blocks of size two
+
+| Treatment| Block1| Block2| Block3|  A|  B|  C| A:B| A:C| B:C| A:B:C|
+|---------:|------:|------:|------:|--:|--:|--:|---:|---:|---:|-----:|
+|         1|     -1|     -1|      1| -1|  1|  1|  -1|  -1|   1|    -1|
+|         2|     -1|     -1|      1|  1| -1| -1|  -1|  -1|   1|     1|
+|         3|      1|     -1|     -1| -1|  1| -1|  -1|   1|  -1|     1|
+|         4|      1|     -1|     -1|  1| -1|  1|  -1|   1|  -1|    -1|
+|         5|     -1|      1|     -1| -1| -1|  1|   1|  -1|  -1|     1|
+|         6|     -1|      1|     -1|  1|  1| -1|   1|  -1|  -1|    -1|
+|         7|      1|      1|      1| -1| -1| -1|   1|   1|   1|    -1|
+|         8|      1|      1|      1|  1|  1|  1|   1|   1|   1|     1|
+In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.
+
+
+-->
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>In the absence of any prior information telling us that certain effects are of particular interest, we always favour losing information on higher order effects.<a href="block-factorial.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Also, simultaneous estimation of the intercept, blocking effect and all 8 factorial effects is not possible, as there are insufficient degrees of freedom. In fact, the rank of the combined treatment and block model matrices for the unit-block-treatment model (<a href="#eq:eq:block-plm">(<strong>??</strong>)</a>) is t+b-3.<a href="block-factorial.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>This design is too small to split into four blocks and still be able to estimate all two-factor interactions clear of blocks.<a href="block-factorial.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<ol start="30">
+<li id="fn30"><p>In the absence of any prior information telling us that certain effects are of particular interest, we always favour losing information on higher order effects.<a href="block-factorial.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p>Also, simultaneous estimation of the intercept, blocking effect and all 8 factorial effects is not possible, as there are insufficient degrees of freedom. In fact, the rank of the combined treatment and block model matrices for the unit-block-treatment model (<a href="#eq:eq:block-plm">(<strong>??</strong>)</a>) is t+b-3.<a href="block-factorial.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p>This design is too small to split into four blocks and still be able to estimate all two-factor interactions clear of blocks.<a href="block-factorial.html#fnref32" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
