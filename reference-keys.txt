@@ -99,6 +99,17 @@ tab:reactor-data
 tab:reactor-estimate
 tab:reactor-largest
 fig:reactor-plots
+tab:example-factorial
+exm:block-frac-1
+tab:block-frac-1
+tab:block-frac-1-mm
+tab:cor-optimal
+tab:cor-partial
+def:confounding
+exm:block-frac-2
+tab:block-frac-2
+tab:block-frac-2-mm
+def:block-clear-effects
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -129,7 +140,7 @@ normal-equations
 block-anova
 rcdb
 blocks-orthogonal
-balanced-incomplete-block-designs
+sec-bibd
 construction-of-bibds
 reduced-normal-equations
 estimation-and-inference
@@ -145,6 +156,8 @@ regression-modelling-for-factorial-experiments
 anova-for-factorial-experiments
 exercises-3
 block-factorial
+two-examples
+general-method-of-constructing-a-confounded-block-design
 fractional-factorial
 response-surface-methodology
 optimal-design-of-experiments
