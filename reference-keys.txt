@@ -110,6 +110,11 @@ exm:block-frac-2
 tab:block-frac-2
 tab:block-frac-2-mm
 def:block-clear-effects
+tab:frf2-block-1
+tab:frf2-block-2
+eq:fact-blocks-normal-1
+eq:fact-blocks-normal-2
+eq:fact-blocks-normal-3
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -152,12 +157,13 @@ interactions
 three-principles-for-factorial-effects
 unreplicated-normal-plots
 lenths-method-for-approximate-hypothesis-testing
-regression-modelling-for-factorial-experiments
+fac-reg
 anova-for-factorial-experiments
 exercises-3
 block-factorial
 two-examples
 general-method-of-constructing-a-confounded-block-design
+analysis-of-a-confounded-factorial-design
 fractional-factorial
 response-surface-methodology
 optimal-design-of-experiments

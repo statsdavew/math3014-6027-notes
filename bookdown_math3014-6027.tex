@@ -887,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "Milk first"
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -901,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -912,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3111,9 +3111,9 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    0    1
+## [1,]    1    0    1    1
 ## [2,]    0    1    1    1
-## [3,]    1    0    1    1
+## [3,]    1    1    0    1
 ## [4,]    1    1    1    0
 \end{verbatim}
 
@@ -3128,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    0    1    0    1    0    0    0     1     1     1     1     1
-## [2,]    1    0    0    0    0    0    1    1    1     0     0     1     1     1
-## [3,]    0    0    0    0    1    1    1    1    1     1     1     0     0     0
-## [4,]    1    0    1    1    1    1    1    0    0     0     0     0     0     1
-## [5,]    0    1    1    0    1    0    0    0    1     0     1     0     1     1
-## [6,]    1    1    1    0    0    1    0    1    0     0     1     1     0     0
-## [7,]    1    1    0    1    1    0    0    1    0     1     0     0     1     0
-## [8,]    0    1    1    1    0    0    1    0    1     1     0     1     0     0
+## [1,]    1    1    0    0    1    1    0    0    1     1     0     0     1     0
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    1    0    0    0    1    1    1    0    0     0     1     1     0     1
+## [4,]    1    1    0    1    0    0    1    1    0     0     0     0     1     1
+## [5,]    1    1    1    1    0    0    0    0    0     1     1     1     0     0
+## [6,]    0    1    1    0    0    1    1    1    1     0     1     0     0     0
+## [7,]    0    0    1    1    1    0    1    0    1     1     0     0     0     1
+## [8,]    0    0    1    1    1    1    0    1    0     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4670,35 +4670,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0002 & 0.0011\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0034 & 0.0345\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0045 & 0.0397\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0055 & 0.0506\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0069 & 0.0596\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0071 & 0.0664\\
+time & 2.5675 & 0.66 & 3.890 & 0.0089 & 0.0795\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0103 & 0.0900\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0118 & 0.1069\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0103 & 0.0900\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0118 & 0.1069\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0127 & 0.1114\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0144 & 0.1309\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3043 & 0.9970\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3023 & 0.9944\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4308 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4325 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5393 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5399 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7346 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7318 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7423 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7394 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7869 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7843 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7893 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7871 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9677 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9672 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4716,8 +4716,8 @@ The package \texttt{unrepx} also provides the function \texttt{hnplot} to displa
 \includegraphics{bookdown_math3014-6027_files/figure-latex/desilylation-lenth-plot-1.pdf}
 Informally, factorial effects with estimates greater than \texttt{SME} are thought highly likely to be significant, and effects between \texttt{ME} and \texttt{SME} are considered somewhat likely to be significant (and still worthy of further investigation if the budget allows).
 
-\hypertarget{regression-modelling-for-factorial-experiments}{%
-\section{Regression modelling for factorial experiments}\label{regression-modelling-for-factorial-experiments}}
+\hypertarget{fac-reg}{%
+\section{Regression modelling for factorial experiments}\label{fac-reg}}
 
 We have identified \(d = 2^f-1\) factorial effects that we wish to estimate from our experiment. As \(d < t = 2^f\), we can estimate these factorial effects using a full-rank linear regression model.
 
@@ -5248,7 +5248,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7171 and 5.2133, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7069 and 5.1187, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5545,7 +5545,7 @@ Solutions
 
 We now consider splitting the treatments in a factorial design into blocks. As in Chapter \ref{blocking}, the simplest factorial blocked design is a \textbf{randomised complete block design}, where the blocks are large enough for a complete replicate of the factorial treatments to occur in each block. Analysis then proceeds as in Chapter \ref{blocking}, with the contrasts of interest being those corresponding to the factorial effects (main effects and interactions).
 
-However, the number of treatments grows rapidly in a factorial design, and it is unusual for the block sizes to be sufficiently large to accomodate a complete replication within each block. Hence, \textbf{incomplete block designs} must be employed. While balanced incomplete block designs (Section\ref{sec-bibd}) can be used, they do not tend to have good statistical properties and their construction is complicated. In this chapter, we will focus on a class of methods specific to splitting a two-level factorial design in to blocks who common size \(k\) is a power of two.
+However, the number of treatments grows rapidly in a factorial design, and it is unusual for the block sizes to be sufficiently large to accomodate a complete replication within each block. Hence, \textbf{incomplete block designs} must be employed. While balanced incomplete block designs (Section \ref{sec-bibd}) can be used, they do not tend to have good statistical properties and their construction is complicated. In this chapter, we will focus on a class of methods specific to splitting a two-level factorial design in to blocks who common size \(k\) is a power of two.
 
 \hypertarget{two-examples}{%
 \section{Two examples}\label{two-examples}}
@@ -5935,7 +5935,7 @@ ABC \odot BC = A \odot B \odot C \odot B \odot C = A\,.
 \]
 Hence, the main effect of factor \(A\) is also confounded with blocks. This is clearly undesirable, e.g.~by effect hierarchy.
 
-We shouldn't be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model (\eqref{eq:block-plm}), the rank of the block model matrix \(X_1\) is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.
+We shouldn't be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model \eqref{eq:block-plm}, the rank of the block model matrix \(X_1\) is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.
 
 As in Example \ref{exm:block-frac-1}, we could also explore alternative blocking schemes that do not completely confound factorial effects with blocks. However, as before, these alternatives would lead to higher average variance for the estimation of main effects compared to the design that confounds the three two-factor interactions.\footnote{This design is too small to split into four blocks and still be able to estimate all two-factor interactions clear of blocks.}
 
@@ -5948,7 +5948,7 @@ In a blocked factorial design, those effects which are not confounded with block
 
 \end{definition}
 
-In Example \ref{exm:block-frac-1} the clear effects are \(A\), \(B\), \(C\), \(AB\), \(AC\) and \(BC\). In Example \ref{exm:block-frac-2}, the clear effects are \(A\), \(B\), \(C\) and \(ABC\).
+In Example \ref{exm:block-frac-1}, the clear effects are \(A\), \(B\), \(C\), \(AB\), \(AC\) and \(BC\). In Example \ref{exm:block-frac-2}, the clear effects are \(A\), \(B\), \(C\) and \(ABC\).
 
 \hypertarget{general-method-of-constructing-a-confounded-block-design}{%
 \section{General method of constructing a confounded block design}\label{general-method-of-constructing-a-confounded-block-design}}
@@ -5995,6 +5995,269 @@ We obtain the other confounded effects by hadamard multiplication:
 \mathrm{Block}_{2}\odot \mathrm{Block}_{3} & = & CDEF \nonumber\\
 \mathrm{Block}_{1}\odot \mathrm{Block}_{2} \odot \mathrm{Block}_{3} & = & ADFGH\,. \nonumber
 \end{eqnarray}
+
+It is also straightforward to find blocked fractional factorial designs using \texttt{FrF2} in \texttt{R}. For example, to find the two \(2^3\) designs at the start of this chapter, with blocks of size \(k=4\) and \(k=2\), we simply set the \texttt{blocks} argument equal to the number of blocks \(b\), see Tables \ref{tab:frf2-block-1} and \ref{tab:frf2-block-2}\footnote{The additional \texttt{R} code is to tidy up the output.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{block1.frf2 }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{8}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{3}\NormalTok{, }\AttributeTok{blocks =} \DecValTok{2}\NormalTok{, }
+                          \AttributeTok{alias.info =} \DecValTok{3}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F)}
+\NormalTok{block1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Blocks }\SpecialCharTok{+}\NormalTok{ (A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, block1.frf2))}
+\NormalTok{block1 }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(block1, }\AttributeTok{Treatment =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{, }\AttributeTok{.before =}\NormalTok{ Blocks1)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(block1[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{], }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Treatment"}\NormalTok{, }\StringTok{"Block"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }
+                                         \StringTok{"A:B"}\NormalTok{, }\StringTok{"A:C"}\NormalTok{, }\StringTok{"B:C"}\NormalTok{, }\StringTok{"A:B:C"}\NormalTok{),}
+             \AttributeTok{caption =} \StringTok{"$2\^{}3$ factorial design in two blocks of size four"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:frf2-block-1}$2^3$ factorial design in two blocks of size four}
+\centering
+\begin{tabular}[t]{r|r|r|r|r|r|r|r|r}
+\hline
+Treatment & Block & A & B & C & A:B & A:C & B:C & A:B:C\\
+\hline
+1 & -1 & -1 & -1 & -1 & 1 & 1 & 1 & -1\\
+\hline
+2 & -1 & -1 & 1 & 1 & -1 & -1 & 1 & -1\\
+\hline
+3 & -1 & 1 & -1 & 1 & -1 & 1 & -1 & -1\\
+\hline
+4 & -1 & 1 & 1 & -1 & 1 & -1 & -1 & -1\\
+\hline
+5 & 1 & -1 & -1 & 1 & 1 & -1 & -1 & 1\\
+\hline
+6 & 1 & -1 & 1 & -1 & -1 & 1 & -1 & 1\\
+\hline
+7 & 1 & 1 & -1 & -1 & -1 & -1 & 1 & 1\\
+\hline
+8 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{block2.frf2 }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{8}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{3}\NormalTok{, }\AttributeTok{blocks =} \DecValTok{4}\NormalTok{, }
+                          \AttributeTok{alias.info =} \DecValTok{3}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F, }\AttributeTok{alias.block.2fis =}\NormalTok{ T)}
+\NormalTok{block2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Blocks }\SpecialCharTok{+}\NormalTok{ (A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, block2.frf2))}
+\NormalTok{block2 }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(block2, }\AttributeTok{Treatment =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{, }\AttributeTok{.before =}\NormalTok{ Blocks1)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(block2[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{], }
+             \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Treatment"}\NormalTok{, }\StringTok{"Block1"}\NormalTok{, }\StringTok{"Block2"}\NormalTok{, }\StringTok{"Block3"}\NormalTok{, }
+                           \StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }
+                           \StringTok{"A:B"}\NormalTok{, }\StringTok{"A:C"}\NormalTok{, }\StringTok{"B:C"}\NormalTok{, }\StringTok{"A:B:C"}\NormalTok{),}
+             \AttributeTok{caption =} \StringTok{"$2\^{}3$ factorial design in two blocks of size two"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:frf2-block-2}$2^3$ factorial design in two blocks of size two}
+\centering
+\begin{tabular}[t]{r|r|r|r|r|r|r|r|r|r|r}
+\hline
+Treatment & Block1 & Block2 & Block3 & A & B & C & A:B & A:C & B:C & A:B:C\\
+\hline
+1 & -1 & -1 & 1 & -1 & 1 & 1 & -1 & -1 & 1 & -1\\
+\hline
+2 & -1 & -1 & 1 & 1 & -1 & -1 & -1 & -1 & 1 & 1\\
+\hline
+3 & 1 & -1 & -1 & -1 & 1 & -1 & -1 & 1 & -1 & 1\\
+\hline
+4 & 1 & -1 & -1 & 1 & -1 & 1 & -1 & 1 & -1 & -1\\
+\hline
+5 & -1 & 1 & -1 & -1 & -1 & 1 & 1 & -1 & -1 & 1\\
+\hline
+6 & -1 & 1 & -1 & 1 & 1 & -1 & 1 & -1 & -1 & -1\\
+\hline
+7 & 1 & 1 & 1 & -1 & -1 & -1 & 1 & 1 & 1 & -1\\
+\hline
+8 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+\hline
+\end{tabular}
+\end{table}
+
+In each case, \texttt{FrF2} returns for us the design, in coded \(\pm 1\) units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set \texttt{alias.block.2fis\ =\ T} to allow \texttt{FrF2} to confound two-factor interactions with blocks, otherwise a solution could not be found.
+
+Setting \texttt{alias.info\ =\ 3} ensures \texttt{FrF2} returns information about confounding between blocks and three-factor interactions\footnote{By default, \texttt{FrF2} only returns information about confounding involving two-factor interactions. Unfortunately, it is not possible to get \texttt{FrF2} to return information about confounding involving four-factor or higher interactions.} We extract this information using \texttt{design.info}\footnote{We previously have not explicitly loaded packages before. However, \texttt{design.info} is actually extracting \emph{attributes} of the \texttt{FrF2} object, and I couldn't find a way to make this work without loading the package!}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(FrF2)}
+\FunctionTok{design.info}\NormalTok{(block1.frf2)}\SpecialCharTok{$}\NormalTok{aliased.with.blocks}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ABC"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{design.info}\NormalTok{(block2.frf2)}\SpecialCharTok{$}\NormalTok{aliased.with.blocks}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "AB" "AC" "BC"
+\end{verbatim}
+
+We can also specify which factorial effects we wish to confound with blocks, rather than letting \texttt{FrF2} choose. For the \(2^8\) example above, we can specify the three defining blocks
+
+\[
+\mathrm{Block}_{1}=ACEGH\,,\quad \mathrm{Block}_{2}=BCFGH\,,\quad \mathrm{Block}_{3}= BDEGH\,,
+\]
+the \texttt{blocks} argument
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{block3.frf2 }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{8}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{8}\NormalTok{, }
+                     \AttributeTok{alias.info =} \DecValTok{3}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F, }\AttributeTok{blocks =} \FunctionTok{c}\NormalTok{(}\StringTok{"ACEGH"}\NormalTok{, }\StringTok{"BCFGH"}\NormalTok{, }\StringTok{"BDEGH"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{analysis-of-a-confounded-factorial-design}{%
+\section{Analysis of a confounded factorial design}\label{analysis-of-a-confounded-factorial-design}}
+
+We can analyse a confounded design by by combining ideas from Chapters \ref{blocking} and \ref{factorial}. The most straightforward approach is to add a block effect to the regression model introduced in Section \ref{fac-reg}. Let \(X\) be the \(n\times d\) model matrix with columns corresponding to the \(d = 2^f - b +1\) unscaled contrast coefficients for the estimable factorial effects (i.e.~those \textbf{not} confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the \(X\) matrix cannot columns corresponding to these effects. We write a block-regression model as
+
+\[
+\boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + + Z\boldsymbol{\gamma} + \boldsymbol{\varepsilon}\,,
+\]
+where in a (necessary) change of notation, \(Z\) is the \(n \times b\) model matrix for blocks (previously referred to as \(X_1\)) and \(\boldsymbol{\gamma} = (\gamma_1,\ldots, \gamma_b)^{\mathrm{T}}\) is the vector of block effects (previously called \(\boldsymbol{\beta}\)). The errors remain independent and identically normally distributed with constant variance. Recall that for equal block sizes
+
+\[
+Z = \bigoplus_{i = 1}^b \boldsymbol{1}_{k} = \begin{bmatrix}
+\boldsymbol{1}_{k} & \boldsymbol{0}_{k} & \cdots &  \boldsymbol{0}_{k} \\
+\boldsymbol{0}_{k} & \boldsymbol{1}_{k} & \cdots &  \boldsymbol{0}_{k} \\
+\vdots & & \ddots & \vdots \\
+\boldsymbol{0}_{k} & \boldsymbol{0}_{k} & \cdots &  \boldsymbol{1}_{k} \\
+\end{bmatrix}\,.
+\]
+
+The normal equations take the form
+
+\begin{align}
+n\hat{\beta}_0 + \boldsymbol{1}_n^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:fact-blocks-normal-1}\\
+X^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta}_0 + X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + X^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = X^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:fact-blocks-normal-2}\\
+Z^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + Z^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + Z^{\mathrm{T}}Z\hat{\boldsymbol{\tau}} & = Z^{\mathrm{T}}\boldsymbol{y}\,. \label{eq:fact-blocks-normal-3}\\
+\end{align}
+
+However, we have that \(X^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}_{2^{f}-2^b}\), as all factorial contrasts are orthogonal to the constant vector. Also, \(X^{\mathrm{T}}Z = \boldsymbol{0}_{d\times b}\), as each factorial contrasts takes values -1 and +1 an equal number of times in each block. Also, \(X^{\mathrm{T}}X = nI_{d}\), as all the vectors of factorial contrast coefficients are orthogonal. Hence, the regression coefficients \(\boldsymbol{\beta}\) can be estimated independently of the intercept and block effects, with reduced normal equations
+
+\[
+n\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\boldsymbol{y}\,.
+\]
+Obviously, there is a unique solution for \(\hat{\boldsymbol{\beta}}\),
+
+\[
+\hat{\boldsymbol{\beta}} = \frac{1}{n}X^{\mathrm{T}}\boldsymbol{y}\,,
+\]
+with estimators of the factorial effects having the form \(2\hat{\boldsymbol{\beta}}\) (see Section \ref{fac-reg}).
+
+For a simulated response in Example \ref{exm:block-frac-2}, we can perform this analysis in \texttt{R} using \texttt{lm}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex2.df }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate\_at}\NormalTok{(Xdf,}\FunctionTok{c}\NormalTok{(}\StringTok{"Block"}\NormalTok{), factor)}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Block }\SpecialCharTok{+}\NormalTok{ (A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, ex2.df)}
+\NormalTok{coef.values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ X }\SpecialCharTok{\%*\%}\NormalTok{ coef.values }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{betahat }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X[, }\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{11}\NormalTok{)]) }\SpecialCharTok{\%*\%}\NormalTok{ y }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(X)}
+\NormalTok{betahat }\CommentTok{\# coef estimates, obtained directly}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         [,1]
+## A     4.3993
+## B     0.2524
+## C     2.7675
+## A:B:C 0.4703
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex2.df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(ex2.df, }\AttributeTok{y =}\NormalTok{ y)}
+\NormalTok{ex2.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{  Block }\SpecialCharTok{+}\NormalTok{ A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C }\SpecialCharTok{+}\NormalTok{ A}\SpecialCharTok{:}\NormalTok{B}\SpecialCharTok{:}\NormalTok{C, }\AttributeTok{data =}\NormalTok{ ex2.df)}
+\FunctionTok{anova}\NormalTok{(ex2.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: y
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## Block      3  279.1    93.0     NaN    NaN
+## A          1  154.8   154.8     NaN    NaN
+## B          1    0.5     0.5     NaN    NaN
+## C          1   61.3    61.3     NaN    NaN
+## A:B:C      1    1.8     1.8     NaN    NaN
+## Residuals  0    0.0     NaN
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(ex2.lm)[}\DecValTok{5}\SpecialCharTok{:}\DecValTok{8}\NormalTok{] }\CommentTok{\# coef estimates}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      A      B      C  A:B:C 
+## 4.3993 0.2524 2.7675 0.4703
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \SpecialCharTok{*} \FunctionTok{coef}\NormalTok{(ex2.lm)[}\DecValTok{5}\SpecialCharTok{:}\DecValTok{8}\NormalTok{] }\CommentTok{\# factorial effects}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      A      B      C  A:B:C 
+## 8.7987 0.5048 5.5349 0.9406
+\end{verbatim}
+
+As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex2.lm2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{  (A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, }\AttributeTok{data =}\NormalTok{ ex2.df)}
+\FunctionTok{anova}\NormalTok{(ex2.lm2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: y
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## A          1  154.8   154.8     NaN    NaN
+## B          1    0.5     0.5     NaN    NaN
+## C          1   61.3    61.3     NaN    NaN
+## A:B        1   17.5    17.5     NaN    NaN
+## A:C        1  120.5   120.5     NaN    NaN
+## B:C        1  141.1   141.1     NaN    NaN
+## A:B:C      1    1.8     1.8     NaN    NaN
+## Residuals  0    0.0     NaN
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(ex2.lm2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept)           A           B           C         A:B         A:C 
+##      5.0756      4.3993      0.2524      2.7675      1.4781      3.8811 
+##         B:C       A:B:C 
+##      4.2003      0.4703
+\end{verbatim}
+
+But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
 
 \hypertarget{fractional-factorial}{%
 \chapter{Fractional factorial designs}\label{fractional-factorial}}
