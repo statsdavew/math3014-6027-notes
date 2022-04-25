@@ -164,7 +164,7 @@ As in Example \@ref(exm:block-frac-1), we could also explore alternative blockin
 In a blocked factorial design, those effects which are not confounded with blocks are called **clear**.
 :::
 
-In Example \@ref(exm:block-frac-1) the clear effects are $A$, $B$, $C$, $AB$, $AC$ and $BC$. In Example \@ref(exm:block-frac-2), the clear effects are $A$, $B$, $C$ and $ABC$.
+In Example \@ref(exm:block-frac-1), the clear effects are $A$, $B$, $C$, $AB$, $AC$ and $BC$. In Example \@ref(exm:block-frac-2), the clear effects are $A$, $B$, $C$ and $ABC$.
 
 
 ## General method of constructing a confounded block design
