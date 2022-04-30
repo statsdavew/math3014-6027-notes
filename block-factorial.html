@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-04-25" />
+<meta name="date" content="2022-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -198,6 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
 <li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
 <li class="chapter" data-level="5.3" data-path="block-factorial.html"><a href="block-factorial.html#analysis-of-a-confounded-factorial-design"><i class="fa fa-check"></i><b>5.3</b> Analysis of a confounded factorial design</a></li>
+<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a></li>
 <li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
@@ -1286,10 +1287,10 @@ with estimators of the factorial effects having the form <span class="math inlin
 <span id="cb173-5"><a href="block-factorial.html#cb173-5"></a>betahat &lt;-<span class="st"> </span><span class="kw">t</span>(X[, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">11</span>)]) <span class="op">%*%</span><span class="st"> </span>y <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(X)</span>
 <span id="cb173-6"><a href="block-factorial.html#cb173-6"></a>betahat <span class="co"># coef estimates, obtained directly</span></span></code></pre></div>
 <pre><code>##          [,1]
-## A      3.6943
-## B     -0.6291
-## C      2.2539
-## A:B:C  0.6855</code></pre>
+## A      3.9591
+## B      0.3896
+## C      2.6518
+## A:B:C -0.3160</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="block-factorial.html#cb175-1"></a>ex2.df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(ex2.df, <span class="dt">y =</span> y)</span>
 <span id="cb175-2"><a href="block-factorial.html#cb175-2"></a>ex2.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st">  </span>Block <span class="op">+</span><span class="st"> </span>A <span class="op">+</span><span class="st"> </span>B <span class="op">+</span><span class="st"> </span>C <span class="op">+</span><span class="st"> </span>A<span class="op">:</span>B<span class="op">:</span>C, <span class="dt">data =</span> ex2.df)</span>
 <span id="cb175-3"><a href="block-factorial.html#cb175-3"></a><span class="kw">anova</span>(ex2.lm)</span></code></pre></div>
@@ -1297,18 +1298,18 @@ with estimators of the factorial effects having the form <span class="math inlin
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## Block      3    338   112.6     NaN    NaN
-## A          1    109   109.2     NaN    NaN
-## B          1      3     3.2     NaN    NaN
-## C          1     41    40.6     NaN    NaN
-## A:B:C      1      4     3.8     NaN    NaN
-## Residuals  0      0     NaN</code></pre>
+## Block      3  232.9    77.6     NaN    NaN
+## A          1  125.4   125.4     NaN    NaN
+## B          1    1.2     1.2     NaN    NaN
+## C          1   56.3    56.3     NaN    NaN
+## A:B:C      1    0.8     0.8     NaN    NaN
+## Residuals  0    0.0     NaN</code></pre>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="block-factorial.html#cb177-1"></a><span class="kw">coef</span>(ex2.lm)[<span class="dv">5</span><span class="op">:</span><span class="dv">8</span>] <span class="co"># coef estimates</span></span></code></pre></div>
 <pre><code>##       A       B       C   A:B:C 
-##  3.6943 -0.6291  2.2539  0.6855</code></pre>
+##  3.9591  0.3896  2.6518 -0.3160</code></pre>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="block-factorial.html#cb179-1"></a><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">coef</span>(ex2.lm)[<span class="dv">5</span><span class="op">:</span><span class="dv">8</span>] <span class="co"># factorial effects</span></span></code></pre></div>
-<pre><code>##      A      B      C  A:B:C 
-##  7.389 -1.258  4.508  1.371</code></pre>
+<pre><code>##       A       B       C   A:B:C 
+##  7.9182  0.7792  5.3035 -0.6321</code></pre>
 <p>As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.</p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="block-factorial.html#cb181-1"></a>ex2.lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st">  </span>(A <span class="op">+</span><span class="st"> </span>B <span class="op">+</span><span class="st"> </span>C)<span class="op">^</span><span class="dv">3</span>, <span class="dt">data =</span> ex2.df)</span>
 <span id="cb181-2"><a href="block-factorial.html#cb181-2"></a><span class="kw">anova</span>(ex2.lm2)</span></code></pre></div>
@@ -1316,20 +1317,1168 @@ with estimators of the factorial effects having the form <span class="math inlin
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## A          1  109.2   109.2     NaN    NaN
-## B          1    3.2     3.2     NaN    NaN
-## C          1   40.6    40.6     NaN    NaN
-## A:B        1    4.6     4.6     NaN    NaN
-## A:C        1  155.3   155.3     NaN    NaN
-## B:C        1  177.8   177.8     NaN    NaN
-## A:B:C      1    3.8     3.8     NaN    NaN
+## A          1  125.4   125.4     NaN    NaN
+## B          1    1.2     1.2     NaN    NaN
+## C          1   56.3    56.3     NaN    NaN
+## A:B        1   11.5    11.5     NaN    NaN
+## A:C        1   99.6    99.6     NaN    NaN
+## B:C        1  121.7   121.7     NaN    NaN
+## A:B:C      1    0.8     0.8     NaN    NaN
 ## Residuals  0    0.0     NaN</code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="block-factorial.html#cb183-1"></a><span class="kw">coef</span>(ex2.lm2)</span></code></pre></div>
 <pre><code>## (Intercept)           A           B           C         A:B         A:C 
-##      4.5809      3.6943     -0.6291      2.2539      0.7601      4.4066 
+##      5.3265      3.9591      0.3896      2.6518      1.2009      3.5285 
 ##         B:C       A:B:C 
-##      4.7140      0.6855</code></pre>
+##      3.9011     -0.3160</code></pre>
 <p>But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.</p>
+</div>
+<div id="exercises-4" class="section level2">
+<h2><span class="header-section-number">5.4</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>Suppose that a single replicate <span class="math inline">\(2^5\)</span> factorial experiment is to be arranged in <span class="math inline">\(b=4\)</span> blocks, each containing <span class="math inline">\(k=8\)</span> treatments.</p>
+<p>How many interactions need to be confounded with blocks in this experiment? Can these be chosen independently? Select suitable interactions which could be confounded with blocks and write down the treatments in one block corresponding to your choice.</p></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary></p>
+<p>To run a <span class="math inline">\(2^5\)</span> experiment in <span class="math inline">\(b=4\)</span> blocks requires <span class="math inline">\(b-1=3\)</span> interactions to be confounded and these cannot be chosen independently; the choice of two determines the third.
+Confounding the interactions <span class="math inline">\(ABCD\)</span>, <span class="math inline">\(CDE\)</span> and their product <span class="math inline">\(ABE\)</span> may be a sensible choice, as no main effects or two-factor interactions are then confounded with blocks. (Other choices are acceptable).</p>
+<p>To find a block for this choice, we can solve the equations</p>
+<p><span class="math inline">\(ABCD\)</span> = 1, <span class="math inline">\(CDE\)</span> = -1</p>
+<p>which gives the treatments</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">A</th>
+<th align="right">B</th>
+<th align="right">C</th>
+<th align="right">D</th>
+<th align="right">E</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>This same block can be found using <code>FrF2</code>.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="block-factorial.html#cb185-1"></a>block.<span class="fl">2.5</span> &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">2</span><span class="op">^</span><span class="dv">5</span>, <span class="dt">nfactors =</span> <span class="dv">5</span>, <span class="dt">blocks =</span> <span class="kw">c</span>(<span class="st">&quot;ABCD&quot;</span>, <span class="st">&quot;CDE&quot;</span>))</span>
+<span id="cb185-2"><a href="block-factorial.html#cb185-2"></a><span class="kw">subset</span>(block.<span class="fl">2.5</span>, Blocks <span class="op">==</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##    Blocks  A  B  C  D  E
+## 17      3  1 -1  1 -1  1
+## 18      3  1  1  1  1 -1
+## 19      3  1  1 -1 -1 -1
+## 20      3 -1  1  1 -1  1
+## 21      3  1 -1 -1  1  1
+## 22      3 -1 -1 -1 -1 -1
+## 23      3 -1 -1  1  1 -1
+## 24      3 -1  1 -1  1  1</code></pre>
+</details>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Suppose a <span class="math inline">\(2^7\)</span> design is arranged in <span class="math inline">\(b=8\)</span> blocks with the defining blocks <span class="math inline">\(\mathrm{Block}_1 = ABC\)</span>, <span class="math inline">\(\mathrm{Block}_2 = DEF\)</span> and <span class="math inline">\(\mathrm{Block}_3 = AFG\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Find all the interactions that are confounded with blocks.</p></li>
+<li><p>An alternative blocking scheme has <span class="math inline">\(\mathrm{Block}_1 = ABCD\)</span>, <span class="math inline">\(\mathrm{Block}_2 = ABEF\)</span> and <span class="math inline">\(\mathrm{Block}_3 = ACEG\)</span>. Find all the confounded interactions in this design, and compare with the original blocking scheme.</p></li>
+</ol></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary>
+a. <span class="math inline">\(\mathrm{Block}_1 = ABC\)</span>, <span class="math inline">\(\mathrm{Block}_2 = DEF\)</span>, <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_2 = ABCDEF\)</span>, <span class="math inline">\(\mathrm{Block}_3 = AFG\)</span>, <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_3 = BCFG\)</span>, <span class="math inline">\(\mathrm{Block}_2\mathrm{Block}_3 = ADEG\)</span>, <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_2\mathrm{Block}_3 = BCDEG\)</span>.
+(b) For the alternative blocking scheme, <span class="math inline">\(\mathrm{Block}_1 = ABCD\)</span>, <span class="math inline">\(\mathrm{Block}_2 = ABEF\)</span>, <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_2 = CDEF\)</span>, <span class="math inline">\(\mathrm{Block}_3 = ACEG\)</span>, <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_3 = BDEG\)</span>, <span class="math inline">\(\mathrm{Block}_2\mathrm{Block}_3 = BCFG\)</span>, <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_2\mathrm{Block}_3 = ADFG\)</span>.</p>
+The second scheme does not confound any three-factor interactions with blocks, unlike the original scheme.
+</details>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Suppose that the <span class="math inline">\(2^3\)</span> design</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Run</th>
+<th align="right">A</th>
+<th align="right">B</th>
+<th align="right">C</th>
+<th align="right">AB</th>
+<th align="right">AC</th>
+<th align="right">BC</th>
+<th align="right">ABC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+</tr>
+</tbody>
+</table>
+<p>is arranged in two blocks with runs 1, 2, 5 and 7 in block 1 and runs 3, 4, 6 and 8 in block 2.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Show that a contrast vector defining the difference between the two blocks is not identical to any of the seven contrast vectors in the table and, therefore, it is not confounded with any of the factorial effects.</p></li>
+<li><p>Show that the block effect is not orthogonal to some of the factorial effects. Identify these effects. Discuss why it is undesirable to use this blocking scheme.</p></li>
+</ol></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary>
+a. A unscaled contrast vector (with coefficients -1/+1) has been added to the table below. It is clearly not identical to any of the other columns, and hence no factorial effects have been completely confounded with blocks.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Run</th>
+<th align="right">A</th>
+<th align="right">B</th>
+<th align="right">C</th>
+<th align="right">AB</th>
+<th align="right">AC</th>
+<th align="right">BC</th>
+<th align="right">ABC</th>
+<th align="right">Block</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">+1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+<td align="right">+1</td>
+</tr>
+</tbody>
+</table>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>The inner products of each effect column with the blocking column are given by</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="right">A</th>
+<th align="right">B</th>
+<th align="right">C</th>
+<th align="right">AB</th>
+<th align="right">AC</th>
+<th align="right">BC</th>
+<th align="right">ABC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">+4</td>
+<td align="right">+4</td>
+<td align="right">-4</td>
+<td align="right">+4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>The blocking effect is not orthogonal to the main effects of <span class="math inline">\(B\)</span> or <span class="math inline">\(C\)</span> or the interactions <span class="math inline">\(AB\)</span> and <span class="math inline">\(AC\)</span>. Two of the main effects are <em>partially</em> confounded with the blocking effect, and the variances of the estimators of these effects will inflated. Therefore, this scheme is not desirable. In general, we may prefer to completely confound a smaller number of higher-order factorial effects with blocks, in order to have greater clarity in our design and to not lose information about main effects.</p>
+</details>
+<ol start="4" style="list-style-type: decimal">
+<li><p>In the Chapter <a href="factorial.html#factorial">4</a> exercises we studied the reactor experiment, a <span class="math inline">\(2^5\)</span> full factorial experiment with the following data:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="block-factorial.html#cb187-1"></a>reactor.frf2 &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">32</span>, <span class="dt">nfactors =</span> <span class="dv">5</span>, <span class="dt">randomize =</span> F,</span>
+<span id="cb187-2"><a href="block-factorial.html#cb187-2"></a>                           <span class="dt">factor.names =</span> <span class="kw">c</span>(<span class="st">&quot;FR&quot;</span>, <span class="st">&quot;Cat&quot;</span>, <span class="st">&quot;AR&quot;</span>, <span class="st">&quot;Temp&quot;</span>, <span class="st">&quot;Conc&quot;</span>))</span>
+<span id="cb187-3"><a href="block-factorial.html#cb187-3"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">53</span>, <span class="dv">63</span>, <span class="dv">61</span>, <span class="dv">53</span>, <span class="dv">56</span>, <span class="dv">54</span>, <span class="dv">61</span>, <span class="dv">69</span>, <span class="dv">61</span>, <span class="dv">94</span>, <span class="dv">93</span>, <span class="dv">66</span>, <span class="dv">60</span>, <span class="dv">95</span>, <span class="dv">98</span>, <span class="dv">56</span>, <span class="dv">63</span>,</span>
+<span id="cb187-4"><a href="block-factorial.html#cb187-4"></a>       <span class="dv">70</span>, <span class="dv">65</span>, <span class="dv">59</span>, <span class="dv">55</span>, <span class="dv">67</span>, <span class="dv">65</span>, <span class="dv">44</span>, <span class="dv">45</span>, <span class="dv">78</span>, <span class="dv">77</span>, <span class="dv">49</span>, <span class="dv">42</span>, <span class="dv">81</span>, <span class="dv">82</span>)</span>
+<span id="cb187-5"><a href="block-factorial.html#cb187-5"></a>reactor &lt;-<span class="st"> </span><span class="kw">data.frame</span>(reactor.frf2, <span class="dt">pre.react =</span> y)</span>
+<span id="cb187-6"><a href="block-factorial.html#cb187-6"></a>knitr<span class="op">::</span><span class="kw">kable</span>(reactor, <span class="dt">caption =</span> <span class="st">&quot;Reactor experiment.&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:reactor-data-2">Table 5.10: </span>Reactor experiment.</caption>
+<thead>
+<tr class="header">
+<th align="left">FR</th>
+<th align="left">Cat</th>
+<th align="left">AR</th>
+<th align="left">Temp</th>
+<th align="left">Conc</th>
+<th align="right">pre.react</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">63</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">53</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">69</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">94</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">93</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">60</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">95</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">98</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">63</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">59</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">55</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">67</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">44</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">45</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">78</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">77</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">49</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">42</td>
+</tr>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">81</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">82</td>
+</tr>
+</tbody>
+</table>
+<p>Assume now that this experiment was performed in <span class="math inline">\(b=4\)</span> blocks, confounding the interactions between <code>FR</code>, <code>Cat</code> and <code>AR</code> and between <code>FR</code>, <code>Temp</code> and <code>Conc</code>. Obtain the anova table for this new experiment, and estimate the interactions that are not confounded with blocks. Use Lenth’s method to decide which effects are important.</p></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary>
+For ease of notation, we will label the factors</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Factor</th>
+<th align="right">Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>FR</code></td>
+<td align="right">A</td>
+</tr>
+<tr class="even">
+<td align="right"><code>Cat</code></td>
+<td align="right">B</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>AR</code></td>
+<td align="right">C</td>
+</tr>
+<tr class="even">
+<td align="right"><code>Temp</code></td>
+<td align="right">D</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>Conc</code></td>
+<td align="right">E</td>
+</tr>
+</tbody>
+</table>
+<p>The design has defining blocks <span class="math inline">\(\mathrm{Block}_1 = ABC\)</span> and <span class="math inline">\(\mathrm{Block}_2 = ADE\)</span>, and hence also confounds <span class="math inline">\(\mathrm{Block}_1\mathrm{Block}_2 = BCDE\)</span>. We can assign treatments to blocks according to the four combinations of any pair of these interactions. In the code chunk below, we use the pipe operator (<code>|&gt;</code>) to combine our data processing steps.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="block-factorial.html#cb188-1"></a>fac_to_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">as.numeric</span>(<span class="kw">as.character</span>(x))</span>
+<span id="cb188-2"><a href="block-factorial.html#cb188-2"></a>reactor &lt;-<span class="st"> </span>reactor <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">block1 =</span> <span class="kw">fac_to_numeric</span>(FR) <span class="op">*</span><span class="st"> </span><span class="kw">fac_to_numeric</span>(Cat) <span class="op">*</span></span>
+<span id="cb188-3"><a href="block-factorial.html#cb188-3"></a><span class="st">                           </span><span class="kw">fac_to_numeric</span>(AR), </span>
+<span id="cb188-4"><a href="block-factorial.html#cb188-4"></a>                         <span class="dt">block2 =</span> <span class="kw">fac_to_numeric</span>(FR) <span class="op">*</span><span class="st"> </span><span class="kw">fac_to_numeric</span>(Temp) <span class="op">*</span><span class="st"> </span></span>
+<span id="cb188-5"><a href="block-factorial.html#cb188-5"></a><span class="st">                           </span><span class="kw">fac_to_numeric</span>(Conc)) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
+<span id="cb188-6"><a href="block-factorial.html#cb188-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(block1, block2) <span class="op">|</span><span class="er">&gt;</span></span>
+<span id="cb188-7"><a href="block-factorial.html#cb188-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">block =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">rep</span>(<span class="dv">8</span>, <span class="dv">4</span>)))) <span class="op">|</span><span class="er">&gt;</span></span>
+<span id="cb188-8"><a href="block-factorial.html#cb188-8"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">relocate</span>(block) <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span></span>
+<span id="cb188-9"><a href="block-factorial.html#cb188-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">!</span><span class="kw">c</span>(block1, block2))</span>
+<span id="cb188-10"><a href="block-factorial.html#cb188-10"></a>knitr<span class="op">::</span><span class="kw">kable</span>(reactor, <span class="dt">caption =</span> <span class="st">&quot;Reactor experiment in blocks.&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:block-assign">Table 5.11: </span>Reactor experiment in blocks.</caption>
+<thead>
+<tr class="header">
+<th align="left">block</th>
+<th align="left">FR</th>
+<th align="left">Cat</th>
+<th align="left">AR</th>
+<th align="left">Temp</th>
+<th align="left">Conc</th>
+<th align="right">pre.react</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">54</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">93</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">60</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">65</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">55</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">44</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">81</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">69</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">95</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">67</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">77</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">42</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">63</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">98</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">63</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">78</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">49</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">53</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">94</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="right">66</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="right">59</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">-1</td>
+<td align="left">-1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">82</td>
+</tr>
+</tbody>
+</table>
+<p>We can produce an ANOVA table with the following code; <code>lm</code> and <code>anova</code> should automatically get the degrees of freedom correct (as it will recognise that three interactions are confounded with blocks and not estimable). The three confounded interactions do not appear in the <code>anova</code> output.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="block-factorial.html#cb189-1"></a>reactor.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(pre.react <span class="op">~</span><span class="st"> </span>block <span class="op">+</span><span class="st"> </span>(FR <span class="op">+</span><span class="st"> </span>Cat <span class="op">+</span><span class="st"> </span>AR <span class="op">+</span><span class="st"> </span>Temp <span class="op">+</span><span class="st"> </span>Conc) <span class="op">^</span><span class="st"> </span><span class="dv">5</span>, <span class="dt">data =</span> reactor)</span>
+<span id="cb189-2"><a href="block-factorial.html#cb189-2"></a><span class="kw">anova</span>(reactor.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: pre.react
+##                     Df Sum Sq Mean Sq F value Pr(&gt;F)
+## block                3     24       8     NaN    NaN
+## FR                   1     15      15     NaN    NaN
+## Cat                  1   3042    3042     NaN    NaN
+## AR                   1      3       3     NaN    NaN
+## Temp                 1    925     925     NaN    NaN
+## Conc                 1    312     312     NaN    NaN
+## FR:Cat               1     15      15     NaN    NaN
+## FR:AR                1      4       4     NaN    NaN
+## FR:Temp              1      6       6     NaN    NaN
+## FR:Conc              1      0       0     NaN    NaN
+## Cat:AR               1      6       6     NaN    NaN
+## Cat:Temp             1   1404    1404     NaN    NaN
+## Cat:Conc             1     32      32     NaN    NaN
+## AR:Temp              1     36      36     NaN    NaN
+## AR:Conc              1      6       6     NaN    NaN
+## Temp:Conc            1    968     968     NaN    NaN
+## FR:Cat:Temp          1     15      15     NaN    NaN
+## FR:Cat:Conc          1     28      28     NaN    NaN
+## FR:AR:Temp           1      4       4     NaN    NaN
+## FR:AR:Conc           1     50      50     NaN    NaN
+## Cat:AR:Temp          1     10      10     NaN    NaN
+## Cat:AR:Conc          1      0       0     NaN    NaN
+## Cat:Temp:Conc        1      0       0     NaN    NaN
+## AR:Temp:Conc         1      0       0     NaN    NaN
+## FR:Cat:AR:Temp       1      0       0     NaN    NaN
+## FR:Cat:AR:Conc       1     18      18     NaN    NaN
+## FR:Cat:Temp:Conc     1      3       3     NaN    NaN
+## FR:AR:Temp:Conc      1      8       8     NaN    NaN
+## FR:Cat:AR:Temp:Conc  1      2       2     NaN    NaN
+## Residuals            0      0     NaN</code></pre>
+<p>Estimates of the clear factorial effects can be obtained as twice the corresponding regression coefficients. They are unchanged from the analysis of the unblocked design, as they are estimated independently of the blocks.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="block-factorial.html#cb191-1"></a>fac.effs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">fac.effs =</span> <span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">coef</span>(reactor.lm)[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)])</span>
+<span id="cb191-2"><a href="block-factorial.html#cb191-2"></a>fac.effs &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(fac.effs)</span>
+<span id="cb191-3"><a href="block-factorial.html#cb191-3"></a><span class="kw">rownames</span>(fac.effs) &lt;-<span class="st"> </span><span class="kw">rownames</span>(<span class="kw">anova</span>(reactor.lm))[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)]</span>
+<span id="cb191-4"><a href="block-factorial.html#cb191-4"></a>knitr<span class="op">::</span><span class="kw">kable</span>(fac.effs, <span class="dt">caption =</span> <span class="st">&quot;Reactor experiment: estimates of clear factorial effects&quot;</span>, <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>))</span></code></pre></div>
+<table>
+<caption><span id="tab:block-4-fact-effects">Table 5.12: </span>Reactor experiment: estimates of clear factorial effects</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">FR</td>
+<td align="right">-1.375</td>
+</tr>
+<tr class="even">
+<td align="left">Cat</td>
+<td align="right">19.500</td>
+</tr>
+<tr class="odd">
+<td align="left">AR</td>
+<td align="right">-0.625</td>
+</tr>
+<tr class="even">
+<td align="left">Temp</td>
+<td align="right">10.750</td>
+</tr>
+<tr class="odd">
+<td align="left">Conc</td>
+<td align="right">-6.250</td>
+</tr>
+<tr class="even">
+<td align="left">FR:Cat</td>
+<td align="right">1.375</td>
+</tr>
+<tr class="odd">
+<td align="left">FR:AR</td>
+<td align="right">0.750</td>
+</tr>
+<tr class="even">
+<td align="left">FR:Temp</td>
+<td align="right">-0.875</td>
+</tr>
+<tr class="odd">
+<td align="left">FR:Conc</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Cat:AR</td>
+<td align="right">0.875</td>
+</tr>
+<tr class="odd">
+<td align="left">Cat:Temp</td>
+<td align="right">13.250</td>
+</tr>
+<tr class="even">
+<td align="left">Cat:Conc</td>
+<td align="right">2.000</td>
+</tr>
+<tr class="odd">
+<td align="left">AR:Temp</td>
+<td align="right">2.125</td>
+</tr>
+<tr class="even">
+<td align="left">AR:Conc</td>
+<td align="right">0.875</td>
+</tr>
+<tr class="odd">
+<td align="left">Temp:Conc</td>
+<td align="right">-11.000</td>
+</tr>
+<tr class="even">
+<td align="left">FR:Cat:Temp</td>
+<td align="right">1.375</td>
+</tr>
+<tr class="odd">
+<td align="left">FR:Cat:Conc</td>
+<td align="right">-1.875</td>
+</tr>
+<tr class="even">
+<td align="left">FR:AR:Temp</td>
+<td align="right">-0.750</td>
+</tr>
+<tr class="odd">
+<td align="left">FR:AR:Conc</td>
+<td align="right">-2.500</td>
+</tr>
+<tr class="even">
+<td align="left">Cat:AR:Temp</td>
+<td align="right">1.125</td>
+</tr>
+<tr class="odd">
+<td align="left">Cat:AR:Conc</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">Cat:Temp:Conc</td>
+<td align="right">-0.250</td>
+</tr>
+<tr class="odd">
+<td align="left">AR:Temp:Conc</td>
+<td align="right">0.125</td>
+</tr>
+<tr class="even">
+<td align="left">FR:Cat:AR:Temp</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">FR:Cat:AR:Conc</td>
+<td align="right">1.500</td>
+</tr>
+<tr class="even">
+<td align="left">FR:Cat:Temp:Conc</td>
+<td align="right">0.625</td>
+</tr>
+<tr class="odd">
+<td align="left">FR:AR:Temp:Conc</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="even">
+<td align="left">FR:Cat:AR:Temp:Conc</td>
+<td align="right">-0.500</td>
+</tr>
+</tbody>
+</table>
+<p>Using Lenth’s method produces very similar results to before, albeit using three fewer factorial effects (those confounded with blocks), as the pseudo-standard error hasn’t changed<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a></p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="block-factorial.html#cb192-1"></a>unrepx<span class="op">::</span><span class="kw">hnplot</span>(fac.effs<span class="op">$</span>fac.effs, <span class="dt">horiz =</span> F, <span class="dt">method =</span> <span class="st">&quot;Lenth&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<p><img src="bookdown_math3014-6027_files/figure-html/block-4-lenth-1.png" width="672" /></p>
+</details>
 
 </div>
 </div>
@@ -1342,6 +2491,7 @@ with estimators of the factorial effects having the form <span class="math inlin
 <li id="fn33"><p>The additional <code>R</code> code is to tidy up the output.<a href="block-factorial.html#fnref33" class="footnote-back">↩︎</a></p></li>
 <li id="fn34"><p>By default, <code>FrF2</code> only returns information about confounding involving two-factor interactions. Unfortunately, it is not possible to get <code>FrF2</code> to return information about confounding involving four-factor or higher interactions.<a href="block-factorial.html#fnref34" class="footnote-back">↩︎</a></p></li>
 <li id="fn35"><p>We previously have not explicitly loaded packages before. However, <code>design.info</code> is actually extracting <em>attributes</em> of the <code>FrF2</code> object, and I couldn’t find a way to make this work without loading the package!<a href="block-factorial.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>As the median of the estimated factorial effects is still 0.375.<a href="block-factorial.html#fnref36" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
