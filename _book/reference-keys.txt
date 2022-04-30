@@ -90,6 +90,9 @@ tab:frf2-block-2
 eq:fact-blocks-normal-1
 eq:fact-blocks-normal-2
 eq:fact-blocks-normal-3
+tab:reactor-data-2
+tab:block-assign
+tab:block-4-fact-effects
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -139,6 +142,7 @@ block-factorial
 two-examples
 general-method-of-constructing-a-confounded-block-design
 analysis-of-a-confounded-factorial-design
+exercises-4
 fractional-factorial
 response-surface-methodology
 optimal-design-of-experiments

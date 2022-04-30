@@ -310,3 +310,161 @@ anova(ex2.lm2)
 coef(ex2.lm2)
 ```
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
+
+## Exercises
+
+1. Suppose that a single replicate $2^5$ factorial experiment is to be arranged in $b=4$ blocks, each containing $k=8$ treatments.
+
+    How many interactions need to be confounded with blocks in this experiment? Can these be chosen independently? Select suitable interactions which could be confounded with blocks and write down the treatments in one block corresponding to your choice.
+
+<details>
+<summary><b>Solution</b></summary>
+
+To run a $2^5$ experiment in $b=4$ blocks requires $b-1=3$ interactions to be confounded and these cannot be chosen independently; the choice of two determines the third.
+Confounding the interactions $ABCD$, $CDE$ and their product $ABE$ may be a sensible choice, as no main effects or two-factor interactions are then confounded with blocks. (Other choices are acceptable).
+
+To find a block for this choice, we can solve the equations
+
+$ABCD$ = 1, $CDE$ = -1 
+
+which gives the treatments
+
+| A  | B  | C  | D  | E  |
+| -: | -: | -: | -: | -: |
+| -1 | -1 | -1 | -1 | -1 |
+|  1 |  1 | -1 | -1 | -1 | 
+| -1 | -1 |  1 |  1 | -1 | 
+|  1 |  1 |  1 |  1 | -1 |
+|  1 | -1 |  1 | -1 |  1 | 
+| -1 |  1 |  1 | -1 |  1 | 
+|  1 | -1 | -1 |  1 |  1 |
+| -1 |  1 | -1 |  1 |  1 |
+
+This same block can be found using `FrF2`.
+
+```{r block-ex1}
+block.2.5 <- FrF2::FrF2(nruns = 2^5, nfactors = 5, blocks = c("ABCD", "CDE"))
+subset(block.2.5, Blocks == 3)
+```
+
+</details>
+
+2. Suppose a $2^7$ design is arranged in $b=8$ blocks with the defining blocks $\mathrm{Block}_1 = ABC$, $\mathrm{Block}_2 = DEF$ and $\mathrm{Block}_3 = AFG$.
+
+    a. Find all the interactions that are confounded with blocks.
+
+    b. An alternative blocking scheme has $\mathrm{Block}_1 = ABCD$, $\mathrm{Block}_2 = ABEF$ and $\mathrm{Block}_3 = ACEG$. Find all the confounded interactions in this design, and compare with the original blocking scheme.
+
+<details>
+<summary><b>Solution</b></summary>
+  a. $\mathrm{Block}_1 = ABC$, $\mathrm{Block}_2 = DEF$, $\mathrm{Block}_1\mathrm{Block}_2 = ABCDEF$, $\mathrm{Block}_3 = AFG$, $\mathrm{Block}_1\mathrm{Block}_3 = BCFG$, $\mathrm{Block}_2\mathrm{Block}_3 = ADEG$, $\mathrm{Block}_1\mathrm{Block}_2\mathrm{Block}_3 = BCDEG$.
+(b) For the alternative blocking scheme, $\mathrm{Block}_1 = ABCD$, $\mathrm{Block}_2 = ABEF$, $\mathrm{Block}_1\mathrm{Block}_2 = CDEF$, $\mathrm{Block}_3 = ACEG$, $\mathrm{Block}_1\mathrm{Block}_3 = BDEG$, $\mathrm{Block}_2\mathrm{Block}_3 = BCFG$, $\mathrm{Block}_1\mathrm{Block}_2\mathrm{Block}_3 = ADFG$.
+
+The second scheme does not confound any three-factor interactions with blocks, unlike the original scheme.
+</details>
+    
+3. Suppose that the $2^3$ design
+
+    | Run | A  | B  | C  | AB | AC | BC | ABC |
+    | --: | -: | -: | -: | -: | -: | -: | --: | 
+    | 1   | -1 | -1 | -1 | +1 | +1 | +1 | -1  |
+    | 2   | -1 | -1 | +1 | +1 | -1 | -1 | +1  |
+    | 3   | -1 | +1 | -1 | -1 | +1 | -1 | +1  |
+    | 4   | -1 | +1 | +1 | -1 | -1 | +1 | -1  |
+    | 5   | +1 | -1 | -1 | -1 | -1 | +1 | +1  |
+    | 6   | +1 | -1 | +1 | -1 | +1 | -1 | -1  |
+    | 7   | +1 | +1 | -1 | +1 | -1 | -1 | -1  |
+    | 8   | +1 | +1 | +1 | +1 | +1 | +1 | +1  |
+
+    is arranged in two blocks with runs 1, 2, 5 and 7 in block 1 and runs 3, 4, 6 and 8 in block 2.
+
+    a. Show that a contrast vector defining the difference between the two blocks is not identical to any of the seven contrast vectors in the table and, therefore, it is not confounded with any of the factorial effects.
+    
+    b. Show that the block effect is not orthogonal to some of the factorial effects. Identify these effects. Discuss why it is undesirable to use this blocking scheme.
+    
+<details><summary><b>Solution</b></summary>
+a. A unscaled contrast vector (with coefficients -1/+1) has been added to the table below. It is clearly not identical to any of the other columns, and hence no factorial effects have been completely confounded with blocks.
+
+| Run | A  | B  | C  | AB | AC | BC | ABC | Block |
+| --: | -: | -: | -: | -: | -: | -: | --: | ----: |
+| 1   | -1 | -1 | -1 | +1 | +1 | +1 | -1  | -1    |
+| 2   | -1 | -1 | +1 | +1 | -1 | -1 | +1  | -1    |
+| 3   | -1 | +1 | -1 | -1 | +1 | -1 | +1  | +1    |
+| 4   | -1 | +1 | +1 | -1 | -1 | +1 | -1  | +1    |
+| 5   | +1 | -1 | -1 | -1 | -1 | +1 | +1  | -1    |
+| 6   | +1 | -1 | +1 | -1 | +1 | -1 | -1  | +1    |
+| 7   | +1 | +1 | -1 | +1 | -1 | -1 | -1  | -1    |
+| 8   | +1 | +1 | +1 | +1 | +1 | +1 | +1  | +1    |
+
+b. The inner products of each effect column with the blocking column are given by
+
+| A  | B  | C  | AB | AC | BC | ABC |
+| -: | -: | -: | -: | -: | -: | --: |
+| 0  | +4 | +4 | -4 | +4 | 0  | 0   |
+
+The blocking effect is not orthogonal to the main effects of $B$ or $C$ or the interactions $AB$ and $AC$. Two of the main effects are *partially* confounded with the blocking effect, and the variances of the estimators of these effects will inflated. Therefore, this scheme is not desirable. In general, we may prefer to completely confound a smaller number of higher-order factorial effects with blocks, in order to have greater clarity in our design and to not lose information about main effects.
+
+</details>
+
+4. In the Chapter \@ref(factorial) exercises we studied the reactor experiment, a $2^5$ full factorial experiment with the following data:
+
+    ```{r reactor-data-2, message = F}
+    reactor.frf2 <- FrF2::FrF2(nruns = 32, nfactors = 5, randomize = F,
+                               factor.names = c("FR", "Cat", "AR", "Temp", "Conc"))
+    y <- c(61, 53, 63, 61, 53, 56, 54, 61, 69, 61, 94, 93, 66, 60, 95, 98, 56, 63,
+           70, 65, 59, 55, 67, 65, 44, 45, 78, 77, 49, 42, 81, 82)
+    reactor <- data.frame(reactor.frf2, pre.react = y)
+    knitr::kable(reactor, caption = "Reactor experiment.")
+    ```
+
+    Assume now that this experiment was performed in $b=4$ blocks, confounding the interactions between `FR`, `Cat` and `AR` and between `FR`, `Temp` and `Conc`. Obtain the anova table for this new experiment, and estimate the interactions that are not confounded with blocks. Use Lenth's method to decide which effects are important.
+    
+<details><summary><b>Solution</b></summary>
+For ease of notation, we will label the factors
+
+| Factor | Label |
+| -----: | ----: |
+| `FR`   | A     |
+| `Cat`  | B     |
+| `AR`   | C     |
+| `Temp` | D     |
+| `Conc` | E     |
+
+The design has defining blocks $\mathrm{Block}_1 = ABC$ and $\mathrm{Block}_2 = ADE$, and hence also confounds $\mathrm{Block}_1\mathrm{Block}_2 = BCDE$. We can assign treatments to blocks according to the four combinations of any pair of these interactions. In the code chunk below, we use the pipe operator (`|>`) to combine our data processing steps.
+
+```{r block-assign}
+fac_to_numeric <- function(x) as.numeric(as.character(x))
+reactor <- reactor |> dplyr::mutate(block1 = fac_to_numeric(FR) * fac_to_numeric(Cat) *
+                           fac_to_numeric(AR), 
+                         block2 = fac_to_numeric(FR) * fac_to_numeric(Temp) * 
+                           fac_to_numeric(Conc)) |> 
+  dplyr::arrange(block1, block2) |>
+  dplyr::mutate(block = factor(rep(1:4, rep(8, 4)))) |>
+  dplyr::relocate(block) |> 
+  dplyr::select(!c(block1, block2))
+knitr::kable(reactor, caption = "Reactor experiment in blocks.")
+```
+
+We can produce an ANOVA table with the following code; `lm` and `anova` should automatically get the degrees of freedom correct (as it will recognise that three interactions are confounded with blocks and not estimable). The three confounded interactions do not appear in the `anova` output.
+
+```{r block-4-anova, warning = F}
+reactor.lm <- lm(pre.react ~ block + (FR + Cat + AR + Temp + Conc) ^ 5, data = reactor)
+anova(reactor.lm)
+```
+
+Estimates of the clear factorial effects can be obtained as twice the corresponding regression coefficients. They are unchanged from the analysis of the unblocked design, as they are estimated independently of the blocks.
+
+```{r block-4-fact-effects, warning = F}
+fac.effs <- data.frame(fac.effs = 2 * coef(reactor.lm)[-(1:4)])
+fac.effs <- tidyr::drop_na(fac.effs)
+rownames(fac.effs) <- rownames(anova(reactor.lm))[-c(1, 30)]
+knitr::kable(fac.effs, caption = "Reactor experiment: estimates of clear factorial effects", col.names = c("Estimate"))
+```
+
+Using Lenth's method produces very similar results to before, albeit using three fewer factorial effects (those confounded with blocks), as the pseudo-standard error hasn't changed^[As the median of the estimated factorial effects is still `r median(fac.effs$fac.effs)`.]
+
+```{r block-4-lenth}
+unrepx::hnplot(fac.effs$fac.effs, horiz = F, method = "Lenth", alpha = 0.05)
+```
+
+</details>
