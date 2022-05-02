@@ -216,7 +216,7 @@ div.csl-indent {
 <li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
 <li class="chapter" data-level="4.1.2" data-path="factorial.html"><a href="factorial.html#interactions"><i class="fa fa-check"></i><b>4.1.2</b> Interactions</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#three-principles-for-factorial-effects"><i class="fa fa-check"></i><b>4.2</b> Three principles for factorial effects</a></li>
+<li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#fact-principles"><i class="fa fa-check"></i><b>4.2</b> Three principles for factorial effects</a></li>
 <li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="factorial.html"><a href="factorial.html#lenths-method-for-approximate-hypothesis-testing"><i class="fa fa-check"></i><b>4.3.1</b> Lenth’s method for approximate hypothesis testing</a></li>
@@ -1321,10 +1321,10 @@ with estimators of the factorial effects having the form <span class="math inlin
 <span id="cb172-5"><a href="block-factorial.html#cb172-5" aria-hidden="true" tabindex="-1"></a>betahat <span class="ot">&lt;-</span> <span class="fu">t</span>(X[, <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">11</span>)]) <span class="sc">%*%</span> y <span class="sc">/</span> <span class="fu">nrow</span>(X)</span>
 <span id="cb172-6"><a href="block-factorial.html#cb172-6" aria-hidden="true" tabindex="-1"></a>betahat <span class="co"># coef estimates, obtained directly</span></span></code></pre></div>
 <pre><code>##          [,1]
-## A     3.91041
-## B     0.12204
-## C     2.86022
-## A:B:C 0.04534</code></pre>
+## A      4.4479
+## B     -0.0438
+## C      3.2728
+## A:B:C -0.0645</code></pre>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="block-factorial.html#cb174-1" aria-hidden="true" tabindex="-1"></a>ex2.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ex2.df, <span class="at">y =</span> y)</span>
 <span id="cb174-2"><a href="block-factorial.html#cb174-2" aria-hidden="true" tabindex="-1"></a>ex2.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span>  Block <span class="sc">+</span> A <span class="sc">+</span> B <span class="sc">+</span> C <span class="sc">+</span> A<span class="sc">:</span>B<span class="sc">:</span>C, <span class="at">data =</span> ex2.df)</span>
 <span id="cb174-3"><a href="block-factorial.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ex2.lm)</span></code></pre></div>
@@ -1332,18 +1332,18 @@ with estimators of the factorial effects having the form <span class="math inlin
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## Block      3  301.6   100.5     NaN    NaN
-## A          1  122.3   122.3     NaN    NaN
-## B          1    0.1     0.1     NaN    NaN
-## C          1   65.4    65.4     NaN    NaN
+## Block      3  272.6    90.9     NaN    NaN
+## A          1  158.3   158.3     NaN    NaN
+## B          1    0.0     0.0     NaN    NaN
+## C          1   85.7    85.7     NaN    NaN
 ## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN</code></pre>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="block-factorial.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ex2.lm)[<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>] <span class="co"># coef estimates</span></span></code></pre></div>
 <pre><code>##       A       B       C   A:B:C 
-## 3.91041 0.12204 2.86022 0.04534</code></pre>
+##  4.4479 -0.0438  3.2728 -0.0645</code></pre>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="block-factorial.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">coef</span>(ex2.lm)[<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>] <span class="co"># factorial effects</span></span></code></pre></div>
 <pre><code>##       A       B       C   A:B:C 
-## 7.82083 0.24409 5.72044 0.09067</code></pre>
+##  8.8957 -0.0876  6.5455 -0.1290</code></pre>
 <p>As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="block-factorial.html#cb180-1" aria-hidden="true" tabindex="-1"></a>ex2.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span>  (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">3</span>, <span class="at">data =</span> ex2.df)</span>
 <span id="cb180-2"><a href="block-factorial.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ex2.lm2)</span></code></pre></div>
@@ -1351,19 +1351,19 @@ with estimators of the factorial effects having the form <span class="math inlin
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## A          1  122.3   122.3     NaN    NaN
-## B          1    0.1     0.1     NaN    NaN
-## C          1   65.4    65.4     NaN    NaN
-## A:B        1    7.4     7.4     NaN    NaN
-## A:C        1  182.7   182.7     NaN    NaN
-## B:C        1  111.5   111.5     NaN    NaN
+## A          1  158.3   158.3     NaN    NaN
+## B          1    0.0     0.0     NaN    NaN
+## C          1   85.7    85.7     NaN    NaN
+## A:B        1   28.7    28.7     NaN    NaN
+## A:C        1  129.3   129.3     NaN    NaN
+## B:C        1  114.7   114.7     NaN    NaN
 ## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="block-factorial.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ex2.lm2)</span></code></pre></div>
 <pre><code>## (Intercept)           A           B           C         A:B         A:C 
-##     5.24262     3.91041     0.12204     2.86022     0.96500     4.77916 
+##      4.4708      4.4479     -0.0438      3.2728      1.8929      4.0200 
 ##         B:C       A:B:C 
-##     3.73280     0.04534</code></pre>
+##      3.7862     -0.0645</code></pre>
 <p>But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.</p>
 </div>
 <div id="exercises-4" class="section level2" number="5.4">
@@ -1454,14 +1454,14 @@ Confounding the interactions <span class="math inline">\(ABCD\)</span>, <span cl
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="block-factorial.html#cb184-1" aria-hidden="true" tabindex="-1"></a>block.<span class="fl">2.5</span> <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">5</span>, <span class="at">nfactors =</span> <span class="dv">5</span>, <span class="at">blocks =</span> <span class="fu">c</span>(<span class="st">&quot;ABCD&quot;</span>, <span class="st">&quot;CDE&quot;</span>))</span>
 <span id="cb184-2"><a href="block-factorial.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(block.<span class="fl">2.5</span>, Blocks <span class="sc">==</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##    Blocks  A  B  C  D  E
-## 17      3  1 -1  1 -1  1
-## 18      3 -1 -1  1  1 -1
-## 19      3  1 -1 -1  1  1
-## 20      3  1  1 -1 -1 -1
+## 17      3  1  1 -1 -1 -1
+## 18      3  1 -1 -1  1  1
+## 19      3  1 -1  1 -1  1
+## 20      3 -1  1  1 -1  1
 ## 21      3 -1 -1 -1 -1 -1
 ## 22      3  1  1  1  1 -1
-## 23      3 -1  1  1 -1  1
-## 24      3 -1  1 -1  1  1</code></pre>
+## 23      3 -1  1 -1  1  1
+## 24      3 -1 -1  1  1 -1</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Suppose a <span class="math inline">\(2^7\)</span> design is arranged in <span class="math inline">\(b=8\)</span> blocks with the defining blocks <span class="math inline">\(\mathrm{Block}_1 = ABC\)</span>, <span class="math inline">\(\mathrm{Block}_2 = DEF\)</span> and <span class="math inline">\(\mathrm{Block}_3 = AFG\)</span>.</p>

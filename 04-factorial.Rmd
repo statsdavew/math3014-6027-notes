@@ -289,7 +289,7 @@ desilylation.effs <- emmeans::contrast(desilylation.emm, 'factorial_contrasts')
 desilylation.effs
 ```
 
-## Three principles for factorial effects
+## Three principles for factorial effects {#fact-principles}
 
 Empirical study of many experiments [@BoxMeyer1986; @Li2006] have demonstrated that the following three principles **often** hold when analysing factorial experiments.
 

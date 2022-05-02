@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.9)  30 APR 2022 16:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.9)  30 APR 2022 22:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -784,9 +784,9 @@ l.822 \end{align}
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [17] [18] [19]
-Overfull \hbox (47.49896pt too wide) in paragraph at lines 912--912
- []\T1/lmtt/m/n/10 ## [1] "Tea first"  "Milk first" "Milk first" "Tea first"  "
-Tea first"[] 
+Overfull \hbox (52.74895pt too wide) in paragraph at lines 912--912
+ []\T1/lmtt/m/n/10 ## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "
+Milk first"[] 
  []
 
 [20]
@@ -1074,50 +1074,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [1,]    1    1    0    1    1    0    1    0    1     0   
-  0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [1,]    1    1    1    0    1    0    0    0    0     0   
+  1     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    1    0    1     1   
+[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    0    1    1     1   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    1    1    0    0    1    0     0   
-  1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [3,]    1    1    0    0    1    0    1    0    1     1   
+  0     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [4,]    1    1    0    0    0    1    0    1    0     1   
+[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    0    0    1    1    1    0     0   
   0     0     1     1[] 
  []
 
 [69]
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    0    0    1    0    0    1     0   
+[]\T1/lmtt/m/n/10 ## [5,]    1    0    0    1    0    1    1    0    0     1   
   1     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    0    1    0    1    1    0     1   
+[]\T1/lmtt/m/n/10 ## [6,]    0    0    1    1    1    0    1    1    1     0   
   1     0     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [7,]    0    0    1    1    0    1    1    1    0     0   
-  0     1     0     1[] 
+[]\T1/lmtt/m/n/10 ## [7,]    0    1    0    1    1    1    0    1    0     1   
+  0     0     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [8,]    0    0    1    1    1    1    0    0    1     1   
-  0     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    0    1    1    1    0    1    0    0    1     0   
+  0     1     1     0[] 
  []
 
 [70] [71] [72]
@@ -1434,8 +1434,8 @@ B         A:C[]
 
 
 Overfull \hbox (43.49887pt too wide) in paragraph at lines 6326--6326
-[]\T1/lmtt/m/n/10 ##      5.3479      4.0865      0.2556      3.4170      1.138
-4      4.0609[] 
+[]\T1/lmtt/m/n/10 ##     5.44474     4.36073    -0.03061     3.52329     0.7597
+9     4.02022[] 
  []
 
 [133]
@@ -1462,34 +1462,37 @@ h-1.pdf  used on input line 6836.
 
 ]
 Chapter 6.
-[143] [144
+[143] [144] [145]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[146] [147] [148
 
 ]
 Chapter 7.
-[145] [146
+[149] [150
 
 ]
 Chapter 8.
-(./bookdown_math3014-6027.bbl [147] [148
+(./bookdown_math3014-6027.bbl [151] [152
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 6849.
-[149]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 6849.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 7084.
+[153]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 7084.
 (./bookdown_math3014-6027.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 6849.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 6849.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 7084.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 7084.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 6849.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 7084.
  ) 
 Here is how much of TeX's memory you used:
- 15110 strings out of 492649
- 222286 string characters out of 6129623
- 343250 words of memory out of 5000000
- 17846 multiletter control sequences out of 15000+600000
- 126209 words of font info for 216 fonts, out of 8000000 for 9000
+ 15147 strings out of 492649
+ 222728 string characters out of 6129623
+ 343517 words of memory out of 5000000
+ 17850 multiletter control sequences out of 15000+600000
+ 126374 words of font info for 218 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,20n,38p,931b,549s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{nap-black-ex} has been referenced but does not ex
@@ -1534,10 +1537,10 @@ ype1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/publi
 c/lm/lmtt8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtti1
 0.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (149 pages, 3785798 bytes).
+Output written on bookdown_math3014-6027.pdf (153 pages, 3796759 bytes).
 PDF statistics:
- 2023 PDF objects out of 2073 (max. 8388607)
- 1749 compressed objects within 18 object streams
- 620 named destinations out of 1000 (max. 500000)
+ 2082 PDF objects out of 2487 (max. 8388607)
+ 1803 compressed objects within 19 object streams
+ 649 named destinations out of 1000 (max. 500000)
  18878 words of extra memory for PDF output out of 20736 (max. 10000000)
 

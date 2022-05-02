@@ -907,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"  "Tea first" 
-## [6] "Milk first" "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "Milk first"
+## [6] "Tea first"  "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -932,7 +932,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \end{enumerate}
 
@@ -3180,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    0    1    1    0    1    0    1     0     0     0     0     1
-## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    1    0    0    1    1    0    0    1    0     0     1     1     1     0
-## [4,]    1    1    0    0    0    1    0    1    0     1     0     0     1     1
-## [5,]    1    1    1    0    0    1    0    0    1     0     1     1     0     0
-## [6,]    0    1    1    0    1    0    1    1    0     1     1     0     0     0
-## [7,]    0    0    1    1    0    1    1    1    0     0     0     1     0     1
-## [8,]    0    0    1    1    1    1    0    0    1     1     0     0     1     0
+## [1,]    1    1    1    0    1    0    0    0    0     0     1     1     0     1
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    1    1    0    0    1    0    1    0    1     1     0     0     1     0
+## [4,]    1    0    1    0    0    1    1    1    0     0     0     0     1     1
+## [5,]    1    0    0    1    0    1    1    0    0     1     1     1     0     0
+## [6,]    0    0    1    1    1    0    1    1    1     0     1     0     0     0
+## [7,]    0    1    0    1    1    1    0    1    0     1     0     0     0     1
+## [8,]    0    1    1    1    0    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4524,8 +4524,8 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 ##  temp.time.solvent.reagent    0.193 NaN  0     NaN     NaN
 \end{verbatim}
 
-\hypertarget{three-principles-for-factorial-effects}{%
-\section{Three principles for factorial effects}\label{three-principles-for-factorial-effects}}
+\hypertarget{fact-principles}{%
+\section{Three principles for factorial effects}\label{fact-principles}}
 
 Empirical study of many experiments \citep{BoxMeyer1986, Li2006} have demonstrated that the following three principles \textbf{often} hold when analysing factorial experiments.
 
@@ -4724,33 +4724,33 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
 temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0035 & 0.0330\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0031 & 0.0274\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0055 & 0.0536\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0048 & 0.0431\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0072 & 0.0671\\
+time & 2.5675 & 0.66 & 3.890 & 0.0066 & 0.0604\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0101 & 0.0937\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0094 & 0.0881\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0101 & 0.0937\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0094 & 0.0881\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0124 & 0.1140\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0115 & 0.1076\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3064 & 0.9970\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3035 & 0.9940\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4299 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4312 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5391 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7303 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7325 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7389 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7410 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7835 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7864 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7864 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7895 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9666 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9651 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5316,7 +5316,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7174 and 5.1213, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6898 and 5.1442, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6238,11 +6238,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]
-## A      4.0865
-## B      0.2556
-## C      3.4170
-## A:B:C -0.4866
+##           [,1]
+## A      4.36073
+## B     -0.03061
+## C      3.52329
+## A:B:C  0.55520
 \end{verbatim}
 
 \begin{Shaded}
@@ -6258,11 +6258,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  279.4    93.1     NaN    NaN
-## A          1  133.6   133.6     NaN    NaN
-## B          1    0.5     0.5     NaN    NaN
-## C          1   93.4    93.4     NaN    NaN
-## A:B:C      1    1.9     1.9     NaN    NaN
+## Block      3  276.8    92.3     NaN    NaN
+## A          1  152.1   152.1     NaN    NaN
+## B          1    0.0     0.0     NaN    NaN
+## C          1   99.3    99.3     NaN    NaN
+## A:B:C      1    2.5     2.5     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6273,8 +6273,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-##  4.0865  0.2556  3.4170 -0.4866
+##        A        B        C    A:B:C 
+##  4.36073 -0.03061  3.52329  0.55520
 \end{verbatim}
 
 \begin{Shaded}
@@ -6284,8 +6284,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-##  8.1730  0.5112  6.8341 -0.9731
+##        A        B        C    A:B:C 
+##  8.72146 -0.06121  7.04658  1.11041
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6302,13 +6302,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  133.6   133.6     NaN    NaN
-## B          1    0.5     0.5     NaN    NaN
-## C          1   93.4    93.4     NaN    NaN
-## A:B        1   10.4    10.4     NaN    NaN
-## A:C        1  131.9   131.9     NaN    NaN
-## B:C        1  137.1   137.1     NaN    NaN
-## A:B:C      1    1.9     1.9     NaN    NaN
+## A          1  152.1   152.1     NaN    NaN
+## B          1    0.0     0.0     NaN    NaN
+## C          1   99.3    99.3     NaN    NaN
+## A:B        1    4.6     4.6     NaN    NaN
+## A:C        1  129.3   129.3     NaN    NaN
+## B:C        1  142.9   142.9     NaN    NaN
+## A:B:C      1    2.5     2.5     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6320,9 +6320,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      5.3479      4.0865      0.2556      3.4170      1.1384      4.0609 
+##     5.44474     4.36073    -0.03061     3.52329     0.75979     4.02022 
 ##         B:C       A:B:C 
-##      4.1400     -0.4866
+##     4.22621     0.55520
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6376,12 +6376,12 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1 -1 -1  1  1
-## 18      3 -1  1  1 -1  1
-## 19      3  1  1 -1 -1 -1
-## 20      3 -1 -1 -1 -1 -1
-## 21      3 -1  1 -1  1  1
-## 22      3  1 -1  1 -1  1
+## 17      3  1 -1  1 -1  1
+## 18      3  1  1 -1 -1 -1
+## 19      3 -1 -1 -1 -1 -1
+## 20      3  1 -1 -1  1  1
+## 21      3 -1  1  1 -1  1
+## 22      3 -1  1 -1  1  1
 ## 23      3 -1 -1  1  1 -1
 ## 24      3  1  1  1  1 -1
 \end{verbatim}
@@ -6837,6 +6837,241 @@ Using Lenth's method produces very similar results to before, albeit using three
 
 \hypertarget{fractional-factorial}{%
 \chapter{Fractional factorial designs}\label{fractional-factorial}}
+
+The factorial designs we studied in Chapters \ref{factorial} and \ref{factorial} can involve a large number of treatments, for even a moderate number of factors (Table \ref{tab:size-of-factorial}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{, }\DecValTok{2}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{))}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(size, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"No. factors"}\NormalTok{, }\StringTok{"No. of trts"}\NormalTok{), }\AttributeTok{caption =} \StringTok{"Number of treatments in a $2\^{}f$ factorial designs for different numbers, $f$, of factors."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:size-of-factorial}Number of treatments in a $2^f$ factorial designs for different numbers, $f$, of factors.}
+\centering
+\begin{tabular}[t]{r|r}
+\hline
+No. factors & No. of trts\\
+\hline
+1 & 2\\
+\hline
+2 & 4\\
+\hline
+3 & 8\\
+\hline
+4 & 16\\
+\hline
+5 & 32\\
+\hline
+6 & 64\\
+\hline
+7 & 128\\
+\hline
+8 & 256\\
+\hline
+9 & 512\\
+\hline
+10 & 1024\\
+\hline
+11 & 2048\\
+\hline
+12 & 4096\\
+\hline
+13 & 8192\\
+\hline
+14 & 16384\\
+\hline
+15 & 32768\\
+\hline
+\end{tabular}
+\end{table}
+
+For larger numbers of factors, resource constraints may mean it is not possible to run an experiment using all \(2^f\) treatments. Also, many degrees of freedom in these experiments are used to estimate high-order interactions. For example, in a \(2^5\) experiment, 16 degrees of freedom are used to estimate three-factor and higher interactions, half the size of the experiment. The principles of effect hierarchy and sparsity (Section \ref{fact-principles}) suggest this is probably wasteful.
+
+We can select smaller experiments by using a subset, or \textbf{fraction} of the treatments of size \(2^{f-q}\):
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  divide the treatments in subsets by confounding \(q\) factorial effects (and their products), as in blocking;
+\item
+  only use \textbf{one} of the subsets in the experiment.
+\end{enumerate}
+
+\begin{example}
+\protect\hypertarget{exm:spring-experiment}{}\label{exm:spring-experiment}
+
+Spring experiment \citep[ch.~5]{WH2009}
+
+Consider an industrial experiment to investigate the effect of \(f=5\) factors on the unloaded height of a spring produced using a heat treatment. The five factors are described in Table \ref{tab:spring-factors}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{factor.name }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Quench temperature (F)"}\NormalTok{, }\StringTok{"Heat temperature (F)"}\NormalTok{, }\StringTok{"Heating time (s)"}\NormalTok{, }
+                 \StringTok{"Transfer time (s)"}\NormalTok{, }\StringTok{"Hold{-}down time (s)"}\NormalTok{)}
+\NormalTok{low.level }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"130{-}150"}\NormalTok{, }\DecValTok{1840}\NormalTok{, }\DecValTok{23}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{high.level }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"150{-}170"}\NormalTok{, }\DecValTok{1880}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{spring.factors }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{factor =}\NormalTok{ factor.name, }\AttributeTok{low =}\NormalTok{ low.level, }\AttributeTok{high =}\NormalTok{ high.level)}
+\FunctionTok{row.names}\NormalTok{(spring.factors) }\OtherTok{\textless{}{-}}\NormalTok{ LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(spring.factors, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Factor"}\NormalTok{, }\StringTok{"Low level"}\NormalTok{, }\StringTok{"High level"}\NormalTok{), }
+             \AttributeTok{align =} \FunctionTok{c}\NormalTok{(}\StringTok{"l"}\NormalTok{, }\StringTok{"r"}\NormalTok{, }\StringTok{"r"}\NormalTok{), }\AttributeTok{caption =} \StringTok{"Spring experiment: factors and levels"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:spring-factors}Spring experiment: factors and levels}
+\centering
+\begin{tabular}[t]{l|l|r|r}
+\hline
+  & Factor & Low level & High level\\
+\hline
+A & Quench temperature (F) & 130-150 & 150-170\\
+\hline
+B & Heat temperature (F) & 1840 & 1880\\
+\hline
+C & Heating time (s) & 23 & 25\\
+\hline
+D & Transfer time (s) & 10 & 12\\
+\hline
+E & Hold-down time (s) & 2 & 3\\
+\hline
+\end{tabular}
+\end{table}
+
+Enough experimental units were available to perform \(n=16\) runs, which is one-half of the total number of treatments. We refer to this type of design as a \textbf{one-half fractional replicate} of the full factorial design, or a \textbf{\(2^{5-1}\) fractional factorial design}\footnote{If we only run one-half of the treatments from a \(2^5\) design, the design contains \(\frac{2^5}{2} = 2^{5-1}\) treatments}.
+
+The design was constructed by confounding \(q=1\) factorial effects with blocks, the interaction \(BCDE\) was chosen, and running just one of the two resulting subsets, see Table \ref{tab:spring-data} where \texttt{FrF2} is used to generate the design.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spring }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{5}\NormalTok{, }\AttributeTok{generators =} \StringTok{"BCD"}\NormalTok{, }\AttributeTok{randomize =}\NormalTok{ F)}
+\NormalTok{spring}\SpecialCharTok{$}\NormalTok{height }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{7.54}\NormalTok{, }\FloatTok{7.20}\NormalTok{, }\FloatTok{7.69}\NormalTok{, }\FloatTok{7.63}\NormalTok{, }\FloatTok{7.94}\NormalTok{, }\FloatTok{7.40}\NormalTok{, }\FloatTok{7.95}\NormalTok{, }\FloatTok{7.62}\NormalTok{, }\FloatTok{7.52}\NormalTok{, }\FloatTok{7.52}\NormalTok{, }
+                   \FloatTok{7.63}\NormalTok{, }\FloatTok{7.65}\NormalTok{, }\FloatTok{7.79}\NormalTok{, }\FloatTok{7.29}\NormalTok{, }\FloatTok{8.07}\NormalTok{, }\FloatTok{7.73}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(spring, }\AttributeTok{caption =} \StringTok{"Spring experiment: 16 run design."}\NormalTok{, }\AttributeTok{align =} \FunctionTok{rep}\NormalTok{(}\StringTok{"r"}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:spring-data}Spring experiment: 16 run design.}
+\centering
+\begin{tabular}[t]{r|r|r|r|r|r}
+\hline
+A & B & C & D & E & height\\
+\hline
+-1 & -1 & -1 & -1 & -1 & 7.54\\
+\hline
+1 & -1 & -1 & -1 & -1 & 7.20\\
+\hline
+-1 & 1 & -1 & -1 & 1 & 7.69\\
+\hline
+1 & 1 & -1 & -1 & 1 & 7.63\\
+\hline
+-1 & -1 & 1 & -1 & 1 & 7.94\\
+\hline
+1 & -1 & 1 & -1 & 1 & 7.40\\
+\hline
+-1 & 1 & 1 & -1 & -1 & 7.95\\
+\hline
+1 & 1 & 1 & -1 & -1 & 7.62\\
+\hline
+-1 & -1 & -1 & 1 & 1 & 7.52\\
+\hline
+1 & -1 & -1 & 1 & 1 & 7.52\\
+\hline
+-1 & 1 & -1 & 1 & -1 & 7.63\\
+\hline
+1 & 1 & -1 & 1 & -1 & 7.65\\
+\hline
+-1 & -1 & 1 & 1 & -1 & 7.79\\
+\hline
+1 & -1 & 1 & 1 & -1 & 7.29\\
+\hline
+-1 & 1 & 1 & 1 & 1 & 8.07\\
+\hline
+1 & 1 & 1 & 1 & 1 & 7.73\\
+\hline
+\end{tabular}
+\end{table}
+
+Clearly, using a subset of the treatments, we will no longer be able to estimate all the factorial effects (we have insufficient degrees of freedom). We have confounded the interaction \(BCDE\), and hence clearly the contrast coefficients for this effect will be constant in our design. We say the interaction \(BCDE\) is \textbf{aliased} with the mean, and we write this as \(I = BCDE\). This expression is called the \textbf{defining relation}, as knowledge of which factorial effects are aliased with the mean completely define the fractional factorial.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fac\_to\_numeric }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x))}
+\NormalTok{BCDE }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{B) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{C) }\SpecialCharTok{*} 
+  \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{D) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{E) }
+\NormalTok{BCDE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+\end{verbatim}
+
+This removes one factorial effect from consideration, but we are still short on degrees of freedom. What are the other consequences of using a fractional factorial design?
+
+As the contrast coefficients for the interaction \(BCDE\) are constant, the contrast coefficients for any pairs of factorial effects whose (hadamard) product form \(BCDE\) will be equal. For example, the contrast coefficient vectors for interactions \(BC\) and \(DE\) will be equal, as will the vectors for the main effect \(B\) and the interaction \(CDE\), and so on.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{BC }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{B) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{C)}
+\NormalTok{DE }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{D) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{E)}
+\NormalTok{BC}
+\NormalTok{DE}
+\FunctionTok{all.equal}\NormalTok{(BC, DE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  1 -1 -1 -1 -1  1  1  1  1 -1 -1 -1 -1  1  1
+##  [1]  1  1 -1 -1 -1 -1  1  1  1  1 -1 -1 -1 -1  1  1
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{B)}
+\NormalTok{CDE }\OtherTok{\textless{}{-}} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{C) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{D) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(spring}\SpecialCharTok{$}\NormalTok{E)}
+\NormalTok{B}
+\NormalTok{CDE}
+\FunctionTok{all.equal}\NormalTok{(B, CDE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] -1 -1  1  1 -1 -1  1  1 -1 -1  1  1 -1 -1  1  1
+##  [1] -1 -1  1  1 -1 -1  1  1 -1 -1  1  1 -1 -1  1  1
+## [1] TRUE
+\end{verbatim}
+
+We say these factorial effects are \textbf{aliased}. From the defining relation, we can derive the complete \textbf{aliasing scheme} for a fractional factorial design. For the example,
+
+\begin{align}
+I & = BCDE \\
+A & = ABCDE \\
+B & = CDE \\
+C & = BDE \\
+D & = BCE \\
+E & = BCD \\
+AB & = ACDE \\
+AC & = ABDE \\
+AD & = ABCE \\
+AE & = ABCD \\
+BC & = DE \\
+BD & = CE \\
+BE & = CD \\
+ABC & = ADE \\
+ABD & = ACE \\
+ABE & = ACD \\
+\end{align}
+
+The aliasing scheme contains \(2^{f-q} = 2^{5-1} = 16\) ``strings'', each one containing \(2^q = 2^1 = 2\) ``words''. The design is not capable to distinguishing between factorial effects in the same alias string.
+
+\end{example}
 
 \hypertarget{response-surface-methodology}{%
 \chapter{Response surface methodology}\label{response-surface-methodology}}

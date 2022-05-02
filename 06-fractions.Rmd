@@ -1,1 +1,176 @@
 # Fractional factorial designs {#fractional-factorial}
+
+The factorial designs we studied in Chapters \@ref(factorial) and \@ref(factorial) can involve a large number of treatments, for even a moderate number of factors (Table \@ref(tab:size-of-factorial)).
+
+```{r size-of-factorial}
+size <- data.frame(1:15, 2^(1:15))
+knitr::kable(size, col.names = c("No. factors", "No. of trts"), caption = "Number of treatments in a $2^f$ factorial designs for different numbers, $f$, of factors.")
+```
+
+For larger numbers of factors, resource constraints may mean it is not possible to run an experiment using all $2^f$ treatments. Also, many degrees of freedom in these experiments are used to estimate high-order interactions. For example, in a $2^5$ experiment, 16 degrees of freedom are used to estimate three-factor and higher interactions, half the size of the experiment. The principles of effect hierarchy and sparsity (Section \@ref(fact-principles)) suggest this is probably wasteful.
+
+We can select smaller experiments by using a subset, or **fraction** of the treatments of size $2^{f-q}$:
+
+a. divide the treatments in subsets by confounding $q$ factorial effects (and their products), as in blocking;
+
+b. only use **one** of the subsets in the experiment.
+
+::: {.example #spring-experiment}
+Spring experiment [@WH2009, ch. 5]
+
+Consider an industrial experiment to investigate the effect of $f=5$ factors on the unloaded height of a spring produced using a heat treatment. The five factors are described in Table \@ref(tab:spring-factors).
+
+```{r spring-factors}
+factor.name <- c("Quench temperature (F)", "Heat temperature (F)", "Heating time (s)", 
+                 "Transfer time (s)", "Hold-down time (s)")
+low.level <- c("130-150", 1840, 23, 10, 2)
+high.level <- c("150-170", 1880, 25, 12, 3)
+spring.factors <- data.frame(factor = factor.name, low = low.level, high = high.level)
+row.names(spring.factors) <- LETTERS[1:5]
+knitr::kable(spring.factors, col.names = c("Factor", "Low level", "High level"), 
+             align = c("l", "r", "r"), caption = "Spring experiment: factors and levels")
+```
+Enough experimental units were available to perform $n=16$ runs, which is one-half of the total number of treatments. We refer to this type of design as a **one-half fractional replicate** of the full factorial design, or a **$2^{5-1}$ fractional factorial design**^[If we only run one-half of the treatments from a $2^5$ design, the design contains $\frac{2^5}{2} = 2^{5-1}$ treatments].  
+
+The design was constructed by confounding $q=1$ factorial effects with blocks, the interaction $BCDE$ was chosen, and running just one of the two resulting subsets, see Table \@ref(tab:spring-data) where `FrF2` is used to generate the design.
+
+```{r spring-data, message = F}
+spring <- FrF2::FrF2(nruns = 16, nfactors = 5, generators = "BCD", randomize = F)
+spring$height <- c(7.54, 7.20, 7.69, 7.63, 7.94, 7.40, 7.95, 7.62, 7.52, 7.52, 
+                   7.63, 7.65, 7.79, 7.29, 8.07, 7.73)
+knitr::kable(spring, caption = "Spring experiment: 16 run design.", align = rep("r", 6))
+```
+
+Clearly, using a subset of the treatments, we will no longer be able to estimate all the factorial effects (we have insufficient degrees of freedom). We have confounded the interaction $BCDE$, and hence clearly the contrast coefficients for this effect will be constant in our design. We say the interaction $BCDE$ is **aliased** with the mean, and we write this as $I = BCDE$. This expression is called the **defining relation**, as knowledge of which factorial effects are aliased with the mean completely define the fractional factorial.
+
+```{r spring-def-rel}
+fac_to_numeric <- function(x) as.numeric(as.character(x))
+BCDE <- fac_to_numeric(spring$B) * fac_to_numeric(spring$C) * 
+  fac_to_numeric(spring$D) * fac_to_numeric(spring$E) 
+BCDE
+```
+
+This removes one factorial effect from consideration, but we are still short on degrees of freedom. What are the other consequences of using a fractional factorial design? 
+
+As the contrast coefficients for the interaction $BCDE$ are constant, the contrast coefficients for any pairs of factorial effects whose (hadamard) product form $BCDE$ will be equal. For example, the contrast coefficient vectors for interactions $BC$ and $DE$ will be equal, as will the vectors for the main effect $B$ and the interaction $CDE$, and so on. 
+
+```{r spring-alias1, results = 'hold'}
+BC <- fac_to_numeric(spring$B) * fac_to_numeric(spring$C)
+DE <- fac_to_numeric(spring$D) * fac_to_numeric(spring$E)
+BC
+DE
+all.equal(BC, DE)
+```
+```{r spring-alias2, results = 'hold'}
+B <- fac_to_numeric(spring$B)
+CDE <- fac_to_numeric(spring$C) * fac_to_numeric(spring$D) * fac_to_numeric(spring$E)
+B
+CDE
+all.equal(B, CDE)
+```
+
+We say these factorial effects are **aliased**. From the defining relation, we can derive the complete **aliasing scheme** for a fractional factorial design. For the example,
+
+\begin{align}
+I & = BCDE \\
+A & = ABCDE \\
+B & = CDE \\
+C & = BDE \\
+D & = BCE \\
+E & = BCD \\
+AB & = ACDE \\
+AC & = ABDE \\
+AD & = ABCE \\
+AE & = ABCD \\
+BC & = DE \\
+BD & = CE \\
+BE & = CD \\
+ABC & = ADE \\
+ABD & = ACE \\
+ABE & = ACD \\
+\end{align}
+
+The aliasing scheme contains $2^{f-q} = 2^{5-1} = 16$ "strings", each one containing $2^q = 2^1 = 2$ "words". The design is not capable to distinguishing between factorial effects in the same alias string.
+
+We can also generate this information using the `aliases` function from `FrF2`.
+
+```{r frfr-aliases}
+spring.lm <- lm(height ~ (.)^5, data = spring)
+FrF2::aliases(spring.lm)
+```
+
+:::
+
+::: {.definition #regular-fraction}
+A **regular $2^{f-q}$fractional factorial design** is constructed by aliasing $2^q-1$ factorial effects with the mean; $q$ of these effects can be chosen independently, the others are formed via the hadamard product of the contrast coefficients for the $q$ effects, 
+:::
+
+How do we chose the factorial effects to alias with the mean? As with blocking, we tend to choose higher-order effects, taking care when $q>1$ not to inadvertently alias together lower-order effects (see later examples). 
+
+For Example \@ref(exm:spring-experiment), a slightly unusual defining relation was chosen. It would be more common to use $I = ABCDE$, leading to the aliasing scheme:
+
+\begin{align}
+I & = ABCDE \\
+A & = BCDE \\
+B & = ACDE \\
+C & = ABDE \\
+D & = ABCE \\
+E & = ABCD \\
+AB & = CDE \\
+AC & = BDE \\
+AD & = BCE \\
+AE & = BCD \\
+BC & = ADE \\
+BD & = ACE \\
+BE & = ACD \\
+CD & = ABE \\
+CE & = ABD \\
+DE & = ABC \\
+\end{align}
+
+This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \@ref(Spring-experiment) might be used if factor $A$ and its interactions were a priori thought likely to be important (two-factor interactions involving factor $A$ are aliased with four-factor interactions).
+
+## Estimability and aliasing
+
+Any factorial effect in an alias string is only estimable **if all other effects in that string are assumed zero**^[Except for the defining relation, where no effects are estimable]. Wd can study this further by introducing the **alias matrix**.
+
+::: {.definition #alias-matrix}
+Assume a linear data generating model
+
+$$
+\bY = X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\,,
+$$
+where $\bY$ is an $n$-vector of responses, $X_1$ and $X_2$ are $n\times p_1$ and $n\times p_2$ model matrices, respectively, with $\boldsymbol{\beta}_1$ and $\boldsymbol{\beta}_2$ corresponding $p_1$- and $p_2$-vectors of parameters and random errors $\varepsilon ~ N(\boldsymbol{0}, I_n\sigma^2)$. 
+
+If the submodel 
+
+$$
+\bY = X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\,,
+$$
+is fitted to the response data, then $\hat{\boldsymbol{\beta}}_1 = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\bY$, and
+\begin{align*}
+E(\hat{\boldsymbol{\beta}}_1) & = \boldsymbol{\beta}_1 + (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\boldsymbol{\beta}_2 \\
+& = \boldsymbol{\beta}_1 + A\boldsymbol{\beta}_2\,,
+\end{align*}
+where $A = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2$ is the **alias** matrix.
+:::
+
+We also introduce an alternative definition of estimability.
+
+::: {.definition #alt-estimability}
+A linear combination of parameters $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\theta}$ is estimable if and only if there exists a linear combination of the responses $\boldsymbol{a}^{\mathrm{T}}\bY$ such that
+
+$$
+E(\boldsymbol{a}^{\mathrm{T}}\bY) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
+$$
+:::
+
+Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the $A$ matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition \@ref{def:alt-estimability}, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.
+
+For Example \@ref(exm:spring-experiment) we can generate the alias matrix using the `alias` function.
+
+```{r spring-alias}
+t(alias(spring.lm)$Complete)
+```
+
+
