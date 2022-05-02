@@ -118,6 +118,13 @@ eq:fact-blocks-normal-3
 tab:reactor-data-2
 tab:block-assign
 tab:block-4-fact-effects
+tab:size-of-factorial
+exm:spring-experiment
+tab:spring-factors
+tab:spring-data
+def:regular-fraction
+def:alias-matrix
+def:alt-estimability
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -157,7 +164,7 @@ factorial
 factorial-contrasts
 main-effects
 interactions
-three-principles-for-factorial-effects
+fact-principles
 unreplicated-normal-plots
 lenths-method-for-approximate-hypothesis-testing
 fac-reg
@@ -169,5 +176,6 @@ general-method-of-constructing-a-confounded-block-design
 analysis-of-a-confounded-factorial-design
 exercises-4
 fractional-factorial
+estimability-and-aliasing
 response-surface-methodology
 optimal-design-of-experiments
