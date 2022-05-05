@@ -148,10 +148,4 @@ general-method-of-constructing-a-confounded-block-design
 analysis-of-a-confounded-factorial-design
 exercises-4
 fractional-factorial
-response-surface-methodology
-optimal-design-of-experiments
-exm:spring-experiment
-def:regular-fraction
-def:alias-matrix
 estimability-and-aliasing
-def:alt-estimability

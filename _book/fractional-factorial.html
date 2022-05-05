@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-01" />
+<meta name="date" content="2022-05-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="block-factorial.html"/>
-<link rel="next" href="response-surface-methodology.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -238,8 +238,6 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="fractional-factorial.html"><a href="fractional-factorial.html#estimability-and-aliasing"><i class="fa fa-check"></i><b>6.1</b> Estimability and aliasing</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="response-surface-methodology.html"><a href="response-surface-methodology.html"><i class="fa fa-check"></i><b>7</b> Response surface methodology</a></li>
-<li class="chapter" data-level="8" data-path="optimal-design-of-experiments.html"><a href="optimal-design-of-experiments.html"><i class="fa fa-check"></i><b>8</b> Optimal design of experiments</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -264,8 +262,8 @@ div.csl-indent {
 <div id="fractional-factorial" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Fractional factorial designs</h1>
 <p>The factorial designs we studied in Chapters <a href="factorial.html#factorial">4</a> and <a href="factorial.html#factorial">4</a> can involve a large number of treatments, for even a moderate number of factors (Table <a href="fractional-factorial.html#tab:size-of-factorial">6.1</a>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="fractional-factorial.html#cb1-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">2</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>))</span>
-<span id="cb1-2"><a href="fractional-factorial.html#cb1-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;No. factors&quot;</span>, <span class="st">&quot;No. of trts&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Number of treatments in a $2^f$ factorial designs for different numbers, $f$, of factors.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="fractional-factorial.html#cb192-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">2</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>))</span>
+<span id="cb192-2"><a href="fractional-factorial.html#cb192-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;No. factors&quot;</span>, <span class="st">&quot;No. of trts&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Number of treatments in a $2^f$ factorial designs for different numbers, $f$, of factors.&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:size-of-factorial">Table 6.1: </span>Number of treatments in a <span class="math inline">\(2^f\)</span> factorial designs for different numbers, <span class="math inline">\(f\)</span>, of factors.</caption>
 <thead>
@@ -346,14 +344,14 @@ div.csl-indent {
 <div class="example">
 <p><span id="exm:spring-experiment" class="example"><strong>Example 6.1  </strong></span>Spring experiment <span class="citation">(<a href="#ref-WH2009" role="doc-biblioref">Wu and Hamada, 2009</a>, ch. 5)</span></p>
 <p>Consider an industrial experiment to investigate the effect of <span class="math inline">\(f=5\)</span> factors on the unloaded height of a spring produced using a heat treatment. The five factors are described in Table <a href="fractional-factorial.html#tab:spring-factors">6.2</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="fractional-factorial.html#cb2-1" aria-hidden="true" tabindex="-1"></a>factor.name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Quench temperature (F)&quot;</span>, <span class="st">&quot;Heat temperature (F)&quot;</span>, <span class="st">&quot;Heating time (s)&quot;</span>, </span>
-<span id="cb2-2"><a href="fractional-factorial.html#cb2-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;Transfer time (s)&quot;</span>, <span class="st">&quot;Hold-down time (s)&quot;</span>)</span>
-<span id="cb2-3"><a href="fractional-factorial.html#cb2-3" aria-hidden="true" tabindex="-1"></a>low.level <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;130-150&quot;</span>, <span class="dv">1840</span>, <span class="dv">23</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
-<span id="cb2-4"><a href="fractional-factorial.html#cb2-4" aria-hidden="true" tabindex="-1"></a>high.level <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;150-170&quot;</span>, <span class="dv">1880</span>, <span class="dv">25</span>, <span class="dv">12</span>, <span class="dv">3</span>)</span>
-<span id="cb2-5"><a href="fractional-factorial.html#cb2-5" aria-hidden="true" tabindex="-1"></a>spring.factors <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">factor =</span> factor.name, <span class="at">low =</span> low.level, <span class="at">high =</span> high.level)</span>
-<span id="cb2-6"><a href="fractional-factorial.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(spring.factors) <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb2-7"><a href="fractional-factorial.html#cb2-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(spring.factors, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Factor&quot;</span>, <span class="st">&quot;Low level&quot;</span>, <span class="st">&quot;High level&quot;</span>), </span>
-<span id="cb2-8"><a href="fractional-factorial.html#cb2-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;r&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Spring experiment: factors and levels&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="fractional-factorial.html#cb193-1" aria-hidden="true" tabindex="-1"></a>factor.name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Quench temperature (F)&quot;</span>, <span class="st">&quot;Heat temperature (F)&quot;</span>, <span class="st">&quot;Heating time (s)&quot;</span>, </span>
+<span id="cb193-2"><a href="fractional-factorial.html#cb193-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;Transfer time (s)&quot;</span>, <span class="st">&quot;Hold-down time (s)&quot;</span>)</span>
+<span id="cb193-3"><a href="fractional-factorial.html#cb193-3" aria-hidden="true" tabindex="-1"></a>low.level <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;130-150&quot;</span>, <span class="dv">1840</span>, <span class="dv">23</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb193-4"><a href="fractional-factorial.html#cb193-4" aria-hidden="true" tabindex="-1"></a>high.level <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;150-170&quot;</span>, <span class="dv">1880</span>, <span class="dv">25</span>, <span class="dv">12</span>, <span class="dv">3</span>)</span>
+<span id="cb193-5"><a href="fractional-factorial.html#cb193-5" aria-hidden="true" tabindex="-1"></a>spring.factors <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">factor =</span> factor.name, <span class="at">low =</span> low.level, <span class="at">high =</span> high.level)</span>
+<span id="cb193-6"><a href="fractional-factorial.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(spring.factors) <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb193-7"><a href="fractional-factorial.html#cb193-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(spring.factors, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Factor&quot;</span>, <span class="st">&quot;Low level&quot;</span>, <span class="st">&quot;High level&quot;</span>), </span>
+<span id="cb193-8"><a href="fractional-factorial.html#cb193-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="fu">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;r&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Spring experiment: factors and levels&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:spring-factors">Table 6.2: </span>Spring experiment: factors and levels</caption>
 <thead>
@@ -397,12 +395,12 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<p>Enough experimental units were available to perform <span class="math inline">\(n=16\)</span> runs, which is one-half of the total number of treatments. We refer to this type of design as a <strong>one-half fractional replicate</strong> of the full factorial design, or a <strong><span class="math inline">\(2^{5-1}\)</span> fractional factorial design</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>Enough experimental units were available to perform <span class="math inline">\(n=16\)</span> runs, which is one-half of the total number of treatments. We refer to this type of design as a <strong>one-half fractional replicate</strong> of the full factorial design, or a <strong><span class="math inline">\(2^{5-1}\)</span> fractional factorial design</strong><a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>.</p>
 <p>The design was constructed by confounding <span class="math inline">\(q=1\)</span> factorial effects with blocks, the interaction <span class="math inline">\(BCDE\)</span> was chosen, and running just one of the two resulting subsets, see Table <a href="fractional-factorial.html#tab:spring-data">6.3</a> where <code>FrF2</code> is used to generate the design.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="fractional-factorial.html#cb3-1" aria-hidden="true" tabindex="-1"></a>spring <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">16</span>, <span class="at">nfactors =</span> <span class="dv">5</span>, <span class="at">generators =</span> <span class="st">&quot;BCD&quot;</span>, <span class="at">randomize =</span> F)</span>
-<span id="cb3-2"><a href="fractional-factorial.html#cb3-2" aria-hidden="true" tabindex="-1"></a>spring<span class="sc">$</span>height <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">7.54</span>, <span class="fl">7.20</span>, <span class="fl">7.69</span>, <span class="fl">7.63</span>, <span class="fl">7.94</span>, <span class="fl">7.40</span>, <span class="fl">7.95</span>, <span class="fl">7.62</span>, <span class="fl">7.52</span>, <span class="fl">7.52</span>, </span>
-<span id="cb3-3"><a href="fractional-factorial.html#cb3-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fl">7.63</span>, <span class="fl">7.65</span>, <span class="fl">7.79</span>, <span class="fl">7.29</span>, <span class="fl">8.07</span>, <span class="fl">7.73</span>)</span>
-<span id="cb3-4"><a href="fractional-factorial.html#cb3-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(spring, <span class="at">caption =</span> <span class="st">&quot;Spring experiment: 16 run design.&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="fractional-factorial.html#cb194-1" aria-hidden="true" tabindex="-1"></a>spring <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">16</span>, <span class="at">nfactors =</span> <span class="dv">5</span>, <span class="at">generators =</span> <span class="st">&quot;BCD&quot;</span>, <span class="at">randomize =</span> F)</span>
+<span id="cb194-2"><a href="fractional-factorial.html#cb194-2" aria-hidden="true" tabindex="-1"></a>spring<span class="sc">$</span>height <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">7.54</span>, <span class="fl">7.20</span>, <span class="fl">7.69</span>, <span class="fl">7.63</span>, <span class="fl">7.94</span>, <span class="fl">7.40</span>, <span class="fl">7.95</span>, <span class="fl">7.62</span>, <span class="fl">7.52</span>, <span class="fl">7.52</span>, </span>
+<span id="cb194-3"><a href="fractional-factorial.html#cb194-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fl">7.63</span>, <span class="fl">7.65</span>, <span class="fl">7.79</span>, <span class="fl">7.29</span>, <span class="fl">8.07</span>, <span class="fl">7.73</span>)</span>
+<span id="cb194-4"><a href="fractional-factorial.html#cb194-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(spring, <span class="at">caption =</span> <span class="st">&quot;Spring experiment: 16 run design.&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">6</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:spring-data">Table 6.3: </span>Spring experiment: 16 run design.</caption>
 <thead>
@@ -547,26 +545,26 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Clearly, using a subset of the treatments, we will no longer be able to estimate all the factorial effects (we have insufficient degrees of freedom). We have confounded the interaction <span class="math inline">\(BCDE\)</span>, and hence clearly the contrast coefficients for this effect will be constant in our design. We say the interaction <span class="math inline">\(BCDE\)</span> is <strong>aliased</strong> with the mean, and we write this as <span class="math inline">\(I = BCDE\)</span>. This expression is called the <strong>defining relation</strong>, as knowledge of which factorial effects are aliased with the mean completely define the fractional factorial.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="fractional-factorial.html#cb4-1" aria-hidden="true" tabindex="-1"></a>fac_to_numeric <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(x))</span>
-<span id="cb4-2"><a href="fractional-factorial.html#cb4-2" aria-hidden="true" tabindex="-1"></a>BCDE <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>B) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>C) <span class="sc">*</span> </span>
-<span id="cb4-3"><a href="fractional-factorial.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>D) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>E) </span>
-<span id="cb4-4"><a href="fractional-factorial.html#cb4-4" aria-hidden="true" tabindex="-1"></a>BCDE</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="fractional-factorial.html#cb195-1" aria-hidden="true" tabindex="-1"></a>fac_to_numeric <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(x))</span>
+<span id="cb195-2"><a href="fractional-factorial.html#cb195-2" aria-hidden="true" tabindex="-1"></a>BCDE <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>B) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>C) <span class="sc">*</span> </span>
+<span id="cb195-3"><a href="fractional-factorial.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>D) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>E) </span>
+<span id="cb195-4"><a href="fractional-factorial.html#cb195-4" aria-hidden="true" tabindex="-1"></a>BCDE</span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
 <p>This removes one factorial effect from consideration, but we are still short on degrees of freedom. What are the other consequences of using a fractional factorial design?</p>
 <p>As the contrast coefficients for the interaction <span class="math inline">\(BCDE\)</span> are constant, the contrast coefficients for any pairs of factorial effects whose (hadamard) product form <span class="math inline">\(BCDE\)</span> will be equal. For example, the contrast coefficient vectors for interactions <span class="math inline">\(BC\)</span> and <span class="math inline">\(DE\)</span> will be equal, as will the vectors for the main effect <span class="math inline">\(B\)</span> and the interaction <span class="math inline">\(CDE\)</span>, and so on.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="fractional-factorial.html#cb6-1" aria-hidden="true" tabindex="-1"></a>BC <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>B) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>C)</span>
-<span id="cb6-2"><a href="fractional-factorial.html#cb6-2" aria-hidden="true" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>D) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>E)</span>
-<span id="cb6-3"><a href="fractional-factorial.html#cb6-3" aria-hidden="true" tabindex="-1"></a>BC</span>
-<span id="cb6-4"><a href="fractional-factorial.html#cb6-4" aria-hidden="true" tabindex="-1"></a>DE</span>
-<span id="cb6-5"><a href="fractional-factorial.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(BC, DE)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="fractional-factorial.html#cb197-1" aria-hidden="true" tabindex="-1"></a>BC <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>B) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>C)</span>
+<span id="cb197-2"><a href="fractional-factorial.html#cb197-2" aria-hidden="true" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>D) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>E)</span>
+<span id="cb197-3"><a href="fractional-factorial.html#cb197-3" aria-hidden="true" tabindex="-1"></a>BC</span>
+<span id="cb197-4"><a href="fractional-factorial.html#cb197-4" aria-hidden="true" tabindex="-1"></a>DE</span>
+<span id="cb197-5"><a href="fractional-factorial.html#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(BC, DE)</span></code></pre></div>
 <pre><code>##  [1]  1  1 -1 -1 -1 -1  1  1  1  1 -1 -1 -1 -1  1  1
 ##  [1]  1  1 -1 -1 -1 -1  1  1  1  1 -1 -1 -1 -1  1  1
 ## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="fractional-factorial.html#cb8-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>B)</span>
-<span id="cb8-2"><a href="fractional-factorial.html#cb8-2" aria-hidden="true" tabindex="-1"></a>CDE <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>C) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>D) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>E)</span>
-<span id="cb8-3"><a href="fractional-factorial.html#cb8-3" aria-hidden="true" tabindex="-1"></a>B</span>
-<span id="cb8-4"><a href="fractional-factorial.html#cb8-4" aria-hidden="true" tabindex="-1"></a>CDE</span>
-<span id="cb8-5"><a href="fractional-factorial.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(B, CDE)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="fractional-factorial.html#cb199-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>B)</span>
+<span id="cb199-2"><a href="fractional-factorial.html#cb199-2" aria-hidden="true" tabindex="-1"></a>CDE <span class="ot">&lt;-</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>C) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>D) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(spring<span class="sc">$</span>E)</span>
+<span id="cb199-3"><a href="fractional-factorial.html#cb199-3" aria-hidden="true" tabindex="-1"></a>B</span>
+<span id="cb199-4"><a href="fractional-factorial.html#cb199-4" aria-hidden="true" tabindex="-1"></a>CDE</span>
+<span id="cb199-5"><a href="fractional-factorial.html#cb199-5" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(B, CDE)</span></code></pre></div>
 <pre><code>##  [1] -1 -1  1  1 -1 -1  1  1 -1 -1  1  1 -1 -1  1  1
 ##  [1] -1 -1  1  1 -1 -1  1  1 -1 -1  1  1 -1 -1  1  1
 ## [1] TRUE</code></pre>
@@ -591,8 +589,8 @@ ABE &amp; = ACD \\
 \end{align}\]</span></p>
 <p>The aliasing scheme contains <span class="math inline">\(2^{f-q} = 2^{5-1} = 16\)</span> “strings”, each one containing <span class="math inline">\(2^q = 2^1 = 2\)</span> “words”. The design is not capable to distinguishing between factorial effects in the same alias string.</p>
 <p>We can also generate this information using the <code>aliases</code> function from <code>FrF2</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="fractional-factorial.html#cb10-1" aria-hidden="true" tabindex="-1"></a>spring.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> (.)<span class="sc">^</span><span class="dv">5</span>, <span class="at">data =</span> spring)</span>
-<span id="cb10-2"><a href="fractional-factorial.html#cb10-2" aria-hidden="true" tabindex="-1"></a>FrF2<span class="sc">::</span><span class="fu">aliases</span>(spring.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="fractional-factorial.html#cb201-1" aria-hidden="true" tabindex="-1"></a>spring.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> (.)<span class="sc">^</span><span class="dv">5</span>, <span class="at">data =</span> spring)</span>
+<span id="cb201-2"><a href="fractional-factorial.html#cb201-2" aria-hidden="true" tabindex="-1"></a>FrF2<span class="sc">::</span><span class="fu">aliases</span>(spring.lm)</span></code></pre></div>
 <pre><code>##               
 ##  A = A:B:C:D:E
 ##  B = C:D:E    
@@ -636,18 +634,18 @@ DE &amp; = ABC \\
 <p>This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example <a href="#Spring-experiment"><strong>??</strong></a> might be used if factor <span class="math inline">\(A\)</span> and its interactions were a priori thought likely to be important (two-factor interactions involving factor <span class="math inline">\(A\)</span> are aliased with four-factor interactions).</p>
 <div id="estimability-and-aliasing" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Estimability and aliasing</h2>
-<p>Any factorial effect in an alias string is only estimable <strong>if all other effects in that string are assumed zero</strong><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Wd can study this further by introducing the <strong>alias matrix</strong>.</p>
+<p>Any factorial effect in an alias string is only estimable <strong>if all other effects in that string are assumed zero</strong><a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>. Wd can study this further by introducing the <strong>alias matrix</strong>.</p>
 <div class="definition">
 <p><span id="def:alias-matrix" class="definition"><strong>Definition 6.2  </strong></span>Assume a linear data generating model</p>
 <p><span class="math display">\[
-\bY = X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\,,
+\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\,,
 \]</span>
-where <span class="math inline">\(\bY\)</span> is an <span class="math inline">\(n\)</span>-vector of responses, <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are <span class="math inline">\(n\times p_1\)</span> and <span class="math inline">\(n\times p_2\)</span> model matrices, respectively, with <span class="math inline">\(\boldsymbol{\beta}_1\)</span> and <span class="math inline">\(\boldsymbol{\beta}_2\)</span> corresponding <span class="math inline">\(p_1\)</span>- and <span class="math inline">\(p_2\)</span>-vectors of parameters and random errors <span class="math inline">\(\varepsilon ~ N(\boldsymbol{0}, I_n\sigma^2)\)</span>.</p>
+where <span class="math inline">\(\boldsymbol{y}\)</span> is an <span class="math inline">\(n\)</span>-vector of responses, <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are <span class="math inline">\(n\times p_1\)</span> and <span class="math inline">\(n\times p_2\)</span> model matrices, respectively, with <span class="math inline">\(\boldsymbol{\beta}_1\)</span> and <span class="math inline">\(\boldsymbol{\beta}_2\)</span> corresponding <span class="math inline">\(p_1\)</span>- and <span class="math inline">\(p_2\)</span>-vectors of parameters and random errors <span class="math inline">\(\varepsilon ~ N(\boldsymbol{0}, I_n\sigma^2)\)</span>.</p>
 <p>If the submodel</p>
 <p><span class="math display">\[
-\bY = X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\,,
+\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\,,
 \]</span>
-is fitted to the response data, then <span class="math inline">\(\hat{\boldsymbol{\beta}}_1 = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\bY\)</span>, and
+is fitted to the response data, then <span class="math inline">\(\hat{\boldsymbol{\beta}}_1 = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{y}\)</span>, and
 <span class="math display">\[\begin{align*}
 E(\hat{\boldsymbol{\beta}}_1) &amp; = \boldsymbol{\beta}_1 + (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\boldsymbol{\beta}_2 \\
 &amp; = \boldsymbol{\beta}_1 + A\boldsymbol{\beta}_2\,,
@@ -656,14 +654,14 @@ where <span class="math inline">\(A = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}
 </div>
 <p>We also introduce an alternative definition of estimability.</p>
 <div class="definition">
-<p><span id="def:alt-estimability" class="definition"><strong>Definition 6.3  </strong></span>A linear combination of parameters <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\theta}\)</span> is estimable if and only if there exists a linear combination of the responses <span class="math inline">\(\boldsymbol{a}^{\mathrm{T}}\bY\)</span> such that</p>
+<p><span id="def:alt-estimability" class="definition"><strong>Definition 6.3  </strong></span>A linear combination of parameters <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\theta}\)</span> is estimable if and only if there exists a linear combination of the responses <span class="math inline">\(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}\)</span> such that</p>
 <p><span class="math display">\[
-E(\boldsymbol{a}^{\mathrm{T}}\bY) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
+E(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
 \]</span></p>
 </div>
 <p>Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the <span class="math inline">\(A\)</span> matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition @ref{def:alt-estimability}, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.</p>
 <p>For Example <a href="fractional-factorial.html#exm:spring-experiment">6.1</a> we can generate the alias matrix using the <code>alias</code> function.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="fractional-factorial.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">alias</span>(spring.lm)<span class="sc">$</span>Complete)</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="fractional-factorial.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">alias</span>(spring.lm)<span class="sc">$</span>Complete)</span></code></pre></div>
 <pre><code>##             A1:C1:D1 A1:C1:E1 A1:D1:E1 B1:C1:D1 B1:C1:E1 B1:D1:E1 C1:D1:E1
 ## (Intercept) 0        0        0        0        0        0        0       
 ## A1          0        0        0        0        0        0        0       
@@ -726,9 +724,9 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>If we only run one-half of the treatments from a <span class="math inline">\(2^5\)</span> design, the design contains <span class="math inline">\(\frac{2^5}{2} = 2^{5-1}\)</span> treatments<a href="fractional-factorial.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Except for the defining relation, where no effects are estimable<a href="fractional-factorial.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<ol start="37">
+<li id="fn37"><p>If we only run one-half of the treatments from a <span class="math inline">\(2^5\)</span> design, the design contains <span class="math inline">\(\frac{2^5}{2} = 2^{5-1}\)</span> treatments<a href="fractional-factorial.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p>Except for the defining relation, where no effects are estimable<a href="fractional-factorial.html#fnref38" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -737,7 +735,7 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
         </div>
       </div>
 <a href="block-factorial.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="response-surface-methodology.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
