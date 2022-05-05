@@ -177,5 +177,3 @@ analysis-of-a-confounded-factorial-design
 exercises-4
 fractional-factorial
 estimability-and-aliasing
-response-surface-methodology
-optimal-design-of-experiments

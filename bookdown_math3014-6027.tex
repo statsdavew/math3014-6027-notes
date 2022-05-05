@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-04-30}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -113,11 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-05-05}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,10 +181,6 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
-
-\begin{verbatim}
-## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
-\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -784,27 +780,11 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -907,8 +887,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "Milk first"
-## [6] "Tea first"  "Tea first"  "Tea first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"  "Milk first"
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -921,7 +901,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -932,7 +912,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1083,15 +1063,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1130,15 +1102,7 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1177,15 +1141,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  \begin{minipage}[b]{\linewidth}\centering
-  Source
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Degrees of freedom
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Sums of squares
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-  Mean square
-  \end{minipage} \\
+  Source & Degrees of freedom & Sums of squares & Mean square \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2825,15 +2781,7 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Degrees of freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Sums of squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean square
-\end{minipage} \\
+Source & Degrees of freedom & Sums of squares & Mean square \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3163,10 +3111,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0
+## [1,]    1    1    1    0
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3180,14 +3128,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    1    0    1    0    0    0    0     0     1     1     0     1
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    1    1    0    0    1    0    1    0    1     1     0     0     1     0
-## [4,]    1    0    1    0    0    1    1    1    0     0     0     0     1     1
-## [5,]    1    0    0    1    0    1    1    0    0     1     1     1     0     0
-## [6,]    0    0    1    1    1    0    1    1    1     0     1     0     0     0
-## [7,]    0    1    0    1    1    1    0    1    0     1     0     0     0     1
-## [8,]    0    1    1    1    0    1    0    0    1     0     0     1     1     0
+## [1,]    0    0    1    1    1    0    0    1    1     1     0     1     0     0
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    0    0    0    1    1    1    0    1    0     0     1     0     1     1
+## [4,]    0    1    1    1    0    1    1    0    0     0     0     1     0     1
+## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
+## [6,]    1    0    1    0    0    1    1    1    1     0     1     0     0     0
+## [7,]    1    1    0    0    1    0    1    1    0     1     0     0     0     1
+## [8,]    1    1    0    0    1    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4722,35 +4670,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0031 & 0.0274\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0041 & 0.0337\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0048 & 0.0431\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0061 & 0.0495\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0066 & 0.0604\\
+time & 2.5675 & 0.66 & 3.890 & 0.0078 & 0.0652\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0094 & 0.0881\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0111 & 0.0945\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0094 & 0.0881\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0111 & 0.0945\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0115 & 0.1076\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0135 & 0.1189\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3035 & 0.9940\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3049 & 0.9955\\
 \hline
 solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4312 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5393 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7325 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7348 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7410 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7425 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7864 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7848 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7895 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7875 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9651 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9678 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4944,27 +4892,11 @@ The basic ANOVA table has the following form.
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova-fact} The ANOVA table for a full factorial experiment}\tabularnewline
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Degress of Freedom
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-(Sequential) Sum of Squares
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean Square
-\end{minipage} \\
+Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
 \midrule
 \endhead
 Regression & \(2^f-1\) & \(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\) & Reg SS/\((2^f-1)\) \\
@@ -5316,7 +5248,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6898 and 5.1442, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6892 and 5.1375, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6188,7 +6120,7 @@ the \texttt{blocks} argument
 \hypertarget{analysis-of-a-confounded-factorial-design}{%
 \section{Analysis of a confounded factorial design}\label{analysis-of-a-confounded-factorial-design}}
 
-We can analyse a confounded design by by combining ideas from Chapters \ref{blocking} and \ref{factorial}. The most straightforward approach is to add a block effect to the regression model introduced in Section \ref{fac-reg}. Let \(X\) be the \(n\times d\) model matrix with columns corresponding to the \(d = 2^f - b +1\) unscaled contrast coefficients for the estimable factorial effects (i.e.~those \textbf{not} confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the \(X\) matrix cannot columns corresponding to these effects. We write a block-regression model as
+We can analyse a confounded design by by combining ideas from Chapters \ref{blocking} and \ref{factorial}. The most straightforward approach is to add a block effect to the regression model introduced in Section \ref{fac-reg}. Let \(X\) be the \(n\times d\) model matrix with columns corresponding to the \(d = 2^f - b\) unscaled contrast coefficients for the estimable factorial effects (i.e.~those \textbf{not} confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the \(X\) matrix cannot columns corresponding to these effects. We write a block-regression model as
 
 \[
 \boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + + Z\boldsymbol{\gamma} + \boldsymbol{\varepsilon}\,,
@@ -6209,10 +6141,10 @@ The normal equations take the form
 \begin{align}
 n\hat{\beta}_0 + \boldsymbol{1}_n^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = \boldsymbol{1}_n^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:fact-blocks-normal-1}\\
 X^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta}_0 + X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + X^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = X^{\mathrm{T}}\boldsymbol{y}\,, \label{eq:fact-blocks-normal-2}\\
-Z^{\mathrm{T}}\boldsymbol{1}_n\hat{\mu} + Z^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + Z^{\mathrm{T}}Z\hat{\boldsymbol{\tau}} & = Z^{\mathrm{T}}\boldsymbol{y}\,. \label{eq:fact-blocks-normal-3}\\
+Z^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta_0} + Z^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + Z^{\mathrm{T}}Z\hat{\boldsymbol{\tau}} & = Z^{\mathrm{T}}\boldsymbol{y}\,. \label{eq:fact-blocks-normal-3}\\
 \end{align}
 
-However, we have that \(X^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}_{2^{f}-2^b}\), as all factorial contrasts are orthogonal to the constant vector. Also, \(X^{\mathrm{T}}Z = \boldsymbol{0}_{d\times b}\), as each factorial contrasts takes values -1 and +1 an equal number of times in each block. Also, \(X^{\mathrm{T}}X = nI_{d}\), as all the vectors of factorial contrast coefficients are orthogonal. Hence, the regression coefficients \(\boldsymbol{\beta}\) can be estimated independently of the intercept and block effects, with reduced normal equations
+However, we have that \(X^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}_{d}\), as all factorial contrasts are orthogonal to the constant vector. Also, \(X^{\mathrm{T}}Z = \boldsymbol{0}_{d\times b}\), as each factorial contrasts takes values -1 and +1 an equal number of times in each block. Also, \(X^{\mathrm{T}}X = nI_{d}\), as all the vectors of factorial contrast coefficients are orthogonal. Hence, the regression coefficients \(\boldsymbol{\beta}\) can be estimated independently of the intercept and block effects, with reduced normal equations
 
 \[
 n\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\boldsymbol{y}\,.
@@ -6238,11 +6170,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##           [,1]
-## A      4.36073
-## B     -0.03061
-## C      3.52329
-## A:B:C  0.55520
+##         [,1]
+## A     4.0418
+## B     0.1588
+## C     2.7840
+## A:B:C 0.1728
 \end{verbatim}
 
 \begin{Shaded}
@@ -6258,11 +6190,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  276.8    92.3     NaN    NaN
-## A          1  152.1   152.1     NaN    NaN
-## B          1    0.0     0.0     NaN    NaN
-## C          1   99.3    99.3     NaN    NaN
-## A:B:C      1    2.5     2.5     NaN    NaN
+## Block      3  291.8    97.3     NaN    NaN
+## A          1  130.7   130.7     NaN    NaN
+## B          1    0.2     0.2     NaN    NaN
+## C          1   62.0    62.0     NaN    NaN
+## A:B:C      1    0.2     0.2     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6273,8 +6205,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##        A        B        C    A:B:C 
-##  4.36073 -0.03061  3.52329  0.55520
+##      A      B      C  A:B:C 
+## 4.0418 0.1588 2.7840 0.1728
 \end{verbatim}
 
 \begin{Shaded}
@@ -6284,8 +6216,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##        A        B        C    A:B:C 
-##  8.72146 -0.06121  7.04658  1.11041
+##      A      B      C  A:B:C 
+## 8.0836 0.3176 5.5681 0.3456
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6302,13 +6234,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  152.1   152.1     NaN    NaN
-## B          1    0.0     0.0     NaN    NaN
-## C          1   99.3    99.3     NaN    NaN
-## A:B        1    4.6     4.6     NaN    NaN
-## A:C        1  129.3   129.3     NaN    NaN
-## B:C        1  142.9   142.9     NaN    NaN
-## A:B:C      1    2.5     2.5     NaN    NaN
+## A          1  130.7   130.7     NaN    NaN
+## B          1    0.2     0.2     NaN    NaN
+## C          1   62.0    62.0     NaN    NaN
+## A:B        1    3.3     3.3     NaN    NaN
+## A:C        1  160.3   160.3     NaN    NaN
+## B:C        1  128.1   128.1     NaN    NaN
+## A:B:C      1    0.2     0.2     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6320,9 +6252,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##     5.44474     4.36073    -0.03061     3.52329     0.75979     4.02022 
+##      5.1001      4.0418      0.1588      2.7840      0.6410      4.4769 
 ##         B:C       A:B:C 
-##     4.22621     0.55520
+##      4.0022      0.1728
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6376,14 +6308,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1 -1  1 -1  1
-## 18      3  1  1 -1 -1 -1
-## 19      3 -1 -1 -1 -1 -1
-## 20      3  1 -1 -1  1  1
-## 21      3 -1  1  1 -1  1
-## 22      3 -1  1 -1  1  1
-## 23      3 -1 -1  1  1 -1
-## 24      3  1  1  1  1 -1
+## 17      3  1  1  1  1 -1
+## 18      3 -1  1  1 -1  1
+## 19      3  1 -1 -1  1  1
+## 20      3  1 -1  1 -1  1
+## 21      3 -1  1 -1  1  1
+## 22      3 -1 -1 -1 -1 -1
+## 23      3  1  1 -1 -1 -1
+## 24      3 -1 -1  1  1 -1
 \end{verbatim}
 
 \begin{enumerate}
@@ -6405,15 +6337,8 @@ Solution
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
-\tightlist
 \item
   \(\mathrm{Block}_1 = ABC\), \(\mathrm{Block}_2 = DEF\), \(\mathrm{Block}_1\mathrm{Block}_2 = ABCDEF\), \(\mathrm{Block}_3 = AFG\), \(\mathrm{Block}_1\mathrm{Block}_3 = BCFG\), \(\mathrm{Block}_2\mathrm{Block}_3 = ADEG\), \(\mathrm{Block}_1\mathrm{Block}_2\mathrm{Block}_3 = BCDEG\).
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\setcounter{enumi}{1}
-\tightlist
 \item
   For the alternative blocking scheme, \(\mathrm{Block}_1 = ABCD\), \(\mathrm{Block}_2 = ABEF\), \(\mathrm{Block}_1\mathrm{Block}_2 = CDEF\), \(\mathrm{Block}_3 = ACEG\), \(\mathrm{Block}_1\mathrm{Block}_3 = BDEG\), \(\mathrm{Block}_2\mathrm{Block}_3 = BCFG\), \(\mathrm{Block}_1\mathrm{Block}_2\mathrm{Block}_3 = ADFG\).
 \end{enumerate}
@@ -6701,7 +6626,7 @@ block & FR & Cat & AR & Temp & Conc & pre.react\\
 \end{tabular}
 \end{table}
 
-We can produce an ANOVA table with the following code; \texttt{lm} and \texttt{anova} should automatically get the degrees of freedom correct (as it will recognise that three interactions are confounded with blocks and not estimable). The three confounded interactions do not appear in the \texttt{anova} output.
+We can produce an ANOVA table with the following code; \texttt{lm} and \texttt{anova} should automatically get the degrees of freedom correct (thr functions will recognise that three interactions are confounded with blocks and not estimable). The three confounded interactions do not appear in the \texttt{anova} output.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7071,13 +6996,173 @@ ABE & = ACD \\
 
 The aliasing scheme contains \(2^{f-q} = 2^{5-1} = 16\) ``strings'', each one containing \(2^q = 2^1 = 2\) ``words''. The design is not capable to distinguishing between factorial effects in the same alias string.
 
+We can also generate this information using the \texttt{aliases} function from \texttt{FrF2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spring.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (.)}\SpecialCharTok{\^{}}\DecValTok{5}\NormalTok{, }\AttributeTok{data =}\NormalTok{ spring)}
+\NormalTok{FrF2}\SpecialCharTok{::}\FunctionTok{aliases}\NormalTok{(spring.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               
+##  A = A:B:C:D:E
+##  B = C:D:E    
+##  C = B:D:E    
+##  D = B:C:E    
+##  E = B:C:D    
+##  A:B = A:C:D:E
+##  A:C = A:B:D:E
+##  A:D = A:B:C:E
+##  A:E = A:B:C:D
+##  B:C = D:E    
+##  B:D = C:E    
+##  B:E = C:D    
+##  A:B:C = A:D:E
+##  A:B:D = A:C:E
+##  A:B:E = A:C:D
+\end{verbatim}
+
 \end{example}
 
-\hypertarget{response-surface-methodology}{%
-\chapter{Response surface methodology}\label{response-surface-methodology}}
+\begin{definition}
+\protect\hypertarget{def:regular-fraction}{}\label{def:regular-fraction}
 
-\hypertarget{optimal-design-of-experiments}{%
-\chapter{Optimal design of experiments}\label{optimal-design-of-experiments}}
+A \textbf{regular \(2^{f-q}\)fractional factorial design} is constructed by aliasing \(2^q-1\) factorial effects with the mean; \(q\) of these effects can be chosen independently, the others are formed via the hadamard product of the contrast coefficients for the \(q\) effects,
+
+\end{definition}
+
+How do we chose the factorial effects to alias with the mean? As with blocking, we tend to choose higher-order effects, taking care when \(q>1\) not to inadvertently alias together lower-order effects (see later examples).
+
+For Example \ref{exm:spring-experiment}, a slightly unusual defining relation was chosen. It would be more common to use \(I = ABCDE\), leading to the aliasing scheme:
+
+\begin{align}
+I & = ABCDE \\
+A & = BCDE \\
+B & = ACDE \\
+C & = ABDE \\
+D & = ABCE \\
+E & = ABCD \\
+AB & = CDE \\
+AC & = BDE \\
+AD & = BCE \\
+AE & = BCD \\
+BC & = ADE \\
+BD & = ACE \\
+BE & = ACD \\
+CD & = ABE \\
+CE & = ABD \\
+DE & = ABC \\
+\end{align}
+
+This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \ref{Spring-experiment} might be used if factor \(A\) and its interactions were a priori thought likely to be important (two-factor interactions involving factor \(A\) are aliased with four-factor interactions).
+
+\hypertarget{estimability-and-aliasing}{%
+\section{Estimability and aliasing}\label{estimability-and-aliasing}}
+
+Any factorial effect in an alias string is only estimable \textbf{if all other effects in that string are assumed zero}\footnote{Except for the defining relation, where no effects are estimable}. Wd can study this further by introducing the \textbf{alias matrix}.
+
+\begin{definition}
+\protect\hypertarget{def:alias-matrix}{}\label{def:alias-matrix}
+
+Assume a linear data generating model
+
+\[
+\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\,,
+\]
+where \(\boldsymbol{y}\) is an \(n\)-vector of responses, \(X_1\) and \(X_2\) are \(n\times p_1\) and \(n\times p_2\) model matrices, respectively, with \(\boldsymbol{\beta}_1\) and \(\boldsymbol{\beta}_2\) corresponding \(p_1\)- and \(p_2\)-vectors of parameters and random errors \(\varepsilon ~ N(\boldsymbol{0}, I_n\sigma^2)\).
+
+If the submodel
+
+\[
+\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\,,
+\]
+is fitted to the response data, then \(\hat{\boldsymbol{\beta}}_1 = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}\boldsymbol{y}\), and
+\begin{align*}
+E(\hat{\boldsymbol{\beta}}_1) & = \boldsymbol{\beta}_1 + (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\boldsymbol{\beta}_2 \\
+& = \boldsymbol{\beta}_1 + A\boldsymbol{\beta}_2\,,
+\end{align*}
+where \(A = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\) is the \textbf{alias} matrix.
+
+\end{definition}
+
+We also introduce an alternative definition of estimability.
+
+\begin{definition}
+\protect\hypertarget{def:alt-estimability}{}\label{def:alt-estimability}
+
+A linear combination of parameters \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\theta}\) is estimable if and only if there exists a linear combination of the responses \(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}\) such that
+
+\[
+E(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
+\]
+
+\end{definition}
+
+Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the \(A\) matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition @ref\{def:alt-estimability\}, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.
+
+For Example \ref{exm:spring-experiment} we can generate the alias matrix using the \texttt{alias} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t}\NormalTok{(}\FunctionTok{alias}\NormalTok{(spring.lm)}\SpecialCharTok{$}\NormalTok{Complete)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             A1:C1:D1 A1:C1:E1 A1:D1:E1 B1:C1:D1 B1:C1:E1 B1:D1:E1 C1:D1:E1
+## (Intercept) 0        0        0        0        0        0        0       
+## A1          0        0        0        0        0        0        0       
+## B1          0        0        0        0        0        0        1       
+## C1          0        0        0        0        0        1        0       
+## D1          0        0        0        0        1        0        0       
+## E1          0        0        0        1        0        0        0       
+## A1:B1       0        0        0        0        0        0        0       
+## A1:C1       0        0        0        0        0        0        0       
+## A1:D1       0        0        0        0        0        0        0       
+## A1:E1       0        0        0        0        0        0        0       
+## B1:C1       0        0        0        0        0        0        0       
+## B1:D1       0        0        0        0        0        0        0       
+## B1:E1       0        0        0        0        0        0        0       
+## A1:B1:C1    0        0        1        0        0        0        0       
+## A1:B1:D1    0        1        0        0        0        0        0       
+## A1:B1:E1    1        0        0        0        0        0        0       
+##             A1:B1:C1:D1 A1:B1:C1:E1 A1:B1:D1:E1 A1:C1:D1:E1 B1:C1:D1:E1
+## (Intercept) 0           0           0           0           1          
+## A1          0           0           0           0           0          
+## B1          0           0           0           0           0          
+## C1          0           0           0           0           0          
+## D1          0           0           0           0           0          
+## E1          0           0           0           0           0          
+## A1:B1       0           0           0           1           0          
+## A1:C1       0           0           1           0           0          
+## A1:D1       0           1           0           0           0          
+## A1:E1       1           0           0           0           0          
+## B1:C1       0           0           0           0           0          
+## B1:D1       0           0           0           0           0          
+## B1:E1       0           0           0           0           0          
+## A1:B1:C1    0           0           0           0           0          
+## A1:B1:D1    0           0           0           0           0          
+## A1:B1:E1    0           0           0           0           0          
+##             A1:B1:C1:D1:E1 C1:D1 C1:E1 D1:E1
+## (Intercept) 0              0     0     0    
+## A1          1              0     0     0    
+## B1          0              0     0     0    
+## C1          0              0     0     0    
+## D1          0              0     0     0    
+## E1          0              0     0     0    
+## A1:B1       0              0     0     0    
+## A1:C1       0              0     0     0    
+## A1:D1       0              0     0     0    
+## A1:E1       0              0     0     0    
+## B1:C1       0              0     0     1    
+## B1:D1       0              0     1     0    
+## B1:E1       0              1     0     0    
+## A1:B1:C1    0              0     0     0    
+## A1:B1:D1    0              0     0     0    
+## A1:B1:E1    0              0     0     0
+\end{verbatim}
 
   \bibliography{math3014-6027.bib,packages.bib}
 
