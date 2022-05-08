@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{book}
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-05-08}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -109,15 +113,11 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-05-05}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,6 +181,10 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
+
+\begin{verbatim}
+## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
+\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -780,11 +784,27 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -887,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -912,7 +932,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1063,7 +1083,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1102,7 +1130,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1141,7 +1177,15 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\centering
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2781,7 +2825,15 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-Source & Degrees of freedom & Sums of squares & Mean square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Degrees of freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sums of squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean square
+\end{minipage} \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3111,10 +3163,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
-## [2,]    0    1    1    1
-## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [1,]    0    1    1    1
+## [2,]    1    0    1    1
+## [3,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3128,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    1    1    1    0    0    1    1     1     0     1     0     0
-## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    0    1    0     0     1     0     1     1
-## [4,]    0    1    1    1    0    1    1    0    0     0     0     1     0     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
-## [6,]    1    0    1    0    0    1    1    1    1     0     1     0     0     0
-## [7,]    1    1    0    0    1    0    1    1    0     1     0     0     0     1
-## [8,]    1    1    0    0    1    1    0    0    1     0     0     1     1     0
+## [1,]    1    1    1    1    0    1    0    0    0     0     0     1     0     1
+## [2,]    1    0    0    0    0    0    0    0    1     1     1     1     1     1
+## [3,]    0    1    1    0    0    1    0    1    0     1     1     0     1     0
+## [4,]    0    1    0    1    0    0    1    1    1     0     0     0     1     1
+## [5,]    0    1    0    1    1    0    1    0    0     1     1     1     0     0
+## [6,]    1    0    0    1    1    1    0    1    1     1     0     0     0     0
+## [7,]    1    0    1    0    1    0    1    1    0     0     1     0     0     1
+## [8,]    0    0    1    0    1    1    1    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4670,35 +4722,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0007\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0041 & 0.0337\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0042 & 0.0390\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0061 & 0.0495\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0066 & 0.0630\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0078 & 0.0652\\
+time & 2.5675 & 0.66 & 3.890 & 0.0088 & 0.0810\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0111 & 0.0945\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0118 & 0.1080\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0111 & 0.0945\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0118 & 0.1080\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0135 & 0.1189\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0146 & 0.1309\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3049 & 0.9955\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3060 & 0.9944\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4312 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4310 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5393 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5403 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7348 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7314 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7425 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7390 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7848 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7841 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7875 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7865 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9678 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9667 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4892,11 +4944,27 @@ The basic ANOVA table has the following form.
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova-fact} The ANOVA table for a full factorial experiment}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(2^f-1\) & \(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\) & Reg SS/\((2^f-1)\) \\
@@ -5248,7 +5316,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6892 and 5.1375, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6833 and 5.0183, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6170,11 +6238,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##         [,1]
-## A     4.0418
-## B     0.1588
-## C     2.7840
-## A:B:C 0.1728
+##          [,1]
+## A     4.40939
+## B     0.38897
+## C     2.97254
+## A:B:C 0.01493
 \end{verbatim}
 
 \begin{Shaded}
@@ -6190,11 +6258,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  291.8    97.3     NaN    NaN
-## A          1  130.7   130.7     NaN    NaN
-## B          1    0.2     0.2     NaN    NaN
-## C          1   62.0    62.0     NaN    NaN
-## A:B:C      1    0.2     0.2     NaN    NaN
+## Block      3  248.6    82.9     NaN    NaN
+## A          1  155.5   155.5     NaN    NaN
+## B          1    1.2     1.2     NaN    NaN
+## C          1   70.7    70.7     NaN    NaN
+## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6205,8 +6273,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 4.0418 0.1588 2.7840 0.1728
+##       A       B       C   A:B:C 
+## 4.40939 0.38897 2.97254 0.01493
 \end{verbatim}
 
 \begin{Shaded}
@@ -6216,8 +6284,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 8.0836 0.3176 5.5681 0.3456
+##       A       B       C   A:B:C 
+## 8.81878 0.77793 5.94507 0.02986
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6234,13 +6302,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  130.7   130.7     NaN    NaN
-## B          1    0.2     0.2     NaN    NaN
-## C          1   62.0    62.0     NaN    NaN
-## A:B        1    3.3     3.3     NaN    NaN
-## A:C        1  160.3   160.3     NaN    NaN
-## B:C        1  128.1   128.1     NaN    NaN
-## A:B:C      1    0.2     0.2     NaN    NaN
+## A          1  155.5   155.5     NaN    NaN
+## B          1    1.2     1.2     NaN    NaN
+## C          1   70.7    70.7     NaN    NaN
+## A:B        1   16.6    16.6     NaN    NaN
+## A:C        1  123.5   123.5     NaN    NaN
+## B:C        1  108.6   108.6     NaN    NaN
+## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6252,9 +6320,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      5.1001      4.0418      0.1588      2.7840      0.6410      4.4769 
+##     5.34850     4.40939     0.38897     2.97254     1.43918     3.92830 
 ##         B:C       A:B:C 
-##      4.0022      0.1728
+##     3.68368     0.01493
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6308,14 +6376,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1  1  1  1 -1
-## 18      3 -1  1  1 -1  1
-## 19      3  1 -1 -1  1  1
+## 17      3 -1  1  1 -1  1
+## 18      3  1 -1 -1  1  1
+## 19      3  1  1  1  1 -1
 ## 20      3  1 -1  1 -1  1
 ## 21      3 -1  1 -1  1  1
-## 22      3 -1 -1 -1 -1 -1
-## 23      3  1  1 -1 -1 -1
-## 24      3 -1 -1  1  1 -1
+## 22      3  1  1 -1 -1 -1
+## 23      3 -1 -1  1  1 -1
+## 24      3 -1 -1 -1 -1 -1
 \end{verbatim}
 
 \begin{enumerate}
@@ -7056,10 +7124,10 @@ CE & = ABD \\
 DE & = ABC \\
 \end{align}
 
-This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \ref{Spring-experiment} might be used if factor \(A\) and its interactions were a priori thought likely to be important (two-factor interactions involving factor \(A\) are aliased with four-factor interactions).
+This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \ref{exm:Spring-experiment} might be used if factor \(A\) and its interactions were a priori thought likely to be important (two-factor interactions involving factor \(A\) are aliased with four-factor interactions).
 
-\hypertarget{estimability-and-aliasing}{%
-\section{Estimability and aliasing}\label{estimability-and-aliasing}}
+\hypertarget{est-alias}{%
+\section{Estimability and aliasing}\label{est-alias}}
 
 Any factorial effect in an alias string is only estimable \textbf{if all other effects in that string are assumed zero}\footnote{Except for the defining relation, where no effects are estimable}. Wd can study this further by introducing the \textbf{alias matrix}.
 
@@ -7162,6 +7230,417 @@ For Example \ref{exm:spring-experiment} we can generate the alias matrix using t
 ## A1:B1:C1    0              0     0     0    
 ## A1:B1:D1    0              0     0     0    
 ## A1:B1:E1    0              0     0     0
+\end{verbatim}
+
+\hypertarget{general-method-for-choosing-a-fractional-factorial-design}{%
+\section{General method for choosing a fractional factorial design}\label{general-method-for-choosing-a-fractional-factorial-design}}
+
+To select a \(2^{f-q}\) fractional factorial design:
+
+\begin{itemize}
+\tightlist
+\item
+  choose \(q\) independent factorial contrasts for the \textbf{generators}, or \textbf{defining words}, \(\nu_1,\ldots,n_q\). Typically, we choose higher-order interactions (due to effect hierarchy):
+\end{itemize}
+
+\[
+\nu_{1}=\boldsymbol{c}_{1},\ldots,\nu_{q} = \boldsymbol{c}_{q}\,.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  all the hadamard products of \(\boldsymbol{c}_{1},\dots,\boldsymbol{c}_{q}\) are also aliased with the mean, and together give the \textbf{defining relation}:
+\end{itemize}
+
+\[
+I = \nu_1 = \ldots = \nu_q = \nu_1\nu_q = \ldots = \nu_1\cdots\nu_q\,. 
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  the \textbf{aliasing scheme} is a list of the \(2^{f-q}\) \textbf{alias strings}. Every effect in one string is estimated by the same contrast in the observations:
+\end{itemize}
+
+\[
+ \begin{array}{ccccccccccccc}
+ I & = & \nu_1 & = & \ldots & = & \nu_q & = & \nu_1\nu_q 
+ & = & \ldots & = & \nu_1\cdots\nu_q \\
+ A & = & A\nu_1 & = & \ldots & = & A\nu_q & = & A\nu_1\nu_q 
+ & = & \ldots & = & A\nu_1\cdots\nu_q \\
+ B & = & B\nu_1 & = & B\ldots & = & B\nu_q & = & B\nu_1\nu_q 
+ & = & \ldots & = & B\nu_1\cdots\nu_q \\
+ \vdots \\
+ CD & = & CD\nu_1 & = & CD\ldots & = & CD\nu_q & = & CD\nu_1\nu_q 
+ & = & CD\ldots & = & CD\nu_1\cdots\nu_q \\
+ \vdots
+ \end{array}
+ \]
+All the effects within a single alias string are aliased, and cannot be simultaneously aliased. In fact, the estimation of any effect within an alias string can only proceed if all other effects in the string are assumed zero; otherwise, we can estimate the sum of the effects (see Section \ref{est-alias}).
+
+To find the treatments in a particular fraction, we simply need to solve a set of equations of the form
+
+\[
+\nu_1 = \pm 1, \quad \nu_2 + \pm 1, \quad \ldots \quad \nu_q = \pm 1\,,
+\]
+with \(2^{f-q}\) treatments satisfying the \(2^q\) equations corresponding to each choice of \(\pm 1\) for each generator.
+
+\begin{example}
+\protect\hypertarget{exm:frac-illustrative}{}\label{exm:frac-illustrative}
+
+Consider a \(2^{6-2}\) design, with \(q=2\) generators \(ABCE\) and \(BCDF\). The defining relation is given by
+
+\[
+I = ABCE = BCDF = ADEF\,.
+\]
+The aliasing scheme has \(2^{6-2} = 16\) strings, each of which contains \(2^2 = 4\) effects or words.
+
+\[
+\begin{array}{ccccccc}
+I & = & ABCE & = & BCDF & = & ADEF \\
+A & = & BCE & = & ABCDF & = & DEF \\
+B & = & ACE & = & CDF & = & ABDEF \\
+C & = & ABE & = & BDF & = & ACDEF \\
+D & = & ABCDE & = & BCF & = & AEF \\
+E & = & ABC & = & BCDEF & = & ADF \\
+F & = & ABCEF & = & BCD & = & ADE \\
+AB & = & CE & = & ACDF & = & BDEF \\
+AC & = & BE & = & ABDF & = & CDEF \\
+AD & = & BCDE & = & ABCF & = & EF \\
+AE & = & BC & = & ABCDEF & = & DF \\
+AF & = & BCEF & = & ABCD & = & DE \\
+BD & = & ACDE & = & CF & = & ABEF \\
+BF & = & ACEF & = & CD & = & ABDE \\
+ABD & = & CDE & = & ACF & = & BEF \\
+ABF & = & CEF & = & ACD & = & BDE \\
+\end{array}
+\]
+This aliasing scheme can result from any one of the four possible fractions defined by
+
+\[
+ABCE = \pm 1\,,\quad BCDF = \pm 1\,.
+\]
+Each fraction has (essentially) the same statistical properties, except the sign of the biasing coefficients from the alias matrix may be reversed (-1, rather than +1).
+
+For example, the treatments in the fraction may be those \(2^{f-q} = 2^{6-2} = 16\) treatments that all have \(ABCE = +1\) and \(BCDF = +1\).
+
+\end{example}
+
+We can also use \texttt{FrF2} to find two-level fractional factorial designs, as we already saw in Example \ref{exm:spring-experiment}. The \texttt{generators} argument can be used to specify which factorial effects to use as generators. These are specified using what \texttt{FrF2} refers to as the \(f-q\) \textbf{base factors}. The \(q\) generators must specify with which factorial effects in the base factors the \(q\) additional factors are aliased.\\
+For Example \ref{exm:frac-illustrative}, a \(2^{6-2}\) design, the base factors are \(A, B, C, D\) and from our defining relation we have \(E = ABC\) and \(F = BCD\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ff.}\DecValTok{2}\NormalTok{.}\FloatTok{6.2} \OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }\AttributeTok{nfactors =} \DecValTok{6}\NormalTok{, }\AttributeTok{generators =} \FunctionTok{c}\NormalTok{(}\StringTok{"ABC"}\NormalTok{, }\StringTok{"BCD"}\NormalTok{), }
+                       \AttributeTok{randomize =}\NormalTok{ F, }\AttributeTok{alias.info =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Once \texttt{FrF2} has generated the design, we can interrogate the aliasing (up to three-factor interactions) using \texttt{design.info} (and using the \texttt{aliases} function, see Example \ref{exm:spring-experiment}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(FrF2)}
+\FunctionTok{design.info}\NormalTok{(ff.}\DecValTok{2}\NormalTok{.}\FloatTok{6.2}\NormalTok{)}\SpecialCharTok{$}\NormalTok{aliased}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $legend
+## [1] "A=A" "B=B" "C=C" "D=D" "E=E" "F=F"
+## 
+## $main
+## [1] "A=BCE=DEF" "B=ACE=CDF" "C=ABE=BDF" "D=AEF=BCF" "E=ABC=ADF" "F=ADE=BCD"
+## 
+## $fi2
+## [1] "AB=CE"    "AC=BE"    "AD=EF"    "AE=BC=DF" "AF=DE"    "BD=CF"    "BF=CD"   
+## 
+## $fi3
+## [1] "ABD=ACF=BEF=CDE" "ABF=ACD=BDE=CEF"
+\end{verbatim}
+
+By default, \texttt{FrF2} chooses the fraction defined by each generator being equal to +1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(ff.}\DecValTok{2}\NormalTok{.}\FloatTok{6.2}\NormalTok{, }\AttributeTok{align =} \StringTok{"r"}\NormalTok{, }
+             \AttributeTok{caption =} \StringTok{"Treatments from a $2\^{}\{6{-}2\}$ fractional factorial design."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:FrF2-example-design}Treatments from a $2^{6-2}$ fractional factorial design.}
+\centering
+\begin{tabular}[t]{r|r|r|r|r|r}
+\hline
+A & B & C & D & E & F\\
+\hline
+-1 & -1 & -1 & -1 & -1 & -1\\
+\hline
+1 & -1 & -1 & -1 & 1 & -1\\
+\hline
+-1 & 1 & -1 & -1 & 1 & 1\\
+\hline
+1 & 1 & -1 & -1 & -1 & 1\\
+\hline
+-1 & -1 & 1 & -1 & 1 & 1\\
+\hline
+1 & -1 & 1 & -1 & -1 & 1\\
+\hline
+-1 & 1 & 1 & -1 & -1 & -1\\
+\hline
+1 & 1 & 1 & -1 & 1 & -1\\
+\hline
+-1 & -1 & -1 & 1 & -1 & 1\\
+\hline
+1 & -1 & -1 & 1 & 1 & 1\\
+\hline
+-1 & 1 & -1 & 1 & 1 & -1\\
+\hline
+1 & 1 & -1 & 1 & -1 & -1\\
+\hline
+-1 & -1 & 1 & 1 & 1 & -1\\
+\hline
+1 & -1 & 1 & 1 & -1 & -1\\
+\hline
+-1 & 1 & 1 & 1 & -1 & 1\\
+\hline
+1 & 1 & 1 & 1 & 1 & 1\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{resolution-and-aberration}{%
+\section{Resolution and aberration}\label{resolution-and-aberration}}
+
+Clearly, the numbers of factors involved in the effects in the defining relation play an important role in the properties of the design.
+
+\begin{definition}
+\protect\hypertarget{def:length}{}\label{def:length}
+
+Each factorial effect is commonly referred to as a \textbf{word}, and the number of factors involved in a factorial effect is its \textbf{length}.
+
+\end{definition}
+
+For example, word \(ABCD\) has length 4; word \(BDE\) has length 3.
+
+\begin{definition}
+\protect\hypertarget{def:resolution}{}\label{def:resolution}
+
+The \textbf{resolution} of a \(2^{f-q}\) design is the length of the shortest word in the defining relation.
+
+A design having resolution \(R\) implies that no effect involving \(x\) factors is aliased with effects involving less than \(R-x\) factors.
+
+Designs of the following resolution are particularly common.
+
+\begin{itemize}
+\item
+  \emph{Resolution III}: shortest word of length 3. No main effect is aliased with any other main effect; at least one main effect of aliased with a two-factor interaction.
+\item
+  \emph{Resolution IV}: shortest word of length 4. No main effect is aliased with any other main effect or any two-factor interaction; at least one pair of two-factor interactions are aliased together.
+\item
+  \emph{Resolution V}: shortest word of length 5. No main effect or two-factor interaction is aliased with any other main effect or two-factor interaction.
+\end{itemize}
+
+\end{definition}
+
+For example,
+
+\begin{itemize}
+\item
+  \(2^{6-2}\), \(I = ABCD = CDEF = ABEF\): resolution IV.
+\item
+  \(2^{3-1}\), \(I = ABC\): resolution III.
+\end{itemize}
+
+\begin{definition}
+\protect\hypertarget{def:wlp}{}\label{def:wlp}
+
+The \emph{word length pattern} of a \(2^{f-q}\) design is given by
+
+\[
+W = (w_3, w_4, \ldots, w_f)\,,
+\]
+where \(w_i\) is the number of words of length \(i\) in the defining relation.
+
+\end{definition}
+
+For example,
+
+\begin{itemize}
+\item
+  \(d_1\): \(2^{7-2}\), \(I = ABCF = ADEG = BCDEFG\)
+\item
+  \(d_2\): \(2^{7-2}\), \(I = DEFG = ABCDF = ABCEG\)
+\end{itemize}
+
+are both resolution IV designs, but have different word length patterns
+
+\begin{itemize}
+\tightlist
+\item
+  \(W(d_1) = (0, 2, 0, 1, 0)\)
+\item
+  \(W(d_2) = (0, 1, 2, 0, 0)\).
+\end{itemize}
+
+\begin{definition}
+\protect\hypertarget{def:minab}{}\label{def:minab}
+
+For two \(2^{f-q}\) designs, say \(d^\star\) and \(d^\dagger\), let \(r\) be the smallest integer such that \(w_r(d^\star) \ne w_r(d^\dagger)\). Then design \(d^\star\) is said to have less \textbf{aberration} than design \(d^\dagger\) if
+
+\[
+w_r(d^\star) < w_r(d^\dagger)\,.
+\]
+
+If no design has less aberration than \(d^\star\), then \(d^\star\) has \textbf{minimum aberration}.
+
+\end{definition}
+
+Consider again designs \(d_1\) and \(d_2\) from above (\(2^{7-2}\) fractions). Here,
+
+\[
+\begin{array}{ccccccc}
+w_3(d_1) & = & 0 & = & w_3(d_2) & = & 0 \\
+w_4(d_1) & = & 2 & > & w_3(d_1) & = & 1 \,, \\
+\end{array}
+\]
+and hence \(d_2\) has less aberration than \(d_1\). In fact, \(d_2\) has minimum aberration.
+
+We can use \texttt{FrF2} to find designs of a specific resolution using the \texttt{resolution} argument (and leaving \texttt{nruns} and \texttt{generators} unspecified). The resulting design will have the minimum number of runs required to obtain the requested resolution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ff.}\DecValTok{2}\NormalTok{.}\DecValTok{6}\NormalTok{.}\FloatTok{2.}\NormalTok{r }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nfactors =} \DecValTok{6}\NormalTok{, }\AttributeTok{resolution =} \DecValTok{4}\NormalTok{, }
+                         \AttributeTok{randomize =}\NormalTok{ F, }\AttributeTok{alias.info =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{design.info}\NormalTok{(ff.}\DecValTok{2}\NormalTok{.}\DecValTok{6}\NormalTok{.}\FloatTok{2.}\NormalTok{r)}\SpecialCharTok{$}\NormalTok{aliased}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $legend
+## [1] "A=A" "B=B" "C=C" "D=D" "E=E" "F=F"
+## 
+## $main
+## [1] "A=BCE=BDF" "B=ACE=ADF" "C=ABE=DEF" "D=ABF=CEF" "E=ABC=CDF" "F=ABD=CDE"
+## 
+## $fi2
+## [1] "AB=CE=DF" "AC=BE"    "AD=BF"    "AE=BC"    "AF=BD"    "CD=EF"    "CF=DE"   
+## 
+## $fi3
+## [1] "ACD=AEF=BCF=BDE" "ACF=ADE=BCD=BEF"
+\end{verbatim}
+
+When \texttt{generators} and \texttt{resolution} are not specified, \texttt{FrF2} function selects designs from catalogues of good designs, most of which have minimum aberration.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ff.}\DecValTok{2}\NormalTok{.}\DecValTok{6}\NormalTok{.}\FloatTok{2.}\NormalTok{a }\OtherTok{\textless{}{-}}\NormalTok{ FrF2}\SpecialCharTok{::}\FunctionTok{FrF2}\NormalTok{(}\AttributeTok{nfactors =} \DecValTok{6}\NormalTok{, }\AttributeTok{nruns =} \DecValTok{16}\NormalTok{, }
+                         \AttributeTok{randomize =}\NormalTok{ F, }\AttributeTok{alias.info =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{design.info}\NormalTok{(ff.}\DecValTok{2}\NormalTok{.}\DecValTok{6}\NormalTok{.}\FloatTok{2.}\NormalTok{a)}\SpecialCharTok{$}\NormalTok{aliased}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $legend
+## [1] "A=A" "B=B" "C=C" "D=D" "E=E" "F=F"
+## 
+## $main
+## [1] "A=BCE=BDF" "B=ACE=ADF" "C=ABE=DEF" "D=ABF=CEF" "E=ABC=CDF" "F=ABD=CDE"
+## 
+## $fi2
+## [1] "AB=CE=DF" "AC=BE"    "AD=BF"    "AE=BC"    "AF=BD"    "CD=EF"    "CF=DE"   
+## 
+## $fi3
+## [1] "ACD=AEF=BCF=BDE" "ACF=ADE=BCD=BEF"
+\end{verbatim}
+
+\hypertarget{frac-anal}{%
+\section{Analysis of fractional factorial designs}\label{frac-anal}}
+
+The analysis can proceed as for full factorial designs (Chapter \ref{factorial}). Assuming only one factorial effect in each alias string is non-zero, we can estimate \(2^{f-q}-1\) factorial effects (one from each string) either by fitting the unit-treatment model or the corresponding regression model.
+
+For Example \ref{exm:spring-experiment}, we can use the unit-treatment model and contrasts to estimate all main effects and selected two-factor interactions, assuming all other factorial effects are zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spring}\SpecialCharTok{$}\NormalTok{treatment }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{)}
+\NormalTok{spring.ut }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ treatment, }\AttributeTok{data =}\NormalTok{ spring)}
+\NormalTok{fac.contrasts.emmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(nlevs) \{}
+\NormalTok{  spring.num }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(spring[, }\FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{)], }\DecValTok{2}\NormalTok{, fac\_to\_numeric)}
+  \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{+}\NormalTok{ A}\SpecialCharTok{:}\NormalTok{B }\SpecialCharTok{+}\NormalTok{ A}\SpecialCharTok{:}\NormalTok{C }\SpecialCharTok{+}\NormalTok{ A}\SpecialCharTok{:}\NormalTok{D }\SpecialCharTok{+}\NormalTok{ A}\SpecialCharTok{:}\NormalTok{E }\SpecialCharTok{+}\NormalTok{ B}\SpecialCharTok{:}\NormalTok{C }
+                          \SpecialCharTok{+}\NormalTok{ B}\SpecialCharTok{:}\NormalTok{D }\SpecialCharTok{+}\NormalTok{ B}\SpecialCharTok{:}\NormalTok{E, }\FunctionTok{data.frame}\NormalTok{(spring.num))[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/} \DecValTok{8}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{spring.emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(spring.ut, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ treatment)}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(spring.emm, }\StringTok{\textquotesingle{}fac.contrasts\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast estimate  SE df t.ratio p.value
+##  A         -0.2612 NaN  0     NaN     NaN
+##  B          0.2213 NaN  0     NaN     NaN
+##  C          0.1762 NaN  0     NaN     NaN
+##  D          0.0288 NaN  0     NaN     NaN
+##  E          0.1037 NaN  0     NaN     NaN
+##  A.B        0.0838 NaN  0     NaN     NaN
+##  A.C       -0.1663 NaN  0     NaN     NaN
+##  A.D        0.0563 NaN  0     NaN     NaN
+##  A.E        0.0262 NaN  0     NaN     NaN
+##  B.C        0.0163 NaN  0     NaN     NaN
+##  B.D        0.0187 NaN  0     NaN     NaN
+##  B.E       -0.0362 NaN  0     NaN     NaN
+\end{verbatim}
+
+When looking at this output, we must remember the aliasing scheme and recognise that we can only estimate these effects if all of their alaises are zero. Otherwise, each of these factorial effects is biased and not estimable (we are actually estimating the linear combination of all the aliased effects).
+
+Alternatively, we can fit the regression model directly in the contrasts; \texttt{lm} automatically recognises which pairs of effects are aliased, and chooses the lexicographically first effect to include in the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spring.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C }\SpecialCharTok{+}\NormalTok{ D }\SpecialCharTok{+}\NormalTok{ E) }\SpecialCharTok{\^{}} \DecValTok{5}\NormalTok{, }\AttributeTok{data =}\NormalTok{ spring)}
+\FunctionTok{c}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{coef}\NormalTok{(spring.lm)[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       A1       B1       C1       D1       E1    A1:B1    A1:C1    A1:D1 
+## -0.26125  0.22125  0.17625  0.02875  0.10375  0.08375 -0.16625  0.05625 
+##    A1:E1    B1:C1    B1:D1    B1:E1 A1:B1:C1 A1:B1:D1 A1:B1:E1 
+##  0.02625  0.01625  0.01875 -0.03625  0.00875 -0.03875 -0.04875
+\end{verbatim}
+
+In this experiment, there are three alias string that only include three-factor interactions. We may wish to use these three degrees of freedom to estimate \(\sigma^2\), under the assumption that all six interactions involved in these three strings are zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spring.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (A }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{+}\NormalTok{ C }\SpecialCharTok{+}\NormalTok{ D }\SpecialCharTok{+}\NormalTok{ E) }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{, }\AttributeTok{data =}\NormalTok{ spring)}
+\FunctionTok{anova}\NormalTok{(spring.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: height
+##           Df Sum Sq Mean Sq F value Pr(>F)   
+## A          1 0.2730  0.2730   51.78 0.0055 **
+## B          1 0.1958  0.1958   37.13 0.0089 **
+## C          1 0.1243  0.1243   23.56 0.0167 * 
+## D          1 0.0033  0.0033    0.63 0.4863   
+## E          1 0.0431  0.0431    8.17 0.0647 . 
+## A:B        1 0.0281  0.0281    5.32 0.1043   
+## A:C        1 0.1106  0.1106   20.97 0.0196 * 
+## A:D        1 0.0127  0.0127    2.40 0.2191   
+## A:E        1 0.0028  0.0028    0.52 0.5220   
+## B:C        1 0.0011  0.0011    0.20 0.6848   
+## B:D        1 0.0014  0.0014    0.27 0.6412   
+## B:E        1 0.0053  0.0053    1.00 0.3917   
+## Residuals  3 0.0158  0.0053                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 
   \bibliography{math3014-6027.bib,packages.bib}

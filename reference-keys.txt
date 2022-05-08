@@ -125,6 +125,12 @@ tab:spring-data
 def:regular-fraction
 def:alias-matrix
 def:alt-estimability
+exm:frac-illustrative
+tab:FrF2-example-design
+def:length
+def:resolution
+def:wlp
+def:minab
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -176,4 +182,7 @@ general-method-of-constructing-a-confounded-block-design
 analysis-of-a-confounded-factorial-design
 exercises-4
 fractional-factorial
-estimability-and-aliasing
+est-alias
+general-method-for-choosing-a-fractional-factorial-design
+resolution-and-aberration
+frac-anal
