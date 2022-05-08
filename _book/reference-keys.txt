@@ -3,7 +3,6 @@ eq:slr
 eq:ex-ex-response
 eq:matrix-model
 eq:lsestimators
-eq:simple-efficiency
 fig:simple-efficiency
 tab:anova
 tab:pulp-expt-data
@@ -97,6 +96,7 @@ tab:block-4-fact-effects
 tab:size-of-factorial
 tab:spring-factors
 tab:spring-data
+tab:FrF2-example-design
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -148,4 +148,7 @@ general-method-of-constructing-a-confounded-block-design
 analysis-of-a-confounded-factorial-design
 exercises-4
 fractional-factorial
-estimability-and-aliasing
+est-alias
+general-method-for-choosing-a-fractional-factorial-design
+resolution-and-aberration
+frac-anal

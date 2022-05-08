@@ -128,9 +128,9 @@ CE & = ABD \\
 DE & = ABC \\
 \end{align}
 
-This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \@ref(Spring-experiment) might be used if factor $A$ and its interactions were a priori thought likely to be important (two-factor interactions involving factor $A$ are aliased with four-factor interactions).
+This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \@ref(exm:Spring-experiment) might be used if factor $A$ and its interactions were a priori thought likely to be important (two-factor interactions involving factor $A$ are aliased with four-factor interactions).
 
-## Estimability and aliasing
+## Estimability and aliasing {#est-alias}
 
 Any factorial effect in an alias string is only estimable **if all other effects in that string are assumed zero**^[Except for the defining relation, where no effects are estimable]. Wd can study this further by introducing the **alias matrix**.
 
@@ -171,6 +171,223 @@ For Example \@ref(exm:spring-experiment) we can generate the alias matrix using 
 
 ```{r spring-alias}
 t(alias(spring.lm)$Complete)
+```
+
+## General method for choosing a fractional factorial design
+
+To select a $2^{f-q}$ fractional factorial design:
+
+- choose $q$ independent factorial contrasts for the **generators**, or **defining words**, $\nu_1,\ldots,n_q$.  Typically, we choose higher-order interactions (due to effect hierarchy):
+
+$$
+\nu_{1}=\boldsymbol{c}_{1},\ldots,\nu_{q} = \boldsymbol{c}_{q}\,.
+$$
+
+ - all the hadamard products of $\boldsymbol{c}_{1},\dots,\boldsymbol{c}_{q}$ are also aliased with the mean, and together give the **defining relation**:
+
+$$
+I = \nu_1 = \ldots = \nu_q = \nu_1\nu_q = \ldots = \nu_1\cdots\nu_q\,. 
+$$
+
+ - the **aliasing scheme** is a list of the $2^{f-q}$ **alias strings**. Every effect in one string is estimated by the same contrast in the observations:
+ 
+ $$
+ \begin{array}{ccccccccccccc}
+ I & = & \nu_1 & = & \ldots & = & \nu_q & = & \nu_1\nu_q 
+ & = & \ldots & = & \nu_1\cdots\nu_q \\
+ A & = & A\nu_1 & = & \ldots & = & A\nu_q & = & A\nu_1\nu_q 
+ & = & \ldots & = & A\nu_1\cdots\nu_q \\
+ B & = & B\nu_1 & = & B\ldots & = & B\nu_q & = & B\nu_1\nu_q 
+ & = & \ldots & = & B\nu_1\cdots\nu_q \\
+ \vdots \\
+ CD & = & CD\nu_1 & = & CD\ldots & = & CD\nu_q & = & CD\nu_1\nu_q 
+ & = & CD\ldots & = & CD\nu_1\cdots\nu_q \\
+ \vdots
+ \end{array}
+ $$
+ All the effects within a single alias string are aliased, and cannot be simultaneously aliased. In fact, the estimation of any effect within an alias string can only proceed if all other effects in the string are assumed zero; otherwise, we can estimate the sum of the effects (see Section \@ref(est-alias)).
+ 
+To find the treatments in a particular fraction, we simply need to solve a set of equations of the form
+
+$$
+\nu_1 = \pm 1, \quad \nu_2 + \pm 1, \quad \ldots \quad \nu_q = \pm 1\,,
+$$
+with $2^{f-q}$ treatments satisfying the $2^q$ equations corresponding to each choice of $\pm 1$ for each generator.
+
+::: {.example #frac-illustrative}
+Consider a $2^{6-2}$ design, with $q=2$ generators $ABCE$ and $BCDF$. The defining relation is given by
+
+$$
+I = ABCE = BCDF = ADEF\,.
+$$
+The aliasing scheme has $2^{6-2} = 16$ strings, each of which contains $2^2 = 4$ effects or words.
+
+$$
+\begin{array}{ccccccc}
+I & = & ABCE & = & BCDF & = & ADEF \\
+A & = & BCE & = & ABCDF & = & DEF \\
+B & = & ACE & = & CDF & = & ABDEF \\
+C & = & ABE & = & BDF & = & ACDEF \\
+D & = & ABCDE & = & BCF & = & AEF \\
+E & = & ABC & = & BCDEF & = & ADF \\
+F & = & ABCEF & = & BCD & = & ADE \\
+AB & = & CE & = & ACDF & = & BDEF \\
+AC & = & BE & = & ABDF & = & CDEF \\
+AD & = & BCDE & = & ABCF & = & EF \\
+AE & = & BC & = & ABCDEF & = & DF \\
+AF & = & BCEF & = & ABCD & = & DE \\
+BD & = & ACDE & = & CF & = & ABEF \\
+BF & = & ACEF & = & CD & = & ABDE \\
+ABD & = & CDE & = & ACF & = & BEF \\
+ABF & = & CEF & = & ACD & = & BDE \\
+\end{array}
+$$
+This aliasing scheme can result from any one of the four possible fractions defined by
+
+$$
+ABCE = \pm 1\,,\quad BCDF = \pm 1\,.
+$$
+Each fraction has (essentially) the same statistical properties, except the sign of the biasing coefficients from the alias matrix may be reversed (-1, rather than +1).
+
+For example, the treatments in the fraction may be those $2^{f-q} = 2^{6-2} = 16$ treatments that all have $ABCE = +1$ and $BCDF = +1$.
+:::
+
+We can also use `FrF2` to find two-level fractional factorial designs, as we already saw in Example \@ref(exm:spring-experiment). The `generators` argument can be used to specify which factorial effects to use as generators. These are specified using what `FrF2` refers to as the $f-q$ **base factors**. The $q$ generators must specify with which factorial effects in the base factors the $q$ additional factors are aliased.  
+For Example \@ref(exm:frac-illustrative), a $2^{6-2}$ design, the base factors are $A, B, C, D$ and from our defining relation we have $E = ABC$ and $F = BCD$.
+
+```{r FrF2-example}
+ff.2.6.2 <- FrF2::FrF2(nruns = 16, nfactors = 6, generators = c("ABC", "BCD"), 
+                       randomize = F, alias.info = 3)
+```
+
+Once `FrF2` has generated the design, we can interrogate the aliasing (up to three-factor interactions) using `design.info` (and using the `aliases` function, see Example \@ref(exm:spring-experiment)).
+
+```{r FrFr-example-di, message = F}
+library(FrF2)
+design.info(ff.2.6.2)$aliased
+```
+By default, `FrF2` chooses the fraction defined by each generator being equal to +1.
+
+```{r FrF2-example-design}
+knitr::kable(ff.2.6.2, align = "r", 
+             caption = "Treatments from a $2^{6-2}$ fractional factorial design.")
+```
+
+## Resolution and aberration
+
+Clearly, the numbers of factors involved in the effects in the defining relation play an important role in the properties of the design. 
+
+::: {.definition #length}
+Each factorial effect is commonly referred to as a **word**, and the number of factors involved in a factorial effect is its **length**. 
+:::
+
+For example, word $ABCD$ has length 4; word $BDE$ has length 3.
+
+::: {.definition #resolution}
+The **resolution** of a $2^{f-q}$ design is the length of the shortest word in the defining relation.
+
+A design having resolution $R$ implies that no effect involving $x$ factors is aliased with effects involving less than $R-x$ factors.
+
+Designs of the following resolution are particularly common.
+
+ - *Resolution III*: shortest word of length 3. No main effect is aliased with any other main effect; at least one main effect of aliased with a two-factor interaction.
+
+ - *Resolution IV*: shortest word of length 4. No main effect is aliased with any other main effect or any two-factor interaction; at least one pair of two-factor interactions are aliased together.
+ 
+ - *Resolution V*: shortest word of length 5. No main effect or two-factor interaction is aliased with any other main effect or two-factor interaction.
+:::
+
+For example,
+
+ - $2^{6-2}$, $I = ABCD = CDEF = ABEF$: resolution IV.
+ 
+ - $2^{3-1}$, $I = ABC$: resolution III.
+ 
+::: {.definition #wlp}
+The *word length pattern* of a $2^{f-q}$ design is given by
+
+$$
+W = (w_3, w_4, \ldots, w_f)\,,
+$$
+where $w_i$ is the number of words of length $i$ in the defining relation.
+:::
+
+For example,
+
+ - $d_1$: $2^{7-2}$, $I = ABCF = ADEG = BCDEFG$
+ 
+ - $d_2$: $2^{7-2}$, $I = DEFG = ABCDF = ABCEG$
+
+are both resolution IV designs, but have different word length patterns
+
+  - $W(d_1) = (0, 2, 0, 1, 0)$
+  - $W(d_2) = (0, 1, 2, 0, 0)$.
+
+::: {.definition #minab}
+For two $2^{f-q}$ designs, say $d^\star$ and $d^\dagger$, let $r$ be the smallest integer such that $w_r(d^\star) \ne w_r(d^\dagger)$. Then design $d^\star$ is said to have less **aberration** than design $d^\dagger$ if 
+
+$$
+w_r(d^\star) < w_r(d^\dagger)\,.
+$$
+
+If no design has less aberration than $d^\star$, then $d^\star$ has **minimum aberration**.
+:::
+
+Consider again designs $d_1$ and $d_2$ from above ($2^{7-2}$ fractions). Here,
+
+$$
+\begin{array}{ccccccc}
+w_3(d_1) & = & 0 & = & w_3(d_2) & = & 0 \\
+w_4(d_1) & = & 2 & > & w_3(d_1) & = & 1 \,, \\
+\end{array}
+$$
+and hence $d_2$ has less aberration than $d_1$. In fact, $d_2$ has minimum aberration.
+
+We can use `FrF2` to find designs of a specific resolution using the `resolution` argument (and leaving `nruns` and `generators` unspecified). The resulting design will have the minimum number of runs required to obtain the requested resolution.
+
+```{r FrF2-res}
+ff.2.6.2.r <- FrF2::FrF2(nfactors = 6, resolution = 4, 
+                         randomize = F, alias.info = 3)
+design.info(ff.2.6.2.r)$aliased
+```
+When `generators` and `resolution` are not specified, `FrF2` function selects designs from catalogues of good designs, most of which have minimum aberration.
+
+```{r FrF2-alone}
+ff.2.6.2.a <- FrF2::FrF2(nfactors = 6, nruns = 16, 
+                         randomize = F, alias.info = 3)
+design.info(ff.2.6.2.a)$aliased
+```
+## Analysis of fractional factorial designs {#frac-anal}
+
+The analysis can proceed as for full factorial designs (Chapter \@ref(factorial)). Assuming only one factorial effect in each alias string is non-zero, we can estimate $2^{f-q}-1$ factorial effects (one from each string) either by fitting the  unit-treatment model or the corresponding regression model. 
+
+For Example \@ref(exm:spring-experiment), we can use the unit-treatment model and contrasts to estimate all main effects and selected two-factor interactions, assuming all other factorial effects are zero.
+
+```{r spring-contrast}
+spring$treatment <- factor(1:16)
+spring.ut <- lm(height ~ treatment, data = spring)
+fac.contrasts.emmc <- function(nlevs) {
+  spring.num <- apply(spring[, c("A", "B", "C", "D", "E")], 2, fac_to_numeric)
+  data.frame(model.matrix(~ . + A:B + A:C + A:D + A:E + B:C 
+                          + B:D + B:E, data.frame(spring.num))[, -1] / 8)
+}
+spring.emm <- emmeans::emmeans(spring.ut, ~ treatment)
+emmeans::contrast(spring.emm, 'fac.contrasts')
+```
+When looking at this output, we must remember the aliasing scheme and recognise that we can only estimate these effects if all of their alaises are zero. Otherwise, each of these factorial effects is biased and not estimable (we are actually estimating the linear combination of all the aliased effects).
+
+Alternatively, we can fit the regression model directly in the contrasts; `lm` automatically recognises which pairs of effects are aliased, and chooses the lexicographically first effect to include in the model.
+
+```{r spring-reg}
+spring.lm <- lm(height ~ (A + B + C + D + E) ^ 5, data = spring)
+c(na.omit(2 * coef(spring.lm)[-1]))
+```
+
+In this experiment, there are three alias string that only include three-factor interactions. We may wish to use these three degrees of freedom to estimate $\sigma^2$, under the assumption that all six interactions involved in these three strings are zero.
+
+```{r spring-sigma2}
+spring.lm <- lm(height ~ (A + B + C + D + E) ^ 2, data = spring)
+anova(spring.lm)
 ```
 
 
