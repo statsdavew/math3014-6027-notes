@@ -423,8 +423,8 @@ $$
 We can also find this design using `FrF2`, combining the arguments `generators` and `blocks`.
 
 ```{r frac-block}
-ff.2.6.2.b.4 <- FrF2::FrF2(nruns = 16, nfactors = 6, generators = c("ABC", "ABD"), blocks = c("ACD", "BCD"), 
-                          randomize = F, alias.block.2fis = T, alias.info = 3)
+ff.2.6.2.b.4 <- FrF2::FrF2(nruns = 16, nfactors = 6, generators = c("ABC", "ABD"), blocks = c("ACD", "BCD"),
+                           randomize = F, alias.block.2fis = T, alias.info = 3)
 design.info(ff.2.6.2.b.4)$aliased
 design.info(ff.2.6.2.b.4)$aliased.with.blocks
 ```
@@ -453,3 +453,23 @@ spring.blocks$blocks <- with(data.frame(spring), fac_to_numeric(A) * fac_to_nume
 springb.lm <- lm(height ~ blocks + (A + B + C + D + E) ^ 3, data = spring.blocks)
 anova(springb.lm)
 ```
+
+
+## Exercises
+
+1. A $2^{5-2}$ design has generators $ACD$ and $BCE$.
+
+    a. Write down the full defining relation. What resolution is this design?
+  
+    b. After analysis, factor $E$ turns out to be unimportant. By assuming that all effects involving factor $E$ and all three-factor and higher-order interactions are negligible, determine which two-factor interactions can be estimated together with the four main effects of factors $A$, $B$, $C$ and $D$.
+  
+2. Consider the following two fractional factorial designs.
+ 
+    i. A $2^{6-2}$ design with generators $ABCDE$ and $ABDF$.
+    ii. A $2^{6-2}$ design with generators $ABCE$ and $ABDF$.
+ 
+    a. What is the resolution of each design? 
+  
+    b. Which design would be preferred under the criterion of minimum aberration?
+  
+    c. For design (ii), if we know that any two-factor interaction involving factor $F$ is negligible, which other two-factor interactions can be estimated under the assumption that three-factor and higher-order interactions are also negligible?

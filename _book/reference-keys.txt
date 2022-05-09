@@ -154,3 +154,14 @@ general-method-for-choosing-a-fractional-factorial-design
 resolution-and-aberration
 frac-anal
 blocking-fractional-fractorial-designs
+exm:spring-experiment
+def:regular-fraction
+def:alias-matrix
+def:alt-estimability
+exm:frac-illustrative
+def:length
+def:resolution
+def:wlp
+def:minab
+exm:block-fractional
+exercises-5
