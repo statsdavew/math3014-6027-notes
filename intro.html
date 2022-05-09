@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-08" />
+<meta name="date" content="2022-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -205,6 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="fractional-factorial.html"><a href="fractional-factorial.html#general-method-for-choosing-a-fractional-factorial-design"><i class="fa fa-check"></i><b>6.2</b> General method for choosing a fractional factorial design</a></li>
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
+<li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -725,15 +726,15 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 <li><p>The simplest method here might be to select four black playing cards and four red playing cards, assign one treatment to each colour, shuffle the cards, and then draw them in order. The colour drawn indicates the treatment that should be used to make the next cup of tea. This operation would give one possible randomisation.</p>
 <p>We could of course also use <code>R</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1"></a><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Tea first&quot; 
-## [6] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot;</code></pre></li>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot; 
+## [6] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre></li>
 <li><p>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1"></a><span class="co"># block 1</span></span>
 <span id="cb4-2"><a href="intro.html#cb4-2"></a><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1"></a><span class="co"># block 2</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2"></a><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;</code></pre></li>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot;</code></pre></li>
 </ol>
 </details>
 <ol start="2" style="list-style-type: decimal">

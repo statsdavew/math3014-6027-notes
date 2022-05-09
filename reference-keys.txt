@@ -131,6 +131,8 @@ def:length
 def:resolution
 def:wlp
 def:minab
+exm:block-fractional
+tab:frac-block-design
 intro
 motivation
 aims-of-experimentation-and-some-examples
@@ -186,3 +188,4 @@ est-alias
 general-method-for-choosing-a-fractional-factorial-design
 resolution-and-aberration
 frac-anal
+blocking-fractional-fractorial-designs

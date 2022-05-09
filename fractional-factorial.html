@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-08" />
+<meta name="date" content="2022-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -205,6 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="fractional-factorial.html"><a href="fractional-factorial.html#general-method-for-choosing-a-fractional-factorial-design"><i class="fa fa-check"></i><b>6.2</b> General method for choosing a fractional factorial design</a></li>
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
+<li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -1059,6 +1060,238 @@ and hence <span class="math inline">\(d_2\)</span> has less aberration than <spa
 ## Residuals  3 0.0158  0.0053                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="blocking-fractional-fractorial-designs" class="section level2">
+<h2><span class="header-section-number">6.5</span> Blocking fractional fractorial designs</h2>
+<p>We block fractional factorial designs using the same approach as Chapter <a href="block-factorial.html#block-factorial">5</a>. To block a <span class="math inline">\(2^{f-q}\)</span> design into <span class="math inline">\(b = 2^m\)</span> blocks, we choose <span class="math inline">\(m\)</span> factorial effects to confound with blocks, also confounding all products of these <span class="math inline">\(m\)</span> effects. However, we of course also confound the <span class="math inline">\(2^q-1\)</span> aliases of each of these <span class="math inline">\(2^m-1\)</span> effects. Hence, we actually choose to confound <span class="math inline">\(2^m-1\)</span> <em>strings of factorial effects</em> with blocks.</p>
+<p>We must pay particular attention to make sure we do not accidentically confound a lower-order effect through the aliasing scheme. We can also use <code>FrF2</code> to find blocked factorial designs.</p>
+<div class="example">
+<p><span id="exm:block-fractional" class="example"><strong>Example 6.3  </strong></span>Consider a <span class="math inline">\(2^{6-2}\)</span> design with defining relation</p>
+<p><span class="math display">\[
+I = ABCE = ABDF = CDEF\,.
+\]</span>
+To split this design into <span class="math inline">\(b=2^2 = 4\)</span> blocks of size <span class="math inline">\(k=4\)</span>, we choose <span class="math inline">\(m=2\)</span> defining blocks, and also confound their product.</p>
+<p><span class="math display">\[
+\begin{array}{ccc}
+\mathrm{Block}_1 &amp; = &amp; ACD \\
+\mathrm{Block}_2 &amp; = &amp; BCD \\
+\mathrm{Block}_1\mathrm{Block}_2 &amp; = &amp; AB\,.
+\end{array}
+\]</span>
+We also confound all aliases of these effects:</p>
+<p><span class="math display">\[
+\begin{array}{ccccccccc}
+\mathrm{Block}_1 &amp; = &amp; ACD &amp; = &amp; BDE &amp; = &amp; BCF &amp; = &amp; ADEF \\
+\mathrm{Block}_2 &amp; = &amp; BCD &amp; = &amp; ADE &amp; = &amp; ACF &amp; = &amp; BEF \\
+\mathrm{Block}_1\mathrm{Block}_2 &amp; = &amp; AB &amp; = &amp; CE &amp; = &amp; DF &amp; = &amp; ABCDEF \,.
+\end{array}
+\]</span>
+We can also find this design using <code>FrF2</code>, combining the arguments <code>generators</code> and <code>blocks</code>.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="fractional-factorial.html#cb220-1"></a>ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span> &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">16</span>, <span class="dt">nfactors =</span> <span class="dv">6</span>, <span class="dt">generators =</span> <span class="kw">c</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;ABD&quot;</span>), <span class="dt">blocks =</span> <span class="kw">c</span>(<span class="st">&quot;ACD&quot;</span>, <span class="st">&quot;BCD&quot;</span>), </span>
+<span id="cb220-2"><a href="fractional-factorial.html#cb220-2"></a>                          <span class="dt">randomize =</span> F, <span class="dt">alias.block.2fis =</span> T, <span class="dt">alias.info =</span> <span class="dv">3</span>)</span>
+<span id="cb220-3"><a href="fractional-factorial.html#cb220-3"></a><span class="kw">design.info</span>(ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span>)<span class="op">$</span>aliased</span></code></pre></div>
+<pre><code>## $legend
+## [1] &quot;A=A&quot; &quot;B=B&quot; &quot;C=C&quot; &quot;D=D&quot; &quot;E=E&quot; &quot;F=F&quot;
+## 
+## $main
+## [1] &quot;A=BCE=BDF&quot; &quot;B=ACE=ADF&quot; &quot;C=ABE=DEF&quot; &quot;D=ABF=CEF&quot; &quot;E=ABC=CDF&quot; &quot;F=ABD=CDE&quot;
+## 
+## $fi2
+## [1] &quot;AC=BE&quot; &quot;AD=BF&quot; &quot;AE=BC&quot; &quot;AF=BD&quot; &quot;CD=EF&quot; &quot;CF=DE&quot;
+## 
+## $fi3
+## character(0)</code></pre>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="fractional-factorial.html#cb222-1"></a><span class="kw">design.info</span>(ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span>)<span class="op">$</span>aliased.with.blocks</span></code></pre></div>
+<pre><code>##  [1] &quot;AB&quot;  &quot;CE&quot;  &quot;DF&quot;  &quot;ACD&quot; &quot;ACF&quot; &quot;ADE&quot; &quot;AEF&quot; &quot;BCD&quot; &quot;BCF&quot; &quot;BDE&quot; &quot;BEF&quot;</code></pre>
+<p>One block of this design can be found by finding all the treatment combinations that satisfy, for example,</p>
+<p><span class="math display">\[
+ABCE = +1, ABDF = +1, ACD = -1, BCD = -1\,.
+\]</span>
+Fixing values for <span class="math inline">\(ABCE\)</span> and <span class="math inline">\(ABDF\)</span>, the other blocks are formed from the other 3 combinations of each of <span class="math inline">\(ACD\)</span> and <span class="math inline">\(BCD\)</span> being equal to <span class="math inline">\(\pm 1\)</span>. We can also use <code>FrF2</code>.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="fractional-factorial.html#cb224-1"></a>block12 &lt;-<span class="st"> </span>ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span>[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>, ]</span>
+<span id="cb224-2"><a href="fractional-factorial.html#cb224-2"></a>block34 &lt;-<span class="st"> </span>ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span>[<span class="dv">9</span><span class="op">:</span><span class="dv">16</span>, ]</span>
+<span id="cb224-3"><a href="fractional-factorial.html#cb224-3"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">cbind</span>(block12, block34), </span>
+<span id="cb224-4"><a href="fractional-factorial.html#cb224-4"></a>      <span class="dt">caption =</span> <span class="st">&quot;Fractional factorial </span></span>
+<span id="cb224-5"><a href="fractional-factorial.html#cb224-5"></a><span class="st">      $2^{6-2}$ design in $b=4$ blocks of size $k=4$.&quot;</span>,</span>
+<span id="cb224-6"><a href="fractional-factorial.html#cb224-6"></a>      <span class="dt">align =</span> <span class="st">&quot;r&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:frac-block-design">Table 6.5: </span>Fractional factorial
+<span class="math inline">\(2^{6-2}\)</span> design in <span class="math inline">\(b=4\)</span> blocks of size <span class="math inline">\(k=4\)</span>.</caption>
+<thead>
+<tr class="header">
+<th align="right">Blocks</th>
+<th align="right">A</th>
+<th align="right">B</th>
+<th align="right">C</th>
+<th align="right">D</th>
+<th align="right">E</th>
+<th align="right">F</th>
+<th align="right">Blocks</th>
+<th align="right">A</th>
+<th align="right">B</th>
+<th align="right">C</th>
+<th align="right">D</th>
+<th align="right">E</th>
+<th align="right">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">3</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">4</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Analysis proceeds as before, except no factorial effect can be estimated that is within an alias string that is confounded with blocks. For Example, split the spring experiment from Exa,ple <a href="fractional-factorial.html#exm:spring-experiment">6.1</a> into <span class="math inline">\(b=2\)</span> blocks of size <span class="math inline">\(k=8\)</span> using confounding the alias string <span class="math inline">\(ABE = ACD\)</span> with blocks.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="fractional-factorial.html#cb225-1"></a>spring.blocks &lt;-<span class="st"> </span>spring</span>
+<span id="cb225-2"><a href="fractional-factorial.html#cb225-2"></a>spring.blocks<span class="op">$</span>blocks &lt;-<span class="st"> </span><span class="kw">with</span>(<span class="kw">data.frame</span>(spring), <span class="kw">fac_to_numeric</span>(A) <span class="op">*</span><span class="st"> </span><span class="kw">fac_to_numeric</span>(B) <span class="op">*</span><span class="st"> </span><span class="kw">fac_to_numeric</span>(C))</span>
+<span id="cb225-3"><a href="fractional-factorial.html#cb225-3"></a>springb.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(height <span class="op">~</span><span class="st"> </span>blocks <span class="op">+</span><span class="st"> </span>(A <span class="op">+</span><span class="st"> </span>B <span class="op">+</span><span class="st"> </span>C <span class="op">+</span><span class="st"> </span>D <span class="op">+</span><span class="st"> </span>E) <span class="op">^</span><span class="st"> </span><span class="dv">3</span>, <span class="dt">data =</span> spring.blocks)</span>
+<span id="cb225-4"><a href="fractional-factorial.html#cb225-4"></a><span class="kw">anova</span>(springb.lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: height
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## blocks     1 0.0003  0.0003     NaN    NaN
+## A          1 0.2730  0.2730     NaN    NaN
+## B          1 0.1958  0.1958     NaN    NaN
+## C          1 0.1243  0.1243     NaN    NaN
+## D          1 0.0033  0.0033     NaN    NaN
+## E          1 0.0431  0.0431     NaN    NaN
+## A:B        1 0.0281  0.0281     NaN    NaN
+## A:C        1 0.1106  0.1106     NaN    NaN
+## A:D        1 0.0127  0.0127     NaN    NaN
+## A:E        1 0.0028  0.0028     NaN    NaN
+## B:C        1 0.0011  0.0011     NaN    NaN
+## B:D        1 0.0014  0.0014     NaN    NaN
+## B:E        1 0.0053  0.0053     NaN    NaN
+## A:B:D      1 0.0060  0.0060     NaN    NaN
+## A:B:E      1 0.0095  0.0095     NaN    NaN
+## Residuals  0 0.0000     NaN</code></pre>
 
 </div>
 </div>
