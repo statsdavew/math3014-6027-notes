@@ -206,6 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
 <li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
+<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -1087,8 +1088,8 @@ We also confound all aliases of these effects:</p>
 \end{array}
 \]</span>
 We can also find this design using <code>FrF2</code>, combining the arguments <code>generators</code> and <code>blocks</code>.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="fractional-factorial.html#cb220-1"></a>ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span> &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">16</span>, <span class="dt">nfactors =</span> <span class="dv">6</span>, <span class="dt">generators =</span> <span class="kw">c</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;ABD&quot;</span>), <span class="dt">blocks =</span> <span class="kw">c</span>(<span class="st">&quot;ACD&quot;</span>, <span class="st">&quot;BCD&quot;</span>), </span>
-<span id="cb220-2"><a href="fractional-factorial.html#cb220-2"></a>                          <span class="dt">randomize =</span> F, <span class="dt">alias.block.2fis =</span> T, <span class="dt">alias.info =</span> <span class="dv">3</span>)</span>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="fractional-factorial.html#cb220-1"></a>ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span> &lt;-<span class="st"> </span>FrF2<span class="op">::</span><span class="kw">FrF2</span>(<span class="dt">nruns =</span> <span class="dv">16</span>, <span class="dt">nfactors =</span> <span class="dv">6</span>, <span class="dt">generators =</span> <span class="kw">c</span>(<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;ABD&quot;</span>), <span class="dt">blocks =</span> <span class="kw">c</span>(<span class="st">&quot;ACD&quot;</span>, <span class="st">&quot;BCD&quot;</span>),</span>
+<span id="cb220-2"><a href="fractional-factorial.html#cb220-2"></a>                           <span class="dt">randomize =</span> F, <span class="dt">alias.block.2fis =</span> T, <span class="dt">alias.info =</span> <span class="dv">3</span>)</span>
 <span id="cb220-3"><a href="fractional-factorial.html#cb220-3"></a><span class="kw">design.info</span>(ff.<span class="dv">2</span>.<span class="dv">6</span>.<span class="fl">2.</span>b<span class="fl">.4</span>)<span class="op">$</span>aliased</span></code></pre></div>
 <pre><code>## $legend
 ## [1] &quot;A=A&quot; &quot;B=B&quot; &quot;C=C&quot; &quot;D=D&quot; &quot;E=E&quot; &quot;F=F&quot;
@@ -1292,6 +1293,26 @@ Fixing values for <span class="math inline">\(ABCE\)</span> and <span class="mat
 ## A:B:D      1 0.0060  0.0060     NaN    NaN
 ## A:B:E      1 0.0095  0.0095     NaN    NaN
 ## Residuals  0 0.0000     NaN</code></pre>
+</div>
+<div id="exercises-5" class="section level2">
+<h2><span class="header-section-number">6.6</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>A <span class="math inline">\(2^{5-2}\)</span> design has generators <span class="math inline">\(ACD\)</span> and <span class="math inline">\(BCE\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Write down the full defining relation. What resolution is this design?</p></li>
+<li><p>After analysis, factor <span class="math inline">\(E\)</span> turns out to be unimportant. By assuming that all effects involving factor <span class="math inline">\(E\)</span> and all three-factor and higher-order interactions are negligible, determine which two-factor interactions can be estimated together with the four main effects of factors <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>.</p></li>
+</ol></li>
+<li><p>Consider the following two fractional factorial designs.</p>
+<ol style="list-style-type: lower-roman">
+<li>A <span class="math inline">\(2^{6-2}\)</span> design with generators <span class="math inline">\(ABCDE\)</span> and <span class="math inline">\(ABDF\)</span>.</li>
+<li>A <span class="math inline">\(2^{6-2}\)</span> design with generators <span class="math inline">\(ABCE\)</span> and <span class="math inline">\(ABDF\)</span>.</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>What is the resolution of each design?</p></li>
+<li><p>Which design would be preferred under the criterion of minimum aberration?</p></li>
+<li><p>For design (ii), if we know that any two-factor interaction involving factor <span class="math inline">\(F\)</span> is negligible, which other two-factor interactions can be estimated under the assumption that three-factor and higher-order interactions are also negligible?</p></li>
+</ol></li>
+</ol>
 
 </div>
 </div>

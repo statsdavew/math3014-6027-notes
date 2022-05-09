@@ -189,3 +189,4 @@ general-method-for-choosing-a-fractional-factorial-design
 resolution-and-aberration
 frac-anal
 blocking-fractional-fractorial-designs
+exercises-5
