@@ -390,4 +390,66 @@ spring.lm <- lm(height ~ (A + B + C + D + E) ^ 2, data = spring)
 anova(spring.lm)
 ```
 
+## Blocking fractional fractorial designs
 
+We block fractional factorial designs using the same approach as Chapter \@ref(block-factorial). To block a $2^{f-q}$ design into $b = 2^m$ blocks, we choose $m$ factorial effects to confound with blocks, also confounding all products of these $m$ effects. However, we of course also confound the $2^q-1$ aliases of each of these $2^m-1$ effects. Hence, we actually choose to confound $2^m-1$ *strings of factorial effects* with blocks.
+
+We must pay particular attention to make sure we do not accidentically confound a lower-order effect through the aliasing scheme. We can also use `FrF2` to find blocked factorial designs.
+
+::: {.example #block-fractional}
+Consider a $2^{6-2}$ design with defining relation
+
+$$
+I = ABCE = ABDF = CDEF\,.
+$$
+To split this design into $b=2^2 = 4$ blocks of size $k=4$, we choose $m=2$ defining blocks, and also confound their product.
+
+$$
+\begin{array}{ccc}
+\mathrm{Block}_1 & = & ACD \\
+\mathrm{Block}_2 & = & BCD \\
+\mathrm{Block}_1\mathrm{Block}_2 & = & AB\,.
+\end{array}
+$$
+We also confound all aliases of these effects:
+
+$$
+\begin{array}{ccccccccc}
+\mathrm{Block}_1 & = & ACD & = & BDE & = & BCF & = & ADEF \\
+\mathrm{Block}_2 & = & BCD & = & ADE & = & ACF & = & BEF \\
+\mathrm{Block}_1\mathrm{Block}_2 & = & AB & = & CE & = & DF & = & ABCDEF \,.
+\end{array}
+$$
+We can also find this design using `FrF2`, combining the arguments `generators` and `blocks`.
+
+```{r frac-block}
+ff.2.6.2.b.4 <- FrF2::FrF2(nruns = 16, nfactors = 6, generators = c("ABC", "ABD"), blocks = c("ACD", "BCD"), 
+                          randomize = F, alias.block.2fis = T, alias.info = 3)
+design.info(ff.2.6.2.b.4)$aliased
+design.info(ff.2.6.2.b.4)$aliased.with.blocks
+```
+One block of this design can be found by finding all the treatment combinations that satisfy, for example,
+
+$$
+ABCE = +1, ABDF = +1, ACD = -1, BCD = -1\,.
+$$
+Fixing values for $ABCE$ and $ABDF$, the other blocks are formed from the other 3 combinations of each of $ACD$ and $BCD$ being equal to $\pm 1$. We can also use `FrF2`.
+
+```{r frac-block-design}
+block12 <- ff.2.6.2.b.4[1:8, ]
+block34 <- ff.2.6.2.b.4[9:16, ]
+knitr::kable(cbind(block12, block34), 
+      caption = "Fractional factorial 
+      $2^{6-2}$ design in $b=4$ blocks of size $k=4$.",
+      align = "r")
+```
+:::
+
+Analysis proceeds as before, except no factorial effect can be estimated that is within an alias string that is confounded with blocks. For Example, split the spring experiment from Exa,ple \@ref(exm:spring-experiment) into $b=2$ blocks of size $k=8$ using confounding the alias string $ABE = ACD$ with blocks.
+
+```{r spring-blocks, warning = F}
+spring.blocks <- spring
+spring.blocks$blocks <- with(data.frame(spring), fac_to_numeric(A) * fac_to_numeric(B) * fac_to_numeric(C))
+springb.lm <- lm(height ~ blocks + (A + B + C + D + E) ^ 3, data = spring.blocks)
+anova(springb.lm)
+```
