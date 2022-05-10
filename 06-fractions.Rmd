@@ -165,7 +165,7 @@ E(\boldsymbol{a}^{\mathrm{T}}\bY) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
 $$
 :::
 
-Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the $A$ matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition \@ref{def:alt-estimability}, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.
+Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the $A$ matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition \@ref(def:alt-estimability), each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.
 
 For Example \@ref(exm:spring-experiment) we can generate the alias matrix using the `alias` function.
 
