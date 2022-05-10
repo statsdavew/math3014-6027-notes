@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-09" />
+<meta name="date" content="2022-05-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -629,7 +629,7 @@ where <span class="math inline">\(A = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}
 E(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
 \]</span></p>
 </div>
-<p>Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the <span class="math inline">\(A\)</span> matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition @ref{def:alt-estimability}, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.</p>
+<p>Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the <span class="math inline">\(A\)</span> matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition <a href="fractional-factorial.html#def:alt-estimability">6.3</a>, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.</p>
 <p>For Example <a href="fractional-factorial.html#exm:spring-experiment">6.1</a> we can generate the alias matrix using the <code>alias</code> function.</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="fractional-factorial.html#cb204-1"></a><span class="kw">t</span>(<span class="kw">alias</span>(spring.lm)<span class="op">$</span>Complete)</span></code></pre></div>
 <pre><code>##             A1:C1:D1 A1:C1:E1 A1:D1:E1 B1:C1:D1 B1:C1:E1 B1:D1:E1 C1:D1:E1
