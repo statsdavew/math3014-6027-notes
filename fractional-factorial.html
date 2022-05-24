@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-10" />
+<meta name="date" content="2022-05-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1302,6 +1302,31 @@ Fixing values for <span class="math inline">\(ABCE\)</span> and <span class="mat
 <li><p>Write down the full defining relation. What resolution is this design?</p></li>
 <li><p>After analysis, factor <span class="math inline">\(E\)</span> turns out to be unimportant. By assuming that all effects involving factor <span class="math inline">\(E\)</span> and all three-factor and higher-order interactions are negligible, determine which two-factor interactions can be estimated together with the four main effects of factors <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>.</p></li>
 </ol></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary>
+a. The full defining relation is</p>
+<p><span class="math display">\[
+I = ACD = BCE = ABDE\,.
+\]</span>
+The shortest word in the defining relation has length three, and therefore the design has resolution III.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Consider the full aliasing scheme:</li>
+</ol>
+<span class="math display">\[
+\begin{array}{ccccccc}
+A &amp; = &amp; CD &amp; = &amp; ABCE &amp; = &amp; BDE \\
+B &amp; = &amp; ABCD &amp; = &amp; CE &amp; = &amp; ADE \\
+C &amp; = &amp; AD &amp; = &amp; BE &amp; = &amp; ABCDE \\ 
+D &amp; = &amp; AC &amp; = &amp; BCDE &amp; = &amp; ABE \\
+E &amp; = &amp; ACDE &amp; = &amp; BC &amp; = &amp; ABD \\
+AB &amp; = &amp; BCD &amp; = &amp; ACE &amp; = &amp; DE \\
+AE &amp; = &amp; CDE &amp; = &amp; ABC &amp; = &amp; BD \\ 
+\end{array}
+\]</span>
+If all the factorial effects involving factor <span class="math inline">\(E\)</span> and all three-factor and higher-order interactions are negligible, we can estimate the two-factor interactions <span class="math inline">\(AB\)</span>, <span class="math inline">\(BC\)</span> and <span class="math inline">\(BD\)</span> in addition to the main effects of the first four factors.
+</details>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Consider the following two fractional factorial designs.</p>
 <ol style="list-style-type: lower-roman">
 <li>A <span class="math inline">\(2^{6-2}\)</span> design with generators <span class="math inline">\(ABCDE\)</span> and <span class="math inline">\(ABDF\)</span>.</li>
@@ -1310,9 +1335,29 @@ Fixing values for <span class="math inline">\(ABCE\)</span> and <span class="mat
 <ol style="list-style-type: lower-alpha">
 <li><p>What is the resolution of each design?</p></li>
 <li><p>Which design would be preferred under the criterion of minimum aberration?</p></li>
-<li><p>For design (ii), if we know that any two-factor interaction involving factor <span class="math inline">\(F\)</span> is negligible, which other two-factor interactions can be estimated under the assumption that three-factor and higher-order interactions are also negligible?</p></li>
+<li><p>For design ii., if we know that any two-factor interaction involving factor <span class="math inline">\(F\)</span> is negligible, which other two-factor interactions can be estimated under the assumption that three-factor and higher-order interactions are also negligible?</p></li>
 </ol></li>
 </ol>
+<details>
+<p><summary><b>Solution</b></summary>
+a. Design i. has full defining relation <span class="math inline">\(I = ABCDE = ABDF = CEF\)</span>, and hence is resolution III. Design ii. has full defining relation <span class="math inline">\(I = ABCE = ABDF = CDEF\)</span>, and hence is resolution IV.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>Design ii. would be preferred under the citerion of minimum aberration, as it is of higher resolution.</p></li>
+<li><p>The alias strings from design ii. including two-factor interactions are as below:</p></li>
+</ol>
+<span class="math display">\[
+\begin{array}{ccccccc}
+AB &amp; = &amp; CE &amp; = &amp; DF &amp; = &amp; ABCDEF \\
+AC &amp; = &amp; BE &amp; = &amp; BCDF &amp; = &amp; ADEF \\
+AD &amp; = &amp; BCDE &amp; = &amp; BF &amp; = &amp; ACEF \\
+AE &amp; = &amp; BC &amp; = &amp; BDEF &amp; = &amp; ACDF \\
+AF &amp; = &amp; BCEF &amp; = &amp; BD &amp; = &amp; ACDE \\
+CD &amp; = &amp; ABDE &amp; = &amp; ABCF &amp; = &amp; EF \\
+CF &amp; = &amp; ABEF &amp; = &amp; ABCD &amp; = &amp; DE \\
+\end{array}
+\]</span>
+It follows that if all two-factor interactions that involve factor <span class="math inline">\(F\)</span> are neglible, along with all three-factor and higher-order interactions, then we can estimate two-factor interactions <span class="math inline">\(AD\)</span>, <span class="math inline">\(BD\)</span>, <span class="math inline">\(CD\)</span> and <span class="math inline">\(DE\)</span>. The pairs of interactions <span class="math inline">\(AB = CE\)</span>, <span class="math inline">\(AC = BE\)</span> and <span class="math inline">\(AE = BC\)</span> are still aliased together.
+</details>
 
 </div>
 </div>
