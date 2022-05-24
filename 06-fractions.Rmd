@@ -462,6 +462,30 @@ anova(springb.lm)
     a. Write down the full defining relation. What resolution is this design?
   
     b. After analysis, factor $E$ turns out to be unimportant. By assuming that all effects involving factor $E$ and all three-factor and higher-order interactions are negligible, determine which two-factor interactions can be estimated together with the four main effects of factors $A$, $B$, $C$ and $D$.
+    
+<details><summary><b>Solution</b></summary>
+a. The full defining relation is
+
+$$
+I = ACD = BCE = ABDE\,.
+$$
+The shortest word in the defining relation has length three, and therefore the design has resolution III.
+
+b. Consider the full aliasing scheme:
+
+$$
+\begin{array}{ccccccc}
+A & = & CD & = & ABCE & = & BDE \\
+B & = & ABCD & = & CE & = & ADE \\
+C & = & AD & = & BE & = & ABCDE \\ 
+D & = & AC & = & BCDE & = & ABE \\
+E & = & ACDE & = & BC & = & ABD \\
+AB & = & BCD & = & ACE & = & DE \\
+AE & = & CDE & = & ABC & = & BD \\ 
+\end{array}
+$$
+If all the factorial effects involving factor $E$ and all three-factor and higher-order interactions are negligible, we can estimate the two-factor interactions $AB$, $BC$ and $BD$ in addition to the main effects of the first four factors.
+</details>
   
 2. Consider the following two fractional factorial designs.
  
@@ -472,4 +496,27 @@ anova(springb.lm)
   
     b. Which design would be preferred under the criterion of minimum aberration?
   
-    c. For design (ii), if we know that any two-factor interaction involving factor $F$ is negligible, which other two-factor interactions can be estimated under the assumption that three-factor and higher-order interactions are also negligible?
+    c. For design ii., if we know that any two-factor interaction involving factor $F$ is negligible, which other two-factor interactions can be estimated under the assumption that three-factor and higher-order interactions are also negligible?
+
+<details><summary><b>Solution</b></summary>
+a. Design i. has full defining relation $I = ABCDE = ABDF = CEF$, and hence is resolution III. Design ii. has full defining relation $I = ABCE = ABDF = CDEF$, and hence is resolution IV.
+
+b. Design ii. would be preferred under the citerion of minimum aberration, as it is of higher resolution.
+
+c. The alias strings from design ii. including two-factor interactions are as below:
+
+$$
+\begin{array}{ccccccc}
+AB & = & CE & = & DF & = & ABCDEF \\
+AC & = & BE & = & BCDF & = & ADEF \\
+AD & = & BCDE & = & BF & = & ACEF \\
+AE & = & BC & = & BDEF & = & ACDF \\
+AF & = & BCEF & = & BD & = & ACDE \\
+CD & = & ABDE & = & ABCF & = & EF \\
+CF & = & ABEF & = & ABCD & = & DE \\
+\end{array}
+$$
+It follows that if all two-factor interactions that involve factor $F$ are neglible, along with all three-factor and higher-order interactions, then we can estimate two-factor interactions $AD$, $BD$, $CD$ and $DE$. The pairs of interactions $AB = CE$, $AC = BE$ and $AE = BC$ are still aliased together.
+</details>
+
+
