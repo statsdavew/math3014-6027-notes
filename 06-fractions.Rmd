@@ -519,4 +519,65 @@ $$
 It follows that if all two-factor interactions that involve factor $F$ are neglible, along with all three-factor and higher-order interactions, then we can estimate two-factor interactions $AD$, $BD$, $CD$ and $DE$. The pairs of interactions $AB = CE$, $AC = BE$ and $AE = BC$ are still aliased together.
 </details>
 
+3. 
+    a. Design an experiment with $n=8$ runs to study the effect of the following five factors on yield:
+        - $A$: temperature (160&deg;F or 180&deg;F)
+        - $B$: concentration (30% or 40%)
+        - $C$: catalyst (1 or 2)
+        - $D$: stirring rate (60 or 100 rpm)
+        - $E$: pH (low or high).
+        
+        It is known that the combinations temperature 180&deg;F, concentration 40%, stirring rate 100 rpm and temperature 180&deg;F, catalyst 2, pH high may lead to disastrous results and should be avoided. Write down the design in coded (-1, +1) units.
+    
+    b. For the five factors in part (a), find a design with $n=8$ runs such that the temperature-by-catalyst interaction ($AC$) and the concentration-by-catalyst ($BC$) interactions are neither aliased with main effects or with each other.
+    
+<details><summary><b>Solution</b></summary>
+a. We require a $2^{5-2}$ fractional factorial design. We could choose to alias the $q=2$ interactions $ABD$ and $ACE$ wth the mean, along with their product $BCDE$. 
+
+    We want to avoid fractions with $A = +1$, $B = +1$ and $D = +1$, and $A = +1$, $C = +1$ and $E = +1$. These lead to $ABD = +1$ and $ACE = +1$, which together define one of the four possible fractions. Hence we just need top choose one of the three other choices, e.g. $ABD = -1$ and $ACE = -1$, giving
+
+    | Run |  A |  B | C  | D  | E  |
+| :-: | -: | -: | -: | -: | -: |
+| 1 | -1 | -1 | -1 | -1 | -1 |
+| 2 | -1 | +1 | +1 | +1 | +1 |
+| 3 | -1 | -1 | +1 | -1 | +1 |
+| 4 | -1 | +1 | -1 | +1 | -1 |
+| 5 | +1 | -1 | +1 | +1 | -1 |
+| 6 | +1 | +1 | -1 | -1 | +1 |
+| 7 | +1 | -1 | -1 | +1 | +1 |
+| 8 | +1 | +1 | +1 | -1 | -1 | 
+
+b. We need a $2^{5-2}$ fractional factorial design such that $AC$ and $BC$ are not alised with main effects or each other. Therefore, our defining relation cannot contain any three letter words contain $AC$ or $BC$. A design with defining relation
+
+    $$
+    I = ABDE = ABCE = CD
+    $$
+    has this property, as $AC = BCDE = BE = AD$ and $BC = ACDE = AE = BD$. There are also other choices that have this property.
+
+    [To find this design, I started with the alias strings I wanted for $AC$ and $BC$ and then worked backwards.]
+
+</details>
+    
+4. An experimenter who wishes to use a $2^{8-2}$ design can only do 16 runs per day, and would like to include "day" as a blocking factor. What design would you recommend and why? Give the defining relation of the fraction you choose, and the defining generators for the blocks. Which two-factor interactions can be clearly estimated?
+
+<details><summary><b>Solution</b></summary>
+The minimum aberration resolution V design has defining relation $I = ABCDG = ABEFGH = CDEFH$ (there are other similar possibilities). 
+
+There are 64 alias strings (including the defining relation) and we need to choose two to define our blocks (remembering the product will also be confounded). Two good choices are
+
+$$
+ACE = BDEG = BCFGH = ADFH
+$$
+and
+
+$$
+BDF = ACFG = ADEGH = BCEH\,,
+$$
+with product
+
+$$
+ABCDEF = EFG = CDGH = ABH\,.
+$$
+This choice leads to no two-factor interactions being confounded with blocks and hence, as the fraction is resolution V, all two-factor interactions are clear of main effects and other two-factor interactions.
+</details>
 
