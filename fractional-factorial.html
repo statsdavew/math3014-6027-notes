@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-24" />
+<meta name="date" content="2022-05-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1357,6 +1357,64 @@ CF &amp; = &amp; ABEF &amp; = &amp; ABCD &amp; = &amp; DE \\
 \end{array}
 \]</span>
 It follows that if all two-factor interactions that involve factor <span class="math inline">\(F\)</span> are neglible, along with all three-factor and higher-order interactions, then we can estimate two-factor interactions <span class="math inline">\(AD\)</span>, <span class="math inline">\(BD\)</span>, <span class="math inline">\(CD\)</span> and <span class="math inline">\(DE\)</span>. The pairs of interactions <span class="math inline">\(AB = CE\)</span>, <span class="math inline">\(AC = BE\)</span> and <span class="math inline">\(AE = BC\)</span> are still aliased together.
+</details>
+<ol start="3" style="list-style-type: decimal">
+<li><ol style="list-style-type: lower-alpha">
+<li><p>Design an experiment with <span class="math inline">\(n=8\)</span> runs to study the effect of the following five factors on yield:</p>
+<ul>
+<li><span class="math inline">\(A\)</span>: temperature (160°F or 180°F)</li>
+<li><span class="math inline">\(B\)</span>: concentration (30% or 40%)</li>
+<li><span class="math inline">\(C\)</span>: catalyst (1 or 2)</li>
+<li><span class="math inline">\(D\)</span>: stirring rate (60 or 100 rpm)</li>
+<li><span class="math inline">\(E\)</span>: pH (low or high).</li>
+</ul>
+<p>It is known that the combinations temperature 180°F, concentration 40%, stirring rate 100 rpm and temperature 180°F, catalyst 2, pH high may lead to disastrous results and should be avoided. Write down the design in coded (-1, +1) units.</p></li>
+<li><p>For the five factors in part (a), find a design with <span class="math inline">\(n=8\)</span> runs such that the temperature-by-catalyst interaction (<span class="math inline">\(AC\)</span>) and the concentration-by-catalyst (<span class="math inline">\(BC\)</span>) interactions are neither aliased with main effects or with each other.</p></li>
+</ol></li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary>
+a. We require a <span class="math inline">\(2^{5-2}\)</span> fractional factorial design. We could choose to alias the <span class="math inline">\(q=2\)</span> interactions <span class="math inline">\(ABD\)</span> and <span class="math inline">\(ACE\)</span> wth the mean, along with their product <span class="math inline">\(BCDE\)</span>.</p>
+<pre><code>We want to avoid fractions with $A = +1$, $B = +1$ and $D = +1$, and $A = +1$, $C = +1$ and $E = +1$. These lead to $ABD = +1$ and $ACE = +1$, which together define one of the four possible fractions. Hence we just need top choose one of the three other choices, e.g. $ABD = -1$ and $ACE = -1$, giving
+
+| Run |  A |  B | C  | D  | E  |</code></pre>
+<div class="line-block">:-: | -: | -: | -: | -: | -: |<br />
+1 | -1 | -1 | -1 | -1 | -1 |<br />
+2 | -1 | +1 | +1 | +1 | +1 |<br />
+3 | -1 | -1 | +1 | -1 | +1 |<br />
+4 | -1 | +1 | -1 | +1 | -1 |<br />
+5 | +1 | -1 | +1 | +1 | -1 |<br />
+6 | +1 | +1 | -1 | -1 | +1 |<br />
+7 | +1 | -1 | -1 | +1 | +1 |<br />
+8 | +1 | +1 | +1 | -1 | -1 |</div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>We need a <span class="math inline">\(2^{5-2}\)</span> fractional factorial design such that <span class="math inline">\(AC\)</span> and <span class="math inline">\(BC\)</span> are not alised with main effects or each other. Therefore, our defining relation cannot contain any three letter words contain <span class="math inline">\(AC\)</span> or <span class="math inline">\(BC\)</span>. A design with defining relation</p>
+<p><span class="math display">\[
+ I = ABDE = ABCE = CD
+ \]</span>
+has this property, as <span class="math inline">\(AC = BCDE = BE = AD\)</span> and <span class="math inline">\(BC = ACDE = AE = BD\)</span>. There are also other choices that have this property.</p>
+<p>[To find this design, I started with the alias strings I wanted for <span class="math inline">\(AC\)</span> and <span class="math inline">\(BC\)</span> and then worked backwards.]</p></li>
+</ol>
+</details>
+<ol start="4" style="list-style-type: decimal">
+<li>An experimenter who wishes to use a <span class="math inline">\(2^{8-2}\)</span> design can only do 16 runs per day, and would like to include “day” as a blocking factor. What design would you recommend and why? Give the defining relation of the fraction you choose, and the defining generators for the blocks. Which two-factor interactions can be clearly estimated?</li>
+</ol>
+<details>
+<p><summary><b>Solution</b></summary>
+The minimum aberration resolution V design has defining relation <span class="math inline">\(I = ABCDG = ABEFGH = CDEFH\)</span> (there are other similar possibilities).</p>
+<p>There are 64 alias strings (including the defining relation) and we need to choose two to define our blocks (remembering the product will also be confounded). Two good choices are</p>
+<p><span class="math display">\[
+ACE = BDEG = BCFGH = ADFH
+\]</span>
+and</p>
+<p><span class="math display">\[
+BDF = ACFG = ADEGH = BCEH\,,
+\]</span>
+with product</p>
+<span class="math display">\[
+ABCDEF = EFG = CDGH = ABH\,.
+\]</span>
+This choice leads to no two-factor interactions being confounded with blocks and hence, as the fraction is resolution V, all two-factor interactions are clear of main effects and other two-factor interactions.
 </details>
 
 </div>
