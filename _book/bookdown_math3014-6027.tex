@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{book}
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2022-05-28}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -109,15 +113,11 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-05-25}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -181,6 +181,10 @@ In this course we consider only \emph{intervention} experiments, in which some a
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
+
+\begin{verbatim}
+## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
+\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -780,11 +784,27 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
@@ -887,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Tea first" 
-## [6] "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "Tea first" 
+## [6] "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -912,7 +932,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -1063,7 +1083,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1102,7 +1130,15 @@ Solution
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -1141,7 +1177,15 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
     >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
   \toprule
-  Source & Degrees of freedom & Sums of squares & Mean square \\
+  \begin{minipage}[b]{\linewidth}\centering
+  Source
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Degrees of freedom
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Sums of squares
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+  Mean square
+  \end{minipage} \\
   \midrule
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
@@ -2781,7 +2825,15 @@ and has the form:
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
 \toprule
-Source & Degrees of freedom & Sums of squares & Mean square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Degrees of freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sums of squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean square
+\end{minipage} \\
 \midrule
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
@@ -3128,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    0    1    0    0    0    0    1     1     0     0     1     1
-## [2,]    0    0    0    0    0    0    1    1    0     1     1     1     1     1
-## [3,]    1    0    0    1    0    1    0    1    1     0     1     1     0     0
-## [4,]    1    1    0    0    1    1    1    0    0     0     0     1     0     1
-## [5,]    1    0    1    0    1    1    0    0    0     1     1     0     1     0
-## [6,]    0    1    1    0    0    1    1    1    1     1     0     0     0     0
-## [7,]    0    0    1    1    1    0    1    0    1     0     1     0     0     1
-## [8,]    0    1    1    1    1    0    0    1    0     0     0     1     1     0
+## [1,]    0    1    1    1    0    0    0    0    0     1     0     1     1     1
+## [2,]    0    0    0    0    0    0    1    1    1     0     1     1     1     1
+## [3,]    0    1    0    1    0    1    0    1    1     1     1     0     0     0
+## [4,]    0    1    1    0    1    1    1    1    0     0     0     0     0     1
+## [5,]    1    1    0    0    1    1    0    0    0     0     1     1     1     0
+## [6,]    1    0    1    0    0    1    1    0    1     1     0     1     0     0
+## [7,]    1    0    0    1    1    0    1    0    0     1     1     0     0     1
+## [8,]    1    0    1    1    1    0    0    1    1     0     0     0     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4670,35 +4722,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0015\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0037 & 0.0334\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0037 & 0.0352\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0054 & 0.0495\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0058 & 0.0521\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0071 & 0.0634\\
+time & 2.5675 & 0.66 & 3.890 & 0.0078 & 0.0701\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0100 & 0.0904\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0110 & 0.0990\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0100 & 0.0904\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0110 & 0.0990\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0129 & 0.1144\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0132 & 0.1174\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3071 & 0.9959\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3060 & 0.9966\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4306 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4322 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5397 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7351 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7316 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7426 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7399 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7880 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7849 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7904 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7872 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9661 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9683 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4892,11 +4944,27 @@ The basic ANOVA table has the following form.
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
 \caption{\label{tab:anova-fact} The ANOVA table for a full factorial experiment}\tabularnewline
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endfirsthead
 \toprule
-Source & Degress of Freedom & (Sequential) Sum of Squares & Mean Square \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Degress of Freedom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(Sequential) Sum of Squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean Square
+\end{minipage} \\
 \midrule
 \endhead
 Regression & \(2^f-1\) & \(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\) & Reg SS/\((2^f-1)\) \\
@@ -5248,7 +5316,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7411 and 5.2087, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7113 and 5.022, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6170,11 +6238,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##         [,1]
-## A     4.4852
-## B     0.1314
-## C     2.9748
-## A:B:C 0.1565
+##          [,1]
+## A      4.6811
+## B      0.2202
+## C      3.1601
+## A:B:C -0.1959
 \end{verbatim}
 
 \begin{Shaded}
@@ -6190,11 +6258,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  223.4    74.5     NaN    NaN
-## A          1  160.9   160.9     NaN    NaN
-## B          1    0.1     0.1     NaN    NaN
-## C          1   70.8    70.8     NaN    NaN
-## A:B:C      1    0.2     0.2     NaN    NaN
+## Block      3  266.8    88.9     NaN    NaN
+## A          1  175.3   175.3     NaN    NaN
+## B          1    0.4     0.4     NaN    NaN
+## C          1   79.9    79.9     NaN    NaN
+## A:B:C      1    0.3     0.3     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6205,8 +6273,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 4.4852 0.1314 2.9748 0.1565
+##       A       B       C   A:B:C 
+##  4.6811  0.2202  3.1601 -0.1959
 \end{verbatim}
 
 \begin{Shaded}
@@ -6216,8 +6284,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 8.9704 0.2629 5.9495 0.3130
+##       A       B       C   A:B:C 
+##  9.3622  0.4405  6.3202 -0.3919
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6234,13 +6302,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  160.9   160.9     NaN    NaN
-## B          1    0.1     0.1     NaN    NaN
-## C          1   70.8    70.8     NaN    NaN
-## A:B        1    8.1     8.1     NaN    NaN
-## A:C        1  109.7   109.7     NaN    NaN
-## B:C        1  105.6   105.6     NaN    NaN
-## A:B:C      1    0.2     0.2     NaN    NaN
+## A          1  175.3   175.3     NaN    NaN
+## B          1    0.4     0.4     NaN    NaN
+## C          1   79.9    79.9     NaN    NaN
+## A:B        1   12.1    12.1     NaN    NaN
+## A:C        1  140.9   140.9     NaN    NaN
+## B:C        1  113.8   113.8     NaN    NaN
+## A:B:C      1    0.3     0.3     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6252,9 +6320,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      4.5612      4.4852      0.1314      2.9748      1.0032      3.7034 
+##      5.4739      4.6811      0.2202      3.1601      1.2276      4.1969 
 ##         B:C       A:B:C 
-##      3.6337      0.1565
+##      3.7715     -0.1959
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6308,14 +6376,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1 -1 -1  1  1
-## 18      3  1  1  1  1 -1
-## 19      3 -1  1  1 -1  1
-## 20      3  1 -1  1 -1  1
-## 21      3 -1 -1  1  1 -1
-## 22      3 -1  1 -1  1  1
-## 23      3  1  1 -1 -1 -1
-## 24      3 -1 -1 -1 -1 -1
+## 17      3  1 -1  1 -1  1
+## 18      3 -1 -1 -1 -1 -1
+## 19      3  1  1  1  1 -1
+## 20      3 -1 -1  1  1 -1
+## 21      3  1  1 -1 -1 -1
+## 22      3 -1  1  1 -1  1
+## 23      3  1 -1 -1  1  1
+## 24      3 -1  1 -1  1  1
 \end{verbatim}
 
 \begin{enumerate}
@@ -7436,7 +7504,7 @@ Consider again designs \(d_1\) and \(d_2\) from above (\(2^{7-2}\) fractions). H
 \[
 \begin{array}{ccccccc}
 w_3(d_1) & = & 0 & = & w_3(d_2) & = & 0 \\
-w_4(d_1) & = & 2 & > & w_3(d_1) & = & 1 \,, \\
+w_4(d_1) & = & 2 & > & w_4(d_2) & = & 1 \,, \\
 \end{array}
 \]
 and hence \(d_2\) has less aberration than \(d_1\). In fact, \(d_2\) has minimum aberration.

@@ -338,7 +338,7 @@ Consider again designs $d_1$ and $d_2$ from above ($2^{7-2}$ fractions). Here,
 $$
 \begin{array}{ccccccc}
 w_3(d_1) & = & 0 & = & w_3(d_2) & = & 0 \\
-w_4(d_1) & = & 2 & > & w_3(d_1) & = & 1 \,, \\
+w_4(d_1) & = & 2 & > & w_4(d_2) & = & 1 \,, \\
 \end{array}
 $$
 and hence $d_2$ has less aberration than $d_1$. In fact, $d_2$ has minimum aberration.
