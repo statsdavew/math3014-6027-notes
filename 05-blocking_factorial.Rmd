@@ -225,7 +225,7 @@ knitr::kable(block2[, -1],
              col.names = c("Treatment", "Block1", "Block2", "Block3", 
                            "A", "B", "C", 
                            "A:B", "A:C", "B:C", "A:B:C"),
-             caption = "$2^3$ factorial design in two blocks of size two")
+             caption = "$2^3$ factorial design in four blocks of size two")
 
 ```
 In each case, `FrF2` returns for us the design, in coded $\pm 1$ units (or the unscaled factorial constrast coefficients), including columns giving the contrast coefficients for estimating the block effects. The function automatically tries to find the best allocation of treatments to blocks, in terms of maximising the number of lower-order factorial effects which are clear of blocks. In the second example, we set `alias.block.2fis = T` to allow `FrF2` to confound two-factor interactions with blocks, otherwise a solution could not be found.

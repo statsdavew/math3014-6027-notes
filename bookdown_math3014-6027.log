@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.9)  28 MAY 2022 10:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.2.9)  30 MAY 2022 08:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -784,9 +784,9 @@ l.822 \end{align}
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [17] [18] [19]
-Overfull \hbox (47.49896pt too wide) in paragraph at lines 912--912
- []\T1/lmtt/m/n/10 ## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "
-Tea first"[] 
+Overfull \hbox (52.74895pt too wide) in paragraph at lines 912--912
+ []\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Milk first" "Tea first"  "
+Milk first"[] 
  []
 
 [20]
@@ -1074,50 +1074,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [1,]    0    1    1    1    0    0    0    0    0     1   
-  0     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [1,]    1    1    0    0    0    1    1    0    1     0   
+  1     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    1    1    1     0   
+[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    0    1    1     1   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [3,]    0    1    0    1    0    1    0    1    1     1   
-  1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    0    1    1    1    0    0     1   
+  0     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [4,]    0    1    1    0    1    1    1    1    0     0   
-  0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [4,]    1    1    0    1    1    0    0    1    0     0   
+  0     1     0     1[] 
  []
 
 [69]
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [5,]    1    1    0    0    1    1    0    0    0     0   
-  1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    1    0    0    0    0    0     1   
+  1     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [6,]    1    0    1    0    0    1    1    0    1     1   
-  0     1     0     0[] 
+[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    0    1    0    1    1    1     1   
+  0     0     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [7,]    1    0    0    1    1    0    1    0    0     1   
+[]\T1/lmtt/m/n/10 ## [7,]    0    0    1    1    0    1    1    1    0     0   
   1     0     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3191--3191
-[]\T1/lmtt/m/n/10 ## [8,]    1    0    1    1    1    0    0    1    1     0   
-  0     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    0    0    1    1    1    1    0    0    1     0   
+  0     1     1     0[] 
  []
 
 [70] [71] [72]
@@ -1434,8 +1434,8 @@ B         A:C[]
 
 
 Overfull \hbox (43.49887pt too wide) in paragraph at lines 6326--6326
-[]\T1/lmtt/m/n/10 ##      5.4739      4.6811      0.2202      3.1601      1.227
-6      4.1969[] 
+[]\T1/lmtt/m/n/10 ##      4.4056      3.7361      0.4134      3.0812      1.262
+8      4.0448[] 
  []
 
 [133]
@@ -1684,7 +1684,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 7993.
 Here is how much of TeX's memory you used:
  15250 strings out of 492649
  224069 string characters out of 6129623
- 344323 words of memory out of 5000000
+ 344324 words of memory out of 5000000
  17872 multiletter control sequences out of 15000+600000
  126504 words of font info for 219 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1731,7 +1731,7 @@ ype1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/publi
 c/lm/lmtt8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmtti1
 0.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (165 pages, 3837118 bytes).
+Output written on bookdown_math3014-6027.pdf (165 pages, 3837139 bytes).
 PDF statistics:
  2243 PDF objects out of 2487 (max. 8388607)
  1951 compressed objects within 20 object streams
