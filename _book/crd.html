@@ -24,7 +24,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-05-30" />
+<meta name="date" content="2022-06-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1207,7 +1207,7 @@ Figure 2.2: Naphthalene black experiment: distributions of dye yields from the s
  Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
  \tag{2.13}
  \end{equation}\]</span></p>
-<p>where <span class="math inline">\(Y_{ij}\)</span> is the response obtained from the <span class="math inline">\(j\)</span>th repetition of the <span class="math inline">\(i\)</span>th batch, <span class="math inline">\(\mu\)</span> is a constant term, <span class="math inline">\(\tau_i\)</span> is the expected effect due to the observation being in the <span class="math inline">\(k\)</span>th batch <span class="math inline">\((k=1,\ldots,5)\)</span> and <span class="math inline">\(\varepsilon_{ij}\)</span> are the random errors.</p>
+<p>where <span class="math inline">\(Y_{ij}\)</span> is the response obtained from the <span class="math inline">\(j\)</span>th repetition of the <span class="math inline">\(i\)</span>th batch, <span class="math inline">\(\mu\)</span> is a constant term, <span class="math inline">\(\tau_i\)</span> is the expected effect due to the observation being in the <span class="math inline">\(i\)</span>th batch <span class="math inline">\((i=1,\ldots,5)\)</span> and <span class="math inline">\(\varepsilon_{ij}\)</span> are the random errors.</p>
 <p>A test of the hypothesis that the group means are all equal is equivalent to a test that the <span class="math inline">\(\tau_i\)</span> are all equal to 0 <span class="math inline">\((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\)</span>. We can use <code>lm</code> to fit model <a href="crd.html#eq:linmod">(2.13)</a>, and <code>anova</code> to test the hypothesis. Before we fit the linear model, we need to make sure <code>batch</code> has type <code>factor</code><a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="crd.html#cb44-1" aria-hidden="true" tabindex="-1"></a>napblack<span class="sc">$</span>batch <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(napblack<span class="sc">$</span>batch)</span>
 <span id="cb44-2"><a href="crd.html#cb44-2" aria-hidden="true" tabindex="-1"></a>napblack.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span>

@@ -6,7 +6,7 @@
 ]{book}
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2022-05-30}
+\date{2022-06-01}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -907,8 +907,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Tea first" 
+## [6] "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
@@ -921,7 +921,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -932,7 +932,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 \end{enumerate}
 
@@ -2279,7 +2279,7 @@ Solution
    \label{eq:linmod}
    \end{equation}
 
-  where \(Y_{ij}\) is the response obtained from the \(j\)th repetition of the \(i\)th batch, \(\mu\) is a constant term, \(\tau_i\) is the expected effect due to the observation being in the \(k\)th batch \((k=1,\ldots,5)\) and \(\varepsilon_{ij}\) are the random errors.
+  where \(Y_{ij}\) is the response obtained from the \(j\)th repetition of the \(i\)th batch, \(\mu\) is a constant term, \(\tau_i\) is the expected effect due to the observation being in the \(i\)th batch \((i=1,\ldots,5)\) and \(\varepsilon_{ij}\) are the random errors.
 
   A test of the hypothesis that the group means are all equal is equivalent to a test that the \(\tau_i\) are all equal to 0 \((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\). We can use \texttt{lm} to fit model \eqref{eq:linmod}, and \texttt{anova} to test the hypothesis. Before we fit the linear model, we need to make sure \texttt{batch} has type \texttt{factor}\footnote{Factors are variables in \texttt{R} which take on a limited number of different values (e.g.~categorical variables). We need to define a categorical variable, like \texttt{batch} as a \texttt{factor} to ensure they are treated correctly by functions such as \texttt{lm}.}.
 
@@ -3180,14 +3180,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    1    0    0    0    1    1    0    1     0     1     1     0     0
+## [1,]    1    0    1    0    1    1    0    1    1     0     0     1     0     0
 ## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    1    0    0    0    1    1    1    0    0     1     0     0     1     1
-## [4,]    1    1    0    1    1    0    0    1    0     0     0     1     0     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
-## [6,]    0    1    1    0    1    0    1    1    1     1     0     0     0     0
-## [7,]    0    0    1    1    0    1    1    1    0     0     1     0     0     1
-## [8,]    0    0    1    1    1    1    0    0    1     0     0     1     1     0
+## [3,]    1    0    0    0    1    1    1    0    0     0     1     0     1     1
+## [4,]    1    0    1    1    0    0    1    0    0     1     0     1     0     1
+## [5,]    1    1    0    1    1    0    0    0    1     1     0     0     1     0
+## [6,]    0    1    1    1    0    1    0    0    0     0     1     1     1     0
+## [7,]    0    1    1    0    1    0    1    1    0     1     1     0     0     0
+## [8,]    0    1    0    1    0    1    1    1    1     0     0     0     0     1
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4724,33 +4724,33 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
 temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0034 & 0.0341\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0033 & 0.0352\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0053 & 0.0540\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0053 & 0.0529\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0070 & 0.0701\\
+time & 2.5675 & 0.66 & 3.890 & 0.0073 & 0.0697\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0095 & 0.0900\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0104 & 0.0971\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0095 & 0.0900\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0104 & 0.0971\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0121 & 0.1102\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0129 & 0.1192\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3042 & 0.9963\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3062 & 0.9974\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4306 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4316 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5390 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7326 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7304 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7409 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7376 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7850 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7832 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7878 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7859 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9650 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9672 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5316,7 +5316,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.719 and 5.1797, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7092 and 5.1274, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6239,10 +6239,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##          [,1]
-## A      3.7361
-## B      0.4134
-## C      3.0812
-## A:B:C -0.2297
+## A      2.7036
+## B      0.1827
+## C      3.2654
+## A:B:C -0.4488
 \end{verbatim}
 
 \begin{Shaded}
@@ -6258,12 +6258,12 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3    318   106.1     NaN    NaN
-## A          1    112   111.7     NaN    NaN
-## B          1      1     1.4     NaN    NaN
-## C          1     76    75.9     NaN    NaN
-## A:B:C      1      0     0.4     NaN    NaN
-## Residuals  0      0     NaN
+## Block      3  273.8    91.3     NaN    NaN
+## A          1   58.5    58.5     NaN    NaN
+## B          1    0.3     0.3     NaN    NaN
+## C          1   85.3    85.3     NaN    NaN
+## A:B:C      1    1.6     1.6     NaN    NaN
+## Residuals  0    0.0     NaN
 \end{verbatim}
 
 \begin{Shaded}
@@ -6274,7 +6274,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-##  3.7361  0.4134  3.0812 -0.2297
+##  2.7036  0.1827  3.2654 -0.4488
 \end{verbatim}
 
 \begin{Shaded}
@@ -6285,7 +6285,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-##  7.4723  0.8268  6.1623 -0.4594
+##  5.4072  0.3654  6.5309 -0.8976
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6302,13 +6302,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  111.7   111.7     NaN    NaN
-## B          1    1.4     1.4     NaN    NaN
-## C          1   75.9    75.9     NaN    NaN
-## A:B        1   12.8    12.8     NaN    NaN
-## A:C        1  130.9   130.9     NaN    NaN
-## B:C        1  174.8   174.8     NaN    NaN
-## A:B:C      1    0.4     0.4     NaN    NaN
+## A          1   58.5    58.5     NaN    NaN
+## B          1    0.3     0.3     NaN    NaN
+## C          1   85.3    85.3     NaN    NaN
+## A:B        1    7.1     7.1     NaN    NaN
+## A:C        1  138.8   138.8     NaN    NaN
+## B:C        1  127.9   127.9     NaN    NaN
+## A:B:C      1    1.6     1.6     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6320,9 +6320,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      4.4056      3.7361      0.4134      3.0812      1.2628      4.0448 
+##      4.4621      2.7036      0.1827      3.2654      0.9431      4.1660 
 ##         B:C       A:B:C 
-##      4.6740     -0.2297
+##      3.9982     -0.4488
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6376,14 +6376,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1 -1  1 -1  1
-## 18      3 -1  1  1 -1  1
+## 17      3  1  1  1  1 -1
+## 18      3  1  1 -1 -1 -1
 ## 19      3 -1  1 -1  1  1
 ## 20      3 -1 -1 -1 -1 -1
-## 21      3  1  1  1  1 -1
-## 22      3  1  1 -1 -1 -1
-## 23      3  1 -1 -1  1  1
-## 24      3 -1 -1  1  1 -1
+## 21      3  1 -1 -1  1  1
+## 22      3 -1 -1  1  1 -1
+## 23      3 -1  1  1 -1  1
+## 24      3  1 -1  1 -1  1
 \end{verbatim}
 
 \begin{enumerate}

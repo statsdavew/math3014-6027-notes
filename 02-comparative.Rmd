@@ -690,7 +690,7 @@ a. When we fit linear models and compare them using analysis of variance (ANOVA)
     (\#eq:linmod)
     \end{equation}
 
-    where $Y_{ij}$ is the response obtained from the $j$th repetition of the $i$th batch, $\mu$ is a constant term, $\tau_i$ is the expected effect due to the observation being in the $k$th batch $(k=1,\ldots,5)$ and $\varepsilon_{ij}$ are the random errors.
+    where $Y_{ij}$ is the response obtained from the $j$th repetition of the $i$th batch, $\mu$ is a constant term, $\tau_i$ is the expected effect due to the observation being in the $i$th batch $(i=1,\ldots,5)$ and $\varepsilon_{ij}$ are the random errors.
  
     A test of the hypothesis that the group means are all equal is equivalent to a test that the  $\tau_i$ are all equal to 0 $(H_0:\,  \tau_1 = \tau_2 = \cdots = \tau_6 = 0)$. We can use `lm` to fit model \@ref(eq:linmod), and `anova` to test the hypothesis. Before we fit the linear model, we need to make sure `batch` has type `factor`^[Factors are variables in `R` which take on a limited number of different values (e.g. categorical variables). We need to define a categorical variable, like `batch` as a `factor` to ensure they are treated correctly by functions such as `lm`.].  
  
