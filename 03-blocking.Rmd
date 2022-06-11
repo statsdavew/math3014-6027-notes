@@ -219,7 +219,7 @@ qr(W)$rank # rank 7 (t+b - 1)
 Notice that if we write $X_{2|1} = (I_n - H_1)X_2$, then the reduced normal equations become
 
 $$
-X_{2|1}^{\mathrm{T}}X_{2|1}\boldsymbol{\tau} = X_{2|1}^{\mathrm{T}}\bY\,,
+X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\bY\,,
 $$
 which have the same form as the CRD in Chapter \@ref(crd) albeit with a different $X_{2|1}$ matrix as we are adjusting for more complex nuisance parameters.
 
