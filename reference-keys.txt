@@ -57,6 +57,7 @@ eq:blocks-orth-ne1
 eq:blocks-orth-ne2
 def:bibd
 eq:blocks-bibd-rne
+eq:exercises-rcbd-model
 eq:exercises-rcbd-model-block
 tab:blackcurrent-data
 fig:ex2-eda
@@ -142,9 +143,7 @@ replication
 randomisation
 intro-blocking
 lin-model-rev
-variance-of-a-predictionfitted-value
 anova-revision
-exercises
 crd
 a-unit-treatment-linear-model
 the-partitioned-linear-model
@@ -156,7 +155,7 @@ multiple-comp
 impact-of-design-choices-on-estimation
 crd-opt-all
 crd-size
-exercises-1
+exercises
 blocking
 unit-block-treatment-model
 normal-equations
@@ -167,7 +166,7 @@ sec-bibd
 construction-of-bibds
 reduced-normal-equations
 estimation-and-inference
-exercises-2
+exercises-1
 factorial
 factorial-contrasts
 main-effects
@@ -177,16 +176,16 @@ unreplicated-normal-plots
 lenths-method-for-approximate-hypothesis-testing
 fac-reg
 anova-for-factorial-experiments
-exercises-3
+exercises-2
 block-factorial
 two-examples
 general-method-of-constructing-a-confounded-block-design
 analysis-of-a-confounded-factorial-design
-exercises-4
+exercises-3
 fractional-factorial
 est-alias
 general-method-for-choosing-a-fractional-factorial-design
 resolution-and-aberration
 frac-anal
 blocking-fractional-fractorial-designs
-exercises-5
+exercises-4

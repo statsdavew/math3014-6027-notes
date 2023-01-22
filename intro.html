@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Motivation, introduction and revision | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Motivation, introduction and revision | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-06-11" />
+<meta name="date" content="2023-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,8 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="crd.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,25 +49,24 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,13 +86,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -120,6 +119,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -138,22 +159,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Motivation, introduction and revision</a><ul>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Motivation, introduction and revision</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#aims-of-experimentation-and-some-examples"><i class="fa fa-check"></i><b>1.2</b> Aims of experimentation and some examples</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>1.3</b> Some definitions</a></li>
-<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#principles"><i class="fa fa-check"></i><b>1.4</b> Principles of experimentation</a><ul>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#principles"><i class="fa fa-check"></i><b>1.4</b> Principles of experimentation</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#replication"><i class="fa fa-check"></i><b>1.4.1</b> Replication</a></li>
 <li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#randomisation"><i class="fa fa-check"></i><b>1.4.2</b> Randomisation</a></li>
 <li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#intro-blocking"><i class="fa fa-check"></i><b>1.4.3</b> Stratification (or blocking)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#variance-of-a-predictionfitted-value"><i class="fa fa-check"></i><b>1.5.1</b> Variance of a Prediction/Fitted Value</a></li>
-<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.1</b> Analysis of Variance as Model Comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a><ul>
+<li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="crd.html"><a href="crd.html#a-unit-treatment-linear-model"><i class="fa fa-check"></i><b>2.1</b> A unit-treatment linear model</a></li>
 <li class="chapter" data-level="2.2" data-path="crd.html"><a href="crd.html#the-partitioned-linear-model"><i class="fa fa-check"></i><b>2.2</b> The partitioned linear model</a></li>
 <li class="chapter" data-level="2.3" data-path="crd.html"><a href="crd.html#reduced-normal-equations-for-the-crd"><i class="fa fa-check"></i><b>2.3</b> Reduced normal equations for the CRD</a></li>
@@ -161,52 +184,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="crd.html"><a href="crd.html#contrast-crd"><i class="fa fa-check"></i><b>2.5</b> Treatment contrast estimators in the CRD</a></li>
 <li class="chapter" data-level="2.6" data-path="crd.html"><a href="crd.html#r-crd"><i class="fa fa-check"></i><b>2.6</b> Analysing CRDs in R</a></li>
 <li class="chapter" data-level="2.7" data-path="crd.html"><a href="crd.html#multiple-comp"><i class="fa fa-check"></i><b>2.7</b> Multiple comparisons</a></li>
-<li class="chapter" data-level="2.8" data-path="crd.html"><a href="crd.html#impact-of-design-choices-on-estimation"><i class="fa fa-check"></i><b>2.8</b> Impact of design choices on estimation</a><ul>
+<li class="chapter" data-level="2.8" data-path="crd.html"><a href="crd.html#impact-of-design-choices-on-estimation"><i class="fa fa-check"></i><b>2.8</b> Impact of design choices on estimation</a>
+<ul>
 <li class="chapter" data-level="2.8.1" data-path="crd.html"><a href="crd.html#crd-opt-all"><i class="fa fa-check"></i><b>2.8.1</b> Optimal treatment allocation</a></li>
 <li class="chapter" data-level="2.8.2" data-path="crd.html"><a href="crd.html#crd-size"><i class="fa fa-check"></i><b>2.8.2</b> Overall size of the experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises-1"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
+<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a><ul>
+<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="blocking.html"><a href="blocking.html#unit-block-treatment-model"><i class="fa fa-check"></i><b>3.1</b> Unit-block-treatment model</a></li>
 <li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html#normal-equations"><i class="fa fa-check"></i><b>3.2</b> Normal equations</a></li>
 <li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#block-anova"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
 <li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
-<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#sec-bibd"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a><ul>
+<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#sec-bibd"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a>
+<ul>
 <li class="chapter" data-level="3.6.1" data-path="blocking.html"><a href="blocking.html#construction-of-bibds"><i class="fa fa-check"></i><b>3.6.1</b> Construction of BIBDs</a></li>
 <li class="chapter" data-level="3.6.2" data-path="blocking.html"><a href="blocking.html#reduced-normal-equations"><i class="fa fa-check"></i><b>3.6.2</b> Reduced normal equations</a></li>
 <li class="chapter" data-level="3.6.3" data-path="blocking.html"><a href="blocking.html#estimation-and-inference"><i class="fa fa-check"></i><b>3.6.3</b> Estimation and inference</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-1"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a><ul>
-<li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#factorial-contrasts"><i class="fa fa-check"></i><b>4.1</b> Factorial contrasts</a><ul>
+<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#factorial-contrasts"><i class="fa fa-check"></i><b>4.1</b> Factorial contrasts</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
 <li class="chapter" data-level="4.1.2" data-path="factorial.html"><a href="factorial.html#interactions"><i class="fa fa-check"></i><b>4.1.2</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#fact-principles"><i class="fa fa-check"></i><b>4.2</b> Three principles for factorial effects</a></li>
-<li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a><ul>
+<li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="factorial.html"><a href="factorial.html#lenths-method-for-approximate-hypothesis-testing"><i class="fa fa-check"></i><b>4.3.1</b> Lenth’s method for approximate hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#fac-reg"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a><ul>
+<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#fac-reg"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="factorial.html"><a href="factorial.html#anova-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4.1</b> ANOVA for factorial experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-2"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a><ul>
+<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
 <li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
 <li class="chapter" data-level="5.3" data-path="block-factorial.html"><a href="block-factorial.html#analysis-of-a-confounded-factorial-design"><i class="fa fa-check"></i><b>5.3</b> Analysis of a confounded factorial design</a></li>
-<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a><ul>
+<li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="fractional-factorial.html"><a href="fractional-factorial.html#est-alias"><i class="fa fa-check"></i><b>6.1</b> Estimability and aliasing</a></li>
 <li class="chapter" data-level="6.2" data-path="fractional-factorial.html"><a href="fractional-factorial.html#general-method-for-choosing-a-fractional-factorial-design"><i class="fa fa-check"></i><b>6.2</b> General method for choosing a fractional factorial design</a></li>
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
 <li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
-<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-4"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -229,8 +261,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Motivation, introduction and revision</h1>
+<div id="intro" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Motivation, introduction and revision<a href="intro.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div class="definition">
 <p><span id="def:exp" class="definition"><strong>Definition 1.1  </strong></span>An <strong>experiment</strong> is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science <span class="math inline">\(\dots\)</span>) by <strong>deliberately</strong> varying some features of the process under study in order to understand the impact of these changes on measureable responses.</p>
 <p>In this course we consider only <em>intervention</em> experiments, in which some aspects of the process are under the experimenters’ control. We do not consider <em>surveys</em> or <em>observational</em> studies.</p>
@@ -257,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>See <span class="citation">Luca and Bazerman (<a href="#ref-LB2020" role="doc-biblioref">2020</a>)</span> for further history, anecdotes and examples, especially from psychology and technology.</p>
 <p>Figure <a href="intro.html#fig:broadbalk">1.1</a> shows the <a href="http://www.era.rothamsted.ac.uk/Broadbalk">Broadbalk</a> agricultural field experiment at Rothamsted, one of the longest continuous running experiments in the world, which is testing the impact of different manures and fertilizers on the growth of winter wheat.</p>
-<div class="figure" style="text-align: center"><span id="fig:broadbalk"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:broadbalk"></span>
 <img src="figures/broadbalk.jpg" alt="The Broadbalk experiment, Rothamsted (photograph taken 2016)" width="75%" />
 <p class="caption">
 Figure 1.1: The Broadbalk experiment, Rothamsted (photograph taken 2016)
@@ -270,8 +302,8 @@ Before we can design an experiment, we need to know:
 - what features (variables or factors) can be varied and controlled, and what values can they be set to;
 - what is the aim of the experiment.
 -->
-<div id="motivation" class="section level2">
-<h2><span class="header-section-number">1.1</span> Motivation</h2>
+<div id="motivation" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Motivation<a href="intro.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="example">
 <p><span id="exm:motivation" class="example"><strong>Example 1.1  </strong></span>Consider an experiment to compare two treatments (e.g. drugs, diets, fertilisers, <span class="math inline">\(\dots\)</span>). We have <span class="math inline">\(n\)</span> subjects (people, mice, plots of land, <span class="math inline">\(\dots\)</span>), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, <span class="math inline">\(\dots\)</span>) is then measured.</p>
 </div>
@@ -282,20 +314,20 @@ Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
 \tag{1.1}
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(\varepsilon_j\sim N(0,\sigma^{2})\)</span> are independent and identically distributed errors and <span class="math inline">\(\beta_{0}, \beta_{1}\)</span> are unknown constants (parameters).</p>
-<p>Let
+<p>Let<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>
 <span class="math display">\[\begin{equation}
-x_{j}=\left\{\begin{array}{ll}
--1&amp;\textrm{if treatment 1 is applied to the $j$th subject}\\
-+1&amp;\textrm{if treatment 2 is applied to the $j$th subject}\nonumber ,
+x_{j}=\left\{\begin{array}{cl}
+0&amp;\textrm{if treatment 1 is applied to the $j$th subject}\\
+1&amp;\textrm{if treatment 2 is applied to the $j$th subject}\nonumber ,
 \end{array}
 \right.
 \end{equation}\]</span>
-for <span class="math inline">\(j=1,\dots,n\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+for <span class="math inline">\(j=1,\dots,n\)</span>.</p>
 <p>The difference in expected response from treatments 1 and 2 is</p>
 <p><span class="math display" id="eq:ex-ex-response">\[\begin{equation}
 \begin{split}
-\textrm{E}[Y_j\, |\, x_j = +1] - \textrm{E}[Y_j\, |\, x_j = -1] &amp; = \beta_{0}+\beta_{1}-\beta_{0}+\beta_{1} \\
-&amp; = 2\beta_{1}\,.
+\textrm{E}[Y_j\, |\, x_j = 1] - \textrm{E}[Y_j\, |\, x_j = 0] &amp; = \beta_{0}+\beta_{1}-\beta_{0} \\
+&amp; = \beta_{1}\,.
 \end{split}
 \tag{1.2}
 \end{equation}\]</span></p>
@@ -405,20 +437,32 @@ n\sum x_jY_j-\sum x_j\sum Y_j\end{array}\right]\,.
 <p>For estimating the difference between treatments, we are interested in</p>
 <p><span class="math display">\[\begin{align*}
 \textrm{Var}(\hat{\beta}_{1})&amp; = \frac{n}{n\sum x_j^{2}-(\sum x_j)^{2}}\sigma^{2}\\
- &amp; = \frac{n}{n^2 - (\sum x_j)^2}\sigma^{2}\,,
+&amp; = \frac{1}{\sum x_j^{2} - n\bar{x}^2}\sigma^{2}\,,
 \end{align*}\]</span>
-as <span class="math inline">\(x_j=\pm 1\)</span>, therefore <span class="math inline">\(x_j^2=1\)</span> for all <span class="math inline">\(j=1,\ldots,n\)</span>, and hence <span class="math inline">\(\sum x_j^2=n\)</span>.</p>
-<p>To achieve the most precise estimator, we need to minimise <span class="math inline">\(\textrm{Var}(\hat{\beta}_{1})\)</span> or equivalently minimise <span class="math inline">\(|\sum x_j|\)</span>. This goal can be achieved through the choice of <span class="math inline">\(x_{1},\dots,x_{n}\)</span>:</p>
+where <span class="math inline">\(\bar{x} = \sum x_j / n\)</span>.</p>
+<p>Assuming constant <span class="math inline">\(\sigma^2\)</span>, to achieve the most precise estimator we need to minimise <span class="math inline">\(\textrm{Var}(\hat{\beta}_{1})\)</span> or equivalently maxmise <span class="math inline">\(\sum x_j^{2} - n\bar{x}^2\)</span>. This goal can be achieved through the choice of <span class="math inline">\(x_{1},\dots,x_{n}\)</span>:</p>
 <ul>
-<li>as each <span class="math inline">\(x_j\)</span> can only take one of two values, -1 or +1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;</li>
-<li>call these <span class="math inline">\(n_{1}\)</span> and <span class="math inline">\(n_{2}\)</span> respectively, with <span class="math inline">\(n_{1}+n_{2}=n\)</span></li>
+<li>as each <span class="math inline">\(x_j\)</span> can only take one of two values, 0 or 1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;</li>
+<li>call these <span class="math inline">\(n_{1}\)</span> and <span class="math inline">\(n_{2}\)</span> respectively, with <span class="math inline">\(n_{1}+n_{2}=n\)</span>.</li>
 </ul>
-<p>It is obvious that <span class="math inline">\(\sum x_j = 0\)</span> if and only if <span class="math inline">\(n_1=n_2\)</span>. Therefore, assuming <span class="math inline">\(n\)</span> is even, the <strong>optimal design</strong> has</p>
+<p>We can find an upper bound for the quantity <span class="math inline">\(\sum x_j^{2} - n\bar{x}^2\)</span>. As each <span class="math inline">\(x_i\in\{0,1\}\)</span> we have</p>
+<p><span class="math display">\[\begin{align}
+\sum x_j^2 &amp; = \sum x_j \\
+&amp; = n\bar{x}\,.
+\end{align}\]</span></p>
+<p>Hence,</p>
+<p><span class="math display">\[\begin{align*}
+\sum x_j^{2} - n\bar{x}^2 &amp; = n\bar{x} - n\bar{x}^2 \\
+&amp; = n\bar{x}(1-\bar{x}) \\
+&amp; \le n/4\,,
+\end{align*}\]</span>
+as we have a quadratic equation in <span class="math inline">\(\bar{x}\)</span> that is maximised at <span class="math inline">\(\bar{x} = 1/2\)</span>.</p>
+<p>If we can find a set of design points that satisfy <span class="math inline">\(\bar{x} = 1/2\)</span>, we will have an <strong>optimal design</strong>. Assuming <span class="math inline">\(n\)</span> is even, one possibility is</p>
 <ul>
-<li><span class="math inline">\(n_{1}=\frac{n}{2}\)</span> subjects assigned to treatment 1 and</li>
-<li><span class="math inline">\(n_{2}=\frac{n}{2}\)</span> subjects assigned to treatment 2.</li>
+<li><span class="math inline">\(n_{1}=\frac{n}{2}\)</span> subjects assigned to treatment 1 (<span class="math inline">\(x_j = 0\)</span>) and</li>
+<li><span class="math inline">\(n_{2}=\frac{n}{2}\)</span> subjects assigned to treatment 2 (<span class="math inline">\(x_j = 1\)</span>).</li>
 </ul>
-<p>For <span class="math inline">\(n\)</span> odd, we choose <span class="math inline">\(n_{1}=\frac{n+1}{2}\)</span>, <span class="math inline">\(n_{2}=\frac{n-1}{2}\)</span>, or vice versa.</p>
+<p>For <span class="math inline">\(n\)</span> odd, we choose <span class="math inline">\(n_{1}=\frac{n+1}{2}\)</span>, <span class="math inline">\(n_{2}=\frac{n-1}{2}\)</span>, or vice versa, to get as close as possible to the optimal design.</p>
 <div class="definition">
 <p><span id="def:simple-efficiency" class="definition"><strong>Definition 1.3  </strong></span>We can assess different designs using their <strong>efficiency</strong>:
 <span class="math display" id="eq:simple-efficiency">\[\begin{equation}
@@ -427,30 +471,30 @@ as <span class="math inline">\(x_j=\pm 1\)</span>, therefore <span class="math i
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(d_{1}\)</span> is a design we want to assess and <span class="math inline">\(d^{*}\)</span> is the optimal design with smallest variance. Note that <span class="math inline">\(0\leq\textrm{Eff}\leq 1\)</span>.</p>
 </div>
-<p>In Figure <a href="intro.html#fig:simple-efficiency">1.2</a> below, we plot this efficiency for Example <a href="intro.html#exm:motivation">1.1</a>, using different choices of <span class="math inline">\(n_1\)</span>. The total number of runs is fixed at <span class="math inline">\(n = 100\)</span>, and the function <code>eff</code> calculates the efficiency from Definition <a href="intro.html#def:simple-efficiency">1.3</a> for a design with <span class="math inline">\(n_1\)</span> subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when <span class="math inline">\(n_1 = n_2\)</span> (equal allocation of treatments 1 and 2). If <span class="math inline">\(n_1=0\)</span> or <span class="math inline">\(n_1 = 1\)</span>, the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.</p>
+<p>In Figure <a href="intro.html#fig:simple-efficiency">1.2</a> below, we plot this efficiency for Example <a href="intro.html#exm:motivation">1.1</a>, using different choices of <span class="math inline">\(n_1\)</span>. The total number of runs is fixed at <span class="math inline">\(n = 100\)</span>, and the function <code>eff</code> calculates the efficiency (assuming <span class="math inline">\(n\)</span> is even) from Definition <a href="intro.html#def:simple-efficiency">1.3</a> for a design with <span class="math inline">\(n_1\)</span> subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when <span class="math inline">\(n_1 = n_2\)</span> (equal allocation of treatments 1 and 2). If <span class="math inline">\(n_1=0\)</span> or <span class="math inline">\(n_1 = 1\)</span>, the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.</p>
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a>n &lt;-<span class="st"> </span><span class="dv">100</span> </span>
-<span id="cb1-2"><a href="intro.html#cb1-2"></a>eff &lt;-<span class="st"> </span><span class="cf">function</span>(n1) <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>((<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>n1 <span class="op">-</span><span class="st"> </span>n) <span class="op">/</span><span class="st"> </span>n)<span class="op">^</span><span class="dv">2</span> </span>
-<span id="cb1-3"><a href="intro.html#cb1-3"></a><span class="kw">curve</span>(eff, <span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> n, <span class="dt">ylab =</span> <span class="st">&quot;Eff&quot;</span>, <span class="dt">xlab =</span> <span class="kw">expression</span>(n[<span class="dv">1</span>]))</span></code></pre></div>
-<div class="figure"><span id="fig:simple-efficiency"></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb1-2"><a href="intro.html#cb1-2" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> <span class="cf">function</span>(n1) <span class="dv">4</span> <span class="sc">*</span> n1 <span class="sc">*</span> (n <span class="sc">-</span> n1) <span class="sc">/</span> n<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-3"><a href="intro.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(eff, <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> n, <span class="at">ylab =</span> <span class="st">&quot;Eff&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(n[<span class="dv">1</span>]))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:simple-efficiency"></span>
 <img src="bookdown_math3014-6027_files/figure-html/simple-efficiency-1.png" alt="Efficiencies for designs for Example 1.1 with different numbers, \(n_1\), of subjects assigned to treatment 1 when the total number of subjects is \(n=100\)." width="672" />
 <p class="caption">
 Figure 1.2: Efficiencies for designs for Example <a href="intro.html#exm:motivation">1.1</a> with different numbers, <span class="math inline">\(n_1\)</span>, of subjects assigned to treatment 1 when the total number of subjects is <span class="math inline">\(n=100\)</span>.
 </p>
 </div>
 </div>
-<div id="aims-of-experimentation-and-some-examples" class="section level2">
-<h2><span class="header-section-number">1.2</span> Aims of experimentation and some examples</h2>
+<div id="aims-of-experimentation-and-some-examples" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Aims of experimentation and some examples<a href="intro.html#aims-of-experimentation-and-some-examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Some reasons experiments are performed:</p>
 <ol style="list-style-type: decimal">
-<li>Treatment comparison (Chapters 2 and 3)</li>
+<li>Treatment comparison</li>
 </ol>
 <ul>
 <li>compare several treatments (and choose the best)</li>
 <li>e.g. clinical trial, agricultural field trial</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Factor screening (Chapters 4, 5 and 6)</li>
+<li>Factor screening</li>
 </ol>
 <ul>
 <li>many complex systems may involve a large number of (discrete) factors (controllable features)</li>
@@ -459,7 +503,7 @@ Figure 1.2: Efficiencies for designs for Example <a href="intro.html#exm:motivat
 <li>e.g. industrial experiments on manufacturing processes</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
-<li>Response surface exploration (Chapter 7)</li>
+<li>Response surface exploration</li>
 </ol>
 <ul>
 <li>detailed description of relationship between important (continuous) variables and response</li>
@@ -468,15 +512,16 @@ Figure 1.2: Efficiencies for designs for Example <a href="intro.html#exm:motivat
 <li>e.g. alcohol yields in a pharmaceutical experiments</li>
 </ul>
 <ol start="4" style="list-style-type: decimal">
-<li>Optimisation (Chapter 7)</li>
+<li>Optimisation</li>
 </ol>
 <ul>
 <li>finding settings of variables that lead to maximum or minimum response</li>
 <li>typically use response surface methods and sequential ``hill climbing’’ strategy</li>
 </ul>
+<p>In this module, we will focus on <strong>treatment comparison</strong> (Chapters 2 and 3) and <strong>factor screening</strong> (Chapters 4, 5 and 6).</p>
 </div>
-<div id="some-definitions" class="section level2">
-<h2><span class="header-section-number">1.3</span> Some definitions</h2>
+<div id="some-definitions" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Some definitions<a href="intro.html#some-definitions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="definition">
 <p><span id="def:response" class="definition"><strong>Definition 1.4  </strong></span>The <strong>response</strong> <span class="math inline">\(Y\)</span> is the outcome measured in an experiment; e.g. yield from a chemical process. The response from the <span class="math inline">\(n\)</span> observations are denoted <span class="math inline">\(Y_{1},\dots,Y_{n}\)</span>.</p>
 </div>
@@ -510,21 +555,21 @@ A **design point** is an $m$-vector $\boldsymbol{x}_{j} = (x_{j1, \ldots, x_{jm}
 <li>Experimental unit: Subject (person, animal, plot of land, ).</li>
 </ul>
 </div>
-<div id="principles" class="section level2">
-<h2><span class="header-section-number">1.4</span> Principles of experimentation</h2>
+<div id="principles" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Principles of experimentation<a href="intro.html#principles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Three fundamental principles that need to be considered when designing an experiment are:</p>
 <ul>
 <li>replication</li>
 <li>randomisation</li>
 <li>stratification (blocking)</li>
 </ul>
-<div id="replication" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> Replication</h3>
+<div id="replication" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Replication<a href="intro.html#replication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Each treatment is applied to a number of experimental units, with the <span class="math inline">\(j\)</span>th treatment replicated <span class="math inline">\(r_{j}\)</span> times. This enables the estimation of the variances of treatment effect estimators; increasing the number of replications, or replicates, decreases the variance of estimators of treatment effects.
 (Note: proper replication involves independent application of the treatment to different experimental units, not just taking several measurements from the same unit).</p>
 </div>
-<div id="randomisation" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> Randomisation</h3>
+<div id="randomisation" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Randomisation<a href="intro.html#randomisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Randomisation should be applied to the allocation of treatments to units. Randomisation protects against <strong>bias</strong>; the effect of
 variables that are unknown and potentially uncontrolled or
 subjectivity in applying treatments. It also provides a formal basis
@@ -536,16 +581,16 @@ for inference and statistical testing.</p>
 </ul>
 <p>Clinical trials are usually also <em>double-blinded</em>, i.e. neither the healthcare professional nor the patient knows which treatment the patient is receiving.</p>
 </div>
-<div id="intro-blocking" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> Stratification (or blocking)</h3>
+<div id="intro-blocking" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> Stratification (or blocking)<a href="intro.html#intro-blocking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We would like to use a wide variety of experimental units (e.g. people or plots of land) to ensure <strong>coverage</strong> of our results, i.e. validity of our conclusions across the population of interest. However, if the sample of units from the population is too heterogenous, then this will induce too much random variability, i.e. increase <span class="math inline">\(\sigma^{2}\)</span> in <span class="math inline">\(\varepsilon_{j}\sim N(0,\sigma^{2})\)</span>, and hence increase the variance of our parameter estimators.</p>
 <p>We can reduce this extraneous variation by splitting our units into homogenous sets, or <strong>blocks</strong>, and including a blocking term in the model. The simplest blocked experiment is a <strong>randomised complete block design</strong>, where each block contains enough units for all treatments to be applied. Comparisons can then be made <em>within</em> each block.</p>
 <p>Basic principle: block what you can, randomise what you cannot.</p>
 <p>Later we will look at blocking in more detail, and the principle of <strong>incomplete blocks</strong>.</p>
 </div>
 </div>
-<div id="lin-model-rev" class="section level2">
-<h2><span class="header-section-number">1.5</span> Revision on the linear model</h2>
+<div id="lin-model-rev" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Revision on the linear model<a href="intro.html#lin-model-rev" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall: <span class="math inline">\(\boldsymbol{Y}=X\boldsymbol{\beta}+\boldsymbol{\varepsilon}\)</span>, with <span class="math inline">\(\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^{2})\)</span>. Let the <span class="math inline">\(j\)</span>th row of <span class="math inline">\(X\)</span> be denoted <span class="math inline">\(\boldsymbol{x}^\textrm{T}_j\)</span>, which holds the values of the predictors, or explanatory variables, for the <span class="math inline">\(j\)</span>th observation. Then</p>
 <p><span class="math display">\[\begin{equation*}
 Y_j=\boldsymbol{x}_j^{\textrm{T}}\boldsymbol{\beta}+\varepsilon_j\,,\quad j=1,\ldots,n\,.
@@ -558,7 +603,7 @@ Y_j=\boldsymbol{x}_j^{\textrm{T}}\boldsymbol{\beta}+\varepsilon_j\,,\quad j=1,\l
 <span class="math display">\[
 \boldsymbol{x}_j^{\textrm{T}}\boldsymbol{\beta}=\beta_{0}+\beta_{1}x_{1j}+\dots+\beta_{m}x_{mj}\,.
 \]</span></p>
-<p>The laest squares estimators are given by</p>
+<p>The least squares estimators are given by</p>
 <p><span class="math display">\[\begin{equation}
 \hat{\boldsymbol{\beta}}=(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\boldsymbol{Y}\,,\nonumber
 \end{equation}\]</span></p>
@@ -566,26 +611,31 @@ Y_j=\boldsymbol{x}_j^{\textrm{T}}\boldsymbol{\beta}+\varepsilon_j\,,\quad j=1,\l
 <p><span class="math display">\[\begin{equation}
 \textrm{Var}(\hat{\boldsymbol{\beta}})=(X^{\textrm{T}}X)^{-1}\sigma^{2}\,.\nonumber
 \end{equation}\]</span></p>
-<div id="variance-of-a-predictionfitted-value" class="section level3">
-<h3><span class="header-section-number">1.5.1</span> Variance of a Prediction/Fitted Value</h3>
-<p>A prediction of the mean response at point <span class="math inline">\(\boldsymbol{x}_0\)</span> (which may or may not be in the design) is</p>
-<p><span class="math display">\[
+<!--
+### Variance of a Prediction/Fitted Value
+A prediction of the mean response at point $\boldsymbol{x}_0$ (which may or may not be in the design) is
+
+$$
 \hat{Y}_0 = \boldsymbol{x}_0^{\textrm{T}}\hat{\boldsymbol{\beta}}\,,
-\]</span></p>
-<p>with</p>
-<p><span class="math display">\[\begin{align*}
-\textrm{Var}(\hat{Y}_0) &amp; = \textrm{Var}\left(\boldsymbol{x}_0^{\textrm{T}}\hat{\boldsymbol{\beta}}\right) \\
-&amp; = \boldsymbol{x}_0^{\textrm{T}}\textrm{Var}(\hat{\boldsymbol{\beta}})\boldsymbol{x}_0 \\
-&amp; = \boldsymbol{x}_0^{\textrm{T}}(X^{\textrm{T}}X)^{-1}\boldsymbol{x}_0\sigma^{2}\,.
-\end{align*}\]</span></p>
-<p>For a linear model, this variance depends only on the assumed regression model and the design (through <span class="math inline">\(X\)</span>), the point at which prediction is to be made (<span class="math inline">\(\boldsymbol{x}_0\)</span>) and the value of <span class="math inline">\(\sigma^2\)</span>; it does not depend on data <span class="math inline">\(\boldsymbol{Y}\)</span> or parameters <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p>
-<p>Similarly, we can find the variance-covariance matrix of the fitted values:
-<span class="math display">\[
+$$
+
+with
+
+\begin{align*}
+\textrm{Var}(\hat{Y}_0) & = \textrm{Var}\left(\boldsymbol{x}_0^{\textrm{T}}\hat{\boldsymbol{\beta}}\right) \\
+& = \boldsymbol{x}_0^{\textrm{T}}\textrm{Var}(\hat{\boldsymbol{\beta}})\boldsymbol{x}_0 \\
+& = \boldsymbol{x}_0^{\textrm{T}}(X^{\textrm{T}}X)^{-1}\boldsymbol{x}_0\sigma^{2}\,.
+\end{align*}
+
+For a linear model, this variance depends only on the assumed regression model and the design (through $X$), the point at which prediction is to be made ($\boldsymbol{x}_0$) and the value of $\sigma^2$; it does not depend on data $\boldsymbol{Y}$ or parameters $\boldsymbol{\beta}$.
+
+Similarly, we can find the variance-covariance matrix of the fitted values:
+$$
 \textrm{Var}(\hat{Y})=\textrm{Var}(X\hat{\boldsymbol{\beta}})=X(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\sigma^{2}\,.
-\]</span></p>
-</div>
-<div id="anova-revision" class="section level3">
-<h3><span class="header-section-number">1.5.2</span> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</h3>
+$$
+-->
+<div id="anova-revision" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Analysis of Variance as Model Comparison<a href="intro.html#anova-revision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To assess the goodness-of-fit of a model, we can use the residual sum of squares</p>
 <p><span class="math display">\[\begin{align*}
 \textrm{RSS} &amp; = (\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})^{\textrm{T}} (\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})\\
@@ -608,30 +658,29 @@ as</p>
 <p><span class="math display">\[
 \hat{\beta}_{0} = \bar{Y} = \frac{1}{n}\sum_{j=1}^n Y_{j}\,.
 \]</span></p>
-<p>How do we compare these models?</p>
-<ol style="list-style-type: decimal">
-<li>Ratio of residual sum of squares:
-<span class="math display">\[\begin{align*}
-R^{2} &amp; = 1 - \frac{\textrm{RSS}}{\textrm{RSS}(\textrm{null})} \\
-&amp; = 1 - \frac{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})}{\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}}\,.
-\end{align*}\]</span></li>
-</ol>
-<p>The quantity <span class="math inline">\(0\leq R^{2}\leq 1\)</span> is sometimes called the <strong>coefficient of multiple determination</strong>:</p>
-<ul>
-<li>high <span class="math inline">\(R^{2}\)</span> implies that the model describes much of the variation in the data;</li>
-<li><strong>but</strong> note that <span class="math inline">\(R^{2}\)</span> will always increase as <span class="math inline">\(p\)</span> (the number of explanatory variables) increases, with <span class="math inline">\(R^{2}=1\)</span> when <span class="math inline">\(p=n\)</span>;</li>
-<li>some software packages will report the adjusted <span class="math inline">\(R^{2}\)</span>.</li>
-</ul>
-<p><span class="math display">\[\begin{align*}
-R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
-&amp; = 1 - \frac{(\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})^{\textrm{T}} (\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})/(n-p)}{(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - n\bar{Y}^{2})/(n-1)};
-\end{align*}\]</span></p>
-<ul>
-<li><span class="math inline">\(R_a^2\)</span> does not necessarily increase with <span class="math inline">\(p\)</span> (as we divide by degrees of freedom to adjust for complexity of the model).</li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
-<li>Analysis of variance (ANOVA): An ANOVA table is compact way of presenting the results of (sequential) comparisons of nested models. You should be familiar with an ANOVA table of the following form.</li>
-</ol>
+<!--How do we compare these models?
+
+1. Ratio of residual sum of squares:
+\begin{align*}
+R^{2} & = 1 - \frac{\textrm{RSS}}{\textrm{RSS}(\textrm{null})} \\
+& = 1 - \frac{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})}{\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}}\,.
+\end{align*}
+
+The quantity $0\leq R^{2}\leq 1$ is sometimes called the **coefficient of multiple determination**:
+
+  - high $R^{2}$ implies that the model describes much of the variation in the data;
+  - **but** note that $R^{2}$ will always increase as $p$ (the number of explanatory variables) increases, with $R^{2}=1$ when $p=n$;
+  - some software packages will report the adjusted $R^{2}$.
+
+\begin{align*}
+R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
+& = 1 - \frac{(\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})^{\textrm{T}} (\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})/(n-p)}{(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - n\bar{Y}^{2})/(n-1)};
+\end{align*}
+
+  - $R_a^2$ does not necessarily increase with $p$ (as we divide by degrees of freedom to adjust for complexity of the model).
+
+-->
+<p>An Analysis of variance (ANOVA) table is compact way of presenting the results of (sequential) comparisons of nested models. You should be familiar with an ANOVA table of the following form.</p>
 <table>
 <caption><span id="tab:anova">Table 1.1: </span> A standard ANOVA table.</caption>
 <colgroup>
@@ -702,12 +751,8 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 \frac{(n-p)}{\sigma^{2}}\hat{\sigma}^{2}\sim\chi^{2}_{n-p}\,.
 \end{equation*}\]</span></p>
 <p>This is a Chi-squared distribution with <span class="math inline">\(n-p\)</span> degrees of freedom (see MATH2010 or MATH6174 notes).</p>
-</div>
-</div>
-<div id="exercises" class="section level2">
-<h2><span class="header-section-number">1.6</span> Exercises</h2>
 <ol style="list-style-type: decimal">
-<li><p><span class="citation">(Adapted from Morris, <a href="#ref-Morris2011" role="doc-biblioref">2011</a>)</span> A classic and famous example of a simple hypothetical experiment was described by <span class="citation">Fisher (<a href="#ref-Fisher1935" role="doc-biblioref">1935</a>)</span>:</p>
+<li><p><span class="citation">(Adapted from <a href="#ref-Morris2011" role="doc-biblioref">Morris, 2011</a>)</span> A classic and famous example of a simple hypothetical experiment was described by <span class="citation">Fisher (<a href="#ref-Fisher1935" role="doc-biblioref">1935</a>)</span>:</p>
 <blockquote>
 <p>A lady declares that by tasting a cup of tea made with milk she can discriminate whether the milk or the tea infusion was added first to the cup. We will consider the problem of designing an experiment by means of which this assertion can be tested. For this purpose let us first lay down a simple form of experiment with a view to studying its limitations and its characteristics, both those that same essential to the experimental method, when well developed, and those that are not essential but auxiliary.</p>
 <p>Our experiment consists in mixing eight cups of tea, four in one way and four in the other, and presenting them to the subject for judgement in a random order. The subject has been told in advance of what the test will consist, namely that she will be asked to taste eight cups, that these shall be four of each kind, and that they shall be presented to her in a random order, that is an order not determined arbitrarily by human choice, but by the actual manipulation of the physical appartatus used in games of chance, cards, dice, roulettes, etc., or, more expeditiously, from a published collection of random sampling numbers purporting to give the actual results of such manipulation<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Her task is to divide the 8 cups into two sets of 4, agreeing, if possible, with the treatments received.</p>
@@ -715,28 +760,32 @@ R^{2}_{a} &amp; = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}
 <ol style="list-style-type: lower-alpha">
 <li>Define the treatments in this experiment.</li>
 <li>Identify the units in this experiment.</li>
-<li>How might a “physical appartatus” from a “game of chance” be used to perform the randomisation. Explain one example.</li>
-<li>Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?</li>
+<li>How might a “physical appartatus” from a “game of chance” be used to perform the randomisation? Explain one example.</li>
+<li>Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Four are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?</li>
 </ol></li>
 </ol>
 <details>
-<p><summary><b>Solution</b></summary></p>
+<summary>
+<b>Solution</b>
+</summary>
 <ol style="list-style-type: lower-alpha">
 <li><p>There are two treatments in the experiment - the two ingredients “milk first” and “tea first”.</p></li>
 <li><p>The experimental units are the “cups of tea”, made up from the tea and milk used and also the cup itself.</p></li>
 <li><p>The simplest method here might be to select four black playing cards and four red playing cards, assign one treatment to each colour, shuffle the cards, and then draw them in order. The colour drawn indicates the treatment that should be used to make the next cup of tea. This operation would give one possible randomisation.</p>
-<p>We could of course also use <code>R</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1"></a><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot;
-## [6] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre></li>
-<li><p>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1"></a><span class="co"># block 1</span></span>
-<span id="cb4-2"><a href="intro.html#cb4-2"></a><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1"></a><span class="co"># block 2</span></span>
-<span id="cb6-2"><a href="intro.html#cb6-2"></a><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre></li>
+<p>We could of course also use <code>R</code>.</p></li>
 </ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">replace =</span> F)</span></code></pre></div>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;
+## [6] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 1</span></span>
+<span id="cb4-2"><a href="intro.html#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 2</span></span>
+<span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Consider the linear model</p>
@@ -751,43 +800,45 @@ with <span class="math inline">\(\boldsymbol{y}\)</span> an <span class="math in
 </ol></li>
 </ol>
 <details>
-<p><summary><b>Solution</b></summary></p>
+<summary>
+<b>Solution</b>
+</summary>
 <ol style="list-style-type: lower-alpha">
 <li><p>The method of least squares minimises the sum of squared differences between the responses and the expected values, that is, minimises the expression</p>
 <p><span class="math display">\[
- (\boldsymbol{y}-X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}-X\boldsymbol{\beta}) = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}\boldsymbol{y}+ \boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}X\boldsymbol{\beta}\,.
- \]</span>
+(\boldsymbol{y}-X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}-X\boldsymbol{\beta}) = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- 2\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}\boldsymbol{y}+ \boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}X\boldsymbol{\beta}\,.
+\]</span>
 Differentiating with respect to the vector <span class="math inline">\(\boldsymbol{\beta}\)</span>, we obtain</p>
 <p><span class="math display">\[
- \frac{\partial}{\partial\boldsymbol{\beta}} = -2X^{\mathrm{T}}\boldsymbol{y}+ 2X^{\mathrm{T}}X\boldsymbol{\beta}\,.
- \]</span></p>
+\frac{\partial}{\partial\boldsymbol{\beta}} = -2X^{\mathrm{T}}\boldsymbol{y}+ 2X^{\mathrm{T}}X\boldsymbol{\beta}\,.
+\]</span></p>
 <p>Set equal to <span class="math inline">\(\boldsymbol{0}\)</span> and solve:</p>
 <p><span class="math display">\[
- X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\boldsymbol{y}\Rightarrow \hat{\boldsymbol{\beta}} = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}\,.
- \]</span></p>
+X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} = X^{\mathrm{T}}\boldsymbol{y}\Rightarrow \hat{\boldsymbol{\beta}} = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}\,.
+\]</span></p>
 <p>The estimator <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is unbiased:</p>
 <p><span class="math display">\[
- E(\hat{\boldsymbol{\beta}}) = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}E(\boldsymbol{y}) = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}X\boldsymbol{\beta}= \boldsymbol{\beta}\,,
- \]</span></p>
+E(\hat{\boldsymbol{\beta}}) = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}E(\boldsymbol{y}) = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}X\boldsymbol{\beta}= \boldsymbol{\beta}\,,
+\]</span></p>
 <p>and has variance:</p>
 <p><span class="math display">\[\begin{align*}
 \mbox{Var}(\hat{\boldsymbol{\beta}}) &amp; =E\left\{ \left[\hat{\boldsymbol{\beta}} - E(\hat{\boldsymbol{\beta}})\right] \left[\hat{\boldsymbol{\beta}} - E(\hat{\boldsymbol{\beta}})\right]^{\mathrm{T}} \right\}\\
- &amp; =  E\left\{ \left[\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}\right] \left[\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}\right]^{\mathrm{T}} \right\}\\
- &amp; = E\left\{ \hat{\boldsymbol{\beta}}\hat{\boldsymbol{\beta}}^{\mathrm{T}} - 2\boldsymbol{\beta}\hat{\boldsymbol{\beta}}^{\mathrm{T}} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}} \right\}\\
- &amp; = E\left\{ \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}\boldsymbol{y}^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1}  - 2\boldsymbol{\beta}\boldsymbol{y}^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\right\}\\
- &amp; = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}E(\boldsymbol{y}\boldsymbol{y}^{\mathrm{T}})X\left(X^{\mathrm{T}}X\right)^{-1} - 2\boldsymbol{\beta}E(\boldsymbol{y}^{\mathrm{T}})X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
- &amp; = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\left[\mbox{Var}(\boldsymbol{y}) + E(\boldsymbol{y})E(\boldsymbol{y}^{\mathrm{T}})\right]X\left(X^{\mathrm{T}}X\right)^{-1} - 2\boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
- &amp; = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\left[I_N\sigma^2 + X\boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}\right]X\left(X^{\mathrm{T}}X\right)^{-1} - \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
- &amp; = \left(X^{\mathrm{T}}X\right)^{-1}\sigma^2\,. 
- \end{align*}\]</span></p></li>
+&amp; =  E\left\{ \left[\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}\right] \left[\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}\right]^{\mathrm{T}} \right\}\\
+&amp; = E\left\{ \hat{\boldsymbol{\beta}}\hat{\boldsymbol{\beta}}^{\mathrm{T}} - 2\boldsymbol{\beta}\hat{\boldsymbol{\beta}}^{\mathrm{T}} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}} \right\}\\
+&amp; = E\left\{ \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\boldsymbol{y}\boldsymbol{y}^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1}  - 2\boldsymbol{\beta}\boldsymbol{y}^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\right\}\\
+&amp; = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}E(\boldsymbol{y}\boldsymbol{y}^{\mathrm{T}})X\left(X^{\mathrm{T}}X\right)^{-1} - 2\boldsymbol{\beta}E(\boldsymbol{y}^{\mathrm{T}})X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
+&amp; = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\left[\mbox{Var}(\boldsymbol{y}) + E(\boldsymbol{y})E(\boldsymbol{y}^{\mathrm{T}})\right]X\left(X^{\mathrm{T}}X\right)^{-1} - 2\boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}X\left(X^{\mathrm{T}}X\right)^{-1} + \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
+&amp; = \left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\left[I_N\sigma^2 + X\boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}X^{\mathrm{T}}\right]X\left(X^{\mathrm{T}}X\right)^{-1} - \boldsymbol{\beta}\boldsymbol{\beta}^{\mathrm{T}}\\
+&amp; = \left(X^{\mathrm{T}}X\right)^{-1}\sigma^2\,.
+\end{align*}\]</span></p></li>
 <li><p>As <span class="math inline">\(\boldsymbol{y}\sim N\left(X\boldsymbol{\beta}, I_N\sigma^2\right)\)</span>, the likelihood is given by</p>
 <p><span class="math display">\[
- L(\boldsymbol{\beta}\,; \boldsymbol{y}) = \left(2\pi\sigma^2\right)^{-N/2}\exp\left\{-\frac{1}{2\sigma^2}(\boldsymbol{y}- X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}- X\boldsymbol{\beta})\right\}\,.
- \]</span></p>
+L(\boldsymbol{\beta}\,; \boldsymbol{y}) = \left(2\pi\sigma^2\right)^{-N/2}\exp\left\{-\frac{1}{2\sigma^2}(\boldsymbol{y}- X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}- X\boldsymbol{\beta})\right\}\,.
+\]</span></p>
 <p>The log-likelihood is given by</p>
 <p><span class="math display">\[
- l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}- X\boldsymbol{\beta}) + \mbox{constant}\,.
- \]</span></p>
+l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\boldsymbol{\beta})^{\mathrm{T}}(\boldsymbol{y}- X\boldsymbol{\beta}) + \mbox{constant}\,.
+\]</span></p>
 <p>Up to a constant, this expression is <span class="math inline">\(-1\times\)</span> the least squares equations; hence maximising the log-likelihood is equivalent to minimising the least squares equation.</p></li>
 </ol>
 </details>
@@ -846,7 +897,9 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
 </ol></li>
 </ol>
 <details>
-<p><summary><b>Solution</b></summary></p>
+<summary>
+<b>Solution</b>
+</summary>
 <ol style="list-style-type: lower-alpha">
 <li><p>From lectures</p>
 <table>
@@ -891,18 +944,18 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
 &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2 - \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}+ 2\boldsymbol{y}^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}}\\
 &amp; = 2\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\\
 &amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\,.
- \end{align*}\]</span></p></li>
+\end{align*}\]</span></p></li>
 <li><p>To compare model (i) with the null model, we compute</p>
 <p><span class="math display">\[\begin{align*}
- \mbox{RSS(null) - RSS(i)} &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- N\bar{Y}^2 - (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)\\
- &amp; = \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\,.
- \end{align*}\]</span></p>
+\mbox{RSS(null) - RSS(i)} &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- N\bar{Y}^2 - (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)\\
+&amp; = \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\,.
+\end{align*}\]</span></p>
 <p>To compare models (i) and (ii), we compare them both to the null model, and look at the difference between these comparisons:</p>
 <p><span class="math display">\[\begin{align*}
- \mbox{[RSS(null) - RSS(ii)] - [RSS(null) - RSS(i)]} &amp; = \mbox{RSS(i) - RSS(ii)}\\
- &amp; = (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
- &amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\,.
- \end{align*}\]</span></p>
+\mbox{[RSS(null) - RSS(ii)] - [RSS(null) - RSS(i)]} &amp; = \mbox{RSS(i) - RSS(ii)}\\
+&amp; = (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
+&amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\,.
+\end{align*}\]</span></p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -953,7 +1006,7 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
 </table></li>
 </ol>
 <p>By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regression SS.</p>
-<ol style="list-style-type: lower-alpha">
+<ol start="3" style="list-style-type: lower-alpha">
 <li><p>The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models</p>
 <p>ia. <span class="math inline">\(\boldsymbol{y}= X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\)</span>,</p>
 <p>iia. <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}= X\boldsymbol{\beta}+ \varepsilon\)</span></p>
@@ -962,7 +1015,7 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
 \mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} &amp; = \mbox{RSS(ia) - RSS(iia)}\\
 &amp; = (\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2)^{\mathrm{T}}(\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
 &amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\,.
- \end{align*}\]</span></p>
+\end{align*}\]</span></p>
 <p>Hence, an ANOVA table for the extra sums of squares is given by</p>
 <table>
 <colgroup>
@@ -1018,16 +1071,17 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
 
 </div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Fisher1935">
-<p>Fisher, R. A. (1935) <em>The Design of Experiments</em>. Edinburgh: Oliver and Boyd.</p>
 </div>
-<div id="ref-LB2020">
-<p>Luca, M. and Bazerman, M. H. (2020) <em>The Power of Experiments: Decision Making in a Data-Driven World</em>. Cambridge: MIT Press.</p>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Fisher1935" class="csl-entry">
+Fisher, R. A. (1935) <em>The Design of Experiments</em>. Edinburgh: <span>Oliver and Boyd</span>.
 </div>
-<div id="ref-Morris2011">
-<p>Morris, M. D. (2011) <em>Design of Experiments: An Introduction Based on Linear Models</em>. Boca Raton: Chapman and Hall/CRC Press.</p>
+<div id="ref-LB2020" class="csl-entry">
+Luca, M. and Bazerman, M. H. (2020) <em>The Power of Experiments: Decision Making in a Data-Driven World</em>. Cambridge: MIT Press.
+</div>
+<div id="ref-Morris2011" class="csl-entry">
+Morris, M. D. (2011) <em>Design of Experiments: An Introduction Based on Linear Models</em>. Boca Raton: <span>Chapman and Hall/CRC Press</span>.
 </div>
 </div>
 <div class="footnotes">
@@ -1035,7 +1089,7 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
 <ol start="1">
 <li id="fn1"><p>Smallest variance.<a href="intro.html#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>In this course, we will almost always start with a statistical model which we wish to use to answer our scientific question.<a href="intro.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>We will discuss the choice of <em>coding</em> -1, +1 later.<a href="intro.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Other choices of <em>coding</em> can be used: e.g. -1,1; it makes no difference for our current purpose.<a href="intro.html#fnref3" class="footnote-back">↩︎</a></p></li>
 <li id="fn4"><p>Check the <a href="https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf">Matrix Cookbook</a> for matrix calculus, amongst much else.<a href="intro.html#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p>Residual sum of squares for the full regression model.<a href="intro.html#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p>Residual sum of squares for the null model.<a href="intro.html#fnref6" class="footnote-back">↩︎</a></p></li>
@@ -1052,7 +1106,6 @@ Differentiating with respect to the vector <span class="math inline">\(\boldsymb
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1092,6 +1145,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -1105,7 +1162,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

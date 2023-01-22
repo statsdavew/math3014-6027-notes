@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-06-11" />
+<meta name="date" content="2023-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,8 @@
   
 
 <link rel="next" href="intro.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,25 +49,24 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,13 +86,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -120,6 +119,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -138,22 +159,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Motivation, introduction and revision</a><ul>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Motivation, introduction and revision</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#aims-of-experimentation-and-some-examples"><i class="fa fa-check"></i><b>1.2</b> Aims of experimentation and some examples</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>1.3</b> Some definitions</a></li>
-<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#principles"><i class="fa fa-check"></i><b>1.4</b> Principles of experimentation</a><ul>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#principles"><i class="fa fa-check"></i><b>1.4</b> Principles of experimentation</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#replication"><i class="fa fa-check"></i><b>1.4.1</b> Replication</a></li>
 <li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#randomisation"><i class="fa fa-check"></i><b>1.4.2</b> Randomisation</a></li>
 <li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#intro-blocking"><i class="fa fa-check"></i><b>1.4.3</b> Stratification (or blocking)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#variance-of-a-predictionfitted-value"><i class="fa fa-check"></i><b>1.5.1</b> Variance of a Prediction/Fitted Value</a></li>
-<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.1</b> Analysis of Variance as Model Comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a><ul>
+<li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="crd.html"><a href="crd.html#a-unit-treatment-linear-model"><i class="fa fa-check"></i><b>2.1</b> A unit-treatment linear model</a></li>
 <li class="chapter" data-level="2.2" data-path="crd.html"><a href="crd.html#the-partitioned-linear-model"><i class="fa fa-check"></i><b>2.2</b> The partitioned linear model</a></li>
 <li class="chapter" data-level="2.3" data-path="crd.html"><a href="crd.html#reduced-normal-equations-for-the-crd"><i class="fa fa-check"></i><b>2.3</b> Reduced normal equations for the CRD</a></li>
@@ -161,52 +184,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="crd.html"><a href="crd.html#contrast-crd"><i class="fa fa-check"></i><b>2.5</b> Treatment contrast estimators in the CRD</a></li>
 <li class="chapter" data-level="2.6" data-path="crd.html"><a href="crd.html#r-crd"><i class="fa fa-check"></i><b>2.6</b> Analysing CRDs in R</a></li>
 <li class="chapter" data-level="2.7" data-path="crd.html"><a href="crd.html#multiple-comp"><i class="fa fa-check"></i><b>2.7</b> Multiple comparisons</a></li>
-<li class="chapter" data-level="2.8" data-path="crd.html"><a href="crd.html#impact-of-design-choices-on-estimation"><i class="fa fa-check"></i><b>2.8</b> Impact of design choices on estimation</a><ul>
+<li class="chapter" data-level="2.8" data-path="crd.html"><a href="crd.html#impact-of-design-choices-on-estimation"><i class="fa fa-check"></i><b>2.8</b> Impact of design choices on estimation</a>
+<ul>
 <li class="chapter" data-level="2.8.1" data-path="crd.html"><a href="crd.html#crd-opt-all"><i class="fa fa-check"></i><b>2.8.1</b> Optimal treatment allocation</a></li>
 <li class="chapter" data-level="2.8.2" data-path="crd.html"><a href="crd.html#crd-size"><i class="fa fa-check"></i><b>2.8.2</b> Overall size of the experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises-1"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
+<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a><ul>
+<li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="blocking.html"><a href="blocking.html#unit-block-treatment-model"><i class="fa fa-check"></i><b>3.1</b> Unit-block-treatment model</a></li>
 <li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html#normal-equations"><i class="fa fa-check"></i><b>3.2</b> Normal equations</a></li>
 <li class="chapter" data-level="3.3" data-path="blocking.html"><a href="blocking.html#block-anova"><i class="fa fa-check"></i><b>3.3</b> Analysis of variance</a></li>
 <li class="chapter" data-level="3.4" data-path="blocking.html"><a href="blocking.html#rcdb"><i class="fa fa-check"></i><b>3.4</b> Randomised complete block designs</a></li>
 <li class="chapter" data-level="3.5" data-path="blocking.html"><a href="blocking.html#blocks-orthogonal"><i class="fa fa-check"></i><b>3.5</b> Orthogonal blocking</a></li>
-<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#sec-bibd"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a><ul>
+<li class="chapter" data-level="3.6" data-path="blocking.html"><a href="blocking.html#sec-bibd"><i class="fa fa-check"></i><b>3.6</b> Balanced incomplete block designs</a>
+<ul>
 <li class="chapter" data-level="3.6.1" data-path="blocking.html"><a href="blocking.html#construction-of-bibds"><i class="fa fa-check"></i><b>3.6.1</b> Construction of BIBDs</a></li>
 <li class="chapter" data-level="3.6.2" data-path="blocking.html"><a href="blocking.html#reduced-normal-equations"><i class="fa fa-check"></i><b>3.6.2</b> Reduced normal equations</a></li>
 <li class="chapter" data-level="3.6.3" data-path="blocking.html"><a href="blocking.html#estimation-and-inference"><i class="fa fa-check"></i><b>3.6.3</b> Estimation and inference</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-1"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a><ul>
-<li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#factorial-contrasts"><i class="fa fa-check"></i><b>4.1</b> Factorial contrasts</a><ul>
+<li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="factorial.html"><a href="factorial.html#factorial-contrasts"><i class="fa fa-check"></i><b>4.1</b> Factorial contrasts</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="factorial.html"><a href="factorial.html#main-effects"><i class="fa fa-check"></i><b>4.1.1</b> Main effects</a></li>
 <li class="chapter" data-level="4.1.2" data-path="factorial.html"><a href="factorial.html#interactions"><i class="fa fa-check"></i><b>4.1.2</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="factorial.html"><a href="factorial.html#fact-principles"><i class="fa fa-check"></i><b>4.2</b> Three principles for factorial effects</a></li>
-<li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a><ul>
+<li class="chapter" data-level="4.3" data-path="factorial.html"><a href="factorial.html#unreplicated-normal-plots"><i class="fa fa-check"></i><b>4.3</b> Normal effect plots for unreplicated factorial designs</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="factorial.html"><a href="factorial.html#lenths-method-for-approximate-hypothesis-testing"><i class="fa fa-check"></i><b>4.3.1</b> Lenth’s method for approximate hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#fac-reg"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a><ul>
+<li class="chapter" data-level="4.4" data-path="factorial.html"><a href="factorial.html#fac-reg"><i class="fa fa-check"></i><b>4.4</b> Regression modelling for factorial experiments</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="factorial.html"><a href="factorial.html#anova-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4.1</b> ANOVA for factorial experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-2"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a><ul>
+<li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
 <li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
 <li class="chapter" data-level="5.3" data-path="block-factorial.html"><a href="block-factorial.html#analysis-of-a-confounded-factorial-design"><i class="fa fa-check"></i><b>5.3</b> Analysis of a confounded factorial design</a></li>
-<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a><ul>
+<li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="fractional-factorial.html"><a href="fractional-factorial.html#est-alias"><i class="fa fa-check"></i><b>6.1</b> Estimability and aliasing</a></li>
 <li class="chapter" data-level="6.2" data-path="fractional-factorial.html"><a href="fractional-factorial.html#general-method-for-choosing-a-fractional-factorial-design"><i class="fa fa-check"></i><b>6.2</b> General method for choosing a fractional factorial design</a></li>
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
 <li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
-<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-4"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -232,13 +264,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">MATH3014-6027 Design (and Analysis) of Experiments</h1>
 <p class="author"><em>Dave Woods</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2022-06-11</em></p>
+<p class="date"><em>2023-01-22</em></p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.</p>
+<div id="preface" class="section level1 unnumbered hasAnchor">
+<h1>Preface<a href="index.html#preface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>These are lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2022-23.</p>
 <p>Southampton prerequisites for this module are MATH2010 or MATH6174 and STAT6123 (or equivalent modules on linear modelling).</p>
-
 
 </div>
             </section>
@@ -251,7 +282,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -291,6 +321,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -304,7 +338,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
