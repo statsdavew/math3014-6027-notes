@@ -4,10 +4,6 @@
 %
 \documentclass[
 ]{book}
-\title{MATH3014-6027 Design (and Analysis) of Experiments}
-\author{Dave Woods}
-\date{2022-06-11}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -37,14 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={MATH3014-6027 Design (and Analysis) of Experiments},
-  pdfauthor={Dave Woods},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -118,6 +106,18 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={MATH3014-6027 Design (and Analysis) of Experiments},
+  pdfauthor={Dave Woods},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{MATH3014-6027 Design (and Analysis) of Experiments}
+\author{Dave Woods}
+\date{2023-01-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -147,7 +147,7 @@
 \chapter*{Preface}\label{preface}}
 \addcontentsline{toc}{chapter}{Preface}
 
-These are draft lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2021-22. They are very much work in progress.
+These are lecture notes for the modules MATH3014 and MATH6027 Design (and Analysis) of Experiments at the University of Southampton for academic year 2022-23.
 
 Southampton prerequisites for this module are MATH2010 or MATH6174 and STAT6123 (or equivalent modules on linear modelling).
 
@@ -165,26 +165,16 @@ Southampton prerequisites for this module are MATH2010 or MATH6174 and STAT6123 
 \chapter{Motivation, introduction and revision}\label{intro}}
 
 \begin{definition}
-\protect\hypertarget{def:exp}{}\label{def:exp}
-
-An \textbf{experiment} is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science \(\dots\)) by \textbf{deliberately} varying some features of the process under study in order to understand the impact of these changes on measureable responses.
+\protect\hypertarget{def:exp}{}\label{def:exp}An \textbf{experiment} is the process through which data are collected to answer a scientific question (physical science, social science, actuarial science \(\dots\)) by \textbf{deliberately} varying some features of the process under study in order to understand the impact of these changes on measureable responses.
 
 In this course we consider only \emph{intervention} experiments, in which some aspects of the process are under the experimenters' control. We do not consider \emph{surveys} or \emph{observational} studies.
-
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:design}{}\label{def:design}
-
-\textbf{Design of experiments} is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
-
+\protect\hypertarget{def:design}{}\label{def:design}\textbf{Design of experiments} is the topic in Statistics concerned with the selection of settings of controllable variables or factors in an experiment and their allocation to experimental units in order to maximise the effectiveness of the experiment at achieving its aim.
 \end{definition}
 
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by \href{https://xkcd.com/2530/}{xkcd}:
-
-\begin{verbatim}
-## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
-\end{verbatim}
 
 Some notable milestones in the history of the design of experiments include:
 
@@ -233,10 +223,7 @@ Figure \ref{fig:broadbalk} shows the \href{http://www.era.rothamsted.ac.uk/Broad
 \section{Motivation}\label{motivation}}
 
 \begin{example}
-\protect\hypertarget{exm:motivation}{}\label{exm:motivation}
-
-Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
-
+\protect\hypertarget{exm:motivation}{}\label{exm:motivation}Consider an experiment to compare two treatments (e.g.~drugs, diets, fertilisers, \(\dots\)). We have \(n\) subjects (people, mice, plots of land, \(\dots\)), each of which can be assigned one of the two treatments. A response (protein measurement, weight, yield, \(\dots\)) is then measured.
 \end{example}
 
 \textbf{Question:} How many subjects should be assigned to each treatment to gain the most precise\footnote{Smallest variance.} inference about the difference in response from the two treatments?
@@ -250,22 +237,22 @@ Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
 
 where \(\varepsilon_j\sim N(0,\sigma^{2})\) are independent and identically distributed errors and \(\beta_{0}, \beta_{1}\) are unknown constants (parameters).
 
-Let\footnote{Other codings can be used: e.g. 0,1; see later in the module. It makes no difference for our current purpose.}
+Let\footnote{Other choices of \emph{coding} can be used: e.g.~-1,1; it makes no difference for our current purpose.}
 \begin{equation}
-x_{j}=\left\{\begin{array}{ll}
--1&\textrm{if treatment 1 is applied to the $j$th subject}\\
-+1&\textrm{if treatment 2 is applied to the $j$th subject}\nonumber ,
+x_{j}=\left\{\begin{array}{cl}
+0&\textrm{if treatment 1 is applied to the $j$th subject}\\
+1&\textrm{if treatment 2 is applied to the $j$th subject}\nonumber ,
 \end{array}
 \right.
 \end{equation}
-for \(j=1,\dots,n\).\footnote{We will discuss the choice of \emph{coding} -1, +1 later.}
+for \(j=1,\dots,n\).
 
 The difference in expected response from treatments 1 and 2 is
 
 \begin{equation}
 \begin{split}
-\textrm{E}[Y_j\, |\, x_j = +1] - \textrm{E}[Y_j\, |\, x_j = -1] & = \beta_{0}+\beta_{1}-\beta_{0}+\beta_{1} \\
-& = 2\beta_{1}\,.
+\textrm{E}[Y_j\, |\, x_j = 1] - \textrm{E}[Y_j\, |\, x_j = 0] & = \beta_{0}+\beta_{1}-\beta_{0} \\
+& = \beta_{1}\,.
 \end{split}
 \label{eq:ex-ex-response}
 \end{equation}
@@ -405,53 +392,66 @@ For estimating the difference between treatments, we are interested in
 
 \begin{align*}
 \textrm{Var}(\hat{\beta}_{1})& = \frac{n}{n\sum x_j^{2}-(\sum x_j)^{2}}\sigma^{2}\\
- & = \frac{n}{n^2 - (\sum x_j)^2}\sigma^{2}\,,
+ & = \frac{1}{\sum x_j^{2} - n\bar{x}^2}\sigma^{2}\,,
 \end{align*}
-as \(x_j=\pm 1\), therefore \(x_j^2=1\) for all \(j=1,\ldots,n\), and hence \(\sum x_j^2=n\).
+where \(\bar{x} = \sum x_j / n\).
 
-To achieve the most precise estimator, we need to minimise \(\textrm{Var}(\hat{\beta}_{1})\) or equivalently minimise \(|\sum x_j|\). This goal can be achieved through the choice of \(x_{1},\dots,x_{n}\):
-
-\begin{itemize}
-\tightlist
-\item
-  as each \(x_j\) can only take one of two values, -1 or +1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
-\item
-  call these \(n_{1}\) and \(n_{2}\) respectively, with \(n_{1}+n_{2}=n\)
-\end{itemize}
-
-It is obvious that \(\sum x_j = 0\) if and only if \(n_1=n_2\). Therefore, assuming \(n\) is even, the \textbf{optimal design} has
+Assuming constant \(\sigma^2\), to achieve the most precise estimator we need to minimise \(\textrm{Var}(\hat{\beta}_{1})\) or equivalently maxmise \(\sum x_j^{2} - n\bar{x}^2\). This goal can be achieved through the choice of \(x_{1},\dots,x_{n}\):
 
 \begin{itemize}
 \tightlist
 \item
-  \(n_{1}=\frac{n}{2}\) subjects assigned to treatment 1 and
+  as each \(x_j\) can only take one of two values, 0 or 1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
 \item
-  \(n_{2}=\frac{n}{2}\) subjects assigned to treatment 2.
+  call these \(n_{1}\) and \(n_{2}\) respectively, with \(n_{1}+n_{2}=n\).
 \end{itemize}
 
-For \(n\) odd, we choose \(n_{1}=\frac{n+1}{2}\), \(n_{2}=\frac{n-1}{2}\), or vice versa.
+We can find an upper bound for the quantity \(\sum x_j^{2} - n\bar{x}^2\). As each \(x_i\in\{0,1\}\) we have
+
+\begin{align}
+\sum x_j^2 & = \sum x_j \\
+& = n\bar{x}\,.
+\end{align}
+
+Hence,
+
+\begin{align*}
+\sum x_j^{2} - n\bar{x}^2 & = n\bar{x} - n\bar{x}^2 \\
+& = n\bar{x}(1-\bar{x}) \\
+& \le n/4\,,
+\end{align*}
+as we have a quadratic equation in \(\bar{x}\) that is maximised at \(\bar{x} = 1/2\).
+
+If we can find a set of design points that satisfy \(\bar{x} = 1/2\), we will have an \textbf{optimal design}. Assuming \(n\) is even, one possibility is
+
+\begin{itemize}
+\tightlist
+\item
+  \(n_{1}=\frac{n}{2}\) subjects assigned to treatment 1 (\(x_j = 0\)) and
+\item
+  \(n_{2}=\frac{n}{2}\) subjects assigned to treatment 2 (\(x_j = 1\)).
+\end{itemize}
+
+For \(n\) odd, we choose \(n_{1}=\frac{n+1}{2}\), \(n_{2}=\frac{n-1}{2}\), or vice versa, to get as close as possible to the optimal design.
 
 \begin{definition}
-\protect\hypertarget{def:simple-efficiency}{}\label{def:simple-efficiency}
-
-We can assess different designs using their \textbf{efficiency}:
+\protect\hypertarget{def:simple-efficiency}{}\label{def:simple-efficiency}We can assess different designs using their \textbf{efficiency}:
 \begin{equation}
 \textrm{Eff}=\frac{\textrm{Var}(\hat{\beta}_{1}\, |\, d^{*})}{\textrm{Var}(\hat{\beta}_{1}\, |\, d_{1})}
 \label{eq:simple-efficiency}
 \end{equation}
 
 where \(d_{1}\) is a design we want to assess and \(d^{*}\) is the optimal design with smallest variance. Note that \(0\leq\textrm{Eff}\leq 1\).
-
 \end{definition}
 
-In Figure \ref{fig:simple-efficiency} below, we plot this efficiency for Example \ref{exm:motivation}, using different choices of \(n_1\). The total number of runs is fixed at \(n = 100\), and the function \texttt{eff} calculates the efficiency from Definition \ref{def:simple-efficiency} for a design with \(n_1\) subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when \(n_1 = n_2\) (equal allocation of treatments 1 and 2). If \(n_1=0\) or \(n_1 = 1\), the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.
+In Figure \ref{fig:simple-efficiency} below, we plot this efficiency for Example \ref{exm:motivation}, using different choices of \(n_1\). The total number of runs is fixed at \(n = 100\), and the function \texttt{eff} calculates the efficiency (assuming \(n\) is even) from Definition \ref{def:simple-efficiency} for a design with \(n_1\) subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when \(n_1 = n_2\) (equal allocation of treatments 1 and 2). If \(n_1=0\) or \(n_1 = 1\), the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.
 
 
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100} 
-\NormalTok{eff }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n1) }\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ ((}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ n1 }\SpecialCharTok{{-}}\NormalTok{ n) }\SpecialCharTok{/}\NormalTok{ n)}\SpecialCharTok{\^{}}\DecValTok{2} 
+\NormalTok{eff }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n1) }\DecValTok{4} \SpecialCharTok{*}\NormalTok{ n1 }\SpecialCharTok{*}\NormalTok{ (n }\SpecialCharTok{{-}}\NormalTok{ n1) }\SpecialCharTok{/}\NormalTok{ n}\SpecialCharTok{\^{}}\DecValTok{2}
 \FunctionTok{curve}\NormalTok{(eff, }\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =}\NormalTok{ n, }\AttributeTok{ylab =} \StringTok{"Eff"}\NormalTok{, }\AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(n[}\DecValTok{1}\NormalTok{]))}
 \end{Highlighting}
 \end{Shaded}
@@ -471,7 +471,7 @@ Some reasons experiments are performed:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Treatment comparison (Chapters 2 and 3)
+  Treatment comparison
 \end{enumerate}
 
 \begin{itemize}
@@ -487,7 +487,7 @@ Some reasons experiments are performed:
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Factor screening (Chapters 4, 5 and 6)
+  Factor screening
 \end{enumerate}
 
 \begin{itemize}
@@ -507,7 +507,7 @@ Some reasons experiments are performed:
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Response surface exploration (Chapter 7)
+  Response surface exploration
 \end{enumerate}
 
 \begin{itemize}
@@ -527,7 +527,7 @@ Some reasons experiments are performed:
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Optimisation (Chapter 7)
+  Optimisation
 \end{enumerate}
 
 \begin{itemize}
@@ -538,35 +538,25 @@ Some reasons experiments are performed:
   typically use response surface methods and sequential ``hill climbing'\,' strategy
 \end{itemize}
 
+In this module, we will focus on \textbf{treatment comparison} (Chapters 2 and 3) and \textbf{factor screening} (Chapters 4, 5 and 6).
+
 \hypertarget{some-definitions}{%
 \section{Some definitions}\label{some-definitions}}
 
 \begin{definition}
-\protect\hypertarget{def:response}{}\label{def:response}
-
-The \textbf{response} \(Y\) is the outcome measured in an experiment; e.g.~yield from a chemical process. The response from the \(n\) observations are denoted \(Y_{1},\dots,Y_{n}\).
-
+\protect\hypertarget{def:response}{}\label{def:response}The \textbf{response} \(Y\) is the outcome measured in an experiment; e.g.~yield from a chemical process. The response from the \(n\) observations are denoted \(Y_{1},\dots,Y_{n}\).
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:factor-variable}{}\label{def:factor-variable}
-
-\textbf{Factors} (discrete) or \textbf{variables} (continuous) are features which can be set or controlled in an experiment; \(m\) denotes the number of factors or variables under investigation. For discrete factors, we call the possible settings of the factor its \textbf{levels}. We denote by \(x_{ij}\) the value taken by factor or variable \(i\) in the \(j\)th run of the experiment (\(i = 1, \ldots, m\); \(j = 1, \ldots, n\)).
-
+\protect\hypertarget{def:factor-variable}{}\label{def:factor-variable}\textbf{Factors} (discrete) or \textbf{variables} (continuous) are features which can be set or controlled in an experiment; \(m\) denotes the number of factors or variables under investigation. For discrete factors, we call the possible settings of the factor its \textbf{levels}. We denote by \(x_{ij}\) the value taken by factor or variable \(i\) in the \(j\)th run of the experiment (\(i = 1, \ldots, m\); \(j = 1, \ldots, n\)).
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:treatment}{}\label{def:treatment}
-
-The \textbf{treatments} or \textbf{support points} are the \emph{distinct} combinations of factor or variable values in the experiment.
-
+\protect\hypertarget{def:treatment}{}\label{def:treatment}The \textbf{treatments} or \textbf{support points} are the \emph{distinct} combinations of factor or variable values in the experiment.
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:unit}{}\label{def:unit}
-
-An experimental \textbf{unit} is the basic element (material, animal, person, time unit, \ldots) to which a treatment can be applied to produce a response.
-
+\protect\hypertarget{def:unit}{}\label{def:unit}An experimental \textbf{unit} is the basic element (material, animal, person, time unit, \ldots) to which a treatment can be applied to produce a response.
 \end{definition}
 
 In Example \ref{exm:motivation} (comparing two treatments):
@@ -663,7 +653,7 @@ and so
 \boldsymbol{x}_j^{\textrm{T}}\boldsymbol{\beta}=\beta_{0}+\beta_{1}x_{1j}+\dots+\beta_{m}x_{mj}\,.
 \]
 
-The laest squares estimators are given by
+The least squares estimators are given by
 
 \begin{equation}
 \hat{\boldsymbol{\beta}}=(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\boldsymbol{Y}\,,\nonumber
@@ -675,32 +665,8 @@ with
 \textrm{Var}(\hat{\boldsymbol{\beta}})=(X^{\textrm{T}}X)^{-1}\sigma^{2}\,.\nonumber
 \end{equation}
 
-\hypertarget{variance-of-a-predictionfitted-value}{%
-\subsection{Variance of a Prediction/Fitted Value}\label{variance-of-a-predictionfitted-value}}
-
-A prediction of the mean response at point \(\boldsymbol{x}_0\) (which may or may not be in the design) is
-
-\[
-\hat{Y}_0 = \boldsymbol{x}_0^{\textrm{T}}\hat{\boldsymbol{\beta}}\,,
-\]
-
-with
-
-\begin{align*}
-\textrm{Var}(\hat{Y}_0) & = \textrm{Var}\left(\boldsymbol{x}_0^{\textrm{T}}\hat{\boldsymbol{\beta}}\right) \\
-& = \boldsymbol{x}_0^{\textrm{T}}\textrm{Var}(\hat{\boldsymbol{\beta}})\boldsymbol{x}_0 \\
-& = \boldsymbol{x}_0^{\textrm{T}}(X^{\textrm{T}}X)^{-1}\boldsymbol{x}_0\sigma^{2}\,.
-\end{align*}
-
-For a linear model, this variance depends only on the assumed regression model and the design (through \(X\)), the point at which prediction is to be made (\(\boldsymbol{x}_0\)) and the value of \(\sigma^2\); it does not depend on data \(\boldsymbol{Y}\) or parameters \(\boldsymbol{\beta}\).
-
-Similarly, we can find the variance-covariance matrix of the fitted values:
-\[
-\textrm{Var}(\hat{Y})=\textrm{Var}(X\hat{\boldsymbol{\beta}})=X(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\sigma^{2}\,.
-\]
-
 \hypertarget{anova-revision}{%
-\subsection{\texorpdfstring{Analysis of Variance and R\(^{2}\) as Model Comparison}{Analysis of Variance and R\^{}\{2\} as Model Comparison}}\label{anova-revision}}
+\subsection{Analysis of Variance as Model Comparison}\label{anova-revision}}
 
 To assess the goodness-of-fit of a model, we can use the residual sum of squares
 
@@ -733,57 +699,15 @@ as
 \hat{\beta}_{0} = \bar{Y} = \frac{1}{n}\sum_{j=1}^n Y_{j}\,.
 \]
 
-How do we compare these models?
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Ratio of residual sum of squares:
-  \begin{align*}
-  R^{2} & = 1 - \frac{\textrm{RSS}}{\textrm{RSS}(\textrm{null})} \\
-  & = 1 - \frac{(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})}{\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}}\,.
-  \end{align*}
-\end{enumerate}
-
-The quantity \(0\leq R^{2}\leq 1\) is sometimes called the \textbf{coefficient of multiple determination}:
-
-\begin{itemize}
-\tightlist
-\item
-  high \(R^{2}\) implies that the model describes much of the variation in the data;
-\item
-  \textbf{but} note that \(R^{2}\) will always increase as \(p\) (the number of explanatory variables) increases, with \(R^{2}=1\) when \(p=n\);
-\item
-  some software packages will report the adjusted \(R^{2}\).
-\end{itemize}
-
-\begin{align*}
-R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
-& = 1 - \frac{(\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})^{\textrm{T}} (\boldsymbol{Y} - X\hat{\boldsymbol{\beta}})/(n-p)}{(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - n\bar{Y}^{2})/(n-1)};
-\end{align*}
-
-\begin{itemize}
-\tightlist
-\item
-  \(R_a^2\) does not necessarily increase with \(p\) (as we divide by degrees of freedom to adjust for complexity of the model).
-\end{itemize}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Analysis of variance (ANOVA): An ANOVA table is compact way of presenting the results of (sequential) comparisons of nested models. You should be familiar with an ANOVA table of the following form.
-\end{enumerate}
+An Analysis of variance (ANOVA) table is compact way of presenting the results of (sequential) comparisons of nested models. You should be familiar with an ANOVA table of the following form.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
 \caption{\label{tab:anova} A standard ANOVA table.}\tabularnewline
-\toprule
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Source
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -793,9 +717,9 @@ Degress of Freedom
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Mean Square
 \end{minipage} \\
-\midrule
+\midrule()
 \endfirsthead
-\toprule
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Source
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -805,12 +729,12 @@ Degress of Freedom
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Mean Square
 \end{minipage} \\
-\midrule
+\midrule()
 \endhead
 Regression & \(p-1\) & By subtraction; see \eqref{eq:SSS} & Reg SS/\((p-1)\) \\
 Residual & \(n-p\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\)\footnote{Residual sum of squares for the full regression model.} & RSS/\((n-p)\) \\
 Total & \(n-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\)\footnote{Residual sum of squares for the null model.} & \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 In row 1 of Table \ref{tab:anova} above,
@@ -859,9 +783,6 @@ is an unbiased estimator for \(\sigma^{2}\), and
 
 This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010 or MATH6174 notes).
 
-\hypertarget{exercises}{%
-\section{Exercises}\label{exercises}}
-
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
@@ -881,9 +802,9 @@ This is a Chi-squared distribution with \(n-p\) degrees of freedom (see MATH2010
   \item
     Identify the units in this experiment.
   \item
-    How might a ``physical appartatus'' from a ``game of chance'' be used to perform the randomisation. Explain one example.
+    How might a ``physical appartatus'' from a ``game of chance'' be used to perform the randomisation? Explain one example.
   \item
-    Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?
+    Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Four are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?
   \end{enumerate}
 \end{enumerate}
 
@@ -899,6 +820,7 @@ Solution
   The simplest method here might be to select four black playing cards and four red playing cards, assign one treatment to each colour, shuffle the cards, and then draw them in order. The colour drawn indicates the treatment that should be used to make the next cup of tea. This operation would give one possible randomisation.
 
   We could of course also use \texttt{R}.
+\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -907,34 +829,39 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Tea first"  "Milk first"
 ## [6] "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
 \item
   Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# block 1}
-\FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# block 2}
-\FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
-\end{verbatim}
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \CommentTok{\# block 1}
+    \FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \CommentTok{\# block 2}
+    \FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Milk first"}\NormalTok{, }\StringTok{"Tea first"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+\end{verbatim}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1048,15 +975,15 @@ Solution
   You should end up with an ANOVA table of the form
 
   \begin{longtable}[]{@{}lccc@{}}
-  \toprule
+  \toprule()
   Source & Degrees of freedom & Sums of squares & Mean square \\
-  \midrule
+  \midrule()
   \endhead
   Model (i) & \(p_1\) & ? & ? \\
   Model (ii) & \(p_2\) & ? & ? \\
   Residual & \(n-p_1-p_2-1\) & ? & ? \\
   Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   The second row of the table gives the \textbf{extra sums of squares} for the additional terms in fitting model (ii), over and above those in model (i).
@@ -1078,11 +1005,11 @@ Solution
   From lectures
 
   \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-  \toprule
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1200}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3600}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3000}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2200}}@{}}
+  \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
   Source
   \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
@@ -1092,12 +1019,12 @@ Solution
   \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
   Mean square
   \end{minipage} \\
-  \midrule
+  \midrule()
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
   Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
   Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   where
@@ -1125,11 +1052,11 @@ Solution
    \end{align*}
 
   \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-  \toprule
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1200}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3600}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3000}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2200}}@{}}
+  \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
   Source
   \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
@@ -1139,14 +1066,14 @@ Solution
   \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
   Mean square
   \end{minipage} \\
-  \midrule
+  \midrule()
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
   Model (i) & \(p_1\) & \(\hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\right)/p_1\) \\
   Extra due to Model (ii) & \(p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\) \\
   Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
   Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \end{enumerate}
 
@@ -1154,6 +1081,7 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
 \item
   The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
 
@@ -1172,11 +1100,11 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
   Hence, an ANOVA table for the extra sums of squares is given by
 
   \begin{longtable}[]{@{}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-  \toprule
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1200}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3600}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3000}}
+    >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2200}}@{}}
+  \toprule()
   \begin{minipage}[b]{\linewidth}\centering
   Source
   \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
@@ -1186,14 +1114,14 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
   \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
   Mean square
   \end{minipage} \\
-  \midrule
+  \midrule()
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
   Extra Model (i) & \(p_1\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\right)/p_1\) \\
   Extra Model (ii) & \(p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\) \\
   Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
   Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \end{enumerate}
 
@@ -1205,9 +1133,7 @@ Note that for these \emph{adjusted} sums of squares, in general the extra sum of
 The simplest form of experiment we will consider compares \(t\) different \textbf{unstructured} treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter \ref{factorial}). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter \ref{blocking} on blocking). A designs for such an experiment is therefore called a \textbf{completely randomised design} (CRD).
 
 \begin{example}
-\protect\hypertarget{exm:one-way}{}\label{exm:one-way}
-
-Pulp experiment \citep[ch.~2]{WH2009}
+\protect\hypertarget{exm:one-way}{}\label{exm:one-way}Pulp experiment \citep[ch.~2]{WH2009}
 
 In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by \(t=4\) operators. The data are given in Table \ref{tab:pulp-expt-data} below.
 
@@ -1267,7 +1193,6 @@ We can informally compare the responses from these four treatments graphically.
 \end{figure}
 
 Figure \ref{fig:pulp-boxplot} shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.
-
 \end{example}
 
 Throughout this chapter we will assume the \(i\)th treatment is applied to \(n_i\) experimental unit, with total number of runs \(n = \sum_{i=1}^t n_i\) in the experiment.
@@ -1439,10 +1364,7 @@ These \(t\) equations are not independent; when multiplied by the \(n_i\), they 
 \section{Contrasts}\label{contrasts}}
 
 \begin{definition}
-\protect\hypertarget{def:contrast}{}\label{def:contrast}
-
-A treatment \textbf{contrast} is a linear combination \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) with coefficient vector \(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\) such that \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\); that is, \(\sum_{i = 1}^t c_i = 0\).
-
+\protect\hypertarget{def:contrast}{}\label{def:contrast}A treatment \textbf{contrast} is a linear combination \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\) with coefficient vector \(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\) such that \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\); that is, \(\sum_{i = 1}^t c_i = 0\).
 \end{definition}
 
 For example, assume we have \(t = 3\) treatments, then the following vectors \(\boldsymbol{c}\) all define contrasts:
@@ -1640,13 +1562,13 @@ Clearly, we could directly calculate, and then compare, mean responses for each 
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3955
-##  1 - 3       -0.38 0.206 16  -1.843  0.0839
-##  1 - 4       -0.44 0.206 16  -2.134  0.0486
-##  2 - 3       -0.56 0.206 16  -2.716  0.0153
-##  2 - 4       -0.62 0.206 16  -3.007  0.0083
-##  3 - 4       -0.06 0.206 16  -0.291  0.7748
+##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  0.3955
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.0839
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.0486
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0153
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0083
+##  operator3 - operator4    -0.06 0.206 16  -0.291  0.7748
 \end{verbatim}
 
   Here, we have first fitted the linear model object. The \texttt{lm} function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5\% significance level,
@@ -1669,13 +1591,13 @@ Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3955
-##  1 - 3       -0.38 0.206 16  -1.843  0.0839
-##  1 - 4       -0.44 0.206 16  -2.134  0.0486
-##  2 - 3       -0.56 0.206 16  -2.716  0.0153
-##  2 - 4       -0.62 0.206 16  -3.007  0.0083
-##  3 - 4       -0.06 0.206 16  -0.291  0.7748
+##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  0.3955
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.0839
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.0486
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0153
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0083
+##  operator3 - operator4    -0.06 0.206 16  -0.291  0.7748
 \end{verbatim}
 
 \begin{Shaded}
@@ -1755,13 +1677,13 @@ Therefore it is usually desirable to maintain some control of the experiment-wis
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  1.0000
-##  1 - 3       -0.38 0.206 16  -1.843  0.5034
-##  1 - 4       -0.44 0.206 16  -2.134  0.2918
-##  2 - 3       -0.56 0.206 16  -2.716  0.0915
-##  2 - 4       -0.62 0.206 16  -3.007  0.0501
-##  3 - 4       -0.06 0.206 16  -0.291  1.0000
+##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  1.0000
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.5034
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.2918
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0915
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0501
+##  operator3 - operator4    -0.06 0.206 16  -0.291  1.0000
 ## 
 ## P value adjustment: bonferroni method for 6 tests
 \end{verbatim}
@@ -1779,13 +1701,13 @@ Therefore it is usually desirable to maintain some control of the experiment-wis
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.8185
-##  1 - 3       -0.38 0.206 16  -1.843  0.2903
-##  1 - 4       -0.44 0.206 16  -2.134  0.1845
-##  2 - 3       -0.56 0.206 16  -2.716  0.0658
-##  2 - 4       -0.62 0.206 16  -3.007  0.0377
-##  3 - 4       -0.06 0.206 16  -0.291  0.9911
+##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  0.8185
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.2903
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.1845
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0658
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0377
+##  operator3 - operator4    -0.06 0.206 16  -0.291  0.9911
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates
 \end{verbatim}
@@ -1803,13 +1725,13 @@ The default adjustment in the \texttt{pairs} function is the Tukey method. Compa
 \end{Shaded}
 
 \begin{verbatim}
-##   contrast estimate     SE df t.ratio Bonf.p.value Tukey.p.value
-## 1    1 - 2     0.18 0.2062 16  0.8731      1.00000       0.81854
-## 2    1 - 3    -0.38 0.2062 16 -1.8433      0.50336       0.29030
-## 3    1 - 4    -0.44 0.2062 16 -2.1343      0.29182       0.18448
-## 4    2 - 3    -0.56 0.2062 16 -2.7164      0.09150       0.06579
-## 5    2 - 4    -0.62 0.2062 16 -3.0074      0.05009       0.03767
-## 6    3 - 4    -0.06 0.2062 16 -0.2910      1.00000       0.99108
+##                contrast estimate     SE df t.ratio Bonf.p.value Tukey.p.value
+## 1 operator1 - operator2     0.18 0.2062 16  0.8731      1.00000       0.81854
+## 2 operator1 - operator3    -0.38 0.2062 16 -1.8433      0.50336       0.29030
+## 3 operator1 - operator4    -0.44 0.2062 16 -2.1343      0.29182       0.18448
+## 4 operator2 - operator3    -0.56 0.2062 16 -2.7164      0.09150       0.06579
+## 5 operator2 - operator4    -0.62 0.2062 16 -3.0074      0.05009       0.03767
+## 6 operator3 - operator4    -0.06 0.2062 16 -0.2910      1.00000       0.99108
 ##   unadjust.p.value
 ## 1         0.395509
 ## 2         0.083893
@@ -2021,8 +1943,8 @@ Returning to Example \ref{exm:one-way}, assume are testing a single pairwise com
 
 So, for example, to achieve \(T = 3\) with a signal-to-noise ratio of \(d=0.5\) requires \(n=288\) runs. As would be expected, the number of runs required to achieve this value of \(T\) decreases as the signal-to-noise ration increases. For \(d=3\), only a very small experiment with \(n=8\) runs is needed.
 
-\hypertarget{exercises-1}{%
-\section{Exercises}\label{exercises-1}}
+\hypertarget{exercises}{%
+\section{Exercises}\label{exercises}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2078,17 +2000,17 @@ The sample variance, \(s^2 = 0.106\), from \eqref{eq:crd-s2}. As \(\sum_{i=1}^tc
 \hline
 contrast & estimate & SE & df & t.ratio & unadjust.p.value & Bonferroni & Tukey\\
 \hline
-1 - 2 & 0.18 & 0.206 & 16 & 0.873 & 0.396 & 1.000 & 0.819\\
+operator1 - operator2 & 0.18 & 0.206 & 16 & 0.873 & 0.396 & 1.000 & 0.819\\
 \hline
-1 - 3 & -0.38 & 0.206 & 16 & -1.843 & 0.084 & 0.503 & 0.290\\
+operator1 - operator3 & -0.38 & 0.206 & 16 & -1.843 & 0.084 & 0.503 & 0.290\\
 \hline
-1 - 4 & -0.44 & 0.206 & 16 & -2.134 & 0.049 & 0.292 & 0.184\\
+operator1 - operator4 & -0.44 & 0.206 & 16 & -2.134 & 0.049 & 0.292 & 0.184\\
 \hline
-2 - 3 & -0.56 & 0.206 & 16 & -2.716 & 0.015 & 0.092 & 0.066\\
+operator2 - operator3 & -0.56 & 0.206 & 16 & -2.716 & 0.015 & 0.092 & 0.066\\
 \hline
-2 - 4 & -0.62 & 0.206 & 16 & -3.007 & 0.008 & 0.050 & 0.038\\
+operator2 - operator4 & -0.62 & 0.206 & 16 & -3.007 & 0.008 & 0.050 & 0.038\\
 \hline
-3 - 4 & -0.06 & 0.206 & 16 & -0.291 & 0.775 & 1.000 & 0.991\\
+operator3 - operator4 & -0.06 & 0.206 & 16 & -0.291 & 0.775 & 1.000 & 0.991\\
 \hline
 \end{tabular}
 
@@ -2103,14 +2025,14 @@ Alternatively, to test each hypothesis at the 5\% level, we can compare each t.r
   ~\citep[Adapted from][]{WH2009} The bioactivity of four different drugs \(A\), \(B\), \(C\) and \(D\) for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
 
   \begin{longtable}[]{@{}lccc@{}}
-  \toprule
+  \toprule()
   Source & Degrees of freedom & Sums of squares & Mean square \\
-  \midrule
+  \midrule()
   \endhead
   Treatment & 3 & 64.42 & 21.47 \\
   Residual & 26 & 62.12 & 2.39 \\
   Total & 29 & 126.54 & \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   \begin{enumerate}
@@ -2144,13 +2066,13 @@ Solution
   for \(i, j = A, B, C, D;\, i\ne j\). The treatment means and repetitions are given in the question (note that not all \(n_i\) are equal). From the ANOVA table, we get \(s^2 = 62.12/26 = 2.389\). The following table summarises the differences between drugs:
 
   \begin{longtable}[]{@{}lllllll@{}}
-  \toprule
+  \toprule()
   & \(A-B\) & \(A-C\) & \(A-D\) & \(B-C\) & \(B-D\) & \(C-D\) \\
-  \midrule
+  \midrule()
   \endhead
   Abs. difference & 0.35 & 3.47 & 2.25 & 3.12 & 1.9 & 1.22 \\
   Test statistic & 0.44 & 4.45 & 2.62 & 4.15 & 2.28 & 1.50 \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   The Bonferroni critical value is \(t_{26, 1-0.05/12} = 3.5069\). The Tukey critical value is \(q_{4,26, 0.95}/\sqrt{2} = 2.7433\) (available \texttt{R} as \texttt{qtukey(0.95,\ 4,\ 26)\ /\ sqrt(2)}). Hence under both methods, bioactivity of drugs \(A\) and \(C\), and \(B\) and \(C\), are significantly different.
@@ -2367,22 +2289,22 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate   SE df t.ratio p.value
-##  1 - 2         -23 31.3 24  -0.735  0.9755
-##  1 - 3         -59 31.3 24  -1.884  0.4351
-##  1 - 4           7 31.3 24   0.224  0.9999
-##  1 - 5         -95 31.3 24  -3.034  0.0566
-##  1 - 6          35 31.3 24   1.118  0.8692
-##  2 - 3         -36 31.3 24  -1.150  0.8555
-##  2 - 4          30 31.3 24   0.958  0.9266
-##  2 - 5         -72 31.3 24  -2.299  0.2329
-##  2 - 6          58 31.3 24   1.852  0.4535
-##  3 - 4          66 31.3 24   2.108  0.3167
-##  3 - 5         -36 31.3 24  -1.150  0.8555
-##  3 - 6          94 31.3 24   3.002  0.0606
-##  4 - 5        -102 31.3 24  -3.257  0.0348
-##  4 - 6          28 31.3 24   0.894  0.9442
-##  5 - 6         130 31.3 24   4.152  0.0043
+##  contrast        estimate   SE df t.ratio p.value
+##  batch1 - batch2      -23 31.3 24  -0.735  0.9755
+##  batch1 - batch3      -59 31.3 24  -1.884  0.4351
+##  batch1 - batch4        7 31.3 24   0.224  0.9999
+##  batch1 - batch5      -95 31.3 24  -3.034  0.0566
+##  batch1 - batch6       35 31.3 24   1.118  0.8692
+##  batch2 - batch3      -36 31.3 24  -1.150  0.8555
+##  batch2 - batch4       30 31.3 24   0.958  0.9266
+##  batch2 - batch5      -72 31.3 24  -2.299  0.2329
+##  batch2 - batch6       58 31.3 24   1.852  0.4535
+##  batch3 - batch4       66 31.3 24   2.108  0.3167
+##  batch3 - batch5      -36 31.3 24  -1.150  0.8555
+##  batch3 - batch6       94 31.3 24   3.002  0.0606
+##  batch4 - batch5     -102 31.3 24  -3.257  0.0348
+##  batch4 - batch6       28 31.3 24   0.894  0.9442
+##  batch5 - batch6      130 31.3 24   4.152  0.0043
 ## 
 ## P value adjustment: tukey method for comparing a family of 6 estimates
 \end{verbatim}
@@ -2396,9 +2318,9 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-##    contrast estimate    SE df t.ratio  p.value
-## 13    4 - 5     -102 31.31 24  -3.257 0.034820
-## 15    5 - 6      130 31.31 24   4.152 0.004295
+##           contrast estimate    SE df t.ratio  p.value
+## 13 batch4 - batch5     -102 31.31 24  -3.257 0.034820
+## 15 batch5 - batch6      130 31.31 24   4.152 0.004295
 \end{verbatim}
 \end{enumerate}
 
@@ -2492,9 +2414,7 @@ The completely randomised design (CRD) works well when there is sufficient homog
 A common way in which the CRD fails is a lack of sufficiently similar experimental units. If there are systemtic differences between different batches, or \textbf{blocks} of units, these differences should be taken into account in both the allocation of treatments to units and the modelling of the resultant data. Otherwise, block-to-block differences may bias treatment comparisons and/or inflate our estimate of the background variability and hence reduce our ability to detect important treatment effects.
 
 \begin{example}
-\protect\hypertarget{exm:blocks-bars}{}\label{exm:blocks-bars}
-
-Steel bar experiment \citep[ch.~4]{Morris2011}
+\protect\hypertarget{exm:blocks-bars}{}\label{exm:blocks-bars}Steel bar experiment \citep[ch.~4]{Morris2011}
 
 \citet{KSN2005} described an experiment to assess the strength of steel reinforcement bars from \(t=4\) coatings\footnote{The four coatings were all made from Engineering Thermoplastic Polyurethane (ETPU); coating one was solely made from ETPU, coatings 2-4 had additional glass fibre, carbon fibre or aramid fibre added, respectively.} (treatments). In total \(n=32\) different bars (units) were available, but the testing process meant sets of four bars were tested together. To account for potential test-specific features (e.g.~environmental or operational), these different test sets were assumed to form \(b=8\) blocks of size \(k=4\). The data are shown in Table \ref{tab:bar-expt-data} below.
 
@@ -2562,7 +2482,6 @@ We can study the data graphically, plotting by treatment and by block.
 \end{figure}
 
 The box plots within each plot in Figure \ref{fig:bar-expt-boxplots} are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This \textbf{balance} makes our analysis more straighforward. By eye, it appears here there may be differences between both coating 3 and the other three coatings.
-
 \end{example}
 
 \begin{example}
@@ -2820,11 +2739,11 @@ and the null model
 and has the form:
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.12}}
-  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.36}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.30}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.22}}@{}}
-\toprule
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1200}}
+  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3600}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2200}}@{}}
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Source
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
@@ -2834,13 +2753,13 @@ Sums of squares
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Mean square
 \end{minipage} \\
-\midrule
+\midrule()
 \endhead
 Blocks & \(b-1\) & RSS \eqref{eq:anova-nm} - RSS \eqref{eq:anova-bm} & \\
 Treatments & \(t-1\) & RSS \eqref{eq:anova-bm} - RSS \eqref{eq:block-plm} & {[}RSS \eqref{eq:anova-bm} - RSS \eqref{eq:block-plm}{]} / \((t-1)\) \\
 Residual & \(n - b - t + 1\) & RSS \eqref{eq:block-plm} & RSS \eqref{eq:block-plm} / \((n - b - t + 1)\) \\
 Total & \(n - 1\) & RSS \eqref{eq:anova-nm} & \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 We test the hypothesis \(H_0: \tau_1 = \cdots = \tau_t = 0\) at the \(100\alpha\)\% significance level by comparing the ratio of treatment and residual mean squares to the \(1-\alpha\) quantile of an \(F\) distribution with \(t-1\) and \(n-b-t+1\) degrees of freedom.
@@ -3163,9 +3082,9 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    0    1
+## [1,]    1    0    1    1
 ## [2,]    0    1    1    1
-## [3,]    1    0    1    1
+## [3,]    1    1    0    1
 ## [4,]    1    1    1    0
 \end{verbatim}
 
@@ -3180,14 +3099,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    1    1    1    0    1    0    0     0     1     0     1     0
-## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    1    0    0    1    1    0    0    1    0     1     0     1     0     1
-## [4,]    1    0    1    0    0    1    0    1    1     0     0     0     1     1
-## [5,]    1    1    1    0    0    1    0    0    0     1     1     1     0     0
-## [6,]    0    1    1    0    1    0    1    1    1     1     0     0     0     0
-## [7,]    0    1    0    1    0    1    1    1    0     0     1     0     0     1
-## [8,]    0    1    0    1    1    1    0    0    1     0     0     1     1     0
+## [1,]    0    1    0    1    0    0    1    0    1     0     1     0     1     1
+## [2,]    1    0    0    0    0    0    0    1    0     1     1     1     1     1
+## [3,]    0    0    0    1    0    1    1    1    1     1     0     1     0     0
+## [4,]    1    1    0    1    1    1    0    0    0     0     0     1     0     1
+## [5,]    0    0    1    0    1    1    0    0    1     1     0     0     1     1
+## [6,]    1    0    1    1    1    0    0    1    1     0     1     0     0     0
+## [7,]    1    1    1    0    0    1    1    1    0     0     0     0     1     0
+## [8,]    0    1    1    0    1    0    1    0    0     1     1     1     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3306,13 +3225,13 @@ Secondly, we can use \texttt{emmeans} to generate the same output from an \textt
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate   SE df t.ratio p.value
-##  1 - 2       -4.37 16.2  5  -0.270  0.9923
-##  1 - 3      -76.25 16.2  5  -4.705  0.0195
-##  1 - 4     -100.87 16.2  5  -6.225  0.0059
-##  2 - 3      -71.88 16.2  5  -4.435  0.0248
-##  2 - 4      -96.50 16.2  5  -5.955  0.0072
-##  3 - 4      -24.62 16.2  5  -1.519  0.4915
+##  contrast              estimate   SE df t.ratio p.value
+##  compound1 - compound2    -4.37 16.2  5  -0.270  0.9923
+##  compound1 - compound3   -76.25 16.2  5  -4.705  0.0195
+##  compound1 - compound4  -100.87 16.2  5  -6.225  0.0059
+##  compound2 - compound3   -71.88 16.2  5  -4.435  0.0248
+##  compound2 - compound4   -96.50 16.2  5  -5.955  0.0072
+##  compound3 - compound4   -24.62 16.2  5  -1.519  0.4915
 ## 
 ## Results are averaged over the levels of: block 
 ## P value adjustment: tukey method for comparing a family of 4 estimates
@@ -3320,8 +3239,8 @@ Secondly, we can use \texttt{emmeans} to generate the same output from an \textt
 
 For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are significantly different at an experiment-wise type I error rate of 5\%.
 
-\hypertarget{exercises-2}{%
-\section{Exercises}\label{exercises-2}}
+\hypertarget{exercises-1}{%
+\section{Exercises}\label{exercises-1}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3329,13 +3248,13 @@ For this experiment, treatments 1 and 3, 1 and 4, 2 and 3, and 2 and 4 are signi
   Consider the below randomised complete block design for comparing two catalysts, \(A\) and \(B\), for a chemical reaction using six batches of material. The response is the yield (\%) from the reaction.
 
   \begin{longtable}[]{@{}lcccccc@{}}
-  \toprule
+  \toprule()
   Catalyst & Batch 1 & Batch 2 & Batch 3 & Batch 4 & Batch 5 & Batch 6 \\
-  \midrule
+  \midrule()
   \endhead
   A & 9 & 19 & 28 & 22 & 18 & 8 \\
   B & 10 & 22 & 30 & 21 & 23 & 12 \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   \begin{enumerate}
@@ -3651,22 +3570,22 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-##  contrast estimate   SE df t.ratio p.value
-##  1 - 2       0.250 1.33 15   0.188  1.0000
-##  1 - 3      -1.125 1.33 15  -0.844  0.9541
-##  1 - 4      -1.250 1.33 15  -0.938  0.9303
-##  1 - 5       0.000 1.33 15   0.000  1.0000
-##  1 - 6      -1.500 1.33 15  -1.125  0.8635
-##  2 - 3      -1.375 1.33 15  -1.031  0.9000
-##  2 - 4      -1.500 1.33 15  -1.125  0.8635
-##  2 - 5      -0.250 1.33 15  -0.188  1.0000
-##  2 - 6      -1.750 1.33 15  -1.313  0.7741
-##  3 - 4      -0.125 1.33 15  -0.094  1.0000
-##  3 - 5       1.125 1.33 15   0.844  0.9541
-##  3 - 6      -0.375 1.33 15  -0.281  0.9997
-##  4 - 5       1.250 1.33 15   0.938  0.9303
-##  4 - 6      -0.250 1.33 15  -0.188  1.0000
-##  5 - 6      -1.500 1.33 15  -1.125  0.8635
+##  contrast                  estimate   SE df t.ratio p.value
+##  fertilizer1 - fertilizer2    0.250 1.33 15   0.188  1.0000
+##  fertilizer1 - fertilizer3   -1.125 1.33 15  -0.844  0.9541
+##  fertilizer1 - fertilizer4   -1.250 1.33 15  -0.938  0.9303
+##  fertilizer1 - fertilizer5    0.000 1.33 15   0.000  1.0000
+##  fertilizer1 - fertilizer6   -1.500 1.33 15  -1.125  0.8635
+##  fertilizer2 - fertilizer3   -1.375 1.33 15  -1.031  0.9000
+##  fertilizer2 - fertilizer4   -1.500 1.33 15  -1.125  0.8635
+##  fertilizer2 - fertilizer5   -0.250 1.33 15  -0.188  1.0000
+##  fertilizer2 - fertilizer6   -1.750 1.33 15  -1.313  0.7741
+##  fertilizer3 - fertilizer4   -0.125 1.33 15  -0.094  1.0000
+##  fertilizer3 - fertilizer5    1.125 1.33 15   0.844  0.9541
+##  fertilizer3 - fertilizer6   -0.375 1.33 15  -0.281  0.9997
+##  fertilizer4 - fertilizer5    1.250 1.33 15   0.938  0.9303
+##  fertilizer4 - fertilizer6   -0.250 1.33 15  -0.188  1.0000
+##  fertilizer5 - fertilizer6   -1.500 1.33 15  -1.125  0.8635
 ## 
 ## Results are averaged over the levels of: block 
 ## P value adjustment: tukey method for comparing a family of 6 estimates
@@ -3941,9 +3860,7 @@ In Chapters \ref{crd} and \ref{blocking}, we assumed the objective of the experi
 In many experiments, particularly in industry, engineering and the physical sciences, the treatments are actually defined via the choice of a \textbf{level} relating to each of a set of \textbf{factors}. We will focus on the commonly occurring case of factors at \textbf{two levels}. For example, consider the below experiment from the pharmaceutical industry.
 
 \begin{example}
-\protect\hypertarget{exm:factorial-desilylation}{}\label{exm:factorial-desilylation}
-
-Desilylation experiment \citep{Owen2001}
+\protect\hypertarget{exm:factorial-desilylation}{}\label{exm:factorial-desilylation}Desilylation experiment \citep{Owen2001}
 
 In this experiment, performed at GlaxoSmithKline, the aim was to optimise the desilylation\footnote{Desilylation is a process of removing silyl, SiH\(_3\) a silicon hydride, from a compound.} of an ether into an alcohol, which was a key step in the synthesis of a particular antibiotic. There were \(t=16\) treatments, defined via the settings of four different factors, as given in Table \ref{tab:factorial-desilylation-data}.
 
@@ -4009,7 +3926,6 @@ Trt 16 & 20 & 25 & 7 & 1.33 & 94.66\\
 \end{table}
 
 Each treatment is defined by the choice of one of two levels for each of the four factors. In the \texttt{R} code above, we have used the function \texttt{FrF2} (from the package of the same name) to generate all \(t = 2^4 = 16\) combinations of the two levels of these four factors. We come back to this function later in the chapter.
-
 \end{example}
 
 This \textbf{factorial treatment structure} lends itself to certain treatment contrasts being of natural interest.
@@ -4087,15 +4003,12 @@ As in Chapter \ref{crd}, we can estimate this treatment contrast by applying the
 where, for this experiment, each \(\bar{y}_{i.}\) is the mean of a single observation (as there is no treatment replication). We see that inference about this contrast is not possible, as no standard error can be obtained.
 
 \begin{definition}
-\protect\hypertarget{def:main-effect}{}\label{def:main-effect}
-
-The \textbf{main effect} of a factor \(A\) is defined as the difference in the average response from the high and low levels of the factor
+\protect\hypertarget{def:main-effect}{}\label{def:main-effect}The \textbf{main effect} of a factor \(A\) is defined as the difference in the average response from the high and low levels of the factor
 
 \[
 \mbox{ME}(A) = \bar{y}(A+) - \bar{y}(A-)\,,
 \]
 where \(\bar{y}(A+)\) is the average response when factor \(A\) is set to its high level, averaged across all combinations of levels of the other factors (with \(\bar{y}(A+)\) defined similarly for the low level of \(A\)).
-
 \end{definition}
 
 As we have averaged the response across the levels of the other factors, the intepretation of the main effect extends beyond this experiment. That is, we can use it to infer something about the system under study. Assuming model \eqref{eq:factorial-utm} is correct, any variation in the main effect can only come from random error in the observations. In fact,
@@ -4275,9 +4188,7 @@ It is somewhat more informative to consider the above interaction contrast as th
 The first component in the above expression is the effect of changing \texttt{reagent} from high to low \textbf{given \texttt{solvent} is set to it's high level}. The second component the effect of changing \texttt{reagent} from high to low \textbf{given \texttt{solvent} is set to it's low level}. This leads to our definition of a two-factor interaction.
 
 \begin{definition}
-\protect\hypertarget{def:two-factor-interaction}{}\label{def:two-factor-interaction}
-
-The \textbf{two-factor interaction} between factors \(A\) and \(B\) is defined as the average difference in main effect of factor \(A\) when computed at the high and low levels of factor \(B\).
+\protect\hypertarget{def:two-factor-interaction}{}\label{def:two-factor-interaction}The \textbf{two-factor interaction} between factors \(A\) and \(B\) is defined as the average difference in main effect of factor \(A\) when computed at the high and low levels of factor \(B\).
 
 \begin{align*}
 \mbox{Int}(A, B) & = \frac{1}{2}\left\{\mbox{ME}(A\mid B+) - \mbox{ME}(A \mid B-)\right\} \\
@@ -4292,7 +4203,6 @@ where \(\bar{y}(A+, B-)\) is the average response when factor \(A\) is set to it
 \]
 
 with similar definitions for other conditional main effects.
-
 \end{definition}
 
 As the sum of the squared contrast coefficients is the same for two-factor interactions as for main effects, the variance of the contrast estimator is also the same.
@@ -4458,10 +4368,7 @@ where
 is the interaction between factors \(A\) and \(B\) using only those treatments where factor \(C\) is set to it's high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.
 
 \begin{definition}
-\protect\hypertarget{def:factorial-effects}{}\label{def:factorial-effects}
-
-A \textbf{factorial effect} is a main effect or interaction contrast defined on a factorial experiment. For a \(2^f\) factorial experiment with \(f\) factors, there are \(2^f-1\) factorial effects, ranging from main effects to the interaction between all \(f\) factors.
-
+\protect\hypertarget{def:factorial-effects}{}\label{def:factorial-effects}A \textbf{factorial effect} is a main effect or interaction contrast defined on a factorial experiment. For a \(2^f\) factorial experiment with \(f\) factors, there are \(2^f-1\) factorial effects, ranging from main effects to the interaction between all \(f\) factors.
 \end{definition}
 
 For Example \ref{exm:factorial-desilylation}, we can now calculate all the factorial effects.
@@ -4530,28 +4437,19 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 Empirical study of many experiments \citep{BoxMeyer1986, Li2006} have demonstrated that the following three principles \textbf{often} hold when analysing factorial experiments.
 
 \begin{definition}
-\protect\hypertarget{def:effect-hierarchy}{}\label{def:effect-hierarchy}
-
-\textbf{Effect hierarchy}: lower-order factorial effects are more likely to be important than higher-order effects; factorial effects of the same order are equally likely to be important.
+\protect\hypertarget{def:effect-hierarchy}{}\label{def:effect-hierarchy}\textbf{Effect hierarchy}: lower-order factorial effects are more likely to be important than higher-order effects; factorial effects of the same order are equally likely to be important.
 
 For example, we would anticipate more large main effects from the analysis of a factorial experiment than two-factor interactions.
-
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:effect-sparsity}{}\label{def:effect-sparsity}
-
-\textbf{Effect sparsity}: the number of large factorial effects is likely to be small, relative to the total number under study.
+\protect\hypertarget{def:effect-sparsity}{}\label{def:effect-sparsity}\textbf{Effect sparsity}: the number of large factorial effects is likely to be small, relative to the total number under study.
 
 This is sometimes called the \textbf{pareto principle}.
-
 \end{definition}
 
 \begin{definition}
-\protect\hypertarget{def:effect-heredity}{}\label{def:effect-heredity}
-
-\textbf{Effect heredity}: interactions are more likely to be important if at least one parent factor also has a large main effect.
-
+\protect\hypertarget{def:effect-heredity}{}\label{def:effect-heredity}\textbf{Effect heredity}: interactions are more likely to be important if at least one parent factor also has a large main effect.
 \end{definition}
 
 These three principles will provide us with some useful guidelines when analysing, and eventually constructing, factorial experiments.
@@ -4722,35 +4620,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0039 & 0.0352\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0041 & 0.0356\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0061 & 0.0532\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0058 & 0.0476\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0082 & 0.0720\\
+time & 2.5675 & 0.66 & 3.890 & 0.0076 & 0.0652\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0111 & 0.0934\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0102 & 0.0900\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0111 & 0.0934\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0102 & 0.0900\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0137 & 0.1162\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0124 & 0.1102\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3068 & 0.9948\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3045 & 0.9936\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4317 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4301 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5398 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5390 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7325 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7332 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7401 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7405 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7844 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7862 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7870 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7889 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9661 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9660 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4938,12 +4836,12 @@ A regression modelling approach is usually more straightforward to apply than de
 The basic ANOVA table has the following form.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
 \caption{\label{tab:anova-fact} The ANOVA table for a full factorial experiment}\tabularnewline
-\toprule
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Source
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -4953,9 +4851,9 @@ Degress of Freedom
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Mean Square
 \end{minipage} \\
-\midrule
+\midrule()
 \endfirsthead
-\toprule
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Source
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -4965,12 +4863,12 @@ Degress of Freedom
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Mean Square
 \end{minipage} \\
-\midrule
+\midrule()
 \endhead
 Regression & \(2^f-1\) & \(\sum_{j=1}^{2^f-1}n\hat{\beta}_j^2 - n\bar{y}^2\) & Reg SS/\((2^f-1)\) \\
 Residual & \(2^f(r-1)\) & \((\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})^{\textrm{T}}(\boldsymbol{Y}-X\hat{\boldsymbol{\beta}})\) & RSS/\((2^f(r-1))\) \\
 Total & \(2^fr-1\) & \(\boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y}-n\bar{Y}^{2}\) & \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 The regression sum of squares for a factorial experiment has a very simple form. If we include an intercept column in \(X\), from Section \ref{anova-revision},
@@ -5089,8 +4987,8 @@ Residuals & 0 & 0.0000\\
 \end{tabular}
 \end{table}
 
-\hypertarget{exercises-3}{%
-\section{Exercises}\label{exercises-3}}
+\hypertarget{exercises-2}{%
+\section{Exercises}\label{exercises-2}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5099,20 +4997,20 @@ Residuals & 0 & 0.0000\\
 
   \begin{longtable}[]{@{}ccc@{}}
   \caption{\label{tab:reactor-expt} Factor levels for the full factorial reactor experiment}\tabularnewline
-  \toprule
+  \toprule()
   Factor & Low level (\(-1\)) & High level (\(1\)) \\
-  \midrule
+  \midrule()
   \endfirsthead
-  \toprule
+  \toprule()
   Factor & Low level (\(-1\)) & High level (\(1\)) \\
-  \midrule
+  \midrule()
   \endhead
   Feed Rate (litres/min) & 10 & 15 \\
   Catalyst (\%) & 1 & 2 \\
   Agitation Rate (rpm) & 100 & 120 \\
   Temperature (C) & 140 & 180 \\
   Concentration (\%) & 3 & 6 \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   The data from this experiment is given in Table \ref{tab:reactor-data}.
@@ -5316,7 +5214,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6903 and 5.0907, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7321 and 5.2955, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5655,9 +5553,7 @@ A & B & C\\
 \end{table}
 
 \begin{example}
-\protect\hypertarget{exm:block-frac-1}{}\label{exm:block-frac-1}
-
-Consider splitting the treatments between two blocks of size \(2^{3-1}=4\). One choice is given in Table \ref{tab:block-frac-1}.
+\protect\hypertarget{exm:block-frac-1}{}\label{exm:block-frac-1}Consider splitting the treatments between two blocks of size \(2^{3-1}=4\). One choice is given in Table \ref{tab:block-frac-1}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5880,22 +5776,16 @@ A:B:C & -0.5 & 0.0 & 0.0 & 0.0 & 0 & 0 & 0 & 1.0\\
 From Table \ref{tab:cor-optimal}, we can see that the block contrast is orthogonal to (has zero inner product with) all the main effect and two-factor interaction contrasts. In comparison, the design with arbitrary treatment assignment has non-zero inner products between blocks and the main effect contrasts (Table \ref{tab:cor-partial}). However, this design does allow estimation of the three-factor interaction (although it too has non-zero inner-product with the block contrast).\footnote{Also, simultaneous estimation of the intercept, blocking effect and all 8 factorial effects is not possible, as there are insufficient degrees of freedom. In fact, the rank of the combined treatment and block model matrices for the unit-block-treatment model (\eqref{eq:eq:block-plm}) is t+b-3.}
 
 Clearly, if interest is in estimation of the main effects and two-factor interactions, it is best to use the design which assigns treatments to blocks via the three-factor interaction contrast coefficients.
-
 \end{example}
 
 \begin{definition}
-\protect\hypertarget{def:confounding}{}\label{def:confounding}
-
-A factorial effect is said to be \textbf{confounded} with blocks if the same contrast in the observations estimates both the factorial effect and a difference between blocks.
-
+\protect\hypertarget{def:confounding}{}\label{def:confounding}A factorial effect is said to be \textbf{confounded} with blocks if the same contrast in the observations estimates both the factorial effect and a difference between blocks.
 \end{definition}
 
 In Example \ref{exm:block-frac-1}, the three-factor interaction \(ABC\) is confounded with blocks. We write \(\mathrm{Blocks} = ABC\) as a shorthand to represent this confounding.
 
 \begin{example}
-\protect\hypertarget{exm:block-frac-2}{}\label{exm:block-frac-2}
-
-Now consider splitting the treatments between four blocks of size \(2^{3-2}=2\). One choice is given in Table \ref{tab:block-frac-2}.
+\protect\hypertarget{exm:block-frac-2}{}\label{exm:block-frac-2}Now consider splitting the treatments between four blocks of size \(2^{3-2}=2\). One choice is given in Table \ref{tab:block-frac-2}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6006,14 +5896,10 @@ Hence, the main effect of factor \(A\) is also confounded with blocks. This is c
 We shouldn't be surprised that a third factorial effect was confounded with blocks. In the unit-block-treatment model \eqref{eq:block-plm}, the rank of the block model matrix \(X_1\) is equal to 3, and hence there will be three degrees of freedom required to estimate the blocking effects.
 
 As in Example \ref{exm:block-frac-1}, we could also explore alternative blocking schemes that do not completely confound factorial effects with blocks. However, as before, these alternatives would lead to higher average variance for the estimation of main effects compared to the design that confounds the three two-factor interactions.\footnote{This design is too small to split into four blocks and still be able to estimate all two-factor interactions clear of blocks.}
-
 \end{example}
 
 \begin{definition}
-\protect\hypertarget{def:block-clear-effects}{}\label{def:block-clear-effects}
-
-In a blocked factorial design, those effects which are not confounded with blocks are called \textbf{clear}.
-
+\protect\hypertarget{def:block-clear-effects}{}\label{def:block-clear-effects}In a blocked factorial design, those effects which are not confounded with blocks are called \textbf{clear}.
 \end{definition}
 
 In Example \ref{exm:block-frac-1}, the clear effects are \(A\), \(B\), \(C\), \(AB\), \(AC\) and \(BC\). In Example \ref{exm:block-frac-2}, the clear effects are \(A\), \(B\), \(C\) and \(ABC\).
@@ -6239,10 +6125,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##          [,1]
-## A      4.3358
-## B     -0.3612
-## C      3.1304
-## A:B:C  0.5301
+## A      3.5371
+## B     -0.1044
+## C      2.5676
+## A:B:C -0.7041
 \end{verbatim}
 
 \begin{Shaded}
@@ -6258,11 +6144,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  232.2    77.4     NaN    NaN
-## A          1  150.4   150.4     NaN    NaN
-## B          1    1.0     1.0     NaN    NaN
-## C          1   78.4    78.4     NaN    NaN
-## A:B:C      1    2.2     2.2     NaN    NaN
+## Block      3  236.8    78.9     NaN    NaN
+## A          1  100.1   100.1     NaN    NaN
+## B          1    0.1     0.1     NaN    NaN
+## C          1   52.7    52.7     NaN    NaN
+## A:B:C      1    4.0     4.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6274,7 +6160,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-##  4.3358 -0.3612  3.1304  0.5301
+##  3.5371 -0.1044  2.5676 -0.7041
 \end{verbatim}
 
 \begin{Shaded}
@@ -6285,7 +6171,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-##  8.6716 -0.7223  6.2608  1.0602
+##  7.0741 -0.2088  5.1353 -1.4082
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6302,13 +6188,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  150.4   150.4     NaN    NaN
-## B          1    1.0     1.0     NaN    NaN
-## C          1   78.4    78.4     NaN    NaN
-## A:B        1    4.3     4.3     NaN    NaN
-## A:C        1  107.1   107.1     NaN    NaN
-## B:C        1  120.8   120.8     NaN    NaN
-## A:B:C      1    2.2     2.2     NaN    NaN
+## A          1  100.1   100.1     NaN    NaN
+## B          1    0.1     0.1     NaN    NaN
+## C          1   52.7    52.7     NaN    NaN
+## A:B        1    2.2     2.2     NaN    NaN
+## A:C        1  118.6   118.6     NaN    NaN
+## B:C        1  116.0   116.0     NaN    NaN
+## A:B:C      1    4.0     4.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6320,15 +6206,15 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      5.3189      4.3358     -0.3612      3.1304      0.7311      3.6586 
+##      5.2188      3.5371     -0.1044      2.5676      0.5205      3.8506 
 ##         B:C       A:B:C 
-##      3.8861      0.5301
+##      3.8083     -0.7041
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
 
-\hypertarget{exercises-4}{%
-\section{Exercises}\label{exercises-4}}
+\hypertarget{exercises-3}{%
+\section{Exercises}\label{exercises-3}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6350,9 +6236,9 @@ To find a block for this choice, we can solve the equations
 which gives the treatments
 
 \begin{longtable}[]{@{}rrrrr@{}}
-\toprule
+\toprule()
 A & B & C & D & E \\
-\midrule
+\midrule()
 \endhead
 -1 & -1 & -1 & -1 & -1 \\
 1 & 1 & -1 & -1 & -1 \\
@@ -6362,7 +6248,7 @@ A & B & C & D & E \\
 -1 & 1 & 1 & -1 & 1 \\
 1 & -1 & -1 & 1 & 1 \\
 -1 & 1 & -1 & 1 & 1 \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 This same block can be found using \texttt{FrF2}.
@@ -6376,14 +6262,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3 -1 -1 -1 -1 -1
-## 18      3  1 -1  1 -1  1
-## 19      3 -1  1  1 -1  1
-## 20      3  1  1  1  1 -1
-## 21      3 -1  1 -1  1  1
-## 22      3  1  1 -1 -1 -1
-## 23      3 -1 -1  1  1 -1
-## 24      3  1 -1 -1  1  1
+## 17      3  1  1  1  1 -1
+## 18      3 -1  1  1 -1  1
+## 19      3  1 -1  1 -1  1
+## 20      3 -1 -1  1  1 -1
+## 21      3  1  1 -1 -1 -1
+## 22      3 -1 -1 -1 -1 -1
+## 23      3  1 -1 -1  1  1
+## 24      3 -1  1 -1  1  1
 \end{verbatim}
 
 \begin{enumerate}
@@ -6420,9 +6306,9 @@ The second scheme does not confound any three-factor interactions with blocks, u
   Suppose that the \(2^3\) design
 
   \begin{longtable}[]{@{}rrrrrrrr@{}}
-  \toprule
+  \toprule()
   Run & A & B & C & AB & AC & BC & ABC \\
-  \midrule
+  \midrule()
   \endhead
   1 & -1 & -1 & -1 & +1 & +1 & +1 & -1 \\
   2 & -1 & -1 & +1 & +1 & -1 & -1 & +1 \\
@@ -6432,7 +6318,7 @@ The second scheme does not confound any three-factor interactions with blocks, u
   6 & +1 & -1 & +1 & -1 & +1 & -1 & -1 \\
   7 & +1 & +1 & -1 & +1 & -1 & -1 & -1 \\
   8 & +1 & +1 & +1 & +1 & +1 & +1 & +1 \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 
   is arranged in two blocks with runs 1, 2, 5 and 7 in block 1 and runs 3, 4, 6 and 8 in block 2.
@@ -6456,9 +6342,9 @@ Solution
 \end{enumerate}
 
 \begin{longtable}[]{@{}rrrrrrrrr@{}}
-\toprule
+\toprule()
 Run & A & B & C & AB & AC & BC & ABC & Block \\
-\midrule
+\midrule()
 \endhead
 1 & -1 & -1 & -1 & +1 & +1 & +1 & -1 & -1 \\
 2 & -1 & -1 & +1 & +1 & -1 & -1 & +1 & -1 \\
@@ -6468,7 +6354,7 @@ Run & A & B & C & AB & AC & BC & ABC & Block \\
 6 & +1 & -1 & +1 & -1 & +1 & -1 & -1 & +1 \\
 7 & +1 & +1 & -1 & +1 & -1 & -1 & -1 & -1 \\
 8 & +1 & +1 & +1 & +1 & +1 & +1 & +1 & +1 \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 \begin{enumerate}
@@ -6480,12 +6366,12 @@ Run & A & B & C & AB & AC & BC & ABC & Block \\
 \end{enumerate}
 
 \begin{longtable}[]{@{}rrrrrrr@{}}
-\toprule
+\toprule()
 A & B & C & AB & AC & BC & ABC \\
-\midrule
+\midrule()
 \endhead
 0 & +4 & +4 & -4 & +4 & 0 & 0 \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 The blocking effect is not orthogonal to the main effects of \(B\) or \(C\) or the interactions \(AB\) and \(AC\). Two of the main effects are \emph{partially} confounded with the blocking effect, and the variances of the estimators of these effects will inflated. Therefore, this scheme is not desirable. In general, we may prefer to completely confound a smaller number of higher-order factorial effects with blocks, in order to have greater clarity in our design and to not lose information about main effects.
@@ -6590,16 +6476,16 @@ Solution
 For ease of notation, we will label the factors
 
 \begin{longtable}[]{@{}rr@{}}
-\toprule
+\toprule()
 Factor & Label \\
-\midrule
+\midrule()
 \endhead
 \texttt{FR} & A \\
 \texttt{Cat} & B \\
 \texttt{AR} & C \\
 \texttt{Temp} & D \\
 \texttt{Conc} & E \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 The design has defining blocks \(\mathrm{Block}_1 = ABC\) and \(\mathrm{Block}_2 = ADE\), and hence also confounds \(\mathrm{Block}_1\mathrm{Block}_2 = BCDE\). We can assign treatments to blocks according to the four combinations of any pair of these interactions. In the code chunk below, we use the pipe operator (\texttt{\textbar{}\textgreater{}}) to combine our data processing steps.
@@ -6607,13 +6493,13 @@ The design has defining blocks \(\mathrm{Block}_1 = ABC\) and \(\mathrm{Block}_2
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fac\_to\_numeric }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x))}
-\NormalTok{reactor }\OtherTok{\textless{}{-}}\NormalTok{ reactor }\SpecialCharTok{|}\ErrorTok{\textgreater{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{block1 =} \FunctionTok{fac\_to\_numeric}\NormalTok{(FR) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(Cat) }\SpecialCharTok{*}
+\NormalTok{reactor }\OtherTok{\textless{}{-}}\NormalTok{ reactor }\SpecialCharTok{|\textgreater{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{block1 =} \FunctionTok{fac\_to\_numeric}\NormalTok{(FR) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(Cat) }\SpecialCharTok{*}
                            \FunctionTok{fac\_to\_numeric}\NormalTok{(AR), }
                          \AttributeTok{block2 =} \FunctionTok{fac\_to\_numeric}\NormalTok{(FR) }\SpecialCharTok{*} \FunctionTok{fac\_to\_numeric}\NormalTok{(Temp) }\SpecialCharTok{*} 
-                           \FunctionTok{fac\_to\_numeric}\NormalTok{(Conc)) }\SpecialCharTok{|}\ErrorTok{\textgreater{}} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(block1, block2) }\SpecialCharTok{|}\ErrorTok{\textgreater{}}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{block =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{4}\NormalTok{)))) }\SpecialCharTok{|}\ErrorTok{\textgreater{}}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{relocate}\NormalTok{(block) }\SpecialCharTok{|}\ErrorTok{\textgreater{}} 
+                           \FunctionTok{fac\_to\_numeric}\NormalTok{(Conc)) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(block1, block2) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{block =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{4}\NormalTok{)))) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{relocate}\NormalTok{(block) }\SpecialCharTok{|\textgreater{}} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{c}\NormalTok{(block1, block2))}
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(reactor, }\AttributeTok{caption =} \StringTok{"Reactor experiment in blocks."}\NormalTok{)}
 \end{Highlighting}
@@ -7095,10 +6981,7 @@ We can also generate this information using the \texttt{aliases} function from \
 \end{example}
 
 \begin{definition}
-\protect\hypertarget{def:regular-fraction}{}\label{def:regular-fraction}
-
-A \textbf{regular \(2^{f-q}\)fractional factorial design} is constructed by aliasing \(2^q-1\) factorial effects with the mean; \(q\) of these effects can be chosen independently, the others are formed via the hadamard product of the contrast coefficients for the \(q\) effects,
-
+\protect\hypertarget{def:regular-fraction}{}\label{def:regular-fraction}A \textbf{regular \(2^{f-q}\)fractional factorial design} is constructed by aliasing \(2^q-1\) factorial effects with the mean; \(q\) of these effects can be chosen independently, the others are formed via the hadamard product of the contrast coefficients for the \(q\) effects,
 \end{definition}
 
 How do we chose the factorial effects to alias with the mean? As with blocking, we tend to choose higher-order effects, taking care when \(q>1\) not to inadvertently alias together lower-order effects (see later examples).
@@ -7132,9 +7015,7 @@ This defining relation results in main effects being aliased with four-factor in
 Any factorial effect in an alias string is only estimable \textbf{if all other effects in that string are assumed zero}\footnote{Except for the defining relation, where no effects are estimable}. Wd can study this further by introducing the \textbf{alias matrix}.
 
 \begin{definition}
-\protect\hypertarget{def:alias-matrix}{}\label{def:alias-matrix}
-
-Assume a linear data generating model
+\protect\hypertarget{def:alias-matrix}{}\label{def:alias-matrix}Assume a linear data generating model
 
 \[
 \boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\,,
@@ -7152,20 +7033,16 @@ E(\hat{\boldsymbol{\beta}}_1) & = \boldsymbol{\beta}_1 + (X_1^{\mathrm{T}}X_1)^{
 & = \boldsymbol{\beta}_1 + A\boldsymbol{\beta}_2\,,
 \end{align*}
 where \(A = (X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2\) is the \textbf{alias} matrix.
-
 \end{definition}
 
 We also introduce an alternative definition of estimability.
 
 \begin{definition}
-\protect\hypertarget{def:alt-estimability}{}\label{def:alt-estimability}
-
-A linear combination of parameters \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\theta}\) is estimable if and only if there exists a linear combination of the responses \(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}\) such that
+\protect\hypertarget{def:alt-estimability}{}\label{def:alt-estimability}A linear combination of parameters \(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\theta}\) is estimable if and only if there exists a linear combination of the responses \(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}\) such that
 
 \[
 E(\boldsymbol{a}^{\mathrm{T}}\boldsymbol{y}) = c^{\mathrm{T}}\boldsymbol{\theta}\,.
 \]
-
 \end{definition}
 
 Now assume that using a two-level fractional factorial design, we will estimate one factorial effect (equivalently, the corresponding regression coefficient) from each alias string. Then the \(A\) matrix will have entries 0, -1 or +1, depending on the defining relation of the fraction. Each regression parameter will be biased by the parameters corresponding to other factorial effects in the alias string. Hence, by Definition \ref{def:alt-estimability}, each factorial effect is only estimable under the assumption that all other factorial effects in the alias string are zero.
@@ -7287,9 +7164,7 @@ To find the treatments in a particular fraction, we simply need to solve a set o
 with \(2^{f-q}\) treatments satisfying the \(2^q\) equations corresponding to each choice of \(\pm 1\) for each generator.
 
 \begin{example}
-\protect\hypertarget{exm:frac-illustrative}{}\label{exm:frac-illustrative}
-
-Consider a \(2^{6-2}\) design, with \(q=2\) generators \(ABCE\) and \(BCDF\). The defining relation is given by
+\protect\hypertarget{exm:frac-illustrative}{}\label{exm:frac-illustrative}Consider a \(2^{6-2}\) design, with \(q=2\) generators \(ABCE\) and \(BCDF\). The defining relation is given by
 
 \[
 I = ABCE = BCDF = ADEF\,.
@@ -7324,7 +7199,6 @@ ABCE = \pm 1\,,\quad BCDF = \pm 1\,.
 Each fraction has (essentially) the same statistical properties, except the sign of the biasing coefficients from the alias matrix may be reversed (-1, rather than +1).
 
 For example, the treatments in the fraction may be those \(2^{f-q} = 2^{6-2} = 16\) treatments that all have \(ABCE = +1\) and \(BCDF = +1\).
-
 \end{example}
 
 We can also use \texttt{FrF2} to find two-level fractional factorial designs, as we already saw in Example \ref{exm:spring-experiment}. The \texttt{generators} argument can be used to specify which factorial effects to use as generators. These are specified using what \texttt{FrF2} refers to as the \(f-q\) \textbf{base factors}. The \(q\) generators must specify with which factorial effects in the base factors the \(q\) additional factors are aliased.\\
@@ -7418,10 +7292,7 @@ A & B & C & D & E & F\\
 Clearly, the numbers of factors involved in the effects in the defining relation play an important role in the properties of the design.
 
 \begin{definition}
-\protect\hypertarget{def:length}{}\label{def:length}
-
-Each factorial effect is commonly referred to as a \textbf{word}, and the number of factors involved in a factorial effect is its \textbf{length}.
-
+\protect\hypertarget{def:length}{}\label{def:length}Each factorial effect is commonly referred to as a \textbf{word}, and the number of factors involved in a factorial effect is its \textbf{length}.
 \end{definition}
 
 For example, word \(ABCD\) has length 4; word \(BDE\) has length 3.
@@ -7456,15 +7327,12 @@ For example,
 \end{itemize}
 
 \begin{definition}
-\protect\hypertarget{def:wlp}{}\label{def:wlp}
-
-The \emph{word length pattern} of a \(2^{f-q}\) design is given by
+\protect\hypertarget{def:wlp}{}\label{def:wlp}The \emph{word length pattern} of a \(2^{f-q}\) design is given by
 
 \[
 W = (w_3, w_4, \ldots, w_f)\,,
 \]
 where \(w_i\) is the number of words of length \(i\) in the defining relation.
-
 \end{definition}
 
 For example,
@@ -7487,16 +7355,13 @@ are both resolution IV designs, but have different word length patterns
 \end{itemize}
 
 \begin{definition}
-\protect\hypertarget{def:minab}{}\label{def:minab}
-
-For two \(2^{f-q}\) designs, say \(d^\star\) and \(d^\dagger\), let \(r\) be the smallest integer such that \(w_r(d^\star) \ne w_r(d^\dagger)\). Then design \(d^\star\) is said to have less \textbf{aberration} than design \(d^\dagger\) if
+\protect\hypertarget{def:minab}{}\label{def:minab}For two \(2^{f-q}\) designs, say \(d^\star\) and \(d^\dagger\), let \(r\) be the smallest integer such that \(w_r(d^\star) \ne w_r(d^\dagger)\). Then design \(d^\star\) is said to have less \textbf{aberration} than design \(d^\dagger\) if
 
 \[
 w_r(d^\star) < w_r(d^\dagger)\,.
 \]
 
 If no design has less aberration than \(d^\star\), then \(d^\star\) has \textbf{minimum aberration}.
-
 \end{definition}
 
 Consider again designs \(d_1\) and \(d_2\) from above (\(2^{7-2}\) fractions). Here,
@@ -7792,8 +7657,8 @@ Analysis proceeds as before, except no factorial effect can be estimated that is
 ## Residuals  0 0.0000     NaN
 \end{verbatim}
 
-\hypertarget{exercises-5}{%
-\section{Exercises}\label{exercises-5}}
+\hypertarget{exercises-4}{%
+\section{Exercises}\label{exercises-4}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7934,9 +7799,9 @@ Solution
   We want to avoid fractions with \(A = +1\), \(B = +1\) and \(D = +1\), and \(A = +1\), \(C = +1\) and \(E = +1\). These lead to \(ABD = +1\) and \(ACE = +1\), which together define one of the four possible fractions. Hence we just need top choose one of the three other choices, e.g.~\(ABD = -1\) and \(ACE = -1\), giving
 
   \begin{longtable}[]{@{}crrrrr@{}}
-  \toprule
+  \toprule()
   Run & A & B & C & D & E \\
-  \midrule
+  \midrule()
   \endhead
   1 & -1 & -1 & -1 & -1 & -1 \\
   2 & -1 & +1 & +1 & +1 & +1 \\
@@ -7946,7 +7811,7 @@ Solution
   6 & +1 & +1 & -1 & -1 & +1 \\
   7 & +1 & -1 & -1 & +1 & +1 \\
   8 & +1 & +1 & +1 & -1 & -1 \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \item
   We need a \(2^{5-2}\) fractional factorial design such that \(AC\) and \(BC\) are not alised with main effects or each other. Therefore, our defining relation cannot contain any three letter words contain \(AC\) or \(BC\). A design with defining relation

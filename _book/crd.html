@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-06-11" />
+<meta name="date" content="2023-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="intro.html"/>
 <link rel="next" href="blocking.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -93,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -173,10 +172,8 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#variance-of-a-predictionfitted-value"><i class="fa fa-check"></i><b>1.5.1</b> Variance of a Prediction/Fitted Value</a></li>
-<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.1</b> Analysis of Variance as Model Comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a>
 <ul>
@@ -192,7 +189,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.8.1" data-path="crd.html"><a href="crd.html#crd-opt-all"><i class="fa fa-check"></i><b>2.8.1</b> Optimal treatment allocation</a></li>
 <li class="chapter" data-level="2.8.2" data-path="crd.html"><a href="crd.html#crd-size"><i class="fa fa-check"></i><b>2.8.2</b> Overall size of the experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises-1"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
+<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a>
 <ul>
@@ -207,7 +204,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.6.2" data-path="blocking.html"><a href="blocking.html#reduced-normal-equations"><i class="fa fa-check"></i><b>3.6.2</b> Reduced normal equations</a></li>
 <li class="chapter" data-level="3.6.3" data-path="blocking.html"><a href="blocking.html#estimation-and-inference"><i class="fa fa-check"></i><b>3.6.3</b> Estimation and inference</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-1"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a>
 <ul>
@@ -225,14 +222,14 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="factorial.html"><a href="factorial.html#anova-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4.1</b> ANOVA for factorial experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-2"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
 <li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
 <li class="chapter" data-level="5.3" data-path="block-factorial.html"><a href="block-factorial.html#analysis-of-a-confounded-factorial-design"><i class="fa fa-check"></i><b>5.3</b> Analysis of a confounded factorial design</a></li>
-<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a>
 <ul>
@@ -241,7 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
 <li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
-<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-4"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -264,8 +261,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="crd" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Completely randomised designs</h1>
+<div id="crd" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Completely randomised designs<a href="crd.html#crd" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The simplest form of experiment we will consider compares <span class="math inline">\(t\)</span> different <strong>unstructured</strong> treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter <a href="factorial.html#factorial">4</a>). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter <a href="blocking.html#blocking">3</a> on blocking). A designs for such an experiment is therefore called a <strong>completely randomised design</strong> (CRD).</p>
 <div class="example">
 <p><span id="exm:one-way" class="example"><strong>Example 2.1  </strong></span>Pulp experiment <span class="citation">(<a href="#ref-WH2009" role="doc-biblioref">Wu and Hamada, 2009</a>, ch. 2)</span></p>
@@ -326,7 +323,7 @@ div.csl-indent {
 <p>The experiment has one factor (operator) with four levels (sometimes called a one-way layout). The CRD employed has equal replication of each treatment (operator).</p>
 <p>We can informally compare the responses from these four treatments graphically.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:pulp-boxplot"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pulp-boxplot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/pulp-boxplot-1.png" alt="Pulp experiment: distributions of reflectance from the four operators." width="672" />
 <p class="caption">
 Figure 2.1: Pulp experiment: distributions of reflectance from the four operators.
@@ -335,11 +332,11 @@ Figure 2.1: Pulp experiment: distributions of reflectance from the four operator
 <p>Figure <a href="crd.html#fig:pulp-boxplot">2.1</a> shows that, relative to the variation, there may be a difference in the mean response between treatments 1 and 2, and 3 and 4. In this chapter, we will see how to make this comparison formally using linear models, and to assess how the choice of design impacts our results.</p>
 </div>
 <p>Throughout this chapter we will assume the <span class="math inline">\(i\)</span>th treatment is applied to <span class="math inline">\(n_i\)</span> experimental unit, with total number of runs <span class="math inline">\(n = \sum_{i=1}^t n_i\)</span> in the experiment.</p>
-<div id="a-unit-treatment-linear-model" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> A unit-treatment linear model</h2>
+<div id="a-unit-treatment-linear-model" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> A unit-treatment linear model<a href="crd.html#a-unit-treatment-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An appropriate, and common, model to describe data from such experiments when the response is continuous is given by</p>
 <p><span class="math display" id="eq:utm">\[\begin{equation}
-y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,, 
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}\,, \quad i = 1, \ldots, t; j = 1, \ldots, n_i\,,
 \tag{2.1}
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(y_{ij}\)</span> is the response from the <span class="math inline">\(j\)</span>th application of treatment <span class="math inline">\(i\)</span>, <span class="math inline">\(\mu\)</span> is a constant parameter, <span class="math inline">\(\tau_i\)</span> is the effect of the <span class="math inline">\(i\)</span>th treatment, and <span class="math inline">\(\varepsilon_{ij}\)</span> is the random individual effect from each experimental unit with <span class="math inline">\(E(\varepsilon_{ij})=0\)</span> and <span class="math inline">\(\mathrm{Var}(\varepsilon_{ij}) = \sigma^2\)</span>. All random errors are assumed independent and here we also assume <span class="math inline">\(\varepsilon_{ij} \sim N(0, \sigma^2)\)</span>.</p>
@@ -363,8 +360,8 @@ E(y_{kj}) - E(y_{lj}) &amp; = \mu_A + \tau_k - \mu_A - \tau_l \\
 \end{align*}\]</span></p>
 <p>is constant across different experiments. This concept of <strong>comparison</strong> underpins most design of experiments, and will be applied throughout this module.</p>
 </div>
-<div id="the-partitioned-linear-model" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> The partitioned linear model</h2>
+<div id="the-partitioned-linear-model" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> The partitioned linear model<a href="crd.html#the-partitioned-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In matrix form, we can write model <a href="crd.html#eq:utm">(2.1)</a> as</p>
 <p><span class="math display">\[
 \boldsymbol{y}= X_1\mu + X_2\boldsymbol{\tau}+ \boldsymbol{\varepsilon}\,,
@@ -392,7 +389,7 @@ X_2^{\mathrm{T}}X_1\hat{\mu} + X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\tau}} &amp; 
 \end{align*}\]</span></p>
 <p>Assuming <span class="math inline">\((X_1^{\mathrm{T}}X_1)^{-1}\)</span> exists, which it does in this case, we can pre-multiply the first of these equations by <span class="math inline">\(X_2^{\mathrm{T}}X_1(X_1^{\mathrm{T}}X_1)^{-1}\)</span> and subtract it from the second equation to obtain</p>
 <p><span class="math display">\[\begin{align*}
-X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_1\hat{\mu} 
+X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_1\hat{\mu}
 &amp; + X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]X_2\hat{\boldsymbol{\tau}} \\
 &amp; = X_2^{\mathrm{T}}[I_n - X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}]\boldsymbol{y}\,.
 \end{align*}\]</span></p>
@@ -413,19 +410,19 @@ X_{2|1} = (I_n - H_1)X_2\,,
 \]</span>
 then we can rewrite equation <a href="crd.html#eq:crd-red-normal">(2.4)</a> as</p>
 <p><span class="math display" id="eq:rne">\[\begin{equation}
-X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,, 
+X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsymbol{y}\,,
 \tag{2.5}
 \end{equation}\]</span></p>
 <p>which are the normal equations for a linear model with expectation <span class="math inline">\(E(\boldsymbol{y}) = X_{2|1}\boldsymbol{\tau}\)</span>.</p>
 </div>
-<div id="reduced-normal-equations-for-the-crd" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Reduced normal equations for the CRD</h2>
+<div id="reduced-normal-equations-for-the-crd" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Reduced normal equations for the CRD<a href="crd.html#reduced-normal-equations-for-the-crd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For the CRD discussed in this chapter, <span class="math inline">\(X_1^{\mathrm{T}}X_1 = n\)</span>, the total number of runs in the experiment<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>. Hence <span class="math inline">\((X_1^{\mathrm{T}}X_1)^{-1} = 1/n\)</span> and <span class="math inline">\(H_1 = \frac{1}{n}J_n\)</span>, with <span class="math inline">\(J_n\)</span> the <span class="math inline">\(n\times n\)</span> matrix with all entries equal to 1.</p>
 <p>The adjusted model matrix then has the form</p>
 <p><span class="math display" id="eq:crd-x21">\[\begin{align}
 X_{2|1} &amp; = (I_n - H_1)X_2 \nonumber\\
 &amp; = X_2 - \frac{1}{n}J_nX_2 \nonumber\\
-&amp; = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. \tag{2.6} 
+&amp; = X_2 - \frac{1}{n}[n_1\boldsymbol{1}_n \vert \cdots \vert n_t\boldsymbol{1}_n]\,. \tag{2.6}
 \end{align}\]</span></p>
 <p>That is, every column of <span class="math inline">\(X_2\)</span> has been adjusted by the subtraction of the column mean from each entry<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. Also notice that each row of <span class="math inline">\(X_{2|1}\)</span> has a row-sum equal to zero (<span class="math inline">\(= 1 - \sum_{i=1}^tn_t/n\)</span>). Hence, <span class="math inline">\(X_{2|1}\)</span> is not of full column rank, and so the reduced normal equations do not have a unique solution<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
 <p>Although <a href="crd.html#eq:rne">(2.5)</a>, and hence, <a href="crd.html#eq:crd-ls">(2.2)</a>, have no unique solution<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>, it can be shown that both <span class="math inline">\(\widehat{X_{2|1}\boldsymbol{\tau}}\)</span> and <span class="math inline">\(\widehat{X\boldsymbol{\beta}}\)</span> have unique solutions. Hence fitted values <span class="math inline">\(\hat{\boldsymbol{y}} = \widehat{X\boldsymbol{\beta}}\)</span> and the residual sum of squares</p>
@@ -437,9 +434,9 @@ are both uniquely defined for any solution to <a href="crd.html#eq:crd-ls">(2.2)
 <p>Let’s study equation <a href="crd.html#eq:rne">(2.5)</a> in more detail. We have</p>
 <p><span class="math display">\[\begin{align*}
 X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
- &amp; = X_2^{\mathrm{T}}X_2 - X_2^{\mathrm{T}}H_1X_2 \\
- &amp; = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}X_2^{\mathrm{T}}J_nX_2 \\
- &amp; = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\,,
+&amp; = X_2^{\mathrm{T}}X_2 - X_2^{\mathrm{T}}H_1X_2 \\
+&amp; = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}X_2^{\mathrm{T}}J_nX_2 \\
+&amp; = \mathrm{diag}(\boldsymbol{n}) - \frac{1}{n}\boldsymbol{n}\boldsymbol{n}^{\mathrm{T}}\,,
 \end{align*}\]</span></p>
 <p>where <span class="math inline">\(\boldsymbol{n}^{\mathrm{T}} = (n_1, \ldots, n_t)\)</span>. Hence, the reduced normal equations become</p>
 <p><span class="math display" id="eq:crd-rne">\[\begin{align}
@@ -456,8 +453,8 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 <p>where <span class="math inline">\(\hat{\tau}_w = \frac{1}{n}\sum_{i=1}^tn_i\hat{\tau}_i\)</span> and <span class="math inline">\(\bar{y}_{i.} = \frac{1}{n_i}\sum_{j = 1}^{n_i}y_{ij}\)</span> <span class="math inline">\((i = 1, \ldots, t)\)</span>.</p>
 <p>These <span class="math inline">\(t\)</span> equations are not independent; when multiplied by the <span class="math inline">\(n_i\)</span>, they sum to zero due to the linear dependency between the columns of <span class="math inline">\(X_{2|1}\)</span>. Hence, there is no unique solution to <span class="math inline">\(\hat{\boldsymbol{\tau}}\)</span> from equation <a href="crd.html#eq:crd-rne">(2.7)</a>. However, we can estimate certain linear combinations of the <span class="math inline">\(\tau_i\)</span>, called <em>contrasts</em>.</p>
 </div>
-<div id="contrasts" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Contrasts</h2>
+<div id="contrasts" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Contrasts<a href="crd.html#contrasts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="definition">
 <p><span id="def:contrast" class="definition"><strong>Definition 2.1  </strong></span>A treatment <strong>contrast</strong> is a linear combination <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> with coefficient vector <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}} = (c_1,\ldots, c_t)\)</span> such that <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{1} = 0\)</span>; that is, <span class="math inline">\(\sum_{i = 1}^t c_i = 0\)</span>.</p>
 </div>
@@ -480,8 +477,8 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 </ol>
 <p>with the final example once again demonstrating that we cannot estimate the individual <span class="math inline">\(\tau_i\)</span>.</p>
 </div>
-<div id="contrast-crd" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Treatment contrast estimators in the CRD</h2>
+<div id="contrast-crd" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Treatment contrast estimators in the CRD<a href="crd.html#contrast-crd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We estimate a treatment contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> in the CRD via linear combinations of equations <a href="crd.html#eq:crd-irne">(2.8)</a>:</p>
 <p><span class="math display">\[\begin{align*}
 &amp; \sum_{i=1}^t c_i\hat{\tau}_i - \sum_{i=1}^tc_i\hat{\tau}_w = \sum_{i=1}^tc_i\bar{y}_{i.} - \sum_{i=1}^tc_i\bar{y}_{..} \\
@@ -494,7 +491,7 @@ X^{\mathrm{T}}_{2|1}X_{2|1} &amp; = X_2^{\mathrm{T}}(I_n - H_1)X_2 \\
 That is, we estimate the contrast in the treatment effects by the corresponding contrast in the treatment means.</p>
 <p>The variance of this estimator is straightforward to obtain:</p>
 <p><span class="math display">\[\begin{align*}
-\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right) 
+\mathrm{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)
 &amp; = \sum_{i=1}^tc_i^2\mathrm{var}(\bar{y}_{i.}) \\
 &amp; = \sigma^2\sum_{i=1}^tc_i^2/n_i\,,
 \end{align*}\]</span></p>
@@ -506,11 +503,11 @@ Confidence intervals and hypothesis tests for <span class="math inline">\(\bolds
 <ul>
 <li>a <span class="math inline">\(100(1-\frac{\alpha}{2})\)</span>% confidence interval:
 <span class="math display">\[
- \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
- \]</span></li>
+\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
+\]</span></li>
 </ul>
 <p>where <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2}}\)</span> is the <span class="math inline">\(1-\frac{\alpha}{2}\)</span> quantile of a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-t\)</span> degrees of freedom and</p>
-<p><span class="math display" id="eq:crd-s2">\[\begin{equation} 
+<p><span class="math display" id="eq:crd-s2">\[\begin{equation}
 s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 \tag{2.9}
 \end{equation}\]</span></p>
@@ -519,11 +516,11 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <li>the hypothesis <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\)</span> against the two-sided alternative <span class="math inline">\(H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\)</span> is rejected using a test of with confidence level <span class="math inline">\(1-\alpha/2\)</span> if</li>
 </ul>
 <p><span class="math display">\[
- \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} &gt; t_{n-t, 1-\frac{\alpha}{2}}\,.
- \]</span></p>
+\frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} &gt; t_{n-t, 1-\frac{\alpha}{2}}\,.
+\]</span></p>
 </div>
-<div id="r-crd" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Analysing CRDs in R</h2>
+<div id="r-crd" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Analysing CRDs in R<a href="crd.html#r-crd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="crd.html#cb10-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
 <span id="cb10-2"><a href="crd.html#cb10-2" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(pulp, <span class="at">names_from =</span> operator, <span class="at">values_from =</span> reflectance)[, <span class="sc">-</span><span class="dv">1</span>],</span>
@@ -603,13 +600,13 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="crd.html#cb15-1" aria-hidden="true" tabindex="-1"></a>pulp.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(pulp.lm, <span class="sc">~</span> operator)</span>
 <span id="cb15-2"><a href="crd.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3955
-##  1 - 3       -0.38 0.206 16  -1.843  0.0839
-##  1 - 4       -0.44 0.206 16  -2.134  0.0486
-##  2 - 3       -0.56 0.206 16  -2.716  0.0153
-##  2 - 4       -0.62 0.206 16  -3.007  0.0083
-##  3 - 4       -0.06 0.206 16  -0.291  0.7748</code></pre>
+<pre><code>##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  0.3955
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.0839
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.0486
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0153
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0083
+##  operator3 - operator4    -0.06 0.206 16  -0.291  0.7748</code></pre>
 <p>Here, we have first fitted the linear model object. The <code>lm</code> function, by default, will have set up dummy variables with the first treatment (operator) as a baseline (see MATH2010 or STAT6123). We then take the intermediate step of calculating the ANOVA table for this experiment, and use an F-test to compare the model accounting for operator differences to the null model; there are differences between operators at the 5% significance level,</p>
 <p>The choice of dummy variables in the linear model is unimportant; any set could be used<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>, as in the next line we use the <code>emmeans</code> function (from the package of the same name) to specify that we are interested in estimating contrasts in the factor <code>operator</code> (which specifies our treatments in this experiment). Finally, the <code>pairs</code> command performs hypothesis tests for all pairwise comparisons between the four treatments. The results are the same as those obtained from using <code>pairwise.t.test</code>.</p></li>
 </ol>
@@ -618,13 +615,13 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <li><p>The function <code>contrasts</code> in the <code>emmeans</code> package can be used to estimate arbitrary treatment contrasts (see <code>help("contrast-methods")</code>).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="crd.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as `pairs` above</span></span>
 <span id="cb17-2"><a href="crd.html#cb17-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.3955
-##  1 - 3       -0.38 0.206 16  -1.843  0.0839
-##  1 - 4       -0.44 0.206 16  -2.134  0.0486
-##  2 - 3       -0.56 0.206 16  -2.716  0.0153
-##  2 - 4       -0.62 0.206 16  -3.007  0.0083
-##  3 - 4       -0.06 0.206 16  -0.291  0.7748</code></pre>
+<pre><code>##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  0.3955
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.0839
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.0486
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0153
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0083
+##  operator3 - operator4    -0.06 0.206 16  -0.291  0.7748</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="crd.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
 <span id="cb19-2"><a href="crd.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
 <span id="cb19-3"><a href="crd.html#cb19-3" aria-hidden="true" tabindex="-1"></a>contrast1v23.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs) </span>
@@ -637,8 +634,8 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <li><p>It is straightfoward to apply adjustments for <a href="crd.html#multiple-comp">multiple comparisons</a>.</p></li>
 </ol>
 </div>
-<div id="multiple-comp" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> Multiple comparisons</h2>
+<div id="multiple-comp" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Multiple comparisons<a href="crd.html#multiple-comp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When we perform hypothesis testing, we choose the critical region (i.e. the rule that decides if we reject <span class="math inline">\(H_0\)</span>) to control the probability of a type I error; that is, we control the probability of incorrectly rejecting <span class="math inline">\(H_0\)</span>. If we need to test multiple hypotheses, e.g. to test all pairwise differences, we need to consider the overall probability of incorrectly rejecting <strong>one or more</strong> null hypothesis. This is called the <strong>experiment-wise</strong> or <strong>family-wise</strong> error rate.</p>
 <p>For Example <a href="crd.html#exm:one-way">2.1</a>, there are <span class="math inline">\({4 \choose 2} = 6\)</span> pairwise comparisons. Under the assumption that all tests are independent<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>, assuming each individual test has type I error 0.05, the experiment-wise type I error rate is given by:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="crd.html#cb21-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
@@ -654,32 +651,32 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <li><p>The <strong>Bonferroni method</strong>. An upper bound on the experiment-wise type I error rate for testing <span class="math inline">\(k\)</span> hypotheses can be shown to be</p>
 <p><span class="math display">\[\begin{align*}
 P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\left(\bigcup_{i=1}^{k}\{\mbox{wrongly reject } H_{0}^i\}\right) \\
-&amp; \leq \sum_{i=1}^{k}\underbrace{P(\mbox{wrongly reject } H_{0}^i)}_{\leq \alpha} \\ 
+&amp; \leq \sum_{i=1}^{k}\underbrace{P(\mbox{wrongly reject } H_{0}^i)}_{\leq \alpha} \\
 &amp; \leq k\alpha\,.
 \end{align*}\]</span></p>
 <p>Hence a <em>conservative</em><a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> adjustment for multiple comparisons is to test each hypothesis at size <span class="math inline">\(\alpha / k\)</span>, i.e. for the CRD compare to the quantile <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2k}}\)</span> (or multiply each individual p-value by <span class="math inline">\(k\)</span>).</p>
 <p>For Example <a href="crd.html#exm:one-way">2.1</a>, we can test all pairwise comparisons, each at size <span class="math inline">\(\alpha/k\)</span> using the <code>adjustment</code> argument in <code>pairs</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="crd.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  1.0000
-##  1 - 3       -0.38 0.206 16  -1.843  0.5034
-##  1 - 4       -0.44 0.206 16  -2.134  0.2918
-##  2 - 3       -0.56 0.206 16  -2.716  0.0915
-##  2 - 4       -0.62 0.206 16  -3.007  0.0501
-##  3 - 4       -0.06 0.206 16  -0.291  1.0000
+<pre><code>##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  1.0000
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.5034
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.2918
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0915
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0501
+##  operator3 - operator4    -0.06 0.206 16  -0.291  1.0000
 ## 
 ## P value adjustment: bonferroni method for 6 tests</code></pre>
 <p>Now, only one comparison is significant at an experiment-wise type I error rate of <span class="math inline">\(\alpha = 0.05\)</span> (operators 2 and 4).</p></li>
 <li><p><strong>Tukey’s method</strong>. An alternative approach that gives an exact experiment-wise error rate of <span class="math inline">\(100\alpha\)</span>% compares the <span class="math inline">\(t\)</span> statistic to a critical value from the studentised range distribution<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, given by <span class="math inline">\(\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}\)</span> with <span class="math inline">\(q_{t, n-t, 1-\alpha}\)</span> the <span class="math inline">\(1-\alpha\)</span> quantile from the studentised range distribution (available in <code>R</code> as <code>qtukey</code>).</p>
 <p>For Example <a href="crd.html#exm:one-way">2.1</a>:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="crd.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  1 - 2        0.18 0.206 16   0.873  0.8185
-##  1 - 3       -0.38 0.206 16  -1.843  0.2903
-##  1 - 4       -0.44 0.206 16  -2.134  0.1845
-##  2 - 3       -0.56 0.206 16  -2.716  0.0658
-##  2 - 4       -0.62 0.206 16  -3.007  0.0377
-##  3 - 4       -0.06 0.206 16  -0.291  0.9911
+<pre><code>##  contrast              estimate    SE df t.ratio p.value
+##  operator1 - operator2     0.18 0.206 16   0.873  0.8185
+##  operator1 - operator3    -0.38 0.206 16  -1.843  0.2903
+##  operator1 - operator4    -0.44 0.206 16  -2.134  0.1845
+##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0658
+##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0377
+##  operator3 - operator4    -0.06 0.206 16  -0.291  0.9911
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre></li>
 </ol>
@@ -688,13 +685,13 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 <span id="cb29-2"><a href="crd.html#cb29-2" aria-hidden="true" tabindex="-1"></a>pairs.b <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span>
 <span id="cb29-3"><a href="crd.html#cb29-3" aria-hidden="true" tabindex="-1"></a>pairs.t <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm)</span>
 <span id="cb29-4"><a href="crd.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">transform</span>(pairs.b)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">Bonf.p.value =</span> <span class="fu">transform</span>(pairs.b)[, <span class="dv">6</span>], <span class="at">Tukey.p.value =</span> <span class="fu">transform</span>(pairs.t)[, <span class="dv">6</span>], <span class="at">unadjust.p.value =</span> <span class="fu">transform</span>(pairs.u)[, <span class="dv">6</span>])</span></code></pre></div>
-<pre><code>##   contrast estimate     SE df t.ratio Bonf.p.value Tukey.p.value
-## 1    1 - 2     0.18 0.2062 16  0.8731      1.00000       0.81854
-## 2    1 - 3    -0.38 0.2062 16 -1.8433      0.50336       0.29030
-## 3    1 - 4    -0.44 0.2062 16 -2.1343      0.29182       0.18448
-## 4    2 - 3    -0.56 0.2062 16 -2.7164      0.09150       0.06579
-## 5    2 - 4    -0.62 0.2062 16 -3.0074      0.05009       0.03767
-## 6    3 - 4    -0.06 0.2062 16 -0.2910      1.00000       0.99108
+<pre><code>##                contrast estimate     SE df t.ratio Bonf.p.value Tukey.p.value
+## 1 operator1 - operator2     0.18 0.2062 16  0.8731      1.00000       0.81854
+## 2 operator1 - operator3    -0.38 0.2062 16 -1.8433      0.50336       0.29030
+## 3 operator1 - operator4    -0.44 0.2062 16 -2.1343      0.29182       0.18448
+## 4 operator2 - operator3    -0.56 0.2062 16 -2.7164      0.09150       0.06579
+## 5 operator2 - operator4    -0.62 0.2062 16 -3.0074      0.05009       0.03767
+## 6 operator3 - operator4    -0.06 0.2062 16 -0.2910      1.00000       0.99108
 ##   unadjust.p.value
 ## 1         0.395509
 ## 2         0.083893
@@ -704,8 +701,8 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 ## 6         0.774758</code></pre>
 <p>Although the decision on which hypotheses to reject (comparson 2 - 4) is the same here for both methods, the p-values from the Bonferroni method are all larger, reflecting its more conservative nature.</p>
 </div>
-<div id="impact-of-design-choices-on-estimation" class="section level2" number="2.8">
-<h2><span class="header-section-number">2.8</span> Impact of design choices on estimation</h2>
+<div id="impact-of-design-choices-on-estimation" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Impact of design choices on estimation<a href="crd.html#impact-of-design-choices-on-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall from Section <a href="crd.html#contrast-crd">2.5</a> that the width of a confidence interval for a contrast <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> is given by <span class="math inline">\(2t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\)</span>. The expectation of the square of this quantity is given by</p>
 <p><span class="math display">\[
 4t^2_{n-t, 1-\frac{\alpha}{2}}\sigma^2\sum_{i=1}^tc_i^2/n_i\,,
@@ -715,8 +712,8 @@ as <span class="math inline">\(E(s^2) = \sigma^2\)</span>. It is intuitive that 
 t_{n-t, 1-\frac{\alpha}{2}}\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
 \]</span>
 which can be achieved either by increasing <span class="math inline">\(n\)</span>, and hence reducing the size of the <span class="math inline">\(t\)</span>-quantile, or for choice of the <span class="math inline">\(n_i\)</span> for a fixed <span class="math inline">\(n\)</span>, i.e. through choice of replication of each treatment.</p>
-<div id="crd-opt-all" class="section level3" number="2.8.1">
-<h3><span class="header-section-number">2.8.1</span> Optimal treatment allocation</h3>
+<div id="crd-opt-all" class="section level3 hasAnchor" number="2.8.1">
+<h3><span class="header-section-number">2.8.1</span> Optimal treatment allocation<a href="crd.html#crd-opt-all" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It is quite common that although the total number, <span class="math inline">\(n\)</span>, of runs in the experiment may be fixed, the number <span class="math inline">\(n_1, n_2, \ldots, n_t\)</span> applied to the different treatments is under the experimenter’s control. Choosing <span class="math inline">\(n_1, n_2\)</span> subject to <span class="math inline">\(n_1+n_2 = n\)</span> was the first <strong>optimal design</strong> problem we encountered in Chapter <a href="intro.html#intro">1</a>.</p>
 <p>Assume interest lies in estimating the set of <span class="math inline">\(p\)</span> contrasts <span class="math inline">\(\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}\)</span>, with <span class="math inline">\(\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})\)</span>. One useful measure of the overall quality of the estimators of these <span class="math inline">\(p\)</span> contrasts is the average variance, given by</p>
 <p><span class="math display">\[
@@ -807,8 +804,8 @@ c_6 &amp; = (0, 0, -1, 1)\,.
 <p>So the efficiency of the equally allocated design for estimating this contrast is 75.69 %.</p></li>
 </ol>
 </div>
-<div id="crd-size" class="section level3" number="2.8.2">
-<h3><span class="header-section-number">2.8.2</span> Overall size of the experiment</h3>
+<div id="crd-size" class="section level3 hasAnchor" number="2.8.2">
+<h3><span class="header-section-number">2.8.2</span> Overall size of the experiment<a href="crd.html#crd-size" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can also consider the complementary question: suppose the proportion of runs that is to be allocated to each treatment has been fixed in advance, what size of experiment should be performed to meet the objectives? That is, given a fixed proportion, <span class="math inline">\(w_i\)</span>, of resource to be allocated to the <span class="math inline">\(i\)</span>th treatment, so that <span class="math inline">\(n_i = nw_i\)</span> units will be allocated to that treatment, what value of <span class="math inline">\(n\)</span> should be chosen?</p>
 <p>One way of thinking about this question is to consider the ratio</p>
 <p><span class="math display">\[\begin{align*}
@@ -835,8 +832,8 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 <p>So, for example, to achieve <span class="math inline">\(T = 3\)</span> with a signal-to-noise ratio of <span class="math inline">\(d=0.5\)</span> requires <span class="math inline">\(n=288\)</span> runs. As would be expected, the number of runs required to achieve this value of <span class="math inline">\(T\)</span> decreases as the signal-to-noise ration increases. For <span class="math inline">\(d=3\)</span>, only a very small experiment with <span class="math inline">\(n=8\)</span> runs is needed.</p>
 </div>
 </div>
-<div id="exercises-1" class="section level2" number="2.9">
-<h2><span class="header-section-number">2.9</span> Exercises</h2>
+<div id="exercises" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Exercises<a href="crd.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li><ol style="list-style-type: lower-alpha">
 <li><p>For Example <a href="crd.html#exm:one-way">2.1</a>, calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section <a href="crd.html#contrast-crd">2.5</a> are the same as those found in Section <a href="crd.html#r-crd">2.6</a> using <code>pairwise.t.test</code>, and <code>emmeans</code>.</p></li>
@@ -928,7 +925,17 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 </tbody>
 </table>
 <p>The sample variance, <span class="math inline">\(s^2 = 0.106\)</span>, from <a href="crd.html#eq:crd-s2">(2.9)</a>. As <span class="math inline">\(\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}\)</span> for contrast vectors <span class="math inline">\(\boldsymbol{c}\)</span> corresponding to pairwise differences, the standard error of each pairwise difference is given by <span class="math inline">\(\sqrt{\frac{2s^2}{5}} = 0.206\)</span>. Hence, we can create a table of pairwise differences, standard errors and test statistics.</p>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="26%" />
+<col width="10%" />
+<col width="7%" />
+<col width="3%" />
+<col width="9%" />
+<col width="20%" />
+<col width="13%" />
+<col width="7%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">contrast</th>
@@ -943,7 +950,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1 - 2</td>
+<td align="left">operator1 - operator2</td>
 <td align="right">0.18</td>
 <td align="right">0.206</td>
 <td align="right">16</td>
@@ -953,7 +960,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 <td align="right">0.819</td>
 </tr>
 <tr class="even">
-<td align="left">1 - 3</td>
+<td align="left">operator1 - operator3</td>
 <td align="right">-0.38</td>
 <td align="right">0.206</td>
 <td align="right">16</td>
@@ -963,7 +970,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 <td align="right">0.290</td>
 </tr>
 <tr class="odd">
-<td align="left">1 - 4</td>
+<td align="left">operator1 - operator4</td>
 <td align="right">-0.44</td>
 <td align="right">0.206</td>
 <td align="right">16</td>
@@ -973,7 +980,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 <td align="right">0.184</td>
 </tr>
 <tr class="even">
-<td align="left">2 - 3</td>
+<td align="left">operator2 - operator3</td>
 <td align="right">-0.56</td>
 <td align="right">0.206</td>
 <td align="right">16</td>
@@ -983,7 +990,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 <td align="right">0.066</td>
 </tr>
 <tr class="odd">
-<td align="left">2 - 4</td>
+<td align="left">operator2 - operator4</td>
 <td align="right">-0.62</td>
 <td align="right">0.206</td>
 <td align="right">16</td>
@@ -993,7 +1000,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 <td align="right">0.038</td>
 </tr>
 <tr class="even">
-<td align="left">3 - 4</td>
+<td align="left">operator3 - operator4</td>
 <td align="right">-0.06</td>
 <td align="right">0.206</td>
 <td align="right">16</td>
@@ -1055,8 +1062,8 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 <li><p>Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under <span class="math inline">\(H_0\)</span>: no difference in bioactivity between the drugs, the test statistic follows an <span class="math inline">\(F_{3,26}\)</span> distribution, which has a 1% critical value of <code>qf(0.99, 3, 26) = 4.6366</code>. Hence, we can reject <span class="math inline">\(H_0\)</span>.</p></li>
 <li><p>For each difference, the test statistic has the form</p>
 <p><span class="math display">\[
- \frac{|\bar{y}_{i.}-\bar{y}_{j.}|}{s\sqrt{\frac{1}{n_i}+\frac{1}{n_j}}}\,,
- \]</span></p>
+\frac{|\bar{y}_{i.}-\bar{y}_{j.}|}{s\sqrt{\frac{1}{n_i}+\frac{1}{n_j}}}\,,
+\]</span></p>
 <p>for <span class="math inline">\(i, j = A, B, C, D;\, i\ne j\)</span>. The treatment means and repetitions are given in the question (note that not all <span class="math inline">\(n_i\)</span> are equal). From the ANOVA table, we get <span class="math inline">\(s^2 = 62.12/26 = 2.389\)</span>. The following table summarises the differences between drugs:</p>
 <table>
 <thead>
@@ -1098,7 +1105,7 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 <p>Hence, a test statistic for <span class="math inline">\(H_0:\, \frac{1}{2}(\tau_A+\tau_B) - \frac{1}{2}(\tau_C+\tau_D)=0\)</span> is given by</p>
 <p><span class="math display">\[
 \frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
- \]</span></p>
+\]</span></p>
 <p>The critical value is <span class="math inline">\(t_{26, 1-0.05/2} = 2.0555\)</span>. Hence, we can reject <span class="math inline">\(H_0\)</span> and conclude there is a difference between brand-name and generic drugs.</p></li>
 </ol>
 </details>
@@ -1183,7 +1190,7 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 <b>Solution</b>
 </summary>
 <ol style="list-style-type: lower-alpha">
-<li><p>Two of the simplest ways of examining the data are to calculate basic descriptive statistics, e.g. the mean and standard deviation of the yield in each batch, and to plot the data in the different batches using a simple graphical display, e.g. a stripchart of the yields in each batch. Notice that in both  and  we use the formula . This formula splits the data into groups defined by batch.</p>
+<li><p>Two of the simplest ways of examining the data are to calculate basic descriptive statistics, e.g. the mean and standard deviation of the yield in each batch, and to plot the data in the different batches using a simple graphical display, e.g. a stripchart of the yields in each batch. Notice that in both and we use the formula . This formula splits the data into groups defined by batch.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="crd.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x), </span>
 <span id="cb41-2"><a href="crd.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                                                          <span class="at">st.dev =</span> <span class="fu">sd</span>(x)))</span></code></pre></div>
 <pre><code>##   batch yield.mean yield.st.dev
@@ -1194,7 +1201,7 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 ## 5     5     200.00        50.00
 ## 6     6      70.00        31.02</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="crd.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:napblack-summary"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:napblack-summary"></span>
 <img src="bookdown_math3014-6027_files/figure-html/napblack-summary-1.png" alt="Naphthalene black experiment: distributions of dye yields from the six batches." width="672" />
 <p class="caption">
 Figure 2.2: Naphthalene black experiment: distributions of dye yields from the six batches.
@@ -1204,9 +1211,9 @@ Figure 2.2: Naphthalene black experiment: distributions of dye yields from the s
 <li><p>When we fit linear models and compare them using analysis of variance (ANOVA), it enables us to decide whether the differences that seem to be evident in these simple plots and descriptive statistics are statistically significant or whether this kind of variation could have arisen by chance, even though there are no real differences between the batches.</p>
 <p>An ANOVA table may be used to compare a linear model including differences between the batches to the null model. The linear model we will fit is a simple unit-treatment model:</p>
 <p><span class="math display" id="eq:linmod">\[\begin{equation}
- Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
- \tag{2.13}
- \end{equation}\]</span></p>
+Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
+\tag{2.13}
+\end{equation}\]</span></p>
 <p>where <span class="math inline">\(Y_{ij}\)</span> is the response obtained from the <span class="math inline">\(j\)</span>th repetition of the <span class="math inline">\(i\)</span>th batch, <span class="math inline">\(\mu\)</span> is a constant term, <span class="math inline">\(\tau_i\)</span> is the expected effect due to the observation being in the <span class="math inline">\(i\)</span>th batch <span class="math inline">\((i=1,\ldots,5)\)</span> and <span class="math inline">\(\varepsilon_{ij}\)</span> are the random errors.</p>
 <p>A test of the hypothesis that the group means are all equal is equivalent to a test that the <span class="math inline">\(\tau_i\)</span> are all equal to 0 <span class="math inline">\((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\)</span>. We can use <code>lm</code> to fit model <a href="crd.html#eq:linmod">(2.13)</a>, and <code>anova</code> to test the hypothesis. Before we fit the linear model, we need to make sure <code>batch</code> has type <code>factor</code><a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="crd.html#cb44-1" aria-hidden="true" tabindex="-1"></a>napblack<span class="sc">$</span>batch <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(napblack<span class="sc">$</span>batch)</span>
@@ -1231,7 +1238,7 @@ out.</p></li>
 <span id="cb46-5"><a href="crd.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(batch, standres, <span class="at">xlab =</span> <span class="st">&quot;Batch&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
 <span id="cb46-6"><a href="crd.html#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(fitted, standres, <span class="at">xlab =</span> <span class="st">&quot;Fitted value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
 <span id="cb46-7"><a href="crd.html#cb46-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:residuals"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:residuals"></span>
 <img src="bookdown_math3014-6027_files/figure-html/residuals-1.png" alt="Residuals against batch (left) and fitted values (right) for the linear model fit to the naphthalene black data." width="100%" />
 <p class="caption">
 Figure 2.3: Residuals against batch (left) and fitted values (right) for the linear model fit to the naphthalene black data.
@@ -1241,7 +1248,7 @@ Figure 2.3: Residuals against batch (left) and fitted values (right) for the lin
 <p>We can also plot the standardised residuals against the quantiles of a standard normal distribution to assess the assumption of normality.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="crd.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
 <span id="cb47-2"><a href="crd.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(standres, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:normalplot"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:normalplot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/normalplot-1.png" alt="Normal probability plot for the standardised residuals for the linear model fit to the naphthalene black data." width="100%" />
 <p class="caption">
 Figure 2.4: Normal probability plot for the standardised residuals for the linear model fit to the naphthalene black data.
@@ -1249,36 +1256,36 @@ Figure 2.4: Normal probability plot for the standardised residuals for the linea
 </div>
 <p>The points lie quite well on a straight line (see Figure <a href="crd.html#fig:normalplot">2.4</a>), suggesting the assumption of normality is valid. Overall, the residual plots look reasonable; some investigation of transformations to correct for non-constant variance could be investigated (see MATH2010/STAT6123).</p></li>
 <li><p>When a significant difference between the treatments has been indicated, the next stage is to try to determine which treatments differ. In some cases a specific difference is of interest, a control versus a new treatment for instance, in which case that difference could now be
-inspected. However, usually no specific differences are to be considered a priori, and 
+inspected. However, usually no specific differences are to be considered a priori, and
 difference is of practical importance. A multiple comparison procedure is required to
 investigate all possible differences, which takes account of the number of possible differences
 available amongst the treatments (15 differences between the six batches here).</p>
 <p>We will use Tukey’s method for controlling the experiment-wise type I error rate, fixed here at 5%, as implemented by <code>emmeans</code>.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="crd.html#cb48-1" aria-hidden="true" tabindex="-1"></a>napblack.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(napblack.lm, <span class="st">&#39;batch&#39;</span>)</span>
 <span id="cb48-2"><a href="crd.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(napblack.emm)</span></code></pre></div>
-<pre><code>##  contrast estimate   SE df t.ratio p.value
-##  1 - 2         -23 31.3 24  -0.735  0.9755
-##  1 - 3         -59 31.3 24  -1.884  0.4351
-##  1 - 4           7 31.3 24   0.224  0.9999
-##  1 - 5         -95 31.3 24  -3.034  0.0566
-##  1 - 6          35 31.3 24   1.118  0.8692
-##  2 - 3         -36 31.3 24  -1.150  0.8555
-##  2 - 4          30 31.3 24   0.958  0.9266
-##  2 - 5         -72 31.3 24  -2.299  0.2329
-##  2 - 6          58 31.3 24   1.852  0.4535
-##  3 - 4          66 31.3 24   2.108  0.3167
-##  3 - 5         -36 31.3 24  -1.150  0.8555
-##  3 - 6          94 31.3 24   3.002  0.0606
-##  4 - 5        -102 31.3 24  -3.257  0.0348
-##  4 - 6          28 31.3 24   0.894  0.9442
-##  5 - 6         130 31.3 24   4.152  0.0043
+<pre><code>##  contrast        estimate   SE df t.ratio p.value
+##  batch1 - batch2      -23 31.3 24  -0.735  0.9755
+##  batch1 - batch3      -59 31.3 24  -1.884  0.4351
+##  batch1 - batch4        7 31.3 24   0.224  0.9999
+##  batch1 - batch5      -95 31.3 24  -3.034  0.0566
+##  batch1 - batch6       35 31.3 24   1.118  0.8692
+##  batch2 - batch3      -36 31.3 24  -1.150  0.8555
+##  batch2 - batch4       30 31.3 24   0.958  0.9266
+##  batch2 - batch5      -72 31.3 24  -2.299  0.2329
+##  batch2 - batch6       58 31.3 24   1.852  0.4535
+##  batch3 - batch4       66 31.3 24   2.108  0.3167
+##  batch3 - batch5      -36 31.3 24  -1.150  0.8555
+##  batch3 - batch6       94 31.3 24   3.002  0.0606
+##  batch4 - batch5     -102 31.3 24  -3.257  0.0348
+##  batch4 - batch6       28 31.3 24   0.894  0.9442
+##  batch5 - batch6      130 31.3 24   4.152  0.0043
 ## 
 ## P value adjustment: tukey method for comparing a family of 6 estimates</code></pre>
 <p>We have two significant differences, between batches 4-5 and 5-6.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="crd.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(<span class="fu">transform</span>(<span class="fu">pairs</span>(napblack.emm)), p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>##    contrast estimate    SE df t.ratio  p.value
-## 13    4 - 5     -102 31.31 24  -3.257 0.034820
-## 15    5 - 6      130 31.31 24   4.152 0.004295</code></pre></li>
+<pre><code>##           contrast estimate    SE df t.ratio  p.value
+## 13 batch4 - batch5     -102 31.31 24  -3.257 0.034820
+## 15 batch5 - batch6      130 31.31 24   4.152 0.004295</code></pre></li>
 </ol>
 </details>
 <ol start="4" style="list-style-type: decimal">
@@ -1328,7 +1335,7 @@ available amongst the treatments (15 differences between the six batches here).<
 
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Morris2011" class="csl-entry">
 Morris, M. D. (2011) <em>Design of Experiments: An Introduction Based on Linear Models</em>. Boca Raton: <span>Chapman and Hall/CRC Press</span>.
@@ -1362,7 +1369,6 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1402,6 +1408,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -1415,7 +1425,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

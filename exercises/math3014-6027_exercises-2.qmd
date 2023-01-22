@@ -1,0 +1,279 @@
+---
+title: "MATH3014-6027: Exercises 2"
+format: html
+bibliography: [../math3014-6027.bib, ../packages.bib]
+biblio-style: apalike
+csl: ../journal-of-the-royal-statistical-society.csl
+---
+
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\bbeta}{\boldsymbol{\beta}}
+\newcommand{\bvarepsilon}{\boldsymbol{\varepsilon}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\rT}{\mathrm{T}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\bY}{\boldsymbol{y}}
+\newcommand{\btau}{\boldsymbol{\tau}}
+
+1. 
+    a. For Example \@ref(exm:one-way), calculate the mean response for each operator and show that the treatment differences and results from hypothesis tests using the results in Section \@ref(contrast-crd) are the same as those found in Section \@ref(r-crd) using `pairwise.t.test`, and `emmeans`.
+
+    a. Also check the results in Section \@ref(multiple-comp) by (i) adjusting individual p-values (for Bonferroni) and (ii) using the `qtukey` command.
+    
+<details>
+<summary><b>Solution</b></summary>
+As a reminder, the data from the experiment is as follows.
+
+
+```{r exercise-1-data, echo = F}
+pulp <- data.frame(operator = rep(factor(1:4), 5),
+                   repetition = rep(1:5, rep(4, 5)), 
+                   reflectance = c(59.8, 59.8, 60.7, 61.0, 60.0, 60.2, 60.7, 60.8, 
+                                    60.8, 60.4, 60.5, 60.6, 60.8, 59.9, 60.9, 60.5, 59.8, 60.0, 60.3, 60.5)
+                     )
+knitr::kable(
+tidyr::pivot_wider(pulp, names_from = operator, values_from = reflectance)[, -1], col.names = paste("Operator", 1:4),
+)
+```
+
+The mean response, and variance, from each treatment is given by
+
+```{r exercise-1-means, echo = F}
+ybars2 <- pulp |> 
+    dplyr::group_by(operator) |> 
+    dplyr::summarise(n_i = dplyr::n(), mean = mean(reflectance), 
+                       variance = var(reflectance))
+knitr::kable(ybars2)
+s2 <- (1 / (nrow(pulp) - nrow(ybars2))) * sum(ybars2$variance 
+                                                  * (ybars2$n_i - 1))
+```
+
+The sample variance, $s^2 = `r round(s2, 3)`$, from \@ref(eq:crd-s2). As $\sum_{i=1}^tc_i^2/n_i = \frac{2}{5}$ for contrast vectors $\boldsymbol{c}$ corresponding to pairwise differences, the standard error of each pairwise difference is given by $\sqrt{\frac{2s^2}{5}} = `r round(sqrt(2 * s2 / 5), 3)`$. Hence, we can create a table of pairwise differences, standard errors and test statistics.
+
+```{r exercise-1-results, echo = F}
+res.tab <- transform(pairs.b)
+t.pvalue <- 2*(1 - pt(abs(res.tab[, 5]), res.tab[, 4]))
+pulp.results <- data.frame(res.tab[, 1:5], 
+                               unadjust.p.value = t.pvalue, 
+                               Bonferroni = pmin(1, 6 * t.pvalue),
+                               Tukey = 1 - ptukey(abs(res.tab[, 5]) * sqrt(2), 
+                                                  4, res.tab[, 4]))
+knitr::kable(pulp.results, digits = 3)
+```
+
+Unadjusted p-values are obtained from the t-distribution, as twice the tail probabilities (`2 * (1 - pt(abs(t.ratio), 16))`). For Bonferroni, we simply multiply these p-values by ${t \choose 2} = 6$, and then take the minimum of this value and 1. For the Tukey method, we use `1 - ptukey(abs(t.ratio) * sqrt(2), 4, 16)` (see `?ptukey`).
+
+Alternatively, to test each hypothesis at the 5% level, we can compare each t.ratio to (i) `qt(0.975, 16) = `r round(qt(0.975, 16), 3)`` (unadjusted); (ii) `qt(1 - 0.025/6, 16) = `r round(qt(1 - 0.025/6, 16), 3)`` (Bonferroni); or (iii) `qtukey(0.95, 4, 16) / sqrt(2) = `r round(qtukey(0.95, 4, 16) / sqrt(2), 3)``. 
+</details>
+    
+2. \ [Adapted from @WH2009] The bioactivity of four different drugs $A$, $B$, $C$ and $D$ for treating a particular illness was compared in a study and the following ANOVA table was given for the data:
+
+    | Source | Degrees of freedom | Sums of squares | Mean square |
+    | :----- | :----------------: | :-------------: | :---------: |
+    | Treatment | 3 | 64.42 | 21.47 |
+    | Residual | 26 | 62.12 | 2.39 |
+    | Total | 29 | 126.54 | 
+
+    i. What considerations should be made when assigning drugs to patients, and why?
+
+    i. Use an $F$-test to test at the 0.01 level the null hypothesis that the four drugs have the same bioactivity.
+
+    i. The average response from each treatment is as follows: $\bar{y}_{A.}=66.10$ ($n_A=7$ patients), $\bar{y}_{B.}=65.75$ ($n_B=8$), $\bar{y}_{C.} = 62.63$ ($n_C=9$), and $\bar{y}_{D.}=63.85$ ($n_D=6$). Conduct hypothesis tests for all pairwise comparisons using the Bonferroni and Tukey methods for an experiment-wise error rate of 0.05.
+    
+
+    i. In fact, $A$ and $B$ are brand-name drugs and $C$ and $D$ are generic drugs. Test the null hypothesis at the 5% level that brand-name and generic drugs have the same bioactivity.
+    
+<details>
+<summary><b>Solution</b></summary>
+
+i. Each patient should be randomly allocated to one of the drugs. This is to protect against possible bias from lurking variables, e.g. demographic variables or subjective bias from the study administrator (blinding the study can also help to protect against this).
+
+i. Test statistic = (Treatment mean square)/(Residual mean square) = 21.47/2.39 = 8.98. Under $H_0$: no difference in bioactivity between the drugs, the test statistic follows an $F_{3,26}$ distribution, which has a 1\% critical value of `qf(0.99, 3, 26) = `r qf(0.99, 3, 26)``. Hence, we can reject $H_0$.
+
+i. For each difference, the test statistic has the form
+
+    $$
+    \frac{|\bar{y}_{i.}-\bar{y}_{j.}|}{s\sqrt{\frac{1}{n_i}+\frac{1}{n_j}}}\,,
+    $$
+
+    for $i, j = A, B, C, D;\, i\ne j$. The treatment means and repetitions are given in the question (note that not all $n_i$ are equal). From the ANOVA table, we get $s^2 = 62.12/26 = 2.389$. The following table summarises the differences between drugs:
+
+    |   | $A-B$ | $A-C$ | $A-D$ | $B-C$ | $B-D$ | $C-D$ |
+    |:- | :---- | :---- | :---- | :---- | :---- | :---- |  
+    | Abs. difference |  0.35 | 3.47 | 2.25 | 3.12 | 1.9 | 1.22 |
+    | Test statistic | 0.44 | 4.45 | 2.62 | 4.15 | 2.28 | 1.50 |
+
+    The Bonferroni critical value is $t_{26, 1-0.05/12} = `r qt(1 - 0.01/12, 26)`$. The Tukey critical value is $q_{4,26, 0.95}/\sqrt{2} = `r qtukey(0.95, 4, 26) / sqrt(2)`$ (available `R` as `qtukey(0.95, 4, 26) / sqrt(2)`). Hence under both methods, bioactivity of drugs $A$ and $C$, and $B$ and $C$, are significantly different.
+
+i. A suitable contrast has $\boldsymbol{c} = (0.5, 0.5, -0.5, -0.5)$, with $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = (\tau_A + \tau_B) / 2 - (\tau_C + \tau_D) / 2$ (the difference in average treatment effects). 
+
+    An estimate for this contrast is given by $(\bar{y}_{A.} + \bar{y}_{B.}) / 2 - (\bar{y}_{C.} + \bar{y}_{D.}) / 2$, with variance
+
+    $$\mbox{Var}\left(\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{Y}_{D.})\right) = \frac{\sigma^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)\,.$$
+
+    Hence, a test statistic for $H_0:\, \frac{1}{2}(\tau_A+\tau_B) - \frac{1}{2}(\tau_C+\tau_D)=0$ is given by
+
+    $$
+\frac{\frac{1}{2}(\bar{y}_{A.}+\bar{y}_{B.}) - \frac{1}{2}(\bar{y}_{C.}+\bar{y}_{D.})}{\sqrt{\frac{s^2}{4}\left(\frac{1}{n_A} + \frac{1}{n_B} + \frac{1}{n_C} + \frac{1}{n_D}\right)}} = \frac{2.685}{\frac{\sqrt{2.389}}{2}\sqrt{\frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{6}}} = 4.70\,.
+    $$
+
+    The critical value is $t_{26, 1-0.05/2} = `r qt(0.975, 26)`$. Hence, we can reject $H_0$ and conclude there is a difference between brand-name and generic drugs.
+
+</details>
+
+
+3. <a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).
+
+    ```{r nap-black}
+    napblack <- data.frame(batch = rep(factor(1:6), rep(5, 6)),
+                   repetition = rep(1:5, 6), 
+                   yield = c(145, 40, 40, 120, 180, 140, 155, 90, 160, 95,
+                                   195, 150, 205, 110, 160, 45, 40, 195, 65, 145,
+                                   195, 230, 115, 235, 225, 120, 55, 50, 80, 45)
+                     )
+    knitr::kable(
+    tidyr::pivot_wider(napblack, names_from = batch, values_from = yield)[, -1],
+     col.names = paste("Batch", 1:6),
+     caption = "Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid."
+    )
+    ```
+
+    Conduct a full analysis of this experiment, including
+
+    a. exploratory data analysis;
+    a. fitting a linear model, and conducting an F-test to compare to a model that explains variation using the six batches to the null model;
+    a. usual linear model diagnostics;
+    b. multiple comparisons of all pairwise differences between treatments.
+ 
+<details>
+<summary><b>Solution</b></summary>
+
+a. Two of the simplest ways of examining the data are to calculate basic descriptive statistics, e.g. the mean and standard deviation of the yield in each batch, and to plot the data in the different batches using a simple graphical display, e.g. a stripchart of the yields in each batch. Notice that in both \texttt{aggregate} and \texttt{stripchart} we use the formula \texttt{yield $\sim$ batch}. This formula splits the data into groups defined by batch.
+
+    ```{r napblack-summary, fig.align = 'center', fig.cap = 'Naphthalene black experiment: distributions of dye yields from the six batches.'}
+    aggregate(yield ~ batch, data = napblack, FUN = function(x) c(mean = mean(x), 
+                                                              st.dev = sd(x)))
+    boxplot(yield ~ batch, data = napblack)
+    ```
+
+    Notice that even within any particular batch, the number of grams of standard dyestuff colour determined by the dye trial varies from observation to observation. This *within-group* variation is considered to be random or residual variation. This cannot be explained by any differences between batches. However, a second source of variation in the overall data set can be explained by variation between the batches, i.e. between the different batch means themselves. We can see from the box plots (Figure \@ref(fig:napblack-summary)) and the mean yields in each batch that observations from batch number five appear to have given higher yields (in grams of standard colour) than those from the other batches.
+    
+a. When we fit linear models and compare them using analysis of variance (ANOVA), it enables us to decide whether the differences that seem to be evident in these simple plots and descriptive statistics are statistically significant or whether this kind of variation could have arisen by chance, even though there are no real differences between the batches.
+
+    An ANOVA table may be used to compare a linear model including differences between the batches to the null model. The linear model we will fit is a simple unit-treatment model:
+
+    \begin{equation}
+    Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5\,,
+    (\#eq:linmod)
+    \end{equation}
+
+    where $Y_{ij}$ is the response obtained from the $j$th repetition of the $i$th batch, $\mu$ is a constant term, $\tau_i$ is the expected effect due to the observation being in the $i$th batch $(i=1,\ldots,5)$ and $\varepsilon_{ij}$ are the random errors.
+ 
+    A test of the hypothesis that the group means are all equal is equivalent to a test that the  $\tau_i$ are all equal to 0 $(H_0:\,  \tau_1 = \tau_2 = \cdots = \tau_6 = 0)$. We can use `lm` to fit model \@ref(eq:linmod), and `anova` to test the hypothesis. Before we fit the linear model, we need to make sure `batch` has type `factor`^[Factors are variables in `R` which take on a limited number of different values (e.g. categorical variables). We need to define a categorical variable, like `batch` as a `factor` to ensure they are treated correctly by functions such as `lm`.].  
+ 
+    ```{r linmod}
+    napblack$batch <- as.factor(napblack$batch)
+    napblack.lm <- lm(yield ~ batch, data = napblack)
+    anova(napblack.lm)
+    ```
+
+    The p-value of `r round(anova(napblack.lm)$"Pr(>F)"[1], digits = 4)` indicates significant differences between at least two of the batch
+means. Therefore $H_0$ is rejected and a suitable multiple comparison test should be carried
+out.
+
+a. To perform our analysis, we have fitted a linear model. Therefore, we should use some plots of the residuals $y_{ij} - \hat{y}_{ij}$ to check the model assumptions, particularly that the errors are independently and identically normally distributed. The function `rstandard` which produces residuals which have been standardised to have variance equal to 1.
+
+    ```{r residuals, fig.show = "hold", fig.align = "center", fig.cap = "Residuals against batch (left) and fitted values (right) for the linear model fit to the naphthalene black data.", out.width = "100%"}
+standres <- rstandard(napblack.lm)
+fitted <- fitted(napblack.lm)
+par(mfrow = c(1, 2), pty = "s")
+with(napblack, {
+  plot(batch, standres, xlab = "Batch", ylab = "Standarised residuals")
+  plot(fitted, standres, xlab = "Fitted value", ylab = "Standarised residuals")
+})
+    ```
+    The plots (Figure \@ref(fig:residuals)) show no large standardised residuals ($>2$ in absolute value^[We would anticipate 95\% of the standardised residuals to lie in [-1.96, 1.96], as they will follow a standard normal distribution if the model assumptions are correct.]). While there is some evidence of unequal variation across batches, there is no obvious pattern with respect to fitted values (e.g. no "funnelling"). 
+
+    We can also plot the standardised residuals against the quantiles of a standard normal distribution to assess the assumption of normality.
+
+    ```{r normalplot, fig.align = "center", fig.cap = "Normal probability plot for the standardised residuals for the linear model fit to the naphthalene black data.", out.width = "100%"}
+par(pty = "s")
+qqnorm(standres, main = "")
+    ```
+
+    The points lie quite well on a straight line (see Figure \@ref(fig:normalplot)), suggesting the assumption of normality is valid. Overall, the residual plots look reasonable; some investigation of transformations to correct for non-constant variance could be investigated (see MATH2010/STAT6123).
+
+a. When a significant difference between the treatments has been indicated, the next stage is to try to determine which treatments differ.  In some cases a specific difference is of interest, a control versus a new treatment for instance, in which case that difference could now be
+inspected.  However, usually no specific differences are to be considered a priori, and \textit{any}
+difference is of practical importance.  A multiple comparison procedure is required to
+investigate all possible differences, which takes account of the number of possible differences
+available amongst the treatments (15 differences between the six batches here).
+
+    We will use Tukey's method for controlling the experiment-wise type I error rate, fixed here at 5%, as implemented by `emmeans`.
+    
+    ```{r nap-black-tukey}
+    napblack.emm <- emmeans::emmeans(napblack.lm, 'batch')
+    pairs(napblack.emm)
+    ```
+
+    We have two significant differences, between batches 4-5 and 5-6.
+
+    ```{r nap-black-sig}
+    subset(transform(pairs(napblack.emm)), p.value < 0.05)
+    ```
+
+</details>
+
+4. [Adapted from @Morris2011] Consider a completely randomised design with $t = 5$ treatments and $n=50$ units. The contrasts
+
+$$
+\tau_2 - \tau_1, \quad \tau_3 - \tau_2, \quad \tau_4 - \tau_3, \tau_5 - \tau_4
+$$
+
+are of primary interest to the experimenter. 
+
+a. Find an allocation of the 50 units to the 5 treatments, i.e. find $n_1, \ldots, n_5$, that minimises the average variance of the corresponding contrast estimators.
+
+a. Fixing the proportions of experimental effort applied to each treatment to those found in part (a), i.e. to $w_i = n_i/50$, find the value of $n$ required to make the ratio $T = |\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}|/\sqrt{\mbox{var}\left(\widehat{\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}}\right)} = 2$ assuming a signal-to-noise ratio of 1. 
+
+<details>
+<summary><b>Solution</b></summary>
+
+a. We can use the function `opt_ni` given in Section \@ref(crd-opt-all):
+
+    ```{r opt-alloc}
+n <- 50
+C <- matrix(
+  c(
+  -1, 1, 0, 0, 0,
+  0, -1, 1, 0, 0,
+  0, 0, -1, 1, 0,
+  0, 0, 0, -1, 1
+  ), nrow = 4, byrow = T
+)
+opt_ni(C, n) 
+    ```
+ 
+    Rounding, we obtain a solution of the form $n_1 = n_5 =8$, $n_2 = n_4 = 11$ and $n_3 = 12$. Any of $n_2, n_3, n_4$ may be rounded up to 12 to form a design with the same variance.
+
+    ```{r opt-round, results = "hold"}
+    nv <- c(8, 11, 11, 11, 8)
+    crd_var(C, nv + c(0, 1, 0, 0, 0))
+    crd_var(C, nv + c(0, 0, 1, 0, 0))
+    crd_var(C, nv + c(0, 0, 0, 1, 0))
+    ```
+ 
+a. The optimal ratios for each treatment from part (a) are $w_1 = w_5 = `r opt_ni(C, n)[1]/n`$ and $w_2 = w_3 = w_4 = `r opt_ni(C, n)[2]/n`$. Fixing these, we can use code from Section \@ref(crd-size) to find the required value of $n$ for each contrast.
+
+    ```{r crd-opt-n}
+    nv <- NULL
+    for(i in 1:4) nv[i] <- opt_n(C[i, ], opt_ni(C, n) / n, 1, 2) # snr = 1, target = 2
+    nv
+    ```
+
+
+    Hence, we need $n = `r ceiling(nv[1])`$ for to achieve $T = 2$ for the first and last contrasts, and $n = `r ceiling(nv[2])`$ for the second and third. The differences are due to the different proportions $w_i$ assumed for each treatment. To achieve $T=2$ for all contrasts, we pick the larger number, $n = `r ceiling(nv[1])`$. 
+ 
+</details> 
+

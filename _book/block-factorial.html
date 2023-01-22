@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Blocking in factorial designs | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Blocking in factorial designs | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2022-06-11" />
+<meta name="date" content="2023-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="factorial.html"/>
 <link rel="next" href="fractional-factorial.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -93,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -173,10 +172,8 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#lin-model-rev"><i class="fa fa-check"></i><b>1.5</b> Revision on the linear model</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#variance-of-a-predictionfitted-value"><i class="fa fa-check"></i><b>1.5.1</b> Variance of a Prediction/Fitted Value</a></li>
-<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.2</b> Analysis of Variance and R<span class="math inline">\(^{2}\)</span> as Model Comparison</a></li>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#anova-revision"><i class="fa fa-check"></i><b>1.5.1</b> Analysis of Variance as Model Comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="crd.html"><a href="crd.html"><i class="fa fa-check"></i><b>2</b> Completely randomised designs</a>
 <ul>
@@ -192,7 +189,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.8.1" data-path="crd.html"><a href="crd.html#crd-opt-all"><i class="fa fa-check"></i><b>2.8.1</b> Optimal treatment allocation</a></li>
 <li class="chapter" data-level="2.8.2" data-path="crd.html"><a href="crd.html#crd-size"><i class="fa fa-check"></i><b>2.8.2</b> Overall size of the experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises-1"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
+<li class="chapter" data-level="2.9" data-path="crd.html"><a href="crd.html#exercises"><i class="fa fa-check"></i><b>2.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3</b> Blocking</a>
 <ul>
@@ -207,7 +204,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.6.2" data-path="blocking.html"><a href="blocking.html#reduced-normal-equations"><i class="fa fa-check"></i><b>3.6.2</b> Reduced normal equations</a></li>
 <li class="chapter" data-level="3.6.3" data-path="blocking.html"><a href="blocking.html#estimation-and-inference"><i class="fa fa-check"></i><b>3.6.3</b> Estimation and inference</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="blocking.html"><a href="blocking.html#exercises-1"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="factorial.html"><a href="factorial.html"><i class="fa fa-check"></i><b>4</b> Factorial experiments</a>
 <ul>
@@ -225,14 +222,14 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="factorial.html"><a href="factorial.html#anova-for-factorial-experiments"><i class="fa fa-check"></i><b>4.4.1</b> ANOVA for factorial experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="factorial.html"><a href="factorial.html#exercises-2"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="block-factorial.html"><a href="block-factorial.html"><i class="fa fa-check"></i><b>5</b> Blocking in factorial designs</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="block-factorial.html"><a href="block-factorial.html#two-examples"><i class="fa fa-check"></i><b>5.1</b> Two examples</a></li>
 <li class="chapter" data-level="5.2" data-path="block-factorial.html"><a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design"><i class="fa fa-check"></i><b>5.2</b> General method of constructing a confounded block design</a></li>
 <li class="chapter" data-level="5.3" data-path="block-factorial.html"><a href="block-factorial.html#analysis-of-a-confounded-factorial-design"><i class="fa fa-check"></i><b>5.3</b> Analysis of a confounded factorial design</a></li>
-<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+<li class="chapter" data-level="5.4" data-path="block-factorial.html"><a href="block-factorial.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fractional-factorial.html"><a href="fractional-factorial.html"><i class="fa fa-check"></i><b>6</b> Fractional factorial designs</a>
 <ul>
@@ -241,7 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="fractional-factorial.html"><a href="fractional-factorial.html#resolution-and-aberration"><i class="fa fa-check"></i><b>6.3</b> Resolution and aberration</a></li>
 <li class="chapter" data-level="6.4" data-path="fractional-factorial.html"><a href="fractional-factorial.html#frac-anal"><i class="fa fa-check"></i><b>6.4</b> Analysis of fractional factorial designs</a></li>
 <li class="chapter" data-level="6.5" data-path="fractional-factorial.html"><a href="fractional-factorial.html#blocking-fractional-fractorial-designs"><i class="fa fa-check"></i><b>6.5</b> Blocking fractional fractorial designs</a></li>
-<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.6" data-path="fractional-factorial.html"><a href="fractional-factorial.html#exercises-4"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -264,12 +261,12 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="block-factorial" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Blocking in factorial designs</h1>
+<div id="block-factorial" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Blocking in factorial designs<a href="block-factorial.html#block-factorial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We now consider splitting the treatments in a factorial design into blocks. As in Chapter <a href="blocking.html#blocking">3</a>, the simplest factorial blocked design is a <strong>randomised complete block design</strong>, where the blocks are large enough for a complete replicate of the factorial treatments to occur in each block. Analysis then proceeds as in Chapter <a href="blocking.html#blocking">3</a>, with the contrasts of interest being those corresponding to the factorial effects (main effects and interactions).</p>
 <p>However, the number of treatments grows rapidly in a factorial design, and it is unusual for the block sizes to be sufficiently large to accomodate a complete replication within each block. Hence, <strong>incomplete block designs</strong> must be employed. While balanced incomplete block designs (Section <a href="blocking.html#sec-bibd">3.6</a>) can be used, they do not tend to have good statistical properties and their construction is complicated. In this chapter, we will focus on a class of methods specific to splitting a two-level factorial design in to blocks who common size <span class="math inline">\(k\)</span> is a power of two.</p>
-<div id="two-examples" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Two examples</h2>
+<div id="two-examples" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Two examples<a href="block-factorial.html#two-examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We will use two simple examples to illustrate this approach, based on a <span class="math inline">\(2^3\)</span> experiment with factors labelled <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> (Table <a href="block-factorial.html#tab:example-factorial">5.1</a>).</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="block-factorial.html#cb156-1" aria-hidden="true" tabindex="-1"></a>example.design <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">8</span>, <span class="at">nfactors =</span> <span class="dv">3</span>, <span class="at">randomize =</span> F)</span>
 <span id="cb156-2"><a href="block-factorial.html#cb156-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(example.design, <span class="at">caption =</span> <span class="st">&quot;Treatments from a $2^3$ factorial design&quot;</span>, <span class="at">align =</span> <span class="fu">rep</span>(<span class="st">&quot;r&quot;</span>, <span class="dv">3</span>))</span></code></pre></div>
@@ -995,8 +992,8 @@ Hence, the main effect of factor <span class="math inline">\(A\)</span> is also 
 </div>
 <p>In Example <a href="block-factorial.html#exm:block-frac-1">5.1</a>, the clear effects are <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(AB\)</span>, <span class="math inline">\(AC\)</span> and <span class="math inline">\(BC\)</span>. In Example <a href="block-factorial.html#exm:block-frac-2">5.2</a>, the clear effects are <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(ABC\)</span>.</p>
 </div>
-<div id="general-method-of-constructing-a-confounded-block-design" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> General method of constructing a confounded block design</h2>
+<div id="general-method-of-constructing-a-confounded-block-design" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> General method of constructing a confounded block design<a href="block-factorial.html#general-method-of-constructing-a-confounded-block-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To arrange a <span class="math inline">\(2^{f}\)</span> design in <span class="math inline">\(b=2^{q}\)</span> blocks of size <span class="math inline">\(k=2^{f-q}\)</span>:</p>
 <ul>
 <li>choose <span class="math inline">\(q\)</span> independent factorial contrasts for the <strong>defining blocks</strong>. Typically, we choose higher-order interactions (due to effect hierarchy):</li>
@@ -1289,8 +1286,8 @@ the <code>blocks</code> argument</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="block-factorial.html#cb171-1" aria-hidden="true" tabindex="-1"></a>block3.frf2 <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">8</span>, <span class="at">nfactors =</span> <span class="dv">8</span>, </span>
 <span id="cb171-2"><a href="block-factorial.html#cb171-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">alias.info =</span> <span class="dv">3</span>, <span class="at">randomize =</span> F, <span class="at">blocks =</span> <span class="fu">c</span>(<span class="st">&quot;ACEGH&quot;</span>, <span class="st">&quot;BCFGH&quot;</span>, <span class="st">&quot;BDEGH&quot;</span>))</span></code></pre></div>
 </div>
-<div id="analysis-of-a-confounded-factorial-design" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Analysis of a confounded factorial design</h2>
+<div id="analysis-of-a-confounded-factorial-design" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Analysis of a confounded factorial design<a href="block-factorial.html#analysis-of-a-confounded-factorial-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can analyse a confounded design by by combining ideas from Chapters <a href="blocking.html#blocking">3</a> and <a href="factorial.html#factorial">4</a>. The most straightforward approach is to add a block effect to the regression model introduced in Section <a href="factorial.html#fac-reg">4.4</a>. Let <span class="math inline">\(X\)</span> be the <span class="math inline">\(n\times d\)</span> model matrix with columns corresponding to the <span class="math inline">\(d = 2^f - b\)</span> unscaled contrast coefficients for the estimable factorial effects (i.e. those <strong>not</strong> confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the <span class="math inline">\(X\)</span> matrix cannot columns corresponding to these effects. We write a block-regression model as</p>
 <p><span class="math display">\[
 \boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + + Z\boldsymbol{\gamma} + \boldsymbol{\varepsilon}\,,
@@ -1326,11 +1323,11 @@ with estimators of the factorial effects having the form <span class="math inlin
 <span id="cb172-4"><a href="block-factorial.html#cb172-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> coef.values <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb172-5"><a href="block-factorial.html#cb172-5" aria-hidden="true" tabindex="-1"></a>betahat <span class="ot">&lt;-</span> <span class="fu">t</span>(X[, <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">11</span>)]) <span class="sc">%*%</span> y <span class="sc">/</span> <span class="fu">nrow</span>(X)</span>
 <span id="cb172-6"><a href="block-factorial.html#cb172-6" aria-hidden="true" tabindex="-1"></a>betahat <span class="co"># coef estimates, obtained directly</span></span></code></pre></div>
-<pre><code>##          [,1]
-## A      4.3427
-## B     -0.3967
-## C      1.8491
-## A:B:C  0.1038</code></pre>
+<pre><code>##         [,1]
+## A     3.1990
+## B     0.2727
+## C     2.8881
+## A:B:C 0.4513</code></pre>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="block-factorial.html#cb174-1" aria-hidden="true" tabindex="-1"></a>ex2.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ex2.df, <span class="at">y =</span> y)</span>
 <span id="cb174-2"><a href="block-factorial.html#cb174-2" aria-hidden="true" tabindex="-1"></a>ex2.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span>  Block <span class="sc">+</span> A <span class="sc">+</span> B <span class="sc">+</span> C <span class="sc">+</span> A<span class="sc">:</span>B<span class="sc">:</span>C, <span class="at">data =</span> ex2.df)</span>
 <span id="cb174-3"><a href="block-factorial.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ex2.lm)</span></code></pre></div>
@@ -1338,18 +1335,18 @@ with estimators of the factorial effects having the form <span class="math inlin
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## Block      3  243.8    81.3     NaN    NaN
-## A          1  150.9   150.9     NaN    NaN
-## B          1    1.3     1.3     NaN    NaN
-## C          1   27.4    27.4     NaN    NaN
-## A:B:C      1    0.1     0.1     NaN    NaN
-## Residuals  0    0.0     NaN</code></pre>
+## Block      3    328   109.4     NaN    NaN
+## A          1     82    81.9     NaN    NaN
+## B          1      1     0.6     NaN    NaN
+## C          1     67    66.7     NaN    NaN
+## A:B:C      1      2     1.6     NaN    NaN
+## Residuals  0      0     NaN</code></pre>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="block-factorial.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ex2.lm)[<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>] <span class="co"># coef estimates</span></span></code></pre></div>
-<pre><code>##       A       B       C   A:B:C 
-##  4.3427 -0.3967  1.8491  0.1038</code></pre>
+<pre><code>##      A      B      C  A:B:C 
+## 3.1990 0.2727 2.8881 0.4513</code></pre>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="block-factorial.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">coef</span>(ex2.lm)[<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>] <span class="co"># factorial effects</span></span></code></pre></div>
-<pre><code>##       A       B       C   A:B:C 
-##  8.6854 -0.7933  3.6981  0.2075</code></pre>
+<pre><code>##      A      B      C  A:B:C 
+## 6.3979 0.5453 5.7762 0.9025</code></pre>
 <p>As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="block-factorial.html#cb180-1" aria-hidden="true" tabindex="-1"></a>ex2.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span>  (A <span class="sc">+</span> B <span class="sc">+</span> C)<span class="sc">^</span><span class="dv">3</span>, <span class="at">data =</span> ex2.df)</span>
 <span id="cb180-2"><a href="block-factorial.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ex2.lm2)</span></code></pre></div>
@@ -1357,23 +1354,23 @@ with estimators of the factorial effects having the form <span class="math inlin
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## A          1  150.9   150.9     NaN    NaN
-## B          1    1.3     1.3     NaN    NaN
-## C          1   27.4    27.4     NaN    NaN
-## A:B        1    9.2     9.2     NaN    NaN
-## A:C        1  147.4   147.4     NaN    NaN
-## B:C        1   87.2    87.2     NaN    NaN
-## A:B:C      1    0.1     0.1     NaN    NaN
+## A          1   81.9    81.9     NaN    NaN
+## B          1    0.6     0.6     NaN    NaN
+## C          1   66.7    66.7     NaN    NaN
+## A:B        1    5.0     5.0     NaN    NaN
+## A:C        1  165.5   165.5     NaN    NaN
+## B:C        1  157.8   157.8     NaN    NaN
+## A:B:C      1    1.6     1.6     NaN    NaN
 ## Residuals  0    0.0     NaN</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="block-factorial.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ex2.lm2)</span></code></pre></div>
 <pre><code>## (Intercept)           A           B           C         A:B         A:C 
-##      5.2937      4.3427     -0.3967      1.8491      1.0698      4.2931 
+##      5.1142      3.1990      0.2727      2.8881      0.7869      4.5489 
 ##         B:C       A:B:C 
-##      3.3008      0.1038</code></pre>
+##      4.4414      0.4513</code></pre>
 <p>But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.</p>
 </div>
-<div id="exercises-4" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Exercises</h2>
+<div id="exercises-3" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Exercises<a href="block-factorial.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li><p>Suppose that a single replicate <span class="math inline">\(2^5\)</span> factorial experiment is to be arranged in <span class="math inline">\(b=4\)</span> blocks, each containing <span class="math inline">\(k=8\)</span> treatments.</p>
 <p>How many interactions need to be confounded with blocks in this experiment? Can these be chosen independently? Select suitable interactions which could be confounded with blocks and write down the treatments in one block corresponding to your choice.</p></li>
@@ -1460,14 +1457,14 @@ Confounding the interactions <span class="math inline">\(ABCD\)</span>, <span cl
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="block-factorial.html#cb184-1" aria-hidden="true" tabindex="-1"></a>block.<span class="fl">2.5</span> <span class="ot">&lt;-</span> FrF2<span class="sc">::</span><span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">5</span>, <span class="at">nfactors =</span> <span class="dv">5</span>, <span class="at">blocks =</span> <span class="fu">c</span>(<span class="st">&quot;ABCD&quot;</span>, <span class="st">&quot;CDE&quot;</span>))</span>
 <span id="cb184-2"><a href="block-factorial.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(block.<span class="fl">2.5</span>, Blocks <span class="sc">==</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##    Blocks  A  B  C  D  E
-## 17      3  1  1 -1 -1 -1
-## 18      3 -1 -1  1  1 -1
+## 17      3  1 -1  1 -1  1
+## 18      3 -1  1  1 -1  1
 ## 19      3 -1  1 -1  1  1
-## 20      3  1 -1  1 -1  1
-## 21      3 -1 -1 -1 -1 -1
-## 22      3 -1  1  1 -1  1
-## 23      3  1  1  1  1 -1
-## 24      3  1 -1 -1  1  1</code></pre>
+## 20      3  1 -1 -1  1  1
+## 21      3 -1 -1  1  1 -1
+## 22      3  1  1  1  1 -1
+## 23      3  1  1 -1 -1 -1
+## 24      3 -1 -1 -1 -1 -1</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Suppose a <span class="math inline">\(2^7\)</span> design is arranged in <span class="math inline">\(b=8\)</span> blocks with the defining blocks <span class="math inline">\(\mathrm{Block}_1 = ABC\)</span>, <span class="math inline">\(\mathrm{Block}_2 = DEF\)</span> and <span class="math inline">\(\mathrm{Block}_3 = AFG\)</span>.</p>
@@ -2556,7 +2553,6 @@ The second scheme does not confound any three-factor interactions with blocks, u
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -2596,6 +2592,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown_math3014-6027.pdf", "bookdown_math3014-6027.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -2609,7 +2609,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

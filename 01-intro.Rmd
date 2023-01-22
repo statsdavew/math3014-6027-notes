@@ -78,22 +78,22 @@ Y_j=\beta_{0}+\beta_{1}x_j+\varepsilon_j\,,\qquad j=1, \ldots, n\,,
 
 where $\varepsilon_j\sim N(0,\sigma^{2})$ are independent and identically distributed errors and $\beta_{0}, \beta_{1}$ are unknown constants (parameters).
 
-Let\footnote{Other codings can be used: e.g. 0,1; see later in the module. It makes no difference for our current purpose.}
+Let^[Other choices of *coding* can be used: e.g. -1,1; it makes no difference for our current purpose.]
 \begin{equation}
-x_{j}=\left\{\begin{array}{ll}
--1&\textrm{if treatment 1 is applied to the $j$th subject}\\
-+1&\textrm{if treatment 2 is applied to the $j$th subject}\nonumber ,
+x_{j}=\left\{\begin{array}{cl}
+0&\textrm{if treatment 1 is applied to the $j$th subject}\\
+1&\textrm{if treatment 2 is applied to the $j$th subject}\nonumber ,
 \end{array}
 \right.
 \end{equation}
-for $j=1,\dots,n$.^[We will discuss the choice of *coding* -1, +1 later.]
+for $j=1,\dots,n$.
 
 The difference in expected response from treatments 1 and 2 is
 
 \begin{equation}
 \begin{split}
-\textrm{E}[Y_j\, |\, x_j = +1] - \textrm{E}[Y_j\, |\, x_j = -1] & = \beta_{0}+\beta_{1}-\beta_{0}+\beta_{1} \\
-& = 2\beta_{1}\,.
+\textrm{E}[Y_j\, |\, x_j = 1] - \textrm{E}[Y_j\, |\, x_j = 0] & = \beta_{0}+\beta_{1}-\beta_{0} \\
+& = \beta_{1}\,.
 \end{split}
 (\#eq:ex-ex-response)
 \end{equation}
@@ -226,21 +226,37 @@ For estimating the difference between treatments, we are interested in
 
 \begin{align*}
 \textrm{Var}(\hat{\beta}_{1})& = \frac{n}{n\sum x_j^{2}-(\sum x_j)^{2}}\sigma^{2}\\
- & = \frac{n}{n^2 - (\sum x_j)^2}\sigma^{2}\,,
+ & = \frac{1}{\sum x_j^{2} - n\bar{x}^2}\sigma^{2}\,,
 \end{align*}
-as $x_j=\pm 1$, therefore $x_j^2=1$ for all $j=1,\ldots,n$, and hence $\sum x_j^2=n$.
+where $\bar{x} = \sum x_j / n$.
 
-To achieve the most precise estimator, we need to minimise $\textrm{Var}(\hat{\beta}_{1})$ or equivalently minimise $|\sum x_j|$. This goal can be achieved through the choice of $x_{1},\dots,x_{n}$:
+Assuming constant $\sigma^2$, to achieve the most precise estimator we need to minimise $\textrm{Var}(\hat{\beta}_{1})$ or equivalently maxmise $\sum x_j^{2} - n\bar{x}^2$. This goal can be achieved through the choice of $x_{1},\dots,x_{n}$:
 
-- as each $x_j$ can only take one of two values, -1 or +1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
-- call these $n_{1}$ and $n_{2}$ respectively, with $n_{1}+n_{2}=n$
+- as each $x_j$ can only take one of two values, 0 or 1, this is equivalent to choosing the numbers of subjects assigned to treatment 1 and treatment 2;
+- call these $n_{1}$ and $n_{2}$ respectively, with $n_{1}+n_{2}=n$.
 
-It is obvious that $\sum x_j = 0$ if and only if $n_1=n_2$. Therefore, assuming $n$ is even, the **optimal design** has
+We can find an upper bound for the quantity $\sum x_j^{2} - n\bar{x}^2$. As each $x_i\in\{0,1\}$ we have
 
-- $n_{1}=\frac{n}{2}$ subjects assigned to treatment 1 and
-- $n_{2}=\frac{n}{2}$ subjects assigned to treatment 2.
+\begin{align}
+\sum x_j^2 & = \sum x_j \\
+& = n\bar{x}\,.
+\end{align}
 
-For $n$ odd, we choose $n_{1}=\frac{n+1}{2}$, $n_{2}=\frac{n-1}{2}$, or vice versa.
+Hence,
+
+\begin{align*}
+\sum x_j^{2} - n\bar{x}^2 & = n\bar{x} - n\bar{x}^2 \\
+& = n\bar{x}(1-\bar{x}) \\
+& \le n/4\,,
+\end{align*}
+as we have a quadratic equation in $\bar{x}$ that is maximised at $\bar{x} = 1/2$.
+
+If we can find a set of design points that satisfy $\bar{x} = 1/2$, we will have an **optimal design**. Assuming $n$ is even, one possibility is 
+
+- $n_{1}=\frac{n}{2}$ subjects assigned to treatment 1 ($x_j = 0$) and
+- $n_{2}=\frac{n}{2}$ subjects assigned to treatment 2 ($x_j = 1$).
+
+For $n$ odd, we choose $n_{1}=\frac{n+1}{2}$, $n_{2}=\frac{n-1}{2}$, or vice versa, to get as close as possible to the optimal design.
 
 ::: {.definition #simple-efficiency}
 We can assess different designs using their **efficiency**:
@@ -252,13 +268,13 @@ We can assess different designs using their **efficiency**:
 where $d_{1}$ is a design we want to assess and $d^{*}$ is the optimal design with smallest variance. Note that $0\leq\textrm{Eff}\leq 1$. 
 :::
 
-In Figure \@ref(fig:simple-efficiency) below, we plot this efficiency for Example \@ref(exm:motivation), using different choices of $n_1$. The total number of runs is fixed at $n = 100$, and the function `eff` calculates the efficiency from Definition \@ref(def:simple-efficiency) for a design with $n_1$ subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when $n_1 = n_2$ (equal allocation of treatments 1 and 2). If $n_1=0$ or $n_1 = 1$, the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.
+In Figure \@ref(fig:simple-efficiency) below, we plot this efficiency for Example \@ref(exm:motivation), using different choices of $n_1$. The total number of runs is fixed at $n = 100$, and the function `eff` calculates the efficiency (assuming $n$ is even) from Definition \@ref(def:simple-efficiency) for a design with $n_1$ subjects assigned to treatment 1. Clearly, efficiency of 1 is achieved when $n_1 = n_2$ (equal allocation of treatments 1 and 2). If $n_1=0$ or $n_1 = 1$, the efficiency is zero; we cannot estimate the difference between two treatments if we only allocate subjects to one of them.
 
 (ref:foo) Efficiencies for designs for Example \@ref(exm:motivation) with different numbers, $n_1$, of subjects assigned to treatment 1 when the total number of subjects is $n=100$.
 
 ```{r simple-efficiency, fig.cap = '(ref:foo)'}
 n <- 100 
-eff <- function(n1) 1 - ((2 * n1 - n) / n)^2 
+eff <- function(n1) 4 * n1 * (n - n1) / n^2
 curve(eff, from = 0, to = n, ylab = "Eff", xlab = expression(n[1]))
 ```
 
@@ -267,29 +283,31 @@ curve(eff, from = 0, to = n, ylab = "Eff", xlab = expression(n[1]))
 
 Some reasons experiments are performed:
 
-1. Treatment comparison (Chapters 2 and 3)
+1. Treatment comparison
 
   - compare several treatments (and choose the best)
   - e.g. clinical trial, agricultural field trial
 
-2. Factor screening (Chapters 4, 5 and 6)
+2. Factor screening
 
   - many complex systems may involve a large number of (discrete) factors (controllable features)
   - which of these factors have a substantive impact?
   - (relatively) small experiments
   - e.g. industrial experiments on manufacturing processes
 
-3. Response surface exploration (Chapter 7)
+3. Response surface exploration
 
   - detailed description of relationship between important (continuous) variables and response
   - typically second order polynomial regression models
   - larger experiments, often built up sequentially
   - e.g. alcohol yields in a pharmaceutical experiments
 
-4. Optimisation (Chapter 7)
+4. Optimisation
 
   - finding settings of variables that lead to maximum or minimum response
   - typically use response surface methods and sequential ``hill climbing'' strategy
+
+In this module, we will focus on **treatment comparison** (Chapters 2 and 3) and **factor screening** (Chapters 4, 5 and 6).
 
 ## Some definitions
 
@@ -384,7 +402,7 @@ $$
 $$
 
 
-The laest squares estimators are given by
+The least squares estimators are given by
 
 \begin{equation}
 \hat{\boldsymbol{\beta}}=(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\boldsymbol{Y}\,,\nonumber
@@ -396,6 +414,7 @@ with
 \textrm{Var}(\hat{\boldsymbol{\beta}})=(X^{\textrm{T}}X)^{-1}\sigma^{2}\,.\nonumber
 \end{equation}
 
+<!--
 ### Variance of a Prediction/Fitted Value
 A prediction of the mean response at point $\boldsymbol{x}_0$ (which may or may not be in the design) is
 
@@ -417,8 +436,8 @@ Similarly, we can find the variance-covariance matrix of the fitted values:
 $$
 \textrm{Var}(\hat{Y})=\textrm{Var}(X\hat{\boldsymbol{\beta}})=X(X^{\textrm{T}}X)^{-1}X^{\textrm{T}}\sigma^{2}\,.
 $$
-
-### Analysis of Variance and R$^{2}$ as Model Comparison {#anova-revision}
+-->
+### Analysis of Variance as Model Comparison {#anova-revision}
 
 To assess the goodness-of-fit of a model, we can use the residual sum of squares
 
@@ -451,7 +470,7 @@ $$
 \hat{\beta}_{0} = \bar{Y} = \frac{1}{n}\sum_{j=1}^n Y_{j}\,.
 $$
 
-How do we compare these models?
+<!--How do we compare these models?
 
 1. Ratio of residual sum of squares:
 \begin{align*}
@@ -472,8 +491,9 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
 
   - $R_a^2$ does not necessarily increase with $p$ (as we divide by degrees of freedom to adjust for complexity of the model).
 
+-->
 
-2.  Analysis of variance (ANOVA): An ANOVA table is compact way of presenting the results of (sequential) comparisons of nested models. You should be familiar with an ANOVA table of the following form.
+An Analysis of variance (ANOVA) table is compact way of presenting the results of (sequential) comparisons of nested models. You should be familiar with an ANOVA table of the following form.
 
 Table: (\#tab:anova) A standard ANOVA table.
 
@@ -530,8 +550,6 @@ is an unbiased estimator for $\sigma^{2}$, and
 
 This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 or MATH6174 notes).
 
-## Exercises
-
 1. [Adapted from @Morris2011] A classic and famous example of a simple hypothetical experiment was described by @Fisher1935:
 
     >A lady declares that by tasting a cup of tea made with milk she can discriminate whether the milk or the tea infusion was added first to the cup. We will consider the problem of designing an experiment by means of which this assertion can be tested. For this purpose let us first lay down a simple form of experiment with a view to studying its limitations and its characteristics, both those that same essential to the experimental method, when well developed, and those that are not essential but auxiliary.
@@ -540,8 +558,8 @@ This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 o
 
     a. Define the treatments in this experiment.
     b. Identify the units in this experiment.
-    c. How might a "physical appartatus" from a "game of chance" be used to perform the randomisation. Explain one example.
-    d. Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Foru are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?
+    c. How might a "physical appartatus" from a "game of chance" be used to perform the randomisation? Explain one example.
+    d. Suppose eight tea cups are available for this experiment but they are not identical. Instead they come from two sets. Four are made from heavy, thick porcelain; four from much lighter china. If each cup can only be used once, how might this fact be incorporated into the design of the experiment?
 
 <details>
 <summary><b>Solution</b></summary>
@@ -554,18 +572,18 @@ c. The simplest method here might be to select four black playing cards and four
 
     We could of course also use `R`.
 
-    ```{r tea-randomise}
-    sample(rep(c("Milk first", "Tea first"), c(4, 4)), size = 8, replace = F)
-    ```
+```{r tea-randomise}
+sample(rep(c("Milk first", "Tea first"), c(4, 4)), size = 8, replace = F)
+```
 
 d. Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.
 
-    ```{r tea-blocks}
+```{r tea-blocks}
     # block 1
     sample(rep(c("Milk first", "Tea first"), c(2, 2)), size = 4, replace = F)
     # block 2
     sample(rep(c("Milk first", "Tea first"), c(2, 2)), size = 4, replace = F)
-    ```
+```
 
 </details>
 
@@ -709,7 +727,7 @@ a. To compare model (i) with the null model, we compute
 
 By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regression SS.
 
-a. The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
+c. The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
 
     ia. $\bY = X_2\bbeta_2 + \bvarepsilon$,  
 
