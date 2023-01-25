@@ -23,14 +23,14 @@ In this course we consider only *intervention* experiments, in which some aspect
 People have been designing experiments for as long as they have been exploring the natural world. Collecting empirical evidence is key for scientific development, as described in terms of clinical trials by [xkcd](https://xkcd.com/2530/):
 
 
- ```{r xkcd-clinical-trials, echo = F, out.width = '75%', fig.align = 'center'}
+```{r xkcd-clinical-trials, echo = F, out.width = '75%', fig.align = 'center'}
  if (knitr::is_html_output())
  {
    knitr::include_graphics("https://imgs.xkcd.com/comics/clinical_trials.png")
  } else {
    knitr::include_url("https://imgs.xkcd.com/comics/clinical_trials.png")
  }
-  ```
+```
  
 Some notable milestones in the history of the design of experiments include:
 
@@ -49,9 +49,9 @@ See @LB2020 for further history, anecdotes and examples, especially from psychol
 
 Figure \@ref(fig:broadbalk) shows the [Broadbalk](http://www.era.rothamsted.ac.uk/Broadbalk) agricultural field experiment at Rothamsted, one of the longest continuous running experiments in the world, which is testing the impact of different manures and fertilizers on the growth of winter wheat. 
 
- ```{r broadbalk, echo = F, out.width = '75%', fig.align = 'center', fig.cap = 'The Broadbalk experiment, Rothamsted (photograph taken 2016)'}
+```{r broadbalk, echo = F, out.width = '75%', fig.align = 'center', fig.cap = 'The Broadbalk experiment, Rothamsted (photograph taken 2016)'}
  knitr::include_graphics("figures/broadbalk.jpg")
- ```
+```
 
 
 <!--

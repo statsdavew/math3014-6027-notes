@@ -340,7 +340,8 @@ An experiment-wise error rate of `r 1 - (1 - alpha)^6` is substantially greater 
  } else {
    knitr::include_url("https://imgs.xkcd.com/comics/significant.png")
  }
-  ```
+```
+
 ```{r type-I-jb}
 alpha <- 0.05
 1 - (1 - alpha)^20
