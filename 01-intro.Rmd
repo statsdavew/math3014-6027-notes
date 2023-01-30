@@ -305,7 +305,7 @@ Some reasons experiments are performed:
 4. Optimisation
 
   - finding settings of variables that lead to maximum or minimum response
-  - typically use response surface methods and sequential ``hill climbing'' strategy
+  - typically use response surface methods and sequential "hill climbing" strategy
 
 In this module, we will focus on **treatment comparison** (Chapters 2 and 3) and **factor screening** (Chapters 4, 5 and 6).
 
@@ -346,7 +346,7 @@ $$
 $$
 <!--- Design point: factor level applied to $j$th subject; $x_{j}=\pm 1$-->
 - Treatment or support point: Two treatments or support points
-- Experimental unit: Subject (person, animal, plot of land, \ldots).
+- Experimental unit: Subject (person, animal, plot of land, $\ldots$).
 
 ## Principles of experimentation {#principles}
 
@@ -549,6 +549,8 @@ is an unbiased estimator for $\sigma^{2}$, and
 \end{equation*}
 
 This is a Chi-squared distribution with $n-p$ degrees of freedom (see MATH2010 or MATH6174 notes).
+
+## Exercises
 
 1. [Adapted from @Morris2011] A classic and famous example of a simple hypothetical experiment was described by @Fisher1935:
 
