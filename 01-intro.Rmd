@@ -273,8 +273,8 @@ In Figure \@ref(fig:simple-efficiency) below, we plot this efficiency for Exampl
 (ref:foo) Efficiencies for designs for Example \@ref(exm:motivation) with different numbers, $n_1$, of subjects assigned to treatment 1 when the total number of subjects is $n=100$.
 
 ```{r simple-efficiency, fig.cap = '(ref:foo)'}
-n <- 100 
-eff <- function(n1) 4 * n1 * (n - n1) / n^2
+n <- 100
+eff <- function(n2) 4 * n2 * (n - n2) / n^2
 curve(eff, from = 0, to = n, ylab = "Eff", xlab = expression(n[1]))
 ```
 
@@ -340,8 +340,8 @@ In Example \@ref(exm:motivation) (comparing two treatments):
 - Levels
 $$
 \begin{array}{ll}
-\textrm{treatment 1}&x =-1\\
-\textrm{treatment 2}&x =+1
+\textrm{treatment 1}&x =0\\
+\textrm{treatment 2}&x =1
 \end{array}
 $$
 <!--- Design point: factor level applied to $j$th subject; $x_{j}=\pm 1$-->
