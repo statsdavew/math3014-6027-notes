@@ -407,7 +407,7 @@ It is quite common that although the total number, $n$, of runs in the experimen
 Assume interest lies in estimating the set of $p$ contrasts $\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}$, with $\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})$. One useful measure of the overall quality of the estimators of these $p$ contrasts is the average variance, given by
 
 $$
-\sigma^2\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+\frac{\sigma^2}{t}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
 $$
 So we will minimise this variance by allocating larger values of $n_i$ to the treatments with correspondingly larger values of the contrast coefficients $c_{li}$. Therefore an approach to optimal allocation is to choose $\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}$ so as to
 
