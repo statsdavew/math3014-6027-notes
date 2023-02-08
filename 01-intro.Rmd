@@ -462,7 +462,7 @@ $$
 i.e. $Y_{i}\sim N(\beta_{0},\sigma^{2})$. The residual sum of squares for the null model is given by
 
 $$
-\textrm{RSS}(\textrm{null}) = \boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - m\bar{Y}^{2}\,,
+\textrm{RSS}(\textrm{null}) = \boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - n\bar{Y}^{2}\,,
 $$
 as
 
