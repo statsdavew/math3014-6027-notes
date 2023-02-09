@@ -251,7 +251,7 @@ block3.frf2 <- FrF2::FrF2(nruns = 2^8, nfactors = 8,
 ```
 
 ## Analysis of a confounded factorial design
-We can analyse a confounded design by by combining ideas from Chapters \@ref(blocking) and \@ref(factorial). The most straightforward approach is to add a block effect to the regression model introduced in Section \@ref(fac-reg). Let $X$ be the $n\times d$ model matrix with columns corresponding to the $d = 2^f - b$ unscaled contrast coefficients for the estimable factorial effects (i.e. those **not** confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the $X$ matrix cannot columns corresponding to these effects. We write a block-regression model as 
+We can analyse a confounded design by by combining ideas from Chapters \@ref(blocking) and \@ref(factorial). The most straightforward approach is to add a block effect to the regression model introduced in Section \@ref(fac-reg). Let $X$ be the $n\times d$ model matrix with columns corresponding to the $d = 2^f - b$ unscaled contrast coefficients for the estimable factorial effects (i.e. those **not** confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the $X$ matrix cannot include columns corresponding to these effects. We write a block-regression model as 
 
 $$
 \bY = \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + + Z\boldsymbol{\gamma} + \boldsymbol{\varepsilon}\,,
