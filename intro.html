@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2023-02-09" />
+<meta name="date" content="2023-02-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -781,7 +781,7 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">replace =</span> F)</span></code></pre></div>
 <pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot;
-## [6] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
+## [6] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot;</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</li>
 </ol>
@@ -790,7 +790,7 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
 <pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 2</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Consider the linear model</p>
@@ -851,7 +851,7 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <li><p>Consider the two nested linear models</p>
 <ol style="list-style-type: lower-roman">
 <li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\)</span>,</p></li>
-<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
 </ol>
 <p>with <span class="math inline">\(\varepsilon_j\sim N(0, \sigma^2)\)</span>, and <span class="math inline">\(\varepsilon_{j}\)</span>, <span class="math inline">\(\varepsilon_{k}\)</span> independent <span class="math inline">\((\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^2))\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
