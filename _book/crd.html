@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-02-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -718,7 +718,7 @@ which can be achieved either by increasing <span class="math inline">\(n\)</span
 <p>It is quite common that although the total number, <span class="math inline">\(n\)</span>, of runs in the experiment may be fixed, the number <span class="math inline">\(n_1, n_2, \ldots, n_t\)</span> applied to the different treatments is under the experimenter’s control. Choosing <span class="math inline">\(n_1, n_2\)</span> subject to <span class="math inline">\(n_1+n_2 = n\)</span> was the first <strong>optimal design</strong> problem we encountered in Chapter <a href="intro.html#intro">1</a>.</p>
 <p>Assume interest lies in estimating the set of <span class="math inline">\(p\)</span> contrasts <span class="math inline">\(\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}\)</span>, with <span class="math inline">\(\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})\)</span>. One useful measure of the overall quality of the estimators of these <span class="math inline">\(p\)</span> contrasts is the average variance, given by</p>
 <p><span class="math display">\[
-\sigma^2\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+\frac{\sigma^2}{t}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
 \]</span>
 So we will minimise this variance by allocating larger values of <span class="math inline">\(n_i\)</span> to the treatments with correspondingly larger values of the contrast coefficients <span class="math inline">\(c_{li}\)</span>. Therefore an approach to optimal allocation is to choose <span class="math inline">\(\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}\)</span> so as to</p>
 <p><span class="math display" id="eq:opt-all">\[\begin{equation}

@@ -660,7 +660,7 @@ a. As $\bY\sim N\left(X\bbeta, I_N\sigma^2\right)$, the likelihood is given by
 
     (i) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j$, or $\bY = X_1\bbeta_1 + \bvarepsilon$,  
 
-    (ii) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j$, or $\bY = X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon$
+    (ii) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j$, or $\bY = X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon$
 
 
     with $\varepsilon_j\sim N(0, \sigma^2)$, and $\varepsilon_{j}$, $\varepsilon_{k}$ independent $(\bvarepsilon\sim N(\boldsymbol{0},I_n\sigma^2))$.

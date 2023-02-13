@@ -117,7 +117,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2023-01-30}
+\date{2023-02-13}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -450,8 +450,8 @@ In Figure \ref{fig:simple-efficiency} below, we plot this efficiency for Example
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100} 
-\NormalTok{eff }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n1) }\DecValTok{4} \SpecialCharTok{*}\NormalTok{ n1 }\SpecialCharTok{*}\NormalTok{ (n }\SpecialCharTok{{-}}\NormalTok{ n1) }\SpecialCharTok{/}\NormalTok{ n}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{eff }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n2) }\DecValTok{4} \SpecialCharTok{*}\NormalTok{ n2 }\SpecialCharTok{*}\NormalTok{ (n }\SpecialCharTok{{-}}\NormalTok{ n2) }\SpecialCharTok{/}\NormalTok{ n}\SpecialCharTok{\^{}}\DecValTok{2}
 \FunctionTok{curve}\NormalTok{(eff, }\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =}\NormalTok{ n, }\AttributeTok{ylab =} \StringTok{"Eff"}\NormalTok{, }\AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(n[}\DecValTok{1}\NormalTok{]))}
 \end{Highlighting}
 \end{Shaded}
@@ -571,8 +571,8 @@ In Example \ref{exm:motivation} (comparing two treatments):
   Levels
   \[
   \begin{array}{ll}
-  \textrm{treatment 1}&x =-1\\
-  \textrm{treatment 2}&x =+1
+  \textrm{treatment 1}&x =0\\
+  \textrm{treatment 2}&x =1
   \end{array}
   \]
 \item
@@ -691,7 +691,7 @@ Y_{j}=\beta_{0}+\varepsilon_{j}\,,
 i.e.~\(Y_{i}\sim N(\beta_{0},\sigma^{2})\). The residual sum of squares for the null model is given by
 
 \[
-\textrm{RSS}(\textrm{null}) = \boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - m\bar{Y}^{2}\,,
+\textrm{RSS}(\textrm{null}) = \boldsymbol{Y}^{\textrm{T}}\boldsymbol{Y} - n\bar{Y}^{2}\,,
 \]
 as
 
@@ -832,8 +832,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Milk first" "Tea first"  "Tea first" 
-## [6] "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Tea first" 
+## [6] "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -852,7 +852,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -863,7 +863,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -960,7 +960,7 @@ Solution
   \item
     \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\), or \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\),
   \item
-    \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_2}x_{p_2j} + \varepsilon_j\), or \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)
+    \(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j\), or \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)
   \end{enumerate}
 
   with \(\varepsilon_j\sim N(0, \sigma^2)\), and \(\varepsilon_{j}\), \(\varepsilon_{k}\) independent \((\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^2))\).
@@ -1769,7 +1769,7 @@ It is quite common that although the total number, \(n\), of runs in the experim
 Assume interest lies in estimating the set of \(p\) contrasts \(\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}\), with \(\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})\). One useful measure of the overall quality of the estimators of these \(p\) contrasts is the average variance, given by
 
 \[
-\sigma^2\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+\frac{\sigma^2}{t}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
 \]
 So we will minimise this variance by allocating larger values of \(n_i\) to the treatments with correspondingly larger values of the contrast coefficients \(c_{li}\). Therefore an approach to optimal allocation is to choose \(\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}\) so as to
 
@@ -3085,8 +3085,8 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    0    1    1
-## [2,]    0    1    1    1
+## [1,]    0    1    1    1
+## [2,]    1    0    1    1
 ## [3,]    1    1    0    1
 ## [4,]    1    1    1    0
 \end{verbatim}
@@ -3102,14 +3102,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    1    0    1    1    0    0    0     1     1     0     0     1
+## [1,]    0    1    0    1    1    0    1    1    1     0     1     0     0     0
 ## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    0    1    0    0    1    1    1    0    1     0     0     1     1     0
-## [4,]    0    1    1    1    0    0    1    1    0     0     0     0     1     1
-## [5,]    1    1    0    1    0    0    1    0    0     1     1     1     0     0
-## [6,]    1    0    1    0    0    1    1    1    1     1     0     0     0     0
-## [7,]    1    0    0    1    1    1    0    1    0     0     1     0     1     0
-## [8,]    1    0    1    1    1    0    0    0    1     0     0     1     0     1
+## [3,]    0    0    0    1    1    1    1    0    0     0     0     1     1     1
+## [4,]    0    1    1    1    0    1    0    1    0     1     0     0     0     1
+## [5,]    1    1    1    1    0    0    0    0    0     0     1     1     1     0
+## [6,]    1    1    0    0    0    1    1    0    1     1     0     1     0     0
+## [7,]    1    0    1    0    1    0    1    0    0     1     1     0     0     1
+## [8,]    1    0    1    0    1    1    0    1    1     0     0     0     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4623,35 +4623,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0002 & 0.0015\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0047 & 0.0401\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0035 & 0.0349\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0065 & 0.0525\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0054 & 0.0529\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0086 & 0.0682\\
+time & 2.5675 & 0.66 & 3.890 & 0.0074 & 0.0686\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0112 & 0.0900\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0105 & 0.0964\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0112 & 0.0900\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0105 & 0.0964\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0143 & 0.1177\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0131 & 0.1200\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3047 & 0.9970\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3040 & 0.9940\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4311 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4304 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5395 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7341 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7300 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7421 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7372 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7866 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7811 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7893 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7839 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9675 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9654 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5217,7 +5217,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7264 and 5.1647, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7324 and 5.1976, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6077,7 +6077,7 @@ the \texttt{blocks} argument
 \hypertarget{analysis-of-a-confounded-factorial-design}{%
 \section{Analysis of a confounded factorial design}\label{analysis-of-a-confounded-factorial-design}}
 
-We can analyse a confounded design by by combining ideas from Chapters \ref{blocking} and \ref{factorial}. The most straightforward approach is to add a block effect to the regression model introduced in Section \ref{fac-reg}. Let \(X\) be the \(n\times d\) model matrix with columns corresponding to the \(d = 2^f - b\) unscaled contrast coefficients for the estimable factorial effects (i.e.~those \textbf{not} confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the \(X\) matrix cannot columns corresponding to these effects. We write a block-regression model as
+We can analyse a confounded design by by combining ideas from Chapters \ref{blocking} and \ref{factorial}. The most straightforward approach is to add a block effect to the regression model introduced in Section \ref{fac-reg}. Let \(X\) be the \(n\times d\) model matrix with columns corresponding to the \(d = 2^f - b\) unscaled contrast coefficients for the estimable factorial effects (i.e.~those \textbf{not} confounded with blocks). As no factorial effects that have been confounded with blocks are estimable, the \(X\) matrix cannot include columns corresponding to these effects. We write a block-regression model as
 
 \[
 \boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X\boldsymbol{\beta} + + Z\boldsymbol{\gamma} + \boldsymbol{\varepsilon}\,,
@@ -6128,10 +6128,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##          [,1]
-## A     3.99786
-## B     0.01404
-## C     3.28232
-## A:B:C 0.56365
+## A     4.08167
+## B     0.06888
+## C     2.70793
+## A:B:C 0.09330
 \end{verbatim}
 
 \begin{Shaded}
@@ -6147,11 +6147,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  240.5    80.2     NaN    NaN
-## A          1  127.9   127.9     NaN    NaN
+## Block      3  259.0    86.3     NaN    NaN
+## A          1  133.3   133.3     NaN    NaN
 ## B          1    0.0     0.0     NaN    NaN
-## C          1   86.2    86.2     NaN    NaN
-## A:B:C      1    2.5     2.5     NaN    NaN
+## C          1   58.7    58.7     NaN    NaN
+## A:B:C      1    0.1     0.1     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6163,7 +6163,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-## 3.99786 0.01404 3.28232 0.56365
+## 4.08167 0.06888 2.70793 0.09330
 \end{verbatim}
 
 \begin{Shaded}
@@ -6173,8 +6173,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-## 7.99573 0.02809 6.56465 1.12730
+##      A      B      C  A:B:C 
+## 8.1633 0.1378 5.4159 0.1866
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6191,13 +6191,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  127.9   127.9     NaN    NaN
+## A          1  133.3   133.3     NaN    NaN
 ## B          1    0.0     0.0     NaN    NaN
-## C          1   86.2    86.2     NaN    NaN
-## A:B        1    5.5     5.5     NaN    NaN
-## A:C        1  134.5   134.5     NaN    NaN
-## B:C        1  100.5   100.5     NaN    NaN
-## A:B:C      1    2.5     2.5     NaN    NaN
+## C          1   58.7    58.7     NaN    NaN
+## A:B        1   18.5    18.5     NaN    NaN
+## A:C        1  111.1   111.1     NaN    NaN
+## B:C        1  129.4   129.4     NaN    NaN
+## A:B:C      1    0.1     0.1     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6209,9 +6209,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##     4.94472     3.99786     0.01404     3.28232     0.82575     4.10060 
+##     5.09076     4.08167     0.06888     2.70793     1.52120     3.72645 
 ##         B:C       A:B:C 
-##     3.54410     0.56365
+##     4.02224     0.09330
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6265,14 +6265,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1  1  1  1 -1
-## 18      3 -1 -1 -1 -1 -1
-## 19      3 -1  1 -1  1  1
+## 17      3 -1 -1  1  1 -1
+## 18      3  1  1  1  1 -1
+## 19      3  1  1 -1 -1 -1
 ## 20      3  1 -1 -1  1  1
-## 21      3  1  1 -1 -1 -1
-## 22      3  1 -1  1 -1  1
+## 21      3 -1  1 -1  1  1
+## 22      3 -1 -1 -1 -1 -1
 ## 23      3 -1  1  1 -1  1
-## 24      3 -1 -1  1  1 -1
+## 24      3  1 -1  1 -1  1
 \end{verbatim}
 
 \begin{enumerate}
