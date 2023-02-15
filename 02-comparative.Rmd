@@ -153,7 +153,7 @@ X_{2|1} & = (I_n - H_1)X_2 \nonumber\\
 
 That is, every column of $X_2$ has been adjusted by the subtraction of the column mean from each entry^[Often called "column centred"]. Also notice that each row of $X_{2|1}$ has a row-sum equal to zero ($= 1 - \sum_{i=1}^tn_t/n$). Hence, $X_{2|1}$ is not of full column rank, and so the reduced normal equations do not have a unique solution^[If we recalled the material on "dummy" variables from MATH2010 or STAT6123, we would already have realised this.].
 
-Although \@ref(eq:rne), and hence, \@ref(eq:crd-ls), have no unique solution^[That is, for any two solutions $\tilde{\boldsymbol{\beta}}_1$ and $\tilde{\boldsymbol{\beta}}_2$, $X\tilde{\boldsymbol{\beta}}_1 = \tilde{\boldsymbol{\beta}}_1$.], it can be shown that both $\widehat{X_{2|1}\boldsymbol{\tau}}$ and $\widehat{X\boldsymbol{\beta}}$ have unique solutions. Hence fitted values $\hat{\bY} = \widehat{X\boldsymbol{\beta}}$ and the residual sum of squares
+Although \@ref(eq:rne), and hence, \@ref(eq:crd-ls), have no unique solution^[That is, for any two solutions $\tilde{\boldsymbol{\beta}}_1$ and $\tilde{\boldsymbol{\beta}}_2$, $X\tilde{\boldsymbol{\beta}}_1 = X\tilde{\boldsymbol{\beta}}_2$.], it can be shown that both $\widehat{X_{2|1}\boldsymbol{\tau}}$ and $\widehat{X\boldsymbol{\beta}}$ have unique solutions. Hence fitted values $\hat{\bY} = \widehat{X\boldsymbol{\beta}}$ and the residual sum of squares
 
 $$
 RSS = \left(\bY - \widehat{X\boldsymbol{\beta}}\right)^{\mathrm{T}}\left(\bY - \widehat{X\boldsymbol{\beta}}\right)
