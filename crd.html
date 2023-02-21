@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2023-02-15" />
+<meta name="date" content="2023-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -502,7 +502,7 @@ That is, we estimate the contrast in the treatment effects by the corresponding 
 \]</span>
 Confidence intervals and hypothesis tests for <span class="math inline">\(\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}\)</span> can be constructed/conducted using this distribution, e.g.</p>
 <ul>
-<li>a <span class="math inline">\(100(1-\frac{\alpha}{2})\)</span>% confidence interval:
+<li>a <span class="math inline">\(100(1-\alpha)\)</span>% confidence interval:
 <span class="math display">\[
 \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
 \]</span></li>
@@ -514,7 +514,7 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 \end{equation}\]</span></p>
 <p>is the estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <ul>
-<li>the hypothesis <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\)</span> against the two-sided alternative <span class="math inline">\(H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\)</span> is rejected using a test of with confidence level <span class="math inline">\(1-\alpha/2\)</span> if</li>
+<li>the hypothesis <span class="math inline">\(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\)</span> against the two-sided alternative <span class="math inline">\(H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\)</span> is rejected using a test of with confidence level <span class="math inline">\(1-\alpha\)</span> if</li>
 </ul>
 <p><span class="math display">\[
 \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} &gt; t_{n-t, 1-\frac{\alpha}{2}}\,.
@@ -718,7 +718,7 @@ which can be achieved either by increasing <span class="math inline">\(n\)</span
 <p>It is quite common that although the total number, <span class="math inline">\(n\)</span>, of runs in the experiment may be fixed, the number <span class="math inline">\(n_1, n_2, \ldots, n_t\)</span> applied to the different treatments is under the experimenter’s control. Choosing <span class="math inline">\(n_1, n_2\)</span> subject to <span class="math inline">\(n_1+n_2 = n\)</span> was the first <strong>optimal design</strong> problem we encountered in Chapter <a href="intro.html#intro">1</a>.</p>
 <p>Assume interest lies in estimating the set of <span class="math inline">\(p\)</span> contrasts <span class="math inline">\(\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}\)</span>, with <span class="math inline">\(\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})\)</span>. One useful measure of the overall quality of the estimators of these <span class="math inline">\(p\)</span> contrasts is the average variance, given by</p>
 <p><span class="math display">\[
-\frac{\sigma^2}{t}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+\frac{\sigma^2}{p}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
 \]</span>
 So we will minimise this variance by allocating larger values of <span class="math inline">\(n_i\)</span> to the treatments with correspondingly larger values of the contrast coefficients <span class="math inline">\(c_{li}\)</span>. Therefore an approach to optimal allocation is to choose <span class="math inline">\(\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}\)</span> so as to</p>
 <p><span class="math display" id="eq:opt-all">\[\begin{equation}
@@ -1355,7 +1355,7 @@ Wu, C. F. J. and Hamada, M. (2009) <em>Experiments: Planning, Analysis, and Para
 <li id="fn12"><p>Recall that although <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\boldsymbol{\tau}\)</span> are not uniquely estimable, fitted values <span class="math inline">\(\hat{y}_i = \hat{\mu} + \hat{\tau}_i\)</span> <strong>are</strong>, and hence it does not matter which dummy variables we use in <code>lm</code>.<a href="crd.html#fnref12" class="footnote-back">↩︎</a></p></li>
 <li id="fn13"><p>They aren’t, but it simplifies the maths!<a href="crd.html#fnref13" class="footnote-back">↩︎</a></p></li>
 <li id="fn14"><p>So the experiment-wise type I error will actually be less than the prescribed <span class="math inline">\(\alpha\)</span><a href="crd.html#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p>Given two independent samples <span class="math inline">\(u_1, \ldots, u_l\)</span> and <span class="math inline">\(v_1,\ldots,v_m\)</span> from the same distribution, the studentised range distribution is the distribution of <span class="math inline">\(\frac{R}{\sqrt{2}S}\)</span>, where <span class="math inline">\(R = u_{max}-u_{min}\)</span> is the range of the first sample, and <span class="math inline">\(S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}\)</span> be the sample standard deviation of the second sample.<a href="crd.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>Given <span class="math inline">\(t\)</span> independent samples of size <span class="math inline">\(n\)</span> from the same normal distribution, the studentised range distribution is the distribution of <span class="math inline">\(\frac{R}{S/\sqrt{n}}\)</span>, where <span class="math inline">\(R = \bar{y}_{max}-\bar{y}_{min}\)</span> is the difference between the largest and smallest sample means, and <span class="math inline">\(S = \sqrt{\frac{1}{tn-1}\sum_{i=1}^t\sum_{j=1}^n(y_{ij} - \bar{y})^2}\)</span> is the pooled sample standard deviation.<a href="crd.html#fnref15" class="footnote-back">↩︎</a></p></li>
 <li id="fn16"><p>Factors are variables in <code>R</code> which take on a limited number of different values (e.g. categorical variables). We need to define a categorical variable, like <code>batch</code> as a <code>factor</code> to ensure they are treated correctly by functions such as <code>lm</code>.<a href="crd.html#fnref16" class="footnote-back">↩︎</a></p></li>
 <li id="fn17"><p>We would anticipate 95% of the standardised residuals to lie in [-1.96, 1.96], as they will follow a standard normal distribution if the model assumptions are correct.<a href="crd.html#fnref17" class="footnote-back">↩︎</a></p></li>
 </ol>
