@@ -249,7 +249,7 @@ $$
 $$
 Confidence intervals and hypothesis tests for $\boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau}$ can be constructed/conducted using this distribution, e.g.
 
- - a $100(1-\frac{\alpha}{2})$% confidence interval:
+ - a $100(1-\alpha)$% confidence interval:
  $$
  \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
  $$
@@ -263,7 +263,7 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 
 is the estimate of $\sigma^2$.
  
- - the hypothesis $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$ against the two-sided alternative $H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0$ is rejected using a test of with confidence level $1-\alpha/2$ if 
+ - the hypothesis $H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0$ against the two-sided alternative $H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0$ is rejected using a test of with confidence level $1-\alpha$ if 
  
  $$
  \frac{|\sum_{i=1}^tc_i\bar{y}_{i.}|}{s\sqrt{\sum_{i=1}^tc_i^2/n_i}} > t_{n-t, 1-\frac{\alpha}{2}}\,.
@@ -367,7 +367,7 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &    P\left
 
     Now, only one comparison is significant at an experiment-wise type I error rate of $\alpha = 0.05$ (operators 2 and 4).
 
-1. **Tukey's method**. An alternative approach that gives an exact experiment-wise error rate of $100\alpha$% compares the $t$ statistic to a critical value from the studentised range distribution^[Given two independent samples $u_1, \ldots, u_l$ and $v_1,\ldots,v_m$ from the same distribution, the studentised range distribution is the distribution of $\frac{R}{\sqrt{2}S}$, where $R = u_{max}-u_{min}$ is the range of the first sample, and $S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}$ be the sample standard deviation of the second sample.], given by $\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}$ with $q_{t, n-t, 1-\alpha}$ the $1-\alpha$ quantile from the studentised range distribution (available in `R` as `qtukey`). 
+1. **Tukey's method**. An alternative approach that gives an exact experiment-wise error rate of $100\alpha$% compares the $t$ statistic to a critical value from the studentised range distribution^[Given $t$ independent samples of size $n$ from the same normal distribution, the studentised range distribution is the distribution of $\frac{R}{S/\sqrt{n}}$, where $R = \bar{y}_{max}-\bar{y}_{min}$ is the difference between the largest and smallest sample means, and $S = \sqrt{\frac{1}{tn-1}\sum_{i=1}^t\sum_{j=1}^n(y_{ij} - \bar{y})^2}$ is the pooled sample standard deviation.], given by $\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}$ with $q_{t, n-t, 1-\alpha}$ the $1-\alpha$ quantile from the studentised range distribution (available in `R` as `qtukey`). 
 
     For Example \@ref(exm:one-way):
 
@@ -407,7 +407,7 @@ It is quite common that although the total number, $n$, of runs in the experimen
 Assume interest lies in estimating the set of $p$ contrasts $\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}$, with $\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})$. One useful measure of the overall quality of the estimators of these $p$ contrasts is the average variance, given by
 
 $$
-\frac{\sigma^2}{t}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+\frac{\sigma^2}{p}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
 $$
 So we will minimise this variance by allocating larger values of $n_i$ to the treatments with correspondingly larger values of the contrast coefficients $c_{li}$. Therefore an approach to optimal allocation is to choose $\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}$ so as to
 

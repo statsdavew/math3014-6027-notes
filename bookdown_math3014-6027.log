@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.31)  13 FEB 2023 10:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.31)  21 FEB 2023 10:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -613,9 +613,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.1.5.
                    \relax 
 l.746 \end{align}
                   [16] [17] [18]
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 837--837
-[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "T
-ea first"[] 
+Overfull \hbox (27.74892pt too wide) in paragraph at lines 837--837
+[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "M
+ilk first"[] 
  []
 
 [19]
@@ -890,50 +890,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [1,]    0    1    0    1    1    0    1    1    1     0   
-  1     0     0     0[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    0    1    1     1   
+[]\T1/lmtt/m/n/10 ## [1,]    0    0    1    1    0    0    1    0    0     0   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    1    1    1    1    0    0     0   
+[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    0    1    1     1   
   0     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [4,]    0    1    1    1    0    1    0    1    0     1   
+[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    1    0    1    1    1    1     1   
+  1     0     0     0[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
+[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    1    0    1    0     0   
   0     0     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    1    0    0    0    0    0     0   
-  1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [5,]    0    1    0    0    1    1    0    0    0     1   
+  1     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [6,]    1    1    0    0    0    1    1    0    1     1   
+[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    1    1    0    0    0    1     1   
   0     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [7,]    1    0    1    0    1    0    1    0    0     1   
-  1     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [7,]    1    1    1    0    0    1    1    0    1     0   
+  0     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3113--3113
-[]\T1/lmtt/m/n/10 ## [8,]    1    0    1    0    1    1    0    1    1     0   
-  0     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    1    1    0    0    1    0    1    1    0     0   
+  1     1     0     0[] 
  []
 
 
@@ -1341,8 +1341,8 @@ B         A:C[]
 
 
 Overfull \hbox (43.49887pt too wide) in paragraph at lines 6215--6215
-[]\T1/lmtt/m/n/10 ##     5.09076     4.08167     0.06888     2.70793     1.5212
-0     3.72645[] 
+[]\T1/lmtt/m/n/10 ##     4.75364     3.77154     0.09046     2.93718     0.9512
+9     4.11383[] 
  []
 
 [133]
@@ -1583,11 +1583,11 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 15966 strings out of 476065
- 258719 string characters out of 5791022
+ 15962 strings out of 476065
+ 258683 string characters out of 5791022
  1891305 words of memory out of 5000000
  34932 multiletter control sequences out of 15000+600000
- 641365 words of font info for 314 fonts, out of 8000000 for 9000
+ 641200 words of font info for 312 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  77i,20n,81p,1019b,750s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
@@ -1627,7 +1627,7 @@ ype1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publi
 c/lm/lmtt8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtti1
 0.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (165 pages, 3869249 bytes).
+Output written on bookdown_math3014-6027.pdf (165 pages, 3868978 bytes).
 PDF statistics:
  2277 PDF objects out of 2487 (max. 8388607)
  1946 compressed objects within 20 object streams

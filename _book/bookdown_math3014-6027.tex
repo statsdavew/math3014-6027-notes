@@ -117,7 +117,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2023-02-13}
+\date{2023-02-21}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -832,8 +832,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Milk first"
+## [6] "Tea first"  "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -852,7 +852,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1324,7 +1324,7 @@ X_{2|1} & = (I_n - H_1)X_2 \nonumber\\
 
 That is, every column of \(X_2\) has been adjusted by the subtraction of the column mean from each entry\footnote{Often called ``column centred''}. Also notice that each row of \(X_{2|1}\) has a row-sum equal to zero (\(= 1 - \sum_{i=1}^tn_t/n\)). Hence, \(X_{2|1}\) is not of full column rank, and so the reduced normal equations do not have a unique solution\footnote{If we recalled the material on ``dummy'' variables from MATH2010 or STAT6123, we would already have realised this.}.
 
-Although \eqref{eq:rne}, and hence, \eqref{eq:crd-ls}, have no unique solution\footnote{That is, for any two solutions \(\tilde{\boldsymbol{\beta}}_1\) and \(\tilde{\boldsymbol{\beta}}_2\), \(X\tilde{\boldsymbol{\beta}}_1 = \tilde{\boldsymbol{\beta}}_1\).}, it can be shown that both \(\widehat{X_{2|1}\boldsymbol{\tau}}\) and \(\widehat{X\boldsymbol{\beta}}\) have unique solutions. Hence fitted values \(\hat{\boldsymbol{y}} = \widehat{X\boldsymbol{\beta}}\) and the residual sum of squares
+Although \eqref{eq:rne}, and hence, \eqref{eq:crd-ls}, have no unique solution\footnote{That is, for any two solutions \(\tilde{\boldsymbol{\beta}}_1\) and \(\tilde{\boldsymbol{\beta}}_2\), \(X\tilde{\boldsymbol{\beta}}_1 = X\tilde{\boldsymbol{\beta}}_2\).}, it can be shown that both \(\widehat{X_{2|1}\boldsymbol{\tau}}\) and \(\widehat{X\boldsymbol{\beta}}\) have unique solutions. Hence fitted values \(\hat{\boldsymbol{y}} = \widehat{X\boldsymbol{\beta}}\) and the residual sum of squares
 
 \[
 RSS = \left(\boldsymbol{y}- \widehat{X\boldsymbol{\beta}}\right)^{\mathrm{T}}\left(\boldsymbol{y}- \widehat{X\boldsymbol{\beta}}\right)
@@ -1446,7 +1446,7 @@ Confidence intervals and hypothesis tests for \(\boldsymbol{c}^{\mathrm{T}}\bold
 \begin{itemize}
 \tightlist
 \item
-  a \(100(1-\frac{\alpha}{2})\)\% confidence interval:
+  a \(100(1-\alpha)\)\% confidence interval:
   \[
    \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \in \sum_{i=1}^tc_i\bar{y}_{i.} \pm t_{n-t, 1-\frac{\alpha}{2}}s\sqrt{\sum_{i=1}^tc_i^2/n_i}\,,
    \]
@@ -1464,7 +1464,7 @@ is the estimate of \(\sigma^2\).
 \begin{itemize}
 \tightlist
 \item
-  the hypothesis \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\) against the two-sided alternative \(H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\) is rejected using a test of with confidence level \(1-\alpha/2\) if
+  the hypothesis \(H_0: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} = 0\) against the two-sided alternative \(H_1: \boldsymbol{c}^{\mathrm{T}}\boldsymbol{\tau} \ne 0\) is rejected using a test of with confidence level \(1-\alpha\) if
 \end{itemize}
 
 \[
@@ -1693,7 +1693,7 @@ Therefore it is usually desirable to maintain some control of the experiment-wis
 
   Now, only one comparison is significant at an experiment-wise type I error rate of \(\alpha = 0.05\) (operators 2 and 4).
 \item
-  \textbf{Tukey's method}. An alternative approach that gives an exact experiment-wise error rate of \(100\alpha\)\% compares the \(t\) statistic to a critical value from the studentised range distribution\footnote{Given two independent samples \(u_1, \ldots, u_l\) and \(v_1,\ldots,v_m\) from the same distribution, the studentised range distribution is the distribution of \(\frac{R}{\sqrt{2}S}\), where \(R = u_{max}-u_{min}\) is the range of the first sample, and \(S = \sqrt{\frac{1}{m-1}\sum_{i=1}^m(v_i - \bar{v})^2}\) be the sample standard deviation of the second sample.}, given by \(\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}\) with \(q_{t, n-t, 1-\alpha}\) the \(1-\alpha\) quantile from the studentised range distribution (available in \texttt{R} as \texttt{qtukey}).
+  \textbf{Tukey's method}. An alternative approach that gives an exact experiment-wise error rate of \(100\alpha\)\% compares the \(t\) statistic to a critical value from the studentised range distribution\footnote{Given \(t\) independent samples of size \(n\) from the same normal distribution, the studentised range distribution is the distribution of \(\frac{R}{S/\sqrt{n}}\), where \(R = \bar{y}_{max}-\bar{y}_{min}\) is the difference between the largest and smallest sample means, and \(S = \sqrt{\frac{1}{tn-1}\sum_{i=1}^t\sum_{j=1}^n(y_{ij} - \bar{y})^2}\) is the pooled sample standard deviation.}, given by \(\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}\) with \(q_{t, n-t, 1-\alpha}\) the \(1-\alpha\) quantile from the studentised range distribution (available in \texttt{R} as \texttt{qtukey}).
 
   For Example \ref{exm:one-way}:
 
@@ -1769,7 +1769,7 @@ It is quite common that although the total number, \(n\), of runs in the experim
 Assume interest lies in estimating the set of \(p\) contrasts \(\boldsymbol{c}_1^{\mathrm{T}}\boldsymbol{\tau}, \ldots, \boldsymbol{c}_p^{\mathrm{T}}\boldsymbol{\tau}\), with \(\boldsymbol{c}_l^{\mathrm{T}} = (c_{l1}, \ldots, c_{lt})\). One useful measure of the overall quality of the estimators of these \(p\) contrasts is the average variance, given by
 
 \[
-\frac{\sigma^2}{t}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
+\frac{\sigma^2}{p}\sum_{l=1}^p\sum_{i=1}^tc_{li}^2/n_i\,.
 \]
 So we will minimise this variance by allocating larger values of \(n_i\) to the treatments with correspondingly larger values of the contrast coefficients \(c_{li}\). Therefore an approach to optimal allocation is to choose \(\boldsymbol{n} = (n_1, \ldots, n_t)^{\mathrm{T}}\) so as to
 
@@ -3085,9 +3085,9 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
+## [1,]    1    1    0    1
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
 ## [4,]    1    1    1    0
 \end{verbatim}
 
@@ -3102,14 +3102,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    0    1    1    0    1    1    1     0     1     0     0     0
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    1    0    0     0     0     1     1     1
-## [4,]    0    1    1    1    0    1    0    1    0     1     0     0     0     1
-## [5,]    1    1    1    1    0    0    0    0    0     0     1     1     1     0
-## [6,]    1    1    0    0    0    1    1    0    1     1     0     1     0     0
-## [7,]    1    0    1    0    1    0    1    0    0     1     1     0     0     1
-## [8,]    1    0    1    0    1    1    0    1    1     0     0     0     1     0
+## [1,]    0    0    1    1    0    0    1    0    0     0     1     1     1     1
+## [2,]    1    0    0    0    0    0    0    1    1     1     0     1     1     1
+## [3,]    0    0    0    1    0    1    1    1    1     1     1     0     0     0
+## [4,]    1    0    1    1    1    1    0    1    0     0     0     0     0     1
+## [5,]    0    1    0    0    1    1    0    0    0     1     1     0     1     1
+## [6,]    0    1    1    1    1    0    0    0    1     1     0     1     0     0
+## [7,]    1    1    1    0    0    1    1    0    1     0     0     0     1     0
+## [8,]    1    1    0    0    1    0    1    1    0     0     1     1     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4623,35 +4623,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0007\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0035 & 0.0349\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0039 & 0.0371\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0054 & 0.0529\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0055 & 0.0487\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0074 & 0.0686\\
+time & 2.5675 & 0.66 & 3.890 & 0.0074 & 0.0664\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0105 & 0.0964\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0100 & 0.0900\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0105 & 0.0964\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0100 & 0.0900\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0131 & 0.1200\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0125 & 0.1125\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3040 & 0.9940\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3020 & 0.9959\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4304 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4283 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5395 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7300 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7314 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7372 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7394 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7811 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7838 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7839 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7868 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9654 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9656 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5217,7 +5217,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7324 and 5.1976, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7758 and 5.1349, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6127,11 +6127,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]
-## A     4.08167
-## B     0.06888
-## C     2.70793
-## A:B:C 0.09330
+##           [,1]
+## A      3.77154
+## B      0.09046
+## C      2.93718
+## A:B:C -0.31465
 \end{verbatim}
 
 \begin{Shaded}
@@ -6147,11 +6147,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  259.0    86.3     NaN    NaN
-## A          1  133.3   133.3     NaN    NaN
-## B          1    0.0     0.0     NaN    NaN
-## C          1   58.7    58.7     NaN    NaN
-## A:B:C      1    0.1     0.1     NaN    NaN
+## Block      3  280.7    93.6     NaN    NaN
+## A          1  113.8   113.8     NaN    NaN
+## B          1    0.1     0.1     NaN    NaN
+## C          1   69.0    69.0     NaN    NaN
+## A:B:C      1    0.8     0.8     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6162,8 +6162,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-## 4.08167 0.06888 2.70793 0.09330
+##        A        B        C    A:B:C 
+##  3.77154  0.09046  2.93718 -0.31465
 \end{verbatim}
 
 \begin{Shaded}
@@ -6173,8 +6173,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 8.1633 0.1378 5.4159 0.1866
+##       A       B       C   A:B:C 
+##  7.5431  0.1809  5.8744 -0.6293
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6191,13 +6191,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  133.3   133.3     NaN    NaN
-## B          1    0.0     0.0     NaN    NaN
-## C          1   58.7    58.7     NaN    NaN
-## A:B        1   18.5    18.5     NaN    NaN
-## A:C        1  111.1   111.1     NaN    NaN
-## B:C        1  129.4   129.4     NaN    NaN
-## A:B:C      1    0.1     0.1     NaN    NaN
+## A          1  113.8   113.8     NaN    NaN
+## B          1    0.1     0.1     NaN    NaN
+## C          1   69.0    69.0     NaN    NaN
+## A:B        1    7.2     7.2     NaN    NaN
+## A:C        1  135.4   135.4     NaN    NaN
+## B:C        1  138.1   138.1     NaN    NaN
+## A:B:C      1    0.8     0.8     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6209,9 +6209,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##     5.09076     4.08167     0.06888     2.70793     1.52120     3.72645 
+##     4.75364     3.77154     0.09046     2.93718     0.95129     4.11383 
 ##         B:C       A:B:C 
-##     4.02224     0.09330
+##     4.15452    -0.31465
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6267,12 +6267,12 @@ This same block can be found using \texttt{FrF2}.
 ##    Blocks  A  B  C  D  E
 ## 17      3 -1 -1  1  1 -1
 ## 18      3  1  1  1  1 -1
-## 19      3  1  1 -1 -1 -1
+## 19      3 -1  1 -1  1  1
 ## 20      3  1 -1 -1  1  1
-## 21      3 -1  1 -1  1  1
-## 22      3 -1 -1 -1 -1 -1
-## 23      3 -1  1  1 -1  1
-## 24      3  1 -1  1 -1  1
+## 21      3  1  1 -1 -1 -1
+## 22      3 -1  1  1 -1  1
+## 23      3  1 -1  1 -1  1
+## 24      3 -1 -1 -1 -1 -1
 \end{verbatim}
 
 \begin{enumerate}
