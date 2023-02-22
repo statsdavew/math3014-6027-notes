@@ -318,7 +318,7 @@ a. It more easily generalises to the more complicated models we will see in Chap
 
 a. It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions (see [Exercise 3](#nap-black-ex)).
 
-a. It is straightfoward to apply adjustments for [multiple comparisons](#multiple-comp).
+a. It is straightforward to apply adjustments for [multiple comparisons](#multiple-comp).
 
 ## Multiple comparisons {#multiple-comp}
 
