@@ -117,7 +117,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2023-02-21}
+\date{2023-02-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -832,8 +832,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Milk first" "Tea first"  "Milk first"
-## [6] "Tea first"  "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Milk first" "Milk first" "Tea first" 
+## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -852,7 +852,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -863,7 +863,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -1622,7 +1622,7 @@ Our preferred approach is using method 2 (\texttt{lm} and \texttt{emmeans}), for
 \item
   It explicitly acknowledges that we have fitted a linear model, and so encourages us to check the model assumptions (see \protect\hyperlink{nap-black-ex}{Exercise 3}).
 \item
-  It is straightfoward to apply adjustments for \protect\hyperlink{multiple-comp}{multiple comparisons}.
+  It is straightforward to apply adjustments for \protect\hyperlink{multiple-comp}{multiple comparisons}.
 \end{enumerate}
 
 \hypertarget{multiple-comp}{%
@@ -2484,7 +2484,7 @@ We can study the data graphically, plotting by treatment and by block.
 \caption{Steel bar experiment: distributions of tensile strength (ksi) from the eight blocks (top) and the four coatings (bottom).}\label{fig:bar-expt-boxplots}
 \end{figure}
 
-The box plots within each plot in Figure \ref{fig:bar-expt-boxplots} are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This \textbf{balance} makes our analysis more straighforward. By eye, it appears here there may be differences between both coating 3 and the other three coatings.
+The box plots within each plot in Figure \ref{fig:bar-expt-boxplots} are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This \textbf{balance} makes our analysis more straighforward. By eye, it appears here there may be differences between coating 3 and the other three coatings.
 \end{example}
 
 \begin{example}
@@ -2582,7 +2582,7 @@ X_1 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
 \boldsymbol{0}_{k_b} & \boldsymbol{0}_{k_b} & \cdots &  \boldsymbol{1}_{k_b} \\
 \end{bmatrix}\,,
 \]
-where \(k_i = \sum_{j=1}^t n_{ij}\), the number of units in the \(i\)th block. The structure of matrix \(X_2\) is harder to describe so distinctly, but each row includes a single non-zero entry, equal to one, indicating which treatment was applied in that run of the experiment. The first \(k_1\) rows correspond to block 1, the second \(k_2\) to block 2, and so on. We will see special cases later.
+where \(k_i = \sum_{j=1}^t n_{ij}\), the number of units in the \(i\)th block. The structure of matrix \(X_2\) is harder to describe so succinctly, but each row includes a single non-zero entry, equal to one, indicating which treatment was applied in that run of the experiment. The first \(k_1\) rows correspond to block 1, the second \(k_2\) to block 2, and so on. We will see special cases later.
 
 \hypertarget{normal-equations}{%
 \section{Normal equations}\label{normal-equations}}
@@ -2718,7 +2718,7 @@ X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\boldsy
 \]
 which have the same form as the CRD in Chapter \ref{crd} albeit with a different \(X_{2|1}\) matrix as we are adjusting for more complex nuisance parameters.
 
-In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section @ref(\#rcdb) below). By default, to fit model \eqref{eq:block-plm}, the \texttt{lm} function in \texttt{R} applies the constraint \(\tau_t = \beta_b = 0\), and removes the corresponding columns from \(X_1\) and \(X_2\), to leave a \(W\) matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use \texttt{emmeans} to extract these estimates from an \texttt{lm} object).
+In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section @ref(\#rcbd) below). By default, to fit model \eqref{eq:block-plm}, the \texttt{lm} function in \texttt{R} applies the constraint \(\tau_t = \beta_b = 0\), and removes the corresponding columns from \(X_1\) and \(X_2\), to leave a \(W\) matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use \texttt{emmeans} to extract these estimates from an \texttt{lm} object).
 
 \hypertarget{block-anova}{%
 \section{Analysis of variance}\label{block-anova}}
@@ -2854,7 +2854,7 @@ H_1X_2 & = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2 \\
 
 as for a RCBD \(X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots, k_b) = tI_b\) and \(X_2^{\mathrm{T}}X_1 = N = J_{t\times b}\).
 
-Comparing \eqref{eq:rcbd-x21} to the form of \(X_{2|1}\) for a CRD, equation \eqref{eq:crd-x21}, we see that for the RCBD, \(X_{2|1}\) has the same form as a CRD with \(b\) replicates of each treatment (that is, \(n_i = b\) for \(i=1,\ldots, t\)). This is a powerful result, as it tell us
+Comparing \eqref{eq:rcbd-x21} to the form of \(X_{2|1}\) for a CRD, equation \eqref{eq:crd-x21}, we see that for the RCBD, \(X_{2|1}\) has the same form as a CRD with \(b\) replicates of each treatment (that is, \(n_i = b\) for \(i=1,\ldots, t\)). This is a powerful result, as it tells us:
 
 \begin{itemize}
 \item
@@ -3102,14 +3102,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    1    1    0    0    1    0    0     0     1     1     1     1
-## [2,]    1    0    0    0    0    0    0    1    1     1     0     1     1     1
-## [3,]    0    0    0    1    0    1    1    1    1     1     1     0     0     0
-## [4,]    1    0    1    1    1    1    0    1    0     0     0     0     0     1
-## [5,]    0    1    0    0    1    1    0    0    0     1     1     0     1     1
-## [6,]    0    1    1    1    1    0    0    0    1     1     0     1     0     0
-## [7,]    1    1    1    0    0    1    1    0    1     0     0     0     1     0
-## [8,]    1    1    0    0    1    0    1    1    0     0     1     1     0     0
+## [1,]    1    0    0    1    0    1    0    1    1     0     0     0     1     1
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    0    0    0    1    1    1    0    1    0     1     1     1     0     0
+## [4,]    1    0    1    1    1    0    1    0    0     0     0     1     0     1
+## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
+## [6,]    1    1    0    0    1    0    1    1    1     1     0     0     0     0
+## [7,]    0    1    1    0    0    1    1    1    0     0     1     0     0     1
+## [8,]    0    1    1    0    1    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4623,35 +4623,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0002 & 0.0022\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0039 & 0.0371\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0044 & 0.0397\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0055 & 0.0487\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0063 & 0.0581\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0074 & 0.0664\\
+time & 2.5675 & 0.66 & 3.890 & 0.0078 & 0.0690\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0100 & 0.0900\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0107 & 0.0956\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0100 & 0.0900\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0107 & 0.0956\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0125 & 0.1125\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0140 & 0.1252\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3020 & 0.9959\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3054 & 0.9951\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4283 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4316 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5392 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5406 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7314 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7353 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7394 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7430 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7838 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7876 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7868 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7896 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9656 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9666 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5217,7 +5217,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7758 and 5.1349, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6993 and 5.1858, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6128,10 +6128,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##           [,1]
-## A      3.77154
-## B      0.09046
-## C      2.93718
-## A:B:C -0.31465
+## A      4.46086
+## B      0.09589
+## C      3.16320
+## A:B:C -0.33697
 \end{verbatim}
 
 \begin{Shaded}
@@ -6147,11 +6147,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  280.7    93.6     NaN    NaN
-## A          1  113.8   113.8     NaN    NaN
+## Block      3  240.9    80.3     NaN    NaN
+## A          1  159.2   159.2     NaN    NaN
 ## B          1    0.1     0.1     NaN    NaN
-## C          1   69.0    69.0     NaN    NaN
-## A:B:C      1    0.8     0.8     NaN    NaN
+## C          1   80.0    80.0     NaN    NaN
+## A:B:C      1    0.9     0.9     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6163,7 +6163,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##        A        B        C    A:B:C 
-##  3.77154  0.09046  2.93718 -0.31465
+##  4.46086  0.09589  3.16320 -0.33697
 \end{verbatim}
 
 \begin{Shaded}
@@ -6174,7 +6174,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-##  7.5431  0.1809  5.8744 -0.6293
+##  8.9217  0.1918  6.3264 -0.6739
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6191,13 +6191,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  113.8   113.8     NaN    NaN
+## A          1  159.2   159.2     NaN    NaN
 ## B          1    0.1     0.1     NaN    NaN
-## C          1   69.0    69.0     NaN    NaN
-## A:B        1    7.2     7.2     NaN    NaN
-## A:C        1  135.4   135.4     NaN    NaN
-## B:C        1  138.1   138.1     NaN    NaN
-## A:B:C      1    0.8     0.8     NaN    NaN
+## C          1   80.0    80.0     NaN    NaN
+## A:B        1    4.4     4.4     NaN    NaN
+## A:C        1  103.1   103.1     NaN    NaN
+## B:C        1  133.4   133.4     NaN    NaN
+## A:B:C      1    0.9     0.9     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6209,9 +6209,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##     4.75364     3.77154     0.09046     2.93718     0.95129     4.11383 
+##     4.45268     4.46086     0.09589     3.16320     0.73940     3.58982 
 ##         B:C       A:B:C 
-##     4.15452    -0.31465
+##     4.08390    -0.33697
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6265,12 +6265,12 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3 -1 -1  1  1 -1
-## 18      3  1  1  1  1 -1
-## 19      3 -1  1 -1  1  1
-## 20      3  1 -1 -1  1  1
-## 21      3  1  1 -1 -1 -1
-## 22      3 -1  1  1 -1  1
+## 17      3  1 -1 -1  1  1
+## 18      3 -1  1 -1  1  1
+## 19      3 -1  1  1 -1  1
+## 20      3  1  1 -1 -1 -1
+## 21      3  1  1  1  1 -1
+## 22      3 -1 -1  1  1 -1
 ## 23      3  1 -1  1 -1  1
 ## 24      3 -1 -1 -1 -1 -1
 \end{verbatim}
