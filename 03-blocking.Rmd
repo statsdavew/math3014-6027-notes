@@ -30,7 +30,7 @@ We can study the data graphically, plotting by treatment and by block.
 boxplot(strength ~ block, data = bar)
 boxplot(strength ~ coating, data = bar)
 ```
-The box plots within each plot in Figure \@ref(fig:bar-expt-boxplots) are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This **balance** makes our analysis more straighforward. By eye, it appears here there may be differences between both coating 3 and the other three coatings.
+The box plots within each plot in Figure \@ref(fig:bar-expt-boxplots) are comparable, as every treatment has occured with every block the same number of times (once). For example, when we compare the box plots for treatments 1 and 3, we know each of then display one observation from each block. Therefore, differences between treatments will not be influenced by large differences between blocks. This **balance** makes our analysis more straighforward. By eye, it appears here there may be differences between coating 3 and the other three coatings.
 :::
 
 ::: {.example #blocks-tyres}
@@ -92,7 +92,7 @@ X_1 = \bigoplus_{i = 1}^b \boldsymbol{1}_{k_i} = \begin{bmatrix}
 \boldsymbol{0}_{k_b} & \boldsymbol{0}_{k_b} & \cdots &  \boldsymbol{1}_{k_b} \\
 \end{bmatrix}\,,
 $$
-where $k_i = \sum_{j=1}^t n_{ij}$, the number of units in the $i$th block. The structure of matrix $X_2$ is harder to describe so distinctly, but each row includes a single non-zero entry, equal to one, indicating which treatment was applied in that run of the experiment. The first $k_1$ rows correspond to block 1, the second $k_2$ to block 2, and so on. We will see special cases later. 
+where $k_i = \sum_{j=1}^t n_{ij}$, the number of units in the $i$th block. The structure of matrix $X_2$ is harder to describe so succinctly, but each row includes a single non-zero entry, equal to one, indicating which treatment was applied in that run of the experiment. The first $k_1$ rows correspond to block 1, the second $k_2$ to block 2, and so on. We will see special cases later. 
 
 ## Normal equations
 
@@ -223,7 +223,7 @@ X_{2|1}^{\mathrm{T}}X_{2|1}\hat{\boldsymbol{\tau}} = X_{2|1}^{\mathrm{T}}\bY\,,
 $$
 which have the same form as the CRD in Chapter \@ref(crd) albeit with a different $X_{2|1}$ matrix as we are adjusting for more complex nuisance parameters.
 
-In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section \@ref(#rcdb) below). By default, to fit model \@ref(eq:block-plm), the `lm` function in `R` applies the constraint $\tau_t = \beta_b = 0$, and removes the corresponding columns from $X_1$ and $X_2$, to leave a $W$ matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use `emmeans` to extract these estimates from an `lm` object).
+In general, the solution of these equations will depend on the exact form of the design. For the randomised complete block design, the solution turns out to be straighforward (see Section \@ref(#rcbd) below). By default, to fit model \@ref(eq:block-plm), the `lm` function in `R` applies the constraint $\tau_t = \beta_b = 0$, and removes the corresponding columns from $X_1$ and $X_2$, to leave a $W$ matrix with full column rank. Clearly, this solution is not unique but, as with CRDs, we will identify uniquely estimatable combinations of the model parameters (and use `emmeans` to extract these estimates from an `lm` object).
 
 ## Analysis of variance {#block-anova}
 
@@ -309,7 +309,7 @@ H_1X_2 & = X_1(X_1^{\mathrm{T}}X_1)^{-1}X_1^{\mathrm{T}}X_2 \\
 
 as for a RCBD $X_1^{\mathrm{T}}X_1 = \mathrm{diag}(k_1,\ldots, k_b) = tI_b$ and $X_2^{\mathrm{T}}X_1 = N = J_{t\times b}$.
 
-Comparing \@ref(eq:rcbd-x21) to the form of $X_{2|1}$ for a CRD, equation \@ref(eq:crd-x21), we see that for the RCBD, $X_{2|1}$ has the same form as a CRD with $b$ replicates of each treatment (that is, $n_i = b$ for $i=1,\ldots, t$). This is a powerful result, as it tell us
+Comparing \@ref(eq:rcbd-x21) to the form of $X_{2|1}$ for a CRD, equation \@ref(eq:crd-x21), we see that for the RCBD, $X_{2|1}$ has the same form as a CRD with $b$ replicates of each treatment (that is, $n_i = b$ for $i=1,\ldots, t$). This is a powerful result, as it tells us:
 
 - The reduced normal equations for the RCBD take the same form as for the CRD,
     
