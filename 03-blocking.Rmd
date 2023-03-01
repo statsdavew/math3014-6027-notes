@@ -281,7 +281,7 @@ tyre.s2 <- summary(tyre.lm)$sigma^2
 For Example \@ref(exm:blocks-bars), 
 $s^2 = `r bar.s2`$ and for Example \@ref(exm:blocks-tyres), $s^2 = `r tyre.s2`$.
 
-## Randomised complete block designs {#rcdb}
+## Randomised complete block designs {#rcbd}
 
 A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is $n_{ij} = 1$ for $i=1,\ldots, b; j = 1, \ldots, t$. Therefore each block has common size $k_1=\cdots =k_b = t$. The $t$ treatments are randomised to the $t$ units in each block. We can drop the index $l$ from our unit-block-treatment model, as every treatment is replicated just once:
 
