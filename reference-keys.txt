@@ -161,7 +161,7 @@ blocking
 unit-block-treatment-model
 normal-equations
 block-anova
-rcdb
+rcbd
 blocks-orthogonal
 sec-bibd
 construction-of-bibds
