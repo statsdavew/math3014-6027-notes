@@ -117,7 +117,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2023-02-22}
+\date{2023-03-03}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -832,8 +832,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Milk first" "Tea first" 
-## [6] "Tea first"  "Milk first" "Tea first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Tea first" 
+## [6] "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -852,7 +852,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -863,7 +863,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -1088,16 +1088,18 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
 \item
   The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
 
-  ia. \(\boldsymbol{y}= X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\),
+  ia. \(\boldsymbol{y}= X^\star_2\boldsymbol{\beta}_2^\star + \boldsymbol{\varepsilon}\),
 
   iia. \(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}= X\boldsymbol{\beta}+ \varepsilon\)
+
+  where \(X^\star_2 = [\boldsymbol{1}_n \vert X_2]\) and \(\boldsymbol{\beta}_2^\star = (\beta_0, \boldsymbol{\beta}_2)^{\mathrm{T}}\) (so model (ia) also contains the intercept).
 
   Extra sum of squares for model (iia):
 
   \begin{align*}
   \mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} & = \mbox{RSS(ia) - RSS(iia)}\\
-  & = (\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2)^{\mathrm{T}}(\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
-  & = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\,.
+  & = (\boldsymbol{y}- X_2^\star\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(\boldsymbol{y}- X_2^\star\hat{\boldsymbol{\beta}}^\star_2) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
+  & = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\boldsymbol{\beta}}^\star_2\,.
    \end{align*}
 
   Hence, an ANOVA table for the extra sums of squares is given by
@@ -1120,8 +1122,8 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
   \midrule()
   \endhead
   Regression & \(p_1+p_2\) & \(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\) & \(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\) \\
-  Extra Model (i) & \(p_1\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\right)/p_1\) \\
-  Extra Model (ii) & \(p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\) \\
+  Extra due to Model (i) only & \(p_1\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\boldsymbol{\beta}}^\star_2\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\boldsymbol{\beta}}^\star_2\right)/p_1\) \\
+  Extra Model due to model (ii) only & \(p_2\) & \(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\) & \(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\) \\
   Residual & \(n-p_1-p_2-1\) & \((\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\) & RSS\(/(n-p_1-p_2-1)\) \\
   Total & \(n-1\) & \(\boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2\) & \\
   \bottomrule()
@@ -2825,8 +2827,8 @@ The residual mean square for model \eqref{eq:block-plm} also provides an unbiase
 For Example \ref{exm:blocks-bars},
 \(s^2 = 56.3869\) and for Example \ref{exm:blocks-tyres}, \(s^2 = 350.1833\).
 
-\hypertarget{rcdb}{%
-\section{Randomised complete block designs}\label{rcdb}}
+\hypertarget{rcbd}{%
+\section{Randomised complete block designs}\label{rcbd}}
 
 A randomised complete block design (RCBD) has each treatment replicated exactly once in each block, that is \(n_{ij} = 1\) for \(i=1,\ldots, b; j = 1, \ldots, t\). Therefore each block has common size \(k_1=\cdots =k_b = t\). The \(t\) treatments are randomised to the \(t\) units in each block. We can drop the index \(l\) from our unit-block-treatment model, as every treatment is replicated just once:
 
@@ -3085,9 +3087,9 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    0    1
+## [1,]    1    0    1    1
 ## [2,]    0    1    1    1
-## [3,]    1    0    1    1
+## [3,]    1    1    0    1
 ## [4,]    1    1    1    0
 \end{verbatim}
 
@@ -3102,14 +3104,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    0    1    0    1    0    1    1     0     0     0     1     1
-## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    0    1    0     1     1     1     0     0
-## [4,]    1    0    1    1    1    0    1    0    0     0     0     1     0     1
-## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
-## [6,]    1    1    0    0    1    0    1    1    1     1     0     0     0     0
-## [7,]    0    1    1    0    0    1    1    1    0     0     1     0     0     1
-## [8,]    0    1    1    0    1    1    0    0    1     0     0     1     1     0
+## [1,]    0    1    0    1    0    0    0    1    1     1     0     1     1     0
+## [2,]    1    0    0    0    0    0    1    0    0     1     1     1     1     1
+## [3,]    0    0    0    1    0    1    1    1    1     0     1     0     0     1
+## [4,]    1    1    0    1    1    1    0    0    0     0     0     0     1     1
+## [5,]    0    0    1    0    1    1    0    0    1     0     1     1     1     0
+## [6,]    0    1    1    0    1    0    1    0    1     1     0     0     0     1
+## [7,]    1    0    1    1    1    0    0    1    0     1     1     0     0     0
+## [8,]    1    1    1    0    0    1    1    1    0     0     0     1     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3826,7 +3828,7 @@ Solution
 ##             Df Sum Sq Mean Sq F value  Pr(>F)    
 ## position     3   1468     489    7.99 0.01617 *  
 ## application  3    986     329    5.37 0.03901 *  
-## material     3   4621    1540   25.15 0.00085 ***
+## material     3   4622    1540   25.15 0.00085 ***
 ## Residuals    6    368      61                    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -4420,7 +4422,7 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 ##  temp                         8.120 NaN  0     NaN     NaN
 ##  time                         2.567 NaN  0     NaN     NaN
 ##  solvent                     -2.218 NaN  0     NaN     NaN
-##  reagent                      3.087 NaN  0     NaN     NaN
+##  reagent                      3.088 NaN  0     NaN     NaN
 ##  temp.time                   -2.357 NaN  0     NaN     NaN
 ##  temp.solvent                 2.358 NaN  0     NaN     NaN
 ##  temp.reagent                -2.772 NaN  0     NaN     NaN
@@ -4431,7 +4433,7 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 ##  temp.time.reagent            0.195 NaN  0     NaN     NaN
 ##  temp.solvent.reagent        -0.030 NaN  0     NaN     NaN
 ##  time.solvent.reagent        -0.238 NaN  0     NaN     NaN
-##  temp.time.solvent.reagent    0.193 NaN  0     NaN     NaN
+##  temp.time.solvent.reagent    0.192 NaN  0     NaN     NaN
 \end{verbatim}
 
 \hypertarget{fact-principles}{%
@@ -4623,35 +4625,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0002 & 0.0022\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0044 & 0.0397\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0037 & 0.0334\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0063 & 0.0581\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0058 & 0.0514\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0078 & 0.0690\\
+time & 2.5675 & 0.66 & 3.890 & 0.0076 & 0.0682\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0107 & 0.0956\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0109 & 0.0975\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0107 & 0.0956\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0109 & 0.0975\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0140 & 0.1252\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0136 & 0.1211\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3054 & 0.9951\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3050 & 0.9944\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4316 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4310 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5406 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5395 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7353 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7314 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7430 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7386 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7876 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7839 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7896 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7869 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9666 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9659 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5217,7 +5219,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6993 and 5.1858, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7071 and 5.0813, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6128,10 +6130,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##           [,1]
-## A      4.46086
-## B      0.09589
-## C      3.16320
-## A:B:C -0.33697
+## A      3.99425
+## B     -0.02644
+## C      2.77883
+## A:B:C  0.54863
 \end{verbatim}
 
 \begin{Shaded}
@@ -6147,11 +6149,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  240.9    80.3     NaN    NaN
-## A          1  159.2   159.2     NaN    NaN
-## B          1    0.1     0.1     NaN    NaN
-## C          1   80.0    80.0     NaN    NaN
-## A:B:C      1    0.9     0.9     NaN    NaN
+## Block      3  308.9   103.0     NaN    NaN
+## A          1  127.6   127.6     NaN    NaN
+## B          1    0.0     0.0     NaN    NaN
+## C          1   61.8    61.8     NaN    NaN
+## A:B:C      1    2.4     2.4     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6163,7 +6165,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##        A        B        C    A:B:C 
-##  4.46086  0.09589  3.16320 -0.33697
+##  3.99425 -0.02644  2.77883  0.54863
 \end{verbatim}
 
 \begin{Shaded}
@@ -6173,8 +6175,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-##  8.9217  0.1918  6.3264 -0.6739
+##        A        B        C    A:B:C 
+##  7.98849 -0.05289  5.55766  1.09726
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6191,13 +6193,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  159.2   159.2     NaN    NaN
-## B          1    0.1     0.1     NaN    NaN
-## C          1   80.0    80.0     NaN    NaN
-## A:B        1    4.4     4.4     NaN    NaN
-## A:C        1  103.1   103.1     NaN    NaN
-## B:C        1  133.4   133.4     NaN    NaN
-## A:B:C      1    0.9     0.9     NaN    NaN
+## A          1  127.6   127.6     NaN    NaN
+## B          1    0.0     0.0     NaN    NaN
+## C          1   61.8    61.8     NaN    NaN
+## A:B        1   18.0    18.0     NaN    NaN
+## A:C        1  143.3   143.3     NaN    NaN
+## B:C        1  147.6   147.6     NaN    NaN
+## A:B:C      1    2.4     2.4     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6209,9 +6211,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##     4.45268     4.46086     0.09589     3.16320     0.73940     3.58982 
+##     5.15550     3.99425    -0.02644     2.77883     1.49889     4.23279 
 ##         B:C       A:B:C 
-##     4.08390    -0.33697
+##     4.29571     0.54863
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6265,14 +6267,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1 -1 -1  1  1
-## 18      3 -1  1 -1  1  1
-## 19      3 -1  1  1 -1  1
-## 20      3  1  1 -1 -1 -1
-## 21      3  1  1  1  1 -1
-## 22      3 -1 -1  1  1 -1
-## 23      3  1 -1  1 -1  1
-## 24      3 -1 -1 -1 -1 -1
+## 17      3  1  1 -1 -1 -1
+## 18      3  1  1  1  1 -1
+## 19      3  1 -1 -1  1  1
+## 20      3 -1  1 -1  1  1
+## 21      3  1 -1  1 -1  1
+## 22      3 -1 -1 -1 -1 -1
+## 23      3 -1  1  1 -1  1
+## 24      3 -1 -1  1  1 -1
 \end{verbatim}
 
 \begin{enumerate}
@@ -6601,7 +6603,7 @@ We can produce an ANOVA table with the following code; \texttt{lm} and \texttt{a
 ## FR                   1     15      15     NaN    NaN
 ## Cat                  1   3042    3042     NaN    NaN
 ## AR                   1      3       3     NaN    NaN
-## Temp                 1    925     925     NaN    NaN
+## Temp                 1    924     924     NaN    NaN
 ## Conc                 1    312     312     NaN    NaN
 ## FR:Cat               1     15      15     NaN    NaN
 ## FR:AR                1      4       4     NaN    NaN

@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2023-03-01" />
+<meta name="date" content="2023-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -780,17 +780,17 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
 <p>We could of course also use <code>R</code>.</p></li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot;
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;
 ## [6] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 1</span></span>
 <span id="cb4-2"><a href="intro.html#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 2</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Consider the linear model</p>
@@ -1013,13 +1013,14 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <p>By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regression SS.</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li><p>The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models</p>
-<p>ia. <span class="math inline">\(\boldsymbol{y}= X_2\boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}\)</span>,</p>
+<p>ia. <span class="math inline">\(\boldsymbol{y}= X^\star_2\boldsymbol{\beta}_2^\star + \boldsymbol{\varepsilon}\)</span>,</p>
 <p>iia. <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}= X\boldsymbol{\beta}+ \varepsilon\)</span></p>
+<p>where <span class="math inline">\(X^\star_2 = [\boldsymbol{1}_n \vert X_2]\)</span> and <span class="math inline">\(\boldsymbol{\beta}_2^\star = (\beta_0, \boldsymbol{\beta}_2)^{\mathrm{T}}\)</span> (so model (ia) also contains the intercept).</p>
 <p>Extra sum of squares for model (iia):</p>
 <p><span class="math display">\[\begin{align*}
 \mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} &amp; = \mbox{RSS(ia) - RSS(iia)}\\
-&amp; = (\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2)^{\mathrm{T}}(\boldsymbol{y}- X_2\hat{\boldsymbol{\beta}}_2) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
-&amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\,.
+&amp; = (\boldsymbol{y}- X_2^\star\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(\boldsymbol{y}- X_2^\star\hat{\boldsymbol{\beta}}^\star_2) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
+&amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\boldsymbol{\beta}}^\star_2\,.
 \end{align*}\]</span></p>
 <p>Hence, an ANOVA table for the extra sums of squares is given by</p>
 <table>
@@ -1045,13 +1046,13 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - n\bar{Y}^2\right)/(p_1+p_2)\)</span></td>
 </tr>
 <tr class="even">
-<td align="center">Extra Model (i)</td>
+<td align="center">Extra due to Model (i) only</td>
 <td align="center"><span class="math inline">\(p_1\)</span></td>
-<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\)</span></td>
-<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\boldsymbol{\beta}}_2\right)/p_1\)</span></td>
+<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\boldsymbol{\beta}}^\star_2\)</span></td>
+<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\boldsymbol{\beta}}^\star_2\right)/p_1\)</span></td>
 </tr>
 <tr class="odd">
-<td align="center">Extra Model (ii)</td>
+<td align="center">Extra Model due to model (ii) only</td>
 <td align="center"><span class="math inline">\(p_2\)</span></td>
 <td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\)</span></td>
 <td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\)</span></td>
