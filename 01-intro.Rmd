@@ -731,16 +731,18 @@ By definition, the Model (i) SS and the Extra SS for Model (ii) sum to the Regre
 
 c. The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models
 
-    ia. $\bY = X_2\bbeta_2 + \bvarepsilon$,  
+    ia. $\bY = X^\star_2\bbeta_2^\star + \bvarepsilon$,  
 
     iia. $\bY = X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon = X\bbeta + \varepsilon$
+
+    where $X^\star_2 = [\boldsymbol{1}_n \vert X_2]$ and $\bbeta_2^\star = (\beta_0, \bbeta_2)^{\mathrm{T}}$ (so model (ia) also contains the intercept).
 
     Extra sum of squares for model (iia):
 
     \begin{align*}
 \mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} & = \mbox{RSS(ia) - RSS(iia)}\\
-& = (\bY - X_2\hat{\bbeta}_2)^{\mathrm{T}}(\bY - X_2\hat{\bbeta}_2) - (\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})\\
-& = \hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\bbeta}_2\,.
+& = (\bY - X_2^\star\hat{\bbeta}^\star_2)^{\mathrm{T}}(\bY - X_2^\star\hat{\bbeta}^\star_2) - (\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})\\
+& = \hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\bbeta}^\star_2\,.
     \end{align*}
 
     Hence, an ANOVA table for the extra sums of squares is given by
@@ -748,8 +750,8 @@ c. The extra sum of squares for the terms in model (i) over and above those in m
     | Source | Degrees of freedom | Sums of squares | Mean square |
     | :----: | :----------------: | :-------------: | :---------: |
     | Regression | $p_1+p_2$ | $\hat{\bbeta}X^{\mathrm{T}}X\hat{\bbeta} - n\bar{Y}^2$ | $\left(\hat{\bbeta}X^{\mathrm{T}}X\hat{\bbeta} - n\bar{Y}^2\right)/(p_1+p_2)$ |
-    | Extra Model (i) | $p_1$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\bbeta}_2$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_2^{\mathrm{T}}X_2^{\mathrm{T}}X_2\hat{\bbeta}_2\right)/p_1$ |
-    | Extra Model (ii) | $p_2$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1\right)/p_2$ |
+    | Extra due to Model (i) only | $p_1$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\bbeta}^\star_2$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\bbeta}^\star_2\right)/p_1$ |
+    | Extra Model due to model (ii) only | $p_2$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1\right)/p_2$ |
     | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
     | Total | $n-1$ | $\bY^{\mathrm{T}}\bY - n\bar{Y}^2$ | |
 
