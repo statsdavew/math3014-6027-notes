@@ -62,7 +62,7 @@ $$
 with
 
 $$
-\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
+\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_{2^{f-1}}^{\mathrm{T}}, \boldsymbol{1}_{2^{f-1}}^{\mathrm{T}}) / 2^{f-1} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
 $$
 
 ```{r desilylation-lm, message = F}
@@ -153,8 +153,10 @@ plot(reagent_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
 Another contrast that could be of interest in Example \@ref(exm:factorial-desilylation) has coefficients
 
 $$
-\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
+\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8 \,,
 $$
+where the divisor $8 = 2^{f-1} = 2^3$.
+
 This contrast measures the difference between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \@ref(tab:factorial-desilylation-data), we see this is comparing those treatments where `solvent` and `reagent` are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
 
 Focusing on `reagent`, if the effect of this factor on the response was independent of the level to which `solvent` has been set, you would expect this contrast to be zero - changing from the high to low level of `reagent` should affect the response in the same way, regardless of the setting of `solvent`. This argument can be reversed, focussing on the effect of `solvent`. Therefore, if this contrast is large, we say the two factors **interact**.
@@ -197,7 +199,7 @@ As the sum of the squared contrast coefficients is the same for two-factor inter
 $$
 \mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
 $$
-For Example \@ref(exm:factorial-desilylation) we can calculate two-factor interactions for all ${4 \choose 2} = `r choose(4, 2)`$ pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product^[For two matrices $A$ and $B$ of the same dimension $m\times n$, the Hadamard product $A\odot B$ is a matrix of the same dimension with elements given by the elementwise product, $(A\odot B)_{ij} = A_{ij}B_{ij}$.] of the unscaled main effect contrasts (before dividing by $n/2$).
+For Example \@ref(exm:factorial-desilylation) we can calculate two-factor interactions for all ${4 \choose 2} = `r choose(4, 2)`$ pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product^[For two matrices $A$ and $B$ of the same dimension $m\times n$, the Hadamard product $A\odot B$ is a matrix of the same dimension with elements given by the elementwise product, $(A\odot B)_{ij} = A_{ij}B_{ij}$.] of the unscaled main effect contrasts (before dividing by $2^{f-1}$).
 
 ```{r desilylation-2fi-interactions}
 fac.contrasts.int.emmc <- function(levs) {
@@ -270,7 +272,7 @@ $$
 is the interaction between factors $A$ and $B$ using only those treatments where factor $C$ is set to it's high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.
 
 ::: {.definition #factorial-effects}
-A **factorial effect** is a main effect or interaction contrast defined on a factorial experiment. For a $2^f$ factorial experiment with $f$ factors, there are $2^f-1$ factorial effects, ranging from main effects to the interaction between all $f$ factors.
+A **factorial effect** is a main effect or interaction contrast defined on a factorial experiment. For a $2^f$ factorial experiment with $f$ factors, there are $2^f-1$ factorial effects, ranging from main effects to the interaction between all $f$ factors. The contrast coefficients in a factorial contrast all take the form $c_i = \pm 1 / 2^{f-1}$.
 :::
 
 For Example \@ref(exm:factorial-desilylation), we can now calculate all the factorial effects.
