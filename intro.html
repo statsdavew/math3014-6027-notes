@@ -780,17 +780,17 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
 <p>We could of course also use <code>R</code>.</p></li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot; 
-## [6] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot;
+## [6] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 1</span></span>
 <span id="cb4-2"><a href="intro.html#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># block 2</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot;</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Consider the linear model</p>
@@ -850,8 +850,8 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <ol start="3" style="list-style-type: decimal">
 <li><p>Consider the two nested linear models</p>
 <ol style="list-style-type: lower-roman">
-<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\)</span>,</p></li>
-<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X_1\boldsymbol{\beta}_1 + \boldsymbol{\varepsilon}\)</span>,</p></li>
+<li><p><span class="math inline">\(Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j\)</span>, or <span class="math inline">\(\boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}\)</span></p></li>
 </ol>
 <p>with <span class="math inline">\(\varepsilon_j\sim N(0, \sigma^2)\)</span>, and <span class="math inline">\(\varepsilon_{j}\)</span>, <span class="math inline">\(\varepsilon_{k}\)</span> independent <span class="math inline">\((\boldsymbol{\varepsilon}\sim N(\boldsymbol{0},I_n\sigma^2))\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
@@ -943,7 +943,7 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 </tr>
 </tbody>
 </table>
-<p>where</p>
+<p>where <span class="math inline">\(X = [\boldsymbol{1}_n\, X_1 \, X_2]\)</span>.</p>
 <p><span class="math display">\[\begin{align*}
 \mbox{RSS(null) - RSS(ii)} &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2 - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
 &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- n\bar{Y}^2 - \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}+ 2\boldsymbol{y}^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}}\\
@@ -952,14 +952,15 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 \end{align*}\]</span></p></li>
 <li><p>To compare model (i) with the null model, we compute</p>
 <p><span class="math display">\[\begin{align*}
-\mbox{RSS(null) - RSS(i)} &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- N\bar{Y}^2 - (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)\\
-&amp; = \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\,.
-\end{align*}\]</span></p>
+\mbox{RSS(null) - RSS(i)} &amp; = \boldsymbol{y}^{\mathrm{T}}\boldsymbol{y}- N\bar{Y}^2 - (\boldsymbol{y}- X_1^*\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(\boldsymbol{y}- X_1^*\hat{\boldsymbol{\beta}}_1^*)\\
+&amp; = (\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^* - n\bar{Y}^2\,,
+\end{align*}\]</span>
+where <span class="math inline">\(X_1^* = [\boldsymbol{1}\, X_1]\)</span> and <span class="math inline">\(\boldsymbol{\beta}_1^* = (\beta_0, \boldsymbol{\beta}_1^{\mathrm{T}})^{\mathrm{T}}\)</span>.</p>
 <p>To compare models (i) and (ii), we compare them both to the null model, and look at the difference between these comparisons:</p>
 <p><span class="math display">\[\begin{align*}
 \mbox{[RSS(null) - RSS(ii)] - [RSS(null) - RSS(i)]} &amp; = \mbox{RSS(i) - RSS(ii)}\\
-&amp; = (\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1)^{\mathrm{T}}(\boldsymbol{y}- X_1\hat{\boldsymbol{\beta}}_1) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
-&amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\,.
+&amp; = (\boldsymbol{y}- X_1^*\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(\boldsymbol{y}- X_1^*\hat{\boldsymbol{\beta}}_1^*) - (\boldsymbol{y}- X\hat{\boldsymbol{\beta}})^{\mathrm{T}}(\boldsymbol{y}- X\hat{\boldsymbol{\beta}})\\
+&amp; = \hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^*\,.
 \end{align*}\]</span></p>
 <table>
 <colgroup>
@@ -986,14 +987,14 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <tr class="even">
 <td align="left">Model (i)</td>
 <td align="center"><span class="math inline">\(p_1\)</span></td>
-<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\)</span></td>
-<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1 - n\bar{Y}^2\right)/p_1\)</span></td>
+<td align="center"><span class="math inline">\((\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^* - n\bar{Y}^2\)</span></td>
+<td align="center"><span class="math inline">\(\left((\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^* - n\bar{Y}^2\right)/p_1\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left">Extra due to Model (ii)</td>
 <td align="center"><span class="math inline">\(p_2\)</span></td>
-<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\)</span></td>
-<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\)</span></td>
+<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^*\)</span></td>
+<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^*\right)/p_2\)</span></td>
 </tr>
 <tr class="even">
 <td align="left">Residual</td>
@@ -1014,8 +1015,8 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <ol start="3" style="list-style-type: lower-alpha">
 <li><p>The extra sum of squares for the terms in model (i) over and above those in model (ii) are obtained through comparison of the models</p>
 <p>ia. <span class="math inline">\(\boldsymbol{y}= X^\star_2\boldsymbol{\beta}_2^\star + \boldsymbol{\varepsilon}\)</span>,</p>
-<p>iia. <span class="math inline">\(\boldsymbol{y}= X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}= X\boldsymbol{\beta}+ \varepsilon\)</span></p>
-<p>where <span class="math inline">\(X^\star_2 = [\boldsymbol{1}_n \vert X_2]\)</span> and <span class="math inline">\(\boldsymbol{\beta}_2^\star = (\beta_0, \boldsymbol{\beta}_2)^{\mathrm{T}}\)</span> (so model (ia) also contains the intercept).</p>
+<p>iia. <span class="math inline">\(\boldsymbol{y}= \boldsymbol{1}_n\beta_0 + X_1\boldsymbol{\beta}_1 + X_2\boldsymbol{\beta}_2+ \boldsymbol{\varepsilon}= X\boldsymbol{\beta}+ \varepsilon\)</span></p>
+<p>where <span class="math inline">\(X^\star_2 = [\boldsymbol{1}_n \, X_2]\)</span> and <span class="math inline">\(\boldsymbol{\beta}_2^\star = (\beta_0, \boldsymbol{\beta}_2^{\mathrm{T}})^{\mathrm{T}}\)</span> (so model (ia) also contains the intercept).</p>
 <p>Extra sum of squares for model (iia):</p>
 <p><span class="math display">\[\begin{align*}
 \mbox{[RSS(null) - RSS(iia)] - [RSS(null) - RSS(ia)]} &amp; = \mbox{RSS(ia) - RSS(iia)}\\
@@ -1054,8 +1055,8 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 <tr class="odd">
 <td align="center">Extra Model due to model (ii) only</td>
 <td align="center"><span class="math inline">\(p_2\)</span></td>
-<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\)</span></td>
-<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\boldsymbol{\beta}}_1\right)/p_2\)</span></td>
+<td align="center"><span class="math inline">\(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^*\)</span></td>
+<td align="center"><span class="math inline">\(\left(\hat{\boldsymbol{\beta}}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} - (\hat{\boldsymbol{\beta}}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\boldsymbol{\beta}}_1^*\right)/p_2\)</span></td>
 </tr>
 <tr class="even">
 <td align="center">Residual</td>
@@ -1072,7 +1073,7 @@ l(\boldsymbol{\beta}\,;\boldsymbol{y}) = -\frac{1}{2\sigma^2}(\boldsymbol{y}- X\
 </tbody>
 </table></li>
 </ol>
-<p>Note that for these <em>adjusted</em> sums of squares, in general the extra sum of squares for model (i) and (ii) do not sum to the regression sum of squares. This will only be the case if the columns of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are mutually orthogonal, i.e. <span class="math inline">\(X_1^{\mathrm{T}}X_2 = \boldsymbol{0}\)</span>.</p>
+<p>Note that for these <em>adjusted</em> sums of squares, in general the extra sum of squares for model (i) and (ii) do not sum to the regression sum of squares. This will only be the case if the columns of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are mutually orthogonal, i.e. <span class="math inline">\(X_1^{\mathrm{T}}X_2 = \boldsymbol{0}\)</span>, and if both <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are also orthogonal to <span class="math inline">\(\boldsymbol{1}_n\)</span>, i.e. <span class="math inline">\(X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}\)</span> and <span class="math inline">\(X_2^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}\)</span>.</p>
 </details>
 
 </div>
