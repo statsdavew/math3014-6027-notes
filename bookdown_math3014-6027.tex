@@ -117,7 +117,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2023-03-03}
+\date{2023-03-24}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -832,8 +832,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Tea first" 
-## [6] "Milk first" "Milk first" "Tea first"
+## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "Tea first" 
+## [6] "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -852,7 +852,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -863,7 +863,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -3087,10 +3087,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    0    1    1
+## [1,]    1    1    1    0
 ## [2,]    0    1    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3104,14 +3104,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    0    1    0    0    0    1    1     1     0     1     1     0
+## [1,]    0    0    1    1    0    0    0    1    1     1     1     1     0     0
 ## [2,]    1    0    0    0    0    0    1    0    0     1     1     1     1     1
-## [3,]    0    0    0    1    0    1    1    1    1     0     1     0     0     1
-## [4,]    1    1    0    1    1    1    0    0    0     0     0     0     1     1
-## [5,]    0    0    1    0    1    1    0    0    1     0     1     1     1     0
+## [3,]    0    0    0    1    0    1    1    1    1     0     0     0     1     1
+## [4,]    1    0    1    1    1    1    0    0    0     0     0     1     0     1
+## [5,]    0    1    0    0    1    1    0    0    1     0     1     1     1     0
 ## [6,]    0    1    1    0    1    0    1    0    1     1     0     0     0     1
-## [7,]    1    0    1    1    1    0    0    1    0     1     1     0     0     0
-## [8,]    1    1    1    0    0    1    1    1    0     0     0     1     0     0
+## [7,]    1    1    0    1    1    0    0    1    0     1     0     0     1     0
+## [8,]    1    1    1    0    0    1    1    1    0     0     1     0     0     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3828,7 +3828,7 @@ Solution
 ##             Df Sum Sq Mean Sq F value  Pr(>F)    
 ## position     3   1468     489    7.99 0.01617 *  
 ## application  3    986     329    5.37 0.03901 *  
-## material     3   4622    1540   25.15 0.00085 ***
+## material     3   4621    1540   25.15 0.00085 ***
 ## Residuals    6    368      61                    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -3982,7 +3982,7 @@ Studying Table \ref{tab:factorial-desilylation-data}, there are some comparisons
 with
 
 \[
-\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
+\boldsymbol{c}^{\mathrm{T}} = (-\boldsymbol{1}_{2^{f-1}}^{\mathrm{T}}, \boldsymbol{1}_{2^{f-1}}^{\mathrm{T}}) / 2^{f-1} = (-\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_8^{\mathrm{T}}) / 8\,.
 \]
 
 \begin{Shaded}
@@ -4163,8 +4163,10 @@ Main effects are often displayed graphically, using \textbf{main effect plots} w
 Another contrast that could be of interest in Example \ref{exm:factorial-desilylation} has coefficients
 
 \[
-\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8\,.
+\boldsymbol{c}^{\mathrm{T}} = (\boldsymbol{1}_4^{\mathrm{T}}, -\boldsymbol{1}_8^{\mathrm{T}}, \boldsymbol{1}_4^{\mathrm{T}}) / 8 \,,
 \]
+where the divisor \(8 = 2^{f-1} = 2^3\).
+
 This contrast measures the difference between the average treatment effect from treatments 1-4, 13-16 and treatments 5-12. Checking back against Table \ref{tab:factorial-desilylation-data}, we see this is comparing those treatments where \texttt{solvent} and \texttt{reagent} are both set to their low (1-4) or high (13-16) level against those treatments where one of the two factors is set high and the other is set low (5-12).
 
 Focusing on \texttt{reagent}, if the effect of this factor on the response was independent of the level to which \texttt{solvent} has been set, you would expect this contrast to be zero - changing from the high to low level of \texttt{reagent} should affect the response in the same way, regardless of the setting of \texttt{solvent}. This argument can be reversed, focussing on the effect of \texttt{solvent}. Therefore, if this contrast is large, we say the two factors \textbf{interact}.
@@ -4215,7 +4217,7 @@ As the sum of the squared contrast coefficients is the same for two-factor inter
 \[
 \mbox{var}\left\{\mbox{Int}(A, B)\right\} = \frac{4\sigma^2}{n}\,.
 \]
-For Example \ref{exm:factorial-desilylation} we can calculate two-factor interactions for all \({4 \choose 2} = 6\) pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product\footnote{For two matrices \(A\) and \(B\) of the same dimension \(m\times n\), the Hadamard product \(A\odot B\) is a matrix of the same dimension with elements given by the elementwise product, \((A\odot B)_{ij} = A_{ij}B_{ij}\).} of the unscaled main effect contrasts (before dividing by \(n/2\)).
+For Example \ref{exm:factorial-desilylation} we can calculate two-factor interactions for all \({4 \choose 2} = 6\) pairs of factors. The simplest way to calculate the contrast coefficients is as the elementwise, or Hadamard, product\footnote{For two matrices \(A\) and \(B\) of the same dimension \(m\times n\), the Hadamard product \(A\odot B\) is a matrix of the same dimension with elements given by the elementwise product, \((A\odot B)_{ij} = A_{ij}B_{ij}\).} of the unscaled main effect contrasts (before dividing by \(2^{f-1}\)).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4373,7 +4375,7 @@ where
 is the interaction between factors \(A\) and \(B\) using only those treatments where factor \(C\) is set to it's high level. Higher order interaction contrasts can again be constructed by (multiple) hadamard products of (unscaled) main effect contrasts.
 
 \begin{definition}
-\protect\hypertarget{def:factorial-effects}{}\label{def:factorial-effects}A \textbf{factorial effect} is a main effect or interaction contrast defined on a factorial experiment. For a \(2^f\) factorial experiment with \(f\) factors, there are \(2^f-1\) factorial effects, ranging from main effects to the interaction between all \(f\) factors.
+\protect\hypertarget{def:factorial-effects}{}\label{def:factorial-effects}A \textbf{factorial effect} is a main effect or interaction contrast defined on a factorial experiment. For a \(2^f\) factorial experiment with \(f\) factors, there are \(2^f-1\) factorial effects, ranging from main effects to the interaction between all \(f\) factors. The contrast coefficients in a factorial contrast all take the form \(c_i = \pm 1 / 2^{f-1}\).
 \end{definition}
 
 For Example \ref{exm:factorial-desilylation}, we can now calculate all the factorial effects.
@@ -4422,7 +4424,7 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 ##  temp                         8.120 NaN  0     NaN     NaN
 ##  time                         2.567 NaN  0     NaN     NaN
 ##  solvent                     -2.218 NaN  0     NaN     NaN
-##  reagent                      3.088 NaN  0     NaN     NaN
+##  reagent                      3.087 NaN  0     NaN     NaN
 ##  temp.time                   -2.357 NaN  0     NaN     NaN
 ##  temp.solvent                 2.358 NaN  0     NaN     NaN
 ##  temp.reagent                -2.772 NaN  0     NaN     NaN
@@ -4433,7 +4435,7 @@ For Example \ref{exm:factorial-desilylation}, we can now calculate all the facto
 ##  temp.time.reagent            0.195 NaN  0     NaN     NaN
 ##  temp.solvent.reagent        -0.030 NaN  0     NaN     NaN
 ##  time.solvent.reagent        -0.238 NaN  0     NaN     NaN
-##  temp.time.solvent.reagent    0.192 NaN  0     NaN     NaN
+##  temp.time.solvent.reagent    0.193 NaN  0     NaN     NaN
 \end{verbatim}
 
 \hypertarget{fact-principles}{%
@@ -4625,35 +4627,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0007\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0000\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0037 & 0.0334\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0044 & 0.0394\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0058 & 0.0514\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0063 & 0.0574\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0076 & 0.0682\\
+time & 2.5675 & 0.66 & 3.890 & 0.0085 & 0.0769\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0109 & 0.0975\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0111 & 0.1024\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0109 & 0.0975\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0111 & 0.1024\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0136 & 0.1211\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0138 & 0.1264\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3050 & 0.9944\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3026 & 0.9929\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4310 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4304 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5395 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5397 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7314 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7318 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7386 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7394 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7839 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7841 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7869 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7868 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9659 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9665 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5219,7 +5221,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7071 and 5.0813, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6863 and 5.1616, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6130,10 +6132,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##           [,1]
-## A      3.99425
-## B     -0.02644
-## C      2.77883
-## A:B:C  0.54863
+## A      3.56925
+## B      0.33671
+## C      3.19592
+## A:B:C -0.01626
 \end{verbatim}
 
 \begin{Shaded}
@@ -6149,11 +6151,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  308.9   103.0     NaN    NaN
-## A          1  127.6   127.6     NaN    NaN
-## B          1    0.0     0.0     NaN    NaN
-## C          1   61.8    61.8     NaN    NaN
-## A:B:C      1    2.4     2.4     NaN    NaN
+## Block      3  248.9    83.0     NaN    NaN
+## A          1  101.9   101.9     NaN    NaN
+## B          1    0.9     0.9     NaN    NaN
+## C          1   81.7    81.7     NaN    NaN
+## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6165,7 +6167,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##        A        B        C    A:B:C 
-##  3.99425 -0.02644  2.77883  0.54863
+##  3.56925  0.33671  3.19592 -0.01626
 \end{verbatim}
 
 \begin{Shaded}
@@ -6176,7 +6178,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##        A        B        C    A:B:C 
-##  7.98849 -0.05289  5.55766  1.09726
+##  7.13849  0.67341  6.39185 -0.03251
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6193,13 +6195,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  127.6   127.6     NaN    NaN
-## B          1    0.0     0.0     NaN    NaN
-## C          1   61.8    61.8     NaN    NaN
-## A:B        1   18.0    18.0     NaN    NaN
-## A:C        1  143.3   143.3     NaN    NaN
-## B:C        1  147.6   147.6     NaN    NaN
-## A:B:C      1    2.4     2.4     NaN    NaN
+## A          1  101.9   101.9     NaN    NaN
+## B          1    0.9     0.9     NaN    NaN
+## C          1   81.7    81.7     NaN    NaN
+## A:B        1    2.5     2.5     NaN    NaN
+## A:C        1  113.1   113.1     NaN    NaN
+## B:C        1  133.3   133.3     NaN    NaN
+## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6211,9 +6213,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##     5.15550     3.99425    -0.02644     2.77883     1.49889     4.23279 
+##     5.01042     3.56925     0.33671     3.19592     0.56084     3.75929 
 ##         B:C       A:B:C 
-##     4.29571     0.54863
+##     4.08175    -0.01626
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6267,14 +6269,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1  1 -1 -1 -1
-## 18      3  1  1  1  1 -1
-## 19      3  1 -1 -1  1  1
-## 20      3 -1  1 -1  1  1
-## 21      3  1 -1  1 -1  1
+## 17      3  1 -1  1 -1  1
+## 18      3 -1 -1  1  1 -1
+## 19      3  1  1 -1 -1 -1
+## 20      3  1  1  1  1 -1
+## 21      3 -1  1 -1  1  1
 ## 22      3 -1 -1 -1 -1 -1
 ## 23      3 -1  1  1 -1  1
-## 24      3 -1 -1  1  1 -1
+## 24      3  1 -1 -1  1  1
 \end{verbatim}
 
 \begin{enumerate}
@@ -6603,7 +6605,7 @@ We can produce an ANOVA table with the following code; \texttt{lm} and \texttt{a
 ## FR                   1     15      15     NaN    NaN
 ## Cat                  1   3042    3042     NaN    NaN
 ## AR                   1      3       3     NaN    NaN
-## Temp                 1    924     924     NaN    NaN
+## Temp                 1    925     925     NaN    NaN
 ## Conc                 1    312     312     NaN    NaN
 ## FR:Cat               1     15      15     NaN    NaN
 ## FR:AR                1      4       4     NaN    NaN
