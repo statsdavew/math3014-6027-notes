@@ -658,9 +658,9 @@ a. As $\bY\sim N\left(X\bbeta, I_N\sigma^2\right)$, the likelihood is given by
 
 3. Consider the two nested linear models
 
-    (i) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j$, or $\bY = X_1\bbeta_1 + \bvarepsilon$,  
+    (i) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \varepsilon_j$, or $\bY = \boldsymbol{1}_n\beta_0 + X_1\bbeta_1 + \bvarepsilon$,  
 
-    (ii) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j$, or $\bY = X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon$
+    (ii) $Y_j = \beta_0 + \beta_1x_{1j} + \beta_2x_{2j} + \ldots + \beta_{p_1}x_{p_1j} + \beta_{p_1+1}x_{(p_1+1)j} + \ldots + \beta_{p_1+p_2}x_{p_1+p_2j} + \varepsilon_j$, or $\bY = \boldsymbol{1}_n\beta_0 + X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon$
 
 
     with $\varepsilon_j\sim N(0, \sigma^2)$, and $\varepsilon_{j}$, $\varepsilon_{k}$ independent $(\bvarepsilon\sim N(\boldsymbol{0},I_n\sigma^2))$.
@@ -695,7 +695,7 @@ a. From lectures
     | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
     | Total | $n-1$ | $\bY^{\mathrm{T}}\bY - n\bar{Y}^2$ | | 
 
-    where 
+    where $X = [\boldsymbol{1}_n\, X_1 \, X_2]$.
 
     \begin{align*}
 \mbox{RSS(null) - RSS(ii)} & = \bY^{\mathrm{T}}\bY - n\bar{Y}^2 - (\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})\\
@@ -707,23 +707,24 @@ a. From lectures
 a. To compare model (i) with the null model, we compute
 
     \begin{align*}
-    \mbox{RSS(null) - RSS(i)} & = \bY^{\mathrm{T}}\bY - N\bar{Y}^2 - (\bY - X_1\hat{\bbeta}_1)^{\mathrm{T}}(\bY - X_1\hat{\bbeta}_1)\\
-    & = \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1 - n\bar{Y}^2\,.
+    \mbox{RSS(null) - RSS(i)} & = \bY^{\mathrm{T}}\bY - N\bar{Y}^2 - (\bY - X_1^*\hat{\bbeta}_1^*)^{\mathrm{T}}(\bY - X_1^*\hat{\bbeta}_1^*)\\
+    & = (\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^* - n\bar{Y}^2\,,
     \end{align*}
+    where $X_1^* = [\boldsymbol{1}\, X_1]$ and $\boldsymbol{\beta}_1^* = (\beta_0, \boldsymbol{\beta}_1^{\mathrm{T}})^{\mathrm{T}}$.
 
     To compare models (i) and (ii), we compare them both to the null model, and look at the difference between these comparisons:
 
     \begin{align*}
     \mbox{[RSS(null) - RSS(ii)] - [RSS(null) - RSS(i)]} & = \mbox{RSS(i) - RSS(ii)}\\
-    & = (\bY - X_1\hat{\bbeta}_1)^{\mathrm{T}}(\bY - X_1\hat{\bbeta}_1) - (\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})\\
-    & = \hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1\,.
+    & = (\bY - X_1^*\hat{\bbeta}_1^*)^{\mathrm{T}}(\bY - X_1^*\hat{\bbeta}_1^*) - (\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})\\
+    & = \hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^*\,.
     \end{align*}
 
     | Source | Degrees of freedom | Sums of squares | Mean square |
     | :----- | :----------------: | :-------------: | :---------: |
     | Regression | $p_1+p_2$ | $\hat{\bbeta}X^{\mathrm{T}}X\hat{\bbeta} - n\bar{Y}^2$ | $\left(\hat{\bbeta}X^{\mathrm{T}}X\hat{\bbeta} - n\bar{Y}^2\right)/(p_1+p_2)$ |
-    | Model (i) | $p_1$ | $\hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1 - n\bar{Y}^2$ | $\left(\hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1 - n\bar{Y}^2\right)/p_1$ |
-    | Extra due to Model (ii) | $p_2$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1\right)/p_2$ |
+    | Model (i) | $p_1$ | $(\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^* - n\bar{Y}^2$ | $\left((\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^* - n\bar{Y}^2\right)/p_1$ |
+    | Extra due to Model (ii) | $p_2$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^*$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^*\right)/p_2$ |
     | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
     | Total | $n-1$ | $\bY^{\mathrm{T}}\bY - n\bar{Y}^2$ | | 
 
@@ -733,9 +734,9 @@ c. The extra sum of squares for the terms in model (i) over and above those in m
 
     ia. $\bY = X^\star_2\bbeta_2^\star + \bvarepsilon$,  
 
-    iia. $\bY = X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon = X\bbeta + \varepsilon$
+    iia. $\bY = \boldsymbol{1}_n\beta_0 + X_1\bbeta_1 + X_2\bbeta_2+ \bvarepsilon = X\bbeta + \varepsilon$
 
-    where $X^\star_2 = [\boldsymbol{1}_n \vert X_2]$ and $\bbeta_2^\star = (\beta_0, \bbeta_2)^{\mathrm{T}}$ (so model (ia) also contains the intercept).
+    where $X^\star_2 = [\boldsymbol{1}_n \, X_2]$ and $\bbeta_2^\star = (\beta_0, \bbeta_2^{\mathrm{T}})^{\mathrm{T}}$ (so model (ia) also contains the intercept).
 
     Extra sum of squares for model (iia):
 
@@ -751,11 +752,11 @@ c. The extra sum of squares for the terms in model (i) over and above those in m
     | :----: | :----------------: | :-------------: | :---------: |
     | Regression | $p_1+p_2$ | $\hat{\bbeta}X^{\mathrm{T}}X\hat{\bbeta} - n\bar{Y}^2$ | $\left(\hat{\bbeta}X^{\mathrm{T}}X\hat{\bbeta} - n\bar{Y}^2\right)/(p_1+p_2)$ |
     | Extra due to Model (i) only | $p_1$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\bbeta}^\star_2$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}^\star_2)^{\mathrm{T}}(X_2^\star)^{\mathrm{T}}X_2^\star\hat{\bbeta}^\star_2\right)/p_1$ |
-    | Extra Model due to model (ii) only | $p_2$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - \hat{\bbeta}_1^{\mathrm{T}}X_1^{\mathrm{T}}X_1\hat{\bbeta}_1\right)/p_2$ |
+    | Extra Model due to model (ii) only | $p_2$ | $\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^*$ | $\left(\hat{\bbeta}^{\mathrm{T}}X^{\mathrm{T}}X\hat{\bbeta} - (\hat{\bbeta}_1^*)^{\mathrm{T}}(X_1^*)^{\mathrm{T}}X_1^*\hat{\bbeta}_1^*\right)/p_2$ |
     | Residual | $n-p_1-p_2-1$ | $(\bY - X\hat{\bbeta})^{\mathrm{T}}(\bY - X\hat{\bbeta})$ | RSS$/(n-p_1-p_2-1)$ |
     | Total | $n-1$ | $\bY^{\mathrm{T}}\bY - n\bar{Y}^2$ | |
 
-Note that for these *adjusted* sums of squares, in general the extra sum of squares for model (i) and (ii) do not sum to the regression sum of squares. This will only be the case if the columns of $X_1$ and $X_2$ are mutually orthogonal, i.e. $X_1^{\mathrm{T}}X_2 = \boldsymbol{0}$.
+Note that for these *adjusted* sums of squares, in general the extra sum of squares for model (i) and (ii) do not sum to the regression sum of squares. This will only be the case if the columns of $X_1$ and $X_2$ are mutually orthogonal, i.e. $X_1^{\mathrm{T}}X_2 = \boldsymbol{0}$, and if both $X_1$ and $X_2$ are also orthogonal to $\boldsymbol{1}_n$, i.e. $X_1^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}$ and $X_2^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}$.
 
 
 </details>
