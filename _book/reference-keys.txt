@@ -156,11 +156,3 @@ resolution-and-aberration
 frac-anal
 blocking-fractional-fractorial-designs
 exercises-5
-def:exp
-def:design
-exm:motivation
-def:simple-efficiency
-def:response
-def:factor-variable
-def:treatment
-def:unit
