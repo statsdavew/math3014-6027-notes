@@ -361,7 +361,7 @@ qqplot(x = qnorm(p), y = abs(effs[,2]), ylab = "Absolute factorial effects",
 
 The advantage of a half-normal plot such as Figure \@ref(fig:desilylation-half-normal-plot) is that we only need to look at effects appearing in the top right corner (significant effects will always appear "above" a hypothetical straight line) and we do not need to worry about comparing large positive and negative values. For these reason, they are usually preferred over normal plots.
 
-For the desilylation experiment, we can see the effects fall into three groups: one effect standing well away from the line, and almost certainly significant (`temp`, from Table \@ref(desilylation-effects-plot1)), then a group of six effects (`reagent`, `time`, `temp.solvent`, `solvent`, `temp.time`, `temp.reagent`) which may be significant, and then a group of 8 much smaller effects. 
+For the desilylation experiment, we can see the effects fall into three groups: one effect standing well away from the line, and almost certainly significant (`temp`, from Table \@ref(tab:desilylation-effects-plot1)), then a group of six effects (`reagent`, `time`, `temp.solvent`, `solvent`, `temp.time`, `temp.reagent`) which may be significant, and then a group of 8 much smaller effects. 
 
 ### Lenth's method for approximate hypothesis testing
 
