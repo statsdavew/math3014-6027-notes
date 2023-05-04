@@ -657,7 +657,7 @@ Finally, the estimate of the intercept takes the form $\hat{\beta}_0 = \bar{Y}$,
 
 \begin{equation*}
 \begin{split}
-\mbox{RSS} & = \bY^{\mathrm{T}}\bY - 2^f\bar{y} -  2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
+\mbox{RSS} & = \bY^{\mathrm{T}}\bY - 2^f\bar{y}^2 -  2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
 & = \sum_{i=1}^{2^f}(y_i - \bar{y})^2 - 2^f\sum_{i=1}^{p}\hat{\beta}_i^2 \\
 & = \mbox{Total SS} - 2^f\sum_{i=1}^{p}\hat{\beta}_i^2\,
 \end{split}
@@ -683,7 +683,7 @@ $$
 
 a. Each factorial contrast is scaled so the variance for the estimator is equal to $4\sigma^2/n = \sigma^2 / 64$.
 
-b. $E(y_11) = \boldsymbol{x}_1^{\mathrm{T}}\boldsymbol{\beta}$, where $\boldsymbol{x}_1^{\mathrm{T}}$ is the row of the $X$ matrix corresponding to the first treatment and $\boldsymbol{\beta}$ are the regression coefficients. The estimator is given by
+b. $E(y_{11}) = \boldsymbol{x}_1^{\mathrm{T}}\boldsymbol{\beta}$, where $\boldsymbol{x}_1^{\mathrm{T}}$ is the row of the $X$ matrix corresponding to the first treatment and $\boldsymbol{\beta}$ are the regression coefficients. The estimator is given by
 
     $$
 \hat{E}(y_{11}) = \boldsymbol{x}_1^{\mathrm{T}}\hat{\boldsymbol{\beta}}\,,
