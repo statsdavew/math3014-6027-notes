@@ -128,7 +128,7 @@ CE & = ABD \\
 DE & = ABC \\
 \end{align}
 
-This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \@ref(exm:Spring-experiment) might be used if factor $A$ and its interactions were a priori thought likely to be important (two-factor interactions involving factor $A$ are aliased with four-factor interactions).
+This defining relation results in main effects being aliased with four-factor interactions and, perhaps more importantly, no pairs of two-factor interactions aliased together. The original design from Example \@ref(exm:spring-experiment) might be used if factor $A$ and its interactions were a priori thought likely to be important (two-factor interactions involving factor $A$ are aliased with four-factor interactions).
 
 ## Estimability and aliasing {#est-alias}
 
