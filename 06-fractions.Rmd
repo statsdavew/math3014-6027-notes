@@ -177,7 +177,7 @@ t(alias(spring.lm)$Complete)
 
 To select a $2^{f-q}$ fractional factorial design:
 
-- choose $q$ independent factorial contrasts for the **generators**, or **defining words**, $\nu_1,\ldots,n_q$.  Typically, we choose higher-order interactions (due to effect hierarchy):
+- choose $q$ independent factorial contrasts for the **generators**, or **defining words**, $\nu_1,\ldots,\nu_q$.  Typically, we choose higher-order interactions (due to effect hierarchy):
 
 $$
 \nu_{1}=\boldsymbol{c}_{1},\ldots,\nu_{q} = \boldsymbol{c}_{q}\,.
