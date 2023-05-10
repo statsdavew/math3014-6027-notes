@@ -1,6 +1,6 @@
 # Fractional factorial designs {#fractional-factorial}
 
-The factorial designs we studied in Chapters \@ref(factorial) and \@ref(factorial) can involve a large number of treatments, for even a moderate number of factors (Table \@ref(tab:size-of-factorial)).
+The factorial designs we studied in Chapters \@ref(factorial) and \@ref(block-factorial) can involve a large number of treatments, for even a moderate number of factors (Table \@ref(tab:size-of-factorial)).
 
 ```{r size-of-factorial}
 size <- data.frame(1:15, 2^(1:15))
