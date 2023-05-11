@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2023-05-10" />
+<meta name="date" content="2023-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -264,7 +264,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="fractional-factorial" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Fractional factorial designs<a href="fractional-factorial.html#fractional-factorial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The factorial designs we studied in Chapters <a href="factorial.html#factorial">4</a> and <a href="factorial.html#factorial">4</a> can involve a large number of treatments, for even a moderate number of factors (Table <a href="fractional-factorial.html#tab:size-of-factorial">6.1</a>).</p>
+<p>The factorial designs we studied in Chapters <a href="factorial.html#factorial">4</a> and <a href="block-factorial.html#block-factorial">5</a> can involve a large number of treatments, for even a moderate number of factors (Table <a href="fractional-factorial.html#tab:size-of-factorial">6.1</a>).</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="fractional-factorial.html#cb192-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">2</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>))</span>
 <span id="cb192-2"><a href="fractional-factorial.html#cb192-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;No. factors&quot;</span>, <span class="st">&quot;No. of trts&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Number of treatments in a $2^f$ factorial designs for different numbers, $f$, of factors.&quot;</span>)</span></code></pre></div>
 <table>
@@ -1301,7 +1301,7 @@ Fixing values for <span class="math inline">\(ABCE\)</span> and <span class="mat
 </tbody>
 </table>
 </div>
-<p>Analysis proceeds as before, except no factorial effect can be estimated that is within an alias string that is confounded with blocks. For Example, split the spring experiment from Exa,ple <a href="fractional-factorial.html#exm:spring-experiment">6.1</a> into <span class="math inline">\(b=2\)</span> blocks of size <span class="math inline">\(k=8\)</span> using confounding the alias string <span class="math inline">\(ABE = ACD\)</span> with blocks.</p>
+<p>Analysis proceeds as before, except no factorial effect can be estimated that is within an alias string that is confounded with blocks. For Example, split the spring experiment from Example <a href="fractional-factorial.html#exm:spring-experiment">6.1</a> into <span class="math inline">\(b=2\)</span> blocks of size <span class="math inline">\(k=8\)</span> using confounding the alias string <span class="math inline">\(ABE = ACD\)</span> with blocks.</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="fractional-factorial.html#cb224-1" aria-hidden="true" tabindex="-1"></a>spring.blocks <span class="ot">&lt;-</span> spring</span>
 <span id="cb224-2"><a href="fractional-factorial.html#cb224-2" aria-hidden="true" tabindex="-1"></a>spring.blocks<span class="sc">$</span>blocks <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">data.frame</span>(spring), <span class="fu">fac_to_numeric</span>(A) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(B) <span class="sc">*</span> <span class="fu">fac_to_numeric</span>(C))</span>
 <span id="cb224-3"><a href="fractional-factorial.html#cb224-3" aria-hidden="true" tabindex="-1"></a>springb.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> blocks <span class="sc">+</span> (A <span class="sc">+</span> B <span class="sc">+</span> C <span class="sc">+</span> D <span class="sc">+</span> E) <span class="sc">^</span> <span class="dv">3</span>, <span class="at">data =</span> spring.blocks)</span>
