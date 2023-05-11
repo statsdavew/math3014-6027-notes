@@ -445,7 +445,7 @@ knitr::kable(cbind(block12, block34),
 ```
 :::
 
-Analysis proceeds as before, except no factorial effect can be estimated that is within an alias string that is confounded with blocks. For Example, split the spring experiment from Exa,ple \@ref(exm:spring-experiment) into $b=2$ blocks of size $k=8$ using confounding the alias string $ABE = ACD$ with blocks.
+Analysis proceeds as before, except no factorial effect can be estimated that is within an alias string that is confounded with blocks. For Example, split the spring experiment from Example \@ref(exm:spring-experiment) into $b=2$ blocks of size $k=8$ using confounding the alias string $ABE = ACD$ with blocks.
 
 ```{r spring-blocks, warning = F}
 spring.blocks <- spring
