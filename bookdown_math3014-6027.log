@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.12.6)  27 JAN 2024 21:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.12.6)  27 JAN 2024 22:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,7 +566,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.1.5.1
 l.739 \end{align}
                   [16] [17] [18]
 Overfull \hbox (27.74892pt too wide) in paragraph at lines 829--829
-[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Milk first" "Milk first"[] 
+[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Milk first" "Tea first"  "Milk first"[] 
  []
 
 [19]
@@ -791,42 +791,42 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [1,]    1    0    1    1    1    1    0    0    1     0     1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [1,]    0    0    1    0    1    0    0    0    1     1     1     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    0    0    1     1     1     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    1    1    0     0     1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    1    0    1    1    0    1    0     0     0     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    0    1    1    1    1    1     1     0     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    0    0    1    1    0     1     0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    1    0    0    0     0     0     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [5,]    0    1    1    1    0    0    1    0    0     0     1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [5,]    0    1    0    1    0    1    0    1    0     1     0     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [6,]    0    1    0    1    0    1    0    1    1     1     0     1     0     0[] 
+[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    1    0    0    0    1    1     0     1     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [7,]    0    1    0    0    1    0    1    1    1     0     1     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [7,]    1    1    1    0    0    1    1    0    1     0     0     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [8,]    1    1    0    0    1    1    1    0    0     1     0     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    1    1    0    1    1    0    1    0    0     1     1     0     0     0[] 
  []
 
 
@@ -1111,10 +1111,6 @@ Chapter 5.
 [121
 
 ] [122] [123] [124]
-
-LaTeX Warning: Reference `eq:eq:block-plm' on page 125 undefined on input line 5751.
-
-
 Underfull \vbox (badness 1496) has occurred while \output is active []
 
 [125] [126] [127] [128]
@@ -1134,7 +1130,7 @@ Overfull \hbox (43.49887pt too wide) in paragraph at lines 6185--6185
 
 
 Overfull \hbox (43.49887pt too wide) in paragraph at lines 6185--6185
-[]\T1/lmtt/m/n/10 ##      4.7342      4.1620      0.1973      2.9511      1.1667      4.2154[] 
+[]\T1/lmtt/m/n/10 ##      5.2451      3.4993     -0.1440      3.0337      0.9042      3.7991[] 
  []
 
 [133]
@@ -1143,7 +1139,7 @@ Underfull \hbox (badness 1688) in paragraph at lines 6268--6270
  []
 
 [134] [135] [136] [137] [138] [139]
-<bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf, id=1554, 461.725pt x 268.00125pt>
+<bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf, id=1555, 461.725pt x 268.00125pt>
 File: bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf Graphic file (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf>
 Package pdftex.def Info: bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf  used on input line 6692.
@@ -1337,18 +1333,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 15579 strings out of 476213
- 251929 string characters out of 5795388
+ 15578 strings out of 476213
+ 251912 string characters out of 5795388
  1965555 words of memory out of 5000000
- 36210 multiletter control sequences out of 15000+600000
+ 36209 multiletter control sequences out of 15000+600000
  687615 words of font info for 316 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  83i,20n,93p,1019b,790s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmib7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (165 pages, 3887250 bytes).
+Output written on bookdown_math3014-6027.pdf (165 pages, 3886974 bytes).
 PDF statistics:
- 2213 PDF objects out of 2487 (max. 8388607)
- 1881 compressed objects within 19 object streams
+ 2214 PDF objects out of 2487 (max. 8388607)
+ 1882 compressed objects within 19 object streams
  667 named destinations out of 1000 (max. 500000)
  68062 words of extra memory for PDF output out of 74296 (max. 10000000)
 
