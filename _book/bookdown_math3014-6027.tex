@@ -824,7 +824,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Milk first" "Tea first"  "Milk first"
+## [1] "Tea first"  "Milk first" "Tea first"  "Milk first" "Milk first"
 ## [6] "Tea first"  "Milk first" "Tea first"
 \end{verbatim}
 
@@ -855,7 +855,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"
+## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -3067,10 +3067,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
-## [2,]    0    1    1    1
-## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [1,]    0    1    1    1
+## [2,]    1    0    1    1
+## [3,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3084,14 +3084,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    0    1    0    1    0    0    0    1     1     1     1     0     1
-## [2,]    1    0    0    0    0    0    1    1    0     0     1     1     1     1
-## [3,]    0    0    0    0    1    1    1    1    1     1     0     0     1     0
-## [4,]    1    0    1    1    1    1    0    0    0     0     0     0     1     1
-## [5,]    0    1    0    1    0    1    0    1    0     1     0     1     0     1
-## [6,]    0    1    1    1    0    0    0    1    1     0     1     0     1     0
-## [7,]    1    1    1    0    0    1    1    0    1     0     0     1     0     0
-## [8,]    1    1    0    1    1    0    1    0    0     1     1     0     0     0
+## [1,]    0    1    1    0    0    1    1    1    1     0     0     0     1     0
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    0    1    0    0    1    1    1    0    0     0     1     1     0     1
+## [4,]    0    1    1    1    1    0    0    0    0     1     0     0     1     1
+## [5,]    1    1    1    1    0    0    0    0    1     0     1     1     0     0
+## [6,]    1    0    1    0    1    0    1    1    0     1     1     0     0     0
+## [7,]    1    0    0    1    0    1    1    0    1     1     0     0     0     1
+## [8,]    1    0    0    1    1    1    0    1    0     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4598,35 +4598,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0011\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0039 & 0.0349\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0041 & 0.0352\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0057 & 0.0502\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0065 & 0.0577\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0078 & 0.0701\\
+time & 2.5675 & 0.66 & 3.890 & 0.0082 & 0.0735\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0103 & 0.0900\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0112 & 0.0956\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0103 & 0.0900\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0112 & 0.0956\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0125 & 0.1114\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0137 & 0.1181\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3038 & 0.9955\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3064 & 0.9970\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4289 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4308 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5032 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5037 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7314 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7320 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7396 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7400 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7839 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7853 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7866 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7884 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9660 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9657 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5191,7 +5191,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7313 and 5.3187, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7139 and 4.9915, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6098,10 +6098,10 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##          [,1]
-## A      3.4993
-## B     -0.1440
-## C      3.0337
-## A:B:C  0.1177
+## A      4.5056
+## B      0.1155
+## C      3.3841
+## A:B:C -0.5962
 \end{verbatim}
 
 \begin{Shaded}
@@ -6117,11 +6117,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  265.2    88.4     NaN    NaN
-## A          1   98.0    98.0     NaN    NaN
-## B          1    0.2     0.2     NaN    NaN
-## C          1   73.6    73.6     NaN    NaN
-## A:B:C      1    0.1     0.1     NaN    NaN
+## Block      3  282.3    94.1     NaN    NaN
+## A          1  162.4   162.4     NaN    NaN
+## B          1    0.1     0.1     NaN    NaN
+## C          1   91.6    91.6     NaN    NaN
+## A:B:C      1    2.8     2.8     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6133,7 +6133,7 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 
 \begin{verbatim}
 ##       A       B       C   A:B:C 
-##  3.4993 -0.1440  3.0337  0.1177
+##  4.5056  0.1155  3.3841 -0.5962
 \end{verbatim}
 
 \begin{Shaded}
@@ -6143,8 +6143,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-##  6.9986 -0.2880  6.0675  0.2353
+##      A      B      C  A:B:C 
+##  9.011  0.231  6.768 -1.192
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6161,13 +6161,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1   98.0    98.0     NaN    NaN
-## B          1    0.2     0.2     NaN    NaN
-## C          1   73.6    73.6     NaN    NaN
-## A:B        1    6.5     6.5     NaN    NaN
-## A:C        1  115.5   115.5     NaN    NaN
-## B:C        1  143.2   143.2     NaN    NaN
-## A:B:C      1    0.1     0.1     NaN    NaN
+## A          1  162.4   162.4     NaN    NaN
+## B          1    0.1     0.1     NaN    NaN
+## C          1   91.6    91.6     NaN    NaN
+## A:B        1    1.0     1.0     NaN    NaN
+## A:C        1  146.4   146.4     NaN    NaN
+## B:C        1  135.0   135.0     NaN    NaN
+## A:B:C      1    2.8     2.8     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6179,9 +6179,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      5.2451      3.4993     -0.1440      3.0337      0.9042      3.7991 
+##      4.7340      4.5056      0.1155      3.3841      0.3460      4.2779 
 ##         B:C       A:B:C 
-##      4.2313      0.1177
+##      4.1075     -0.5962
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6235,14 +6235,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3  1 -1 -1  1  1
-## 18      3 -1 -1  1  1 -1
-## 19      3  1  1 -1 -1 -1
-## 20      3 -1  1  1 -1  1
-## 21      3 -1  1 -1  1  1
-## 22      3 -1 -1 -1 -1 -1
-## 23      3  1  1  1  1 -1
-## 24      3  1 -1  1 -1  1
+## 17      3 -1  1 -1  1  1
+## 18      3 -1 -1 -1 -1 -1
+## 19      3  1  1  1  1 -1
+## 20      3  1  1 -1 -1 -1
+## 21      3  1 -1  1 -1  1
+## 22      3 -1  1  1 -1  1
+## 23      3  1 -1 -1  1  1
+## 24      3 -1 -1  1  1 -1
 \end{verbatim}
 
 \begin{enumerate}

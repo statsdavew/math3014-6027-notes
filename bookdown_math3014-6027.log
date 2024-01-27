@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.12.6)  27 JAN 2024 22:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.12.6)  27 JAN 2024 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,7 +566,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.1.5.1
 l.739 \end{align}
                   [16] [17] [18]
 Overfull \hbox (27.74892pt too wide) in paragraph at lines 829--829
-[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Milk first" "Tea first"  "Milk first"[] 
+[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "Milk first"[] 
  []
 
 [19]
@@ -791,42 +791,42 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [1,]    0    0    1    0    1    0    0    0    1     1     1     1     0     1[] 
+[]\T1/lmtt/m/n/10 ## [1,]    0    1    1    1    1    0    1    0    0     0     1     0     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [2,]    1    0    0    0    0    0    1    1    0     0     1     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    0    1    1    1    1    1     1     0     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [3,]    0    1    0    1    1    0    0    1    0     1     0     1     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    1    0    0    0     0     0     0     1     1[] 
+[]\T1/lmtt/m/n/10 ## [4,]    0    1    1    0    0    1    0    1    1     0     0     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [5,]    0    1    0    1    0    1    0    1    0     1     0     1     0     1[] 
+[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    0    0    1    0    0    0     1     1     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    1    0    0    0    1    1     0     1     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [6,]    1    0    1    0    1    0    1    1    1     1     0     0     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [7,]    1    1    1    0    0    1    1    0    1     0     0     1     0     0[] 
+[]\T1/lmtt/m/n/10 ## [7,]    1    0    0    1    0    1    1    1    0     0     0     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [8,]    1    1    0    1    1    0    1    0    0     1     1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    1    0    0    1    1    1    0    0    1     0     1     0     1     0[] 
  []
 
 
@@ -1130,7 +1130,7 @@ Overfull \hbox (43.49887pt too wide) in paragraph at lines 6185--6185
 
 
 Overfull \hbox (43.49887pt too wide) in paragraph at lines 6185--6185
-[]\T1/lmtt/m/n/10 ##      5.2451      3.4993     -0.1440      3.0337      0.9042      3.7991[] 
+[]\T1/lmtt/m/n/10 ##      4.6461      4.0545      0.1111      2.9122      1.3923      3.7403[] 
  []
 
 [133]
@@ -1341,7 +1341,7 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  83i,20n,93p,1019b,790s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmib7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></Users/davew/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (165 pages, 3886974 bytes).
+Output written on bookdown_math3014-6027.pdf (165 pages, 3886973 bytes).
 PDF statistics:
  2214 PDF objects out of 2487 (max. 8388607)
  1882 compressed objects within 19 object streams
