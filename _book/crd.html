@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2023-05-04" />
+<meta name="date" content="2024-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -266,18 +270,18 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 2</span> Completely randomised designs<a href="crd.html#crd" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The simplest form of experiment we will consider compares <span class="math inline">\(t\)</span> different <strong>unstructured</strong> treatments. By unstructured, we mean the treatments form a discrete collection, not related through the settings of other experimental features (compare with factorial experiments in Chapter <a href="factorial.html#factorial">4</a>). We also make the assumption that there are no restrictions in the randomisation of treatments to experimental units (compare with Chapter <a href="blocking.html#blocking">3</a> on blocking). A designs for such an experiment is therefore called a <strong>completely randomised design</strong> (CRD).</p>
 <div class="example">
-<p><span id="exm:one-way" class="example"><strong>Example 2.1  </strong></span>Pulp experiment <span class="citation">(<a href="#ref-WH2009" role="doc-biblioref">Wu and Hamada, 2009</a>, ch. 2)</span></p>
+<p><span id="exm:one-way" class="example"><strong>Example 2.1  </strong></span>Pulp experiment <span class="citation">(<a href="#ref-WH2009">Wu and Hamada, 2009</a>, ch. 2)</span></p>
 <p>In a paper pulping mill, an experiment was run to examine differences between the reflectance (brightness; ratio of amount of light leaving a target to the amount of light striking the target) of sheets of pulp made by <span class="math inline">\(t=4\)</span> operators. The data are given in Table <a href="crd.html#tab:pulp-expt-data">2.1</a> below.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="crd.html#cb8-1" aria-hidden="true" tabindex="-1"></a>pulp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">operator =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="dv">5</span>),</span>
-<span id="cb8-2"><a href="crd.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">repetition =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">5</span>)), </span>
-<span id="cb8-3"><a href="crd.html#cb8-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">reflectance =</span> <span class="fu">c</span>(<span class="fl">59.8</span>, <span class="fl">59.8</span>, <span class="fl">60.7</span>, <span class="fl">61.0</span>, <span class="fl">60.0</span>, <span class="fl">60.2</span>, <span class="fl">60.7</span>, <span class="fl">60.8</span>, </span>
-<span id="cb8-4"><a href="crd.html#cb8-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="fl">60.8</span>, <span class="fl">60.4</span>, <span class="fl">60.5</span>, <span class="fl">60.6</span>, <span class="fl">60.8</span>, <span class="fl">59.9</span>, <span class="fl">60.9</span>, <span class="fl">60.5</span>, <span class="fl">59.8</span>, <span class="fl">60.0</span>, <span class="fl">60.3</span>, <span class="fl">60.5</span>)</span>
-<span id="cb8-5"><a href="crd.html#cb8-5" aria-hidden="true" tabindex="-1"></a>                     )</span>
-<span id="cb8-6"><a href="crd.html#cb8-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb8-7"><a href="crd.html#cb8-7" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(pulp, <span class="at">names_from =</span> operator, <span class="at">values_from =</span> reflectance)[, <span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb8-8"><a href="crd.html#cb8-8" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb8-9"><a href="crd.html#cb8-9" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
-<span id="cb8-10"><a href="crd.html#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="crd.html#cb8-1" tabindex="-1"></a>pulp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">operator =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="dv">5</span>),</span>
+<span id="cb8-2"><a href="crd.html#cb8-2" tabindex="-1"></a>                   <span class="at">repetition =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">5</span>)), </span>
+<span id="cb8-3"><a href="crd.html#cb8-3" tabindex="-1"></a>                   <span class="at">reflectance =</span> <span class="fu">c</span>(<span class="fl">59.8</span>, <span class="fl">59.8</span>, <span class="fl">60.7</span>, <span class="fl">61.0</span>, <span class="fl">60.0</span>, <span class="fl">60.2</span>, <span class="fl">60.7</span>, <span class="fl">60.8</span>, </span>
+<span id="cb8-4"><a href="crd.html#cb8-4" tabindex="-1"></a>                                    <span class="fl">60.8</span>, <span class="fl">60.4</span>, <span class="fl">60.5</span>, <span class="fl">60.6</span>, <span class="fl">60.8</span>, <span class="fl">59.9</span>, <span class="fl">60.9</span>, <span class="fl">60.5</span>, <span class="fl">59.8</span>, <span class="fl">60.0</span>, <span class="fl">60.3</span>, <span class="fl">60.5</span>)</span>
+<span id="cb8-5"><a href="crd.html#cb8-5" tabindex="-1"></a>                     )</span>
+<span id="cb8-6"><a href="crd.html#cb8-6" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb8-7"><a href="crd.html#cb8-7" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(pulp, <span class="at">names_from =</span> operator, <span class="at">values_from =</span> reflectance)[, <span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb8-8"><a href="crd.html#cb8-8" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb8-9"><a href="crd.html#cb8-9" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
+<span id="cb8-10"><a href="crd.html#cb8-10" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:pulp-expt-data">Table 2.1: </span>Pulp experiment: reflectance values (unitless) from four different operators.</caption>
 <thead>
@@ -323,7 +327,7 @@ div.csl-indent {
 </table>
 <p>The experiment has one factor (operator) with four levels (sometimes called a one-way layout). The CRD employed has equal replication of each treatment (operator).</p>
 <p>We can informally compare the responses from these four treatments graphically.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="crd.html#cb9-1" tabindex="-1"></a><span class="fu">boxplot</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pulp-boxplot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/pulp-boxplot-1.png" alt="Pulp experiment: distributions of reflectance from the four operators." width="672" />
 <p class="caption">
@@ -523,11 +527,11 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <div id="r-crd" class="section level2 hasAnchor" number="2.6">
 <h2><span class="header-section-number">2.6</span> Analysing CRDs in R<a href="crd.html#r-crd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="crd.html#cb10-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb10-2"><a href="crd.html#cb10-2" aria-hidden="true" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(pulp, <span class="at">names_from =</span> operator, <span class="at">values_from =</span> reflectance)[, <span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb10-3"><a href="crd.html#cb10-3" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb10-4"><a href="crd.html#cb10-4" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
-<span id="cb10-5"><a href="crd.html#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="crd.html#cb10-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb10-2"><a href="crd.html#cb10-2" tabindex="-1"></a> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(pulp, <span class="at">names_from =</span> operator, <span class="at">values_from =</span> reflectance)[, <span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb10-3"><a href="crd.html#cb10-3" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Operator&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb10-4"><a href="crd.html#cb10-4" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Pulp experiment: reflectance values (unitless) from four different operators.&quot;</span></span>
+<span id="cb10-5"><a href="crd.html#cb10-5" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:one-way-analysis">Table 2.2: </span>Pulp experiment: reflectance values (unitless) from four different operators.</caption>
 <thead>
@@ -574,8 +578,8 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <p>Clearly, we could directly calculate, and then compare, mean responses for each operator. However, there are (at least) two other ways we can proceed which use the fact we are fitting a linear model. These will be useful when we consider more complex models.</p>
 <ol style="list-style-type: decimal">
 <li><p>Using <code>pairwise.t.test</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="crd.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(pulp, </span>
-<span id="cb11-2"><a href="crd.html#cb11-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">pairwise.t.test</span>(reflectance, operator, <span class="at">p.adjust.method =</span> <span class="st">&#39;none&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="crd.html#cb11-1" tabindex="-1"></a><span class="fu">with</span>(pulp, </span>
+<span id="cb11-2"><a href="crd.html#cb11-2" tabindex="-1"></a> <span class="fu">pairwise.t.test</span>(reflectance, operator, <span class="at">p.adjust.method =</span> <span class="st">&#39;none&#39;</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -589,8 +593,8 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 ## P value adjustment method: none</code></pre>
 <p>This function performs hypothesis tests for all pairwise treatment comparisons (with a default confidence level of 0.95). Here we can see that operators 1 and 4, 2 and 3, and 2 and 4 have statistically significant differences.</p></li>
 <li><p>Using <code>lm</code> and the <code>emmeans</code> package.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="crd.html#cb13-1" aria-hidden="true" tabindex="-1"></a>pulp.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span>
-<span id="cb13-2"><a href="crd.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(pulp.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="crd.html#cb13-1" tabindex="-1"></a>pulp.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(reflectance <span class="sc">~</span> operator, <span class="at">data =</span> pulp)</span>
+<span id="cb13-2"><a href="crd.html#cb13-2" tabindex="-1"></a><span class="fu">anova</span>(pulp.lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: reflectance
@@ -599,8 +603,8 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 ## Residuals 16   1.70   0.106                 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="crd.html#cb15-1" aria-hidden="true" tabindex="-1"></a>pulp.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(pulp.lm, <span class="sc">~</span> operator)</span>
-<span id="cb15-2"><a href="crd.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="crd.html#cb15-1" tabindex="-1"></a>pulp.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(pulp.lm, <span class="sc">~</span> operator)</span>
+<span id="cb15-2"><a href="crd.html#cb15-2" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast              estimate    SE df t.ratio p.value
 ##  operator1 - operator2     0.18 0.206 16   0.873  0.3955
 ##  operator1 - operator3    -0.38 0.206 16  -1.843  0.0839
@@ -614,8 +618,8 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <p>Our preferred approach is using method 2 (<code>lm</code> and <code>emmeans</code>), for four main reasons:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>The function <code>contrasts</code> in the <code>emmeans</code> package can be used to estimate arbitrary treatment contrasts (see <code>help("contrast-methods")</code>).</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="crd.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same as `pairs` above</span></span>
-<span id="cb17-2"><a href="crd.html#cb17-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="crd.html#cb17-1" tabindex="-1"></a><span class="co"># same as `pairs` above</span></span>
+<span id="cb17-2"><a href="crd.html#cb17-2" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast              estimate    SE df t.ratio p.value
 ##  operator1 - operator2     0.18 0.206 16   0.873  0.3955
 ##  operator1 - operator3    -0.38 0.206 16  -1.843  0.0839
@@ -623,11 +627,11 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 ##  operator2 - operator3    -0.56 0.206 16  -2.716  0.0153
 ##  operator2 - operator4    -0.62 0.206 16  -3.007  0.0083
 ##  operator3 - operator4    -0.06 0.206 16  -0.291  0.7748</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="crd.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
-<span id="cb19-2"><a href="crd.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
-<span id="cb19-3"><a href="crd.html#cb19-3" aria-hidden="true" tabindex="-1"></a>contrast1v23.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs) </span>
-<span id="cb19-4"><a href="crd.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&#39;t1 v avg t2 t3&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>))</span>
-<span id="cb19-5"><a href="crd.html#cb19-5" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&#39;contrast1v23&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="crd.html#cb19-1" tabindex="-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
+<span id="cb19-2"><a href="crd.html#cb19-2" tabindex="-1"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
+<span id="cb19-3"><a href="crd.html#cb19-3" tabindex="-1"></a>contrast1v23.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs) </span>
+<span id="cb19-4"><a href="crd.html#cb19-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&#39;t1 v avg t2 t3&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>))</span>
+<span id="cb19-5"><a href="crd.html#cb19-5" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&#39;contrast1v23&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast       estimate    SE df t.ratio p.value
 ##  t1.v.avg.t2.t3     -0.1 0.179 16  -0.560  0.5832</code></pre></li>
 <li><p>It more easily generalises to the more complicated models we will see in Chapter <a href="blocking.html#blocking">3</a>.</p></li>
@@ -639,13 +643,13 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 <h2><span class="header-section-number">2.7</span> Multiple comparisons<a href="crd.html#multiple-comp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When we perform hypothesis testing, we choose the critical region (i.e. the rule that decides if we reject <span class="math inline">\(H_0\)</span>) to control the probability of a type I error; that is, we control the probability of incorrectly rejecting <span class="math inline">\(H_0\)</span>. If we need to test multiple hypotheses, e.g. to test all pairwise differences, we need to consider the overall probability of incorrectly rejecting <strong>one or more</strong> null hypothesis. This is called the <strong>experiment-wise</strong> or <strong>family-wise</strong> error rate.</p>
 <p>For Example <a href="crd.html#exm:one-way">2.1</a>, there are <span class="math inline">\({4 \choose 2} = 6\)</span> pairwise comparisons. Under the assumption that all tests are independent<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>, assuming each individual test has type I error 0.05, the experiment-wise type I error rate is given by:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="crd.html#cb21-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb21-2"><a href="crd.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> alpha)<span class="sc">^</span><span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="crd.html#cb21-1" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb21-2"><a href="crd.html#cb21-2" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> alpha)<span class="sc">^</span><span class="dv">6</span></span></code></pre></div>
 <pre><code>## [1] 0.2649</code></pre>
 <p>An experiment-wise error rate of 0.2649 is substantially greater than 0.05. Hence, we would expect to make many more type I errors than may be desirable. <a href="https://xkcd.com/882">xkcd</a> has a fun example:</p>
 <p><img src="https://imgs.xkcd.com/comics/significant.png" width="75%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="crd.html#cb23-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb23-2"><a href="crd.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> alpha)<span class="sc">^</span><span class="dv">20</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="crd.html#cb23-1" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb23-2"><a href="crd.html#cb23-2" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> alpha)<span class="sc">^</span><span class="dv">20</span></span></code></pre></div>
 <pre><code>## [1] 0.6415</code></pre>
 <p>Therefore it is usually desirable to maintain some control of the experiment-wise type I error rate. We will consider two methods.</p>
 <ol style="list-style-type: decimal">
@@ -657,7 +661,7 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 \end{align*}\]</span></p>
 <p>Hence a <em>conservative</em><a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> adjustment for multiple comparisons is to test each hypothesis at size <span class="math inline">\(\alpha / k\)</span>, i.e. for the CRD compare to the quantile <span class="math inline">\(t_{n-t, 1-\frac{\alpha}{2k}}\)</span> (or multiply each individual p-value by <span class="math inline">\(k\)</span>).</p>
 <p>For Example <a href="crd.html#exm:one-way">2.1</a>, we can test all pairwise comparisons, each at size <span class="math inline">\(\alpha/k\)</span> using the <code>adjustment</code> argument in <code>pairs</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="crd.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="crd.html#cb25-1" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast              estimate    SE df t.ratio p.value
 ##  operator1 - operator2     0.18 0.206 16   0.873  1.0000
 ##  operator1 - operator3    -0.38 0.206 16  -1.843  0.5034
@@ -670,7 +674,7 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 <p>Now, only one comparison is significant at an experiment-wise type I error rate of <span class="math inline">\(\alpha = 0.05\)</span> (operators 2 and 4).</p></li>
 <li><p><strong>Tukey’s method</strong>. An alternative approach that gives an exact experiment-wise error rate of <span class="math inline">\(100\alpha\)</span>% compares the <span class="math inline">\(t\)</span> statistic to a critical value from the studentised range distribution<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, given by <span class="math inline">\(\frac{1}{\sqrt{2}}q_{t, n-t, 1-\alpha}\)</span> with <span class="math inline">\(q_{t, n-t, 1-\alpha}\)</span> the <span class="math inline">\(1-\alpha\)</span> quantile from the studentised range distribution (available in <code>R</code> as <code>qtukey</code>).</p>
 <p>For Example <a href="crd.html#exm:one-way">2.1</a>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="crd.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="crd.html#cb27-1" tabindex="-1"></a><span class="fu">pairs</span>(pulp.emm)</span></code></pre></div>
 <pre><code>##  contrast              estimate    SE df t.ratio p.value
 ##  operator1 - operator2     0.18 0.206 16   0.873  0.8185
 ##  operator1 - operator3    -0.38 0.206 16  -1.843  0.2903
@@ -682,10 +686,10 @@ P(\mbox{wrongly reject at least one of } H_{0}^1, \ldots, H_{0}^k) = &amp;    P\
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre></li>
 </ol>
 <p>The default adjustment in the <code>pairs</code> function is the Tukey method. Comparing the p-values for each comparison using unadjusted t-tests, the Boneferroni and Tukey methods:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="crd.html#cb29-1" aria-hidden="true" tabindex="-1"></a>pairs.u <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span>
-<span id="cb29-2"><a href="crd.html#cb29-2" aria-hidden="true" tabindex="-1"></a>pairs.b <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span>
-<span id="cb29-3"><a href="crd.html#cb29-3" aria-hidden="true" tabindex="-1"></a>pairs.t <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm)</span>
-<span id="cb29-4"><a href="crd.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">transform</span>(pairs.b)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">Bonf.p.value =</span> <span class="fu">transform</span>(pairs.b)[, <span class="dv">6</span>], <span class="at">Tukey.p.value =</span> <span class="fu">transform</span>(pairs.t)[, <span class="dv">6</span>], <span class="at">unadjust.p.value =</span> <span class="fu">transform</span>(pairs.u)[, <span class="dv">6</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="crd.html#cb29-1" tabindex="-1"></a>pairs.u <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;none&#39;</span>)</span>
+<span id="cb29-2"><a href="crd.html#cb29-2" tabindex="-1"></a>pairs.b <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm, <span class="at">adjust =</span> <span class="st">&#39;bonferroni&#39;</span>)</span>
+<span id="cb29-3"><a href="crd.html#cb29-3" tabindex="-1"></a>pairs.t <span class="ot">&lt;-</span> <span class="fu">pairs</span>(pulp.emm)</span>
+<span id="cb29-4"><a href="crd.html#cb29-4" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">transform</span>(pairs.b)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">Bonf.p.value =</span> <span class="fu">transform</span>(pairs.b)[, <span class="dv">6</span>], <span class="at">Tukey.p.value =</span> <span class="fu">transform</span>(pairs.t)[, <span class="dv">6</span>], <span class="at">unadjust.p.value =</span> <span class="fu">transform</span>(pairs.u)[, <span class="dv">6</span>])</span></code></pre></div>
 <pre><code>##                contrast estimate     SE df t.ratio Bonf.p.value Tukey.p.value
 ## 1 operator1 - operator2     0.18 0.2062 16  0.8731      1.00000       0.81854
 ## 2 operator1 - operator3    -0.38 0.2062 16 -1.8433      0.50336       0.29030
@@ -756,10 +760,10 @@ n_i = \frac{\sqrt{\sum_{l=1}^pc_{li}^2}}{\sum_{i=1}^t\sqrt{\sum_{l=1}^pc_{li}^2}
 \tag{2.12}
 \end{equation}\]</span></p>
 <p>Let’s return to Example <a href="crd.html#exm:one-way">2.1</a> and calculate the optimal allocations under two different sets of contrasts. First, we define an <code>R</code> function for calculating <a href="crd.html#eq:opt-ni">(2.12)</a>.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="crd.html#cb31-1" aria-hidden="true" tabindex="-1"></a>opt_ni <span class="ot">&lt;-</span> <span class="cf">function</span>(C, n) {</span>
-<span id="cb31-2"><a href="crd.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  CtC <span class="ot">&lt;-</span> <span class="fu">t</span>(C) <span class="sc">%*%</span> C</span>
-<span id="cb31-3"><a href="crd.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  n <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(CtC)) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(CtC)))</span>
-<span id="cb31-4"><a href="crd.html#cb31-4" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="crd.html#cb31-1" tabindex="-1"></a>opt_ni <span class="ot">&lt;-</span> <span class="cf">function</span>(C, n) {</span>
+<span id="cb31-2"><a href="crd.html#cb31-2" tabindex="-1"></a>  CtC <span class="ot">&lt;-</span> <span class="fu">t</span>(C) <span class="sc">%*%</span> C</span>
+<span id="cb31-3"><a href="crd.html#cb31-3" tabindex="-1"></a>  n <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(CtC)) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(CtC)))</span>
+<span id="cb31-4"><a href="crd.html#cb31-4" tabindex="-1"></a>} </span></code></pre></div>
 <p>Checking that the function <code>opt-ni</code> matches <a href="crd.html#eq:opt-ni">(2.12)</a> is left as an exercise.</p>
 <p>Consider two sets of contrasts:</p>
 <ol style="list-style-type: decimal">
@@ -773,34 +777,34 @@ c_5 &amp; = (0, -1, 0, 1) \\
 c_6 &amp; = (0, 0, -1, 1)\,.
 \end{align*}\]</span></p>
 <p>Calculating <a href="crd.html#eq:opt-ni">(2.12)</a>, we obtain</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="crd.html#cb32-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb32-2"><a href="crd.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb32-3"><a href="crd.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb32-4"><a href="crd.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
-<span id="cb32-5"><a href="crd.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb32-6"><a href="crd.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
-<span id="cb32-7"><a href="crd.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb32-8"><a href="crd.html#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb32-9"><a href="crd.html#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">byrow =</span> T</span>
-<span id="cb32-10"><a href="crd.html#cb32-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-11"><a href="crd.html#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fu">opt_ni</span>(C, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="crd.html#cb32-1" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb32-2"><a href="crd.html#cb32-2" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb32-3"><a href="crd.html#cb32-3" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb32-4"><a href="crd.html#cb32-4" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb32-5"><a href="crd.html#cb32-5" tabindex="-1"></a><span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb32-6"><a href="crd.html#cb32-6" tabindex="-1"></a><span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb32-7"><a href="crd.html#cb32-7" tabindex="-1"></a><span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb32-8"><a href="crd.html#cb32-8" tabindex="-1"></a><span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb32-9"><a href="crd.html#cb32-9" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">byrow =</span> T</span>
+<span id="cb32-10"><a href="crd.html#cb32-10" tabindex="-1"></a>)</span>
+<span id="cb32-11"><a href="crd.html#cb32-11" tabindex="-1"></a><span class="fu">opt_ni</span>(C, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 5 5 5 5</code></pre>
 <p>Hence confirming that equal replication of the treatments is optimal for minimising the average variance of estimators of the pairwise treatment differences.</p></li>
 <li><p>If operator 4 is new to the mill, it may be desired to test their output to the average output from the other three operators, using a contrast with coefficients <span class="math inline">\(c = (1/3, 1/3, 1/3, -1)\)</span>. The allocation to minimise the variance of the corresponding estimator is given by:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="crd.html#cb34-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb34-2"><a href="crd.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb34-3"><a href="crd.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">1</span></span>
-<span id="cb34-4"><a href="crd.html#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-5"><a href="crd.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">opt_ni</span>(C, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="crd.html#cb34-1" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb34-2"><a href="crd.html#cb34-2" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb34-3"><a href="crd.html#cb34-3" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">1</span></span>
+<span id="cb34-4"><a href="crd.html#cb34-4" tabindex="-1"></a>)</span>
+<span id="cb34-5"><a href="crd.html#cb34-5" tabindex="-1"></a><span class="fu">opt_ni</span>(C, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1]  3.333  3.333  3.333 10.000</code></pre>
 <p>So the optimal allocation splits 10 units between operators 1-3, and allocates 10 units to operator 4. There is no exact integer rounding possible, so we will use <span class="math inline">\(n_1 = 4\)</span>, <span class="math inline">\(n_2=n_3 = 3\)</span>, <span class="math inline">\(n_4 = 10\)</span> and calculate the efficiency by comparing the variance of this allocation to that from the equally allocated design.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="crd.html#cb36-1" aria-hidden="true" tabindex="-1"></a>crd_var <span class="ot">&lt;-</span> <span class="cf">function</span>(C, n) {</span>
-<span id="cb36-2"><a href="crd.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  CtC <span class="ot">&lt;-</span> <span class="fu">t</span>(C) <span class="sc">%*%</span> C</span>
-<span id="cb36-3"><a href="crd.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(CtC) <span class="sc">/</span> n)</span>
-<span id="cb36-4"><a href="crd.html#cb36-4" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb36-5"><a href="crd.html#cb36-5" aria-hidden="true" tabindex="-1"></a>n_equal <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">4</span>)</span>
-<span id="cb36-6"><a href="crd.html#cb36-6" aria-hidden="true" tabindex="-1"></a>n_opt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">10</span>)</span>
-<span id="cb36-7"><a href="crd.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">crd_var</span>(C, n_opt) <span class="sc">/</span> <span class="fu">crd_var</span>(C, n_equal)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="crd.html#cb36-1" tabindex="-1"></a>crd_var <span class="ot">&lt;-</span> <span class="cf">function</span>(C, n) {</span>
+<span id="cb36-2"><a href="crd.html#cb36-2" tabindex="-1"></a>  CtC <span class="ot">&lt;-</span> <span class="fu">t</span>(C) <span class="sc">%*%</span> C</span>
+<span id="cb36-3"><a href="crd.html#cb36-3" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(CtC) <span class="sc">/</span> n)</span>
+<span id="cb36-4"><a href="crd.html#cb36-4" tabindex="-1"></a>} </span>
+<span id="cb36-5"><a href="crd.html#cb36-5" tabindex="-1"></a>n_equal <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">4</span>)</span>
+<span id="cb36-6"><a href="crd.html#cb36-6" tabindex="-1"></a>n_opt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">10</span>)</span>
+<span id="cb36-7"><a href="crd.html#cb36-7" tabindex="-1"></a><span class="fu">crd_var</span>(C, n_opt) <span class="sc">/</span> <span class="fu">crd_var</span>(C, n_equal)</span></code></pre></div>
 <pre><code>## [1] 0.7569</code></pre>
 <p>So the efficiency of the equally allocated design for estimating this contrast is 75.69 %.</p></li>
 </ol>
@@ -818,11 +822,11 @@ c_6 &amp; = (0, 0, -1, 1)\,.
 n = T^2\frac{\sum_{i=1}^t c_i^2/w_i}{d^2}\,.
 \]</span>
 Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing a single pairwise comparison and that we require <span class="math inline">\(T = 3\)</span>, so that the null hypothesis would be comfortably rejected at the 5% level (cf 1.96 for a standard z-test). For equal allocation of the units to each treatment (<span class="math inline">\(w_1 = \cdots = w_4 = 1/4\)</span>) and a variety of different values of the signal-to-noise ratio <span class="math inline">\(d\)</span>, we obtained the following optimal experiment sizes:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="crd.html#cb38-1" aria-hidden="true" tabindex="-1"></a>opt_n <span class="ot">&lt;-</span> <span class="cf">function</span>(cv, prop, snr, target) target <span class="sc">^</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="fu">t</span>(cv) <span class="sc">%*%</span> <span class="fu">diag</span>( <span class="dv">1</span> <span class="sc">/</span> prop) <span class="sc">%*%</span> cv) <span class="sc">/</span> snr <span class="sc">^</span> <span class="dv">2</span></span>
-<span id="cb38-2"><a href="crd.html#cb38-2" aria-hidden="true" tabindex="-1"></a>cv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb38-3"><a href="crd.html#cb38-3" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>, <span class="dv">4</span>)</span>
-<span id="cb38-4"><a href="crd.html#cb38-4" aria-hidden="true" tabindex="-1"></a>snr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="fl">2.5</span>, <span class="dv">3</span>)</span>
-<span id="cb38-5"><a href="crd.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="st">&#39;Signal-to-noise&#39;</span> <span class="ot">=</span> snr, <span class="st">&#39;n&#39;</span> <span class="ot">=</span> <span class="fu">opt_n</span>(cv, w, snr, <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="crd.html#cb38-1" tabindex="-1"></a>opt_n <span class="ot">&lt;-</span> <span class="cf">function</span>(cv, prop, snr, target) target <span class="sc">^</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="fu">t</span>(cv) <span class="sc">%*%</span> <span class="fu">diag</span>( <span class="dv">1</span> <span class="sc">/</span> prop) <span class="sc">%*%</span> cv) <span class="sc">/</span> snr <span class="sc">^</span> <span class="dv">2</span></span>
+<span id="cb38-2"><a href="crd.html#cb38-2" tabindex="-1"></a>cv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb38-3"><a href="crd.html#cb38-3" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>, <span class="dv">4</span>)</span>
+<span id="cb38-4"><a href="crd.html#cb38-4" tabindex="-1"></a>snr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="fl">2.5</span>, <span class="dv">3</span>)</span>
+<span id="cb38-5"><a href="crd.html#cb38-5" tabindex="-1"></a><span class="fu">cbind</span>(<span class="st">&#39;Signal-to-noise&#39;</span> <span class="ot">=</span> snr, <span class="st">&#39;n&#39;</span> <span class="ot">=</span> <span class="fu">opt_n</span>(cv, w, snr, <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>##      Signal-to-noise      n
 ## [1,]             0.5 288.00
 ## [2,]             1.0  72.00
@@ -1016,7 +1020,7 @@ Returning to Example <a href="crd.html#exm:one-way">2.1</a>, assume are testing 
 Alternatively, to test each hypothesis at the 5% level, we can compare each t.ratio to (i) <code>qt(0.975, 16) = 2.12</code> (unadjusted); (ii) <code>qt(1 - 0.025/6, 16) = 3.008</code> (Bonferroni); or (iii) <code>qtukey(0.95, 4, 16) / sqrt(2) = 2.861</code>.
 </details>
 <ol start="2" style="list-style-type: decimal">
-<li><p> <span class="citation">(Adapted from <a href="#ref-WH2009" role="doc-biblioref">Wu and Hamada, 2009</a>)</span> The bioactivity of four different drugs <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> for treating a particular illness was compared in a study and the following ANOVA table was given for the data:</p>
+<li><p> <span class="citation">(Adapted from <a href="#ref-WH2009">Wu and Hamada, 2009</a>)</span> The bioactivity of four different drugs <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> for treating a particular illness was compared in a study and the following ANOVA table was given for the data:</p>
 <table>
 <thead>
 <tr class="header">
@@ -1112,17 +1116,17 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 </details>
 <ol start="3" style="list-style-type: decimal">
 <li><p><a id = "nap-black-ex"></a>The below table gives data from a completely randomised design to compare six different batches of hydrochloric acid on the yield of a dye (naphthalene black 12B).</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="crd.html#cb40-1" aria-hidden="true" tabindex="-1"></a>napblack <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">batch =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">6</span>)),</span>
-<span id="cb40-2"><a href="crd.html#cb40-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">repetition =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">6</span>), </span>
-<span id="cb40-3"><a href="crd.html#cb40-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">yield =</span> <span class="fu">c</span>(<span class="dv">145</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">120</span>, <span class="dv">180</span>, <span class="dv">140</span>, <span class="dv">155</span>, <span class="dv">90</span>, <span class="dv">160</span>, <span class="dv">95</span>,</span>
-<span id="cb40-4"><a href="crd.html#cb40-4" aria-hidden="true" tabindex="-1"></a>                               <span class="dv">195</span>, <span class="dv">150</span>, <span class="dv">205</span>, <span class="dv">110</span>, <span class="dv">160</span>, <span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">195</span>, <span class="dv">65</span>, <span class="dv">145</span>,</span>
-<span id="cb40-5"><a href="crd.html#cb40-5" aria-hidden="true" tabindex="-1"></a>                               <span class="dv">195</span>, <span class="dv">230</span>, <span class="dv">115</span>, <span class="dv">235</span>, <span class="dv">225</span>, <span class="dv">120</span>, <span class="dv">55</span>, <span class="dv">50</span>, <span class="dv">80</span>, <span class="dv">45</span>)</span>
-<span id="cb40-6"><a href="crd.html#cb40-6" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb40-7"><a href="crd.html#cb40-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb40-8"><a href="crd.html#cb40-8" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(napblack, <span class="at">names_from =</span> batch, <span class="at">values_from =</span> yield)[, <span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb40-9"><a href="crd.html#cb40-9" aria-hidden="true" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Batch&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>),</span>
-<span id="cb40-10"><a href="crd.html#cb40-10" aria-hidden="true" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.&quot;</span></span>
-<span id="cb40-11"><a href="crd.html#cb40-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="crd.html#cb40-1" tabindex="-1"></a>napblack <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">batch =</span> <span class="fu">rep</span>(<span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">6</span>)),</span>
+<span id="cb40-2"><a href="crd.html#cb40-2" tabindex="-1"></a>               <span class="at">repetition =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">6</span>), </span>
+<span id="cb40-3"><a href="crd.html#cb40-3" tabindex="-1"></a>               <span class="at">yield =</span> <span class="fu">c</span>(<span class="dv">145</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">120</span>, <span class="dv">180</span>, <span class="dv">140</span>, <span class="dv">155</span>, <span class="dv">90</span>, <span class="dv">160</span>, <span class="dv">95</span>,</span>
+<span id="cb40-4"><a href="crd.html#cb40-4" tabindex="-1"></a>                               <span class="dv">195</span>, <span class="dv">150</span>, <span class="dv">205</span>, <span class="dv">110</span>, <span class="dv">160</span>, <span class="dv">45</span>, <span class="dv">40</span>, <span class="dv">195</span>, <span class="dv">65</span>, <span class="dv">145</span>,</span>
+<span id="cb40-5"><a href="crd.html#cb40-5" tabindex="-1"></a>                               <span class="dv">195</span>, <span class="dv">230</span>, <span class="dv">115</span>, <span class="dv">235</span>, <span class="dv">225</span>, <span class="dv">120</span>, <span class="dv">55</span>, <span class="dv">50</span>, <span class="dv">80</span>, <span class="dv">45</span>)</span>
+<span id="cb40-6"><a href="crd.html#cb40-6" tabindex="-1"></a>                 )</span>
+<span id="cb40-7"><a href="crd.html#cb40-7" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb40-8"><a href="crd.html#cb40-8" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(napblack, <span class="at">names_from =</span> batch, <span class="at">values_from =</span> yield)[, <span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb40-9"><a href="crd.html#cb40-9" tabindex="-1"></a> <span class="at">col.names =</span> <span class="fu">paste</span>(<span class="st">&quot;Batch&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>),</span>
+<span id="cb40-10"><a href="crd.html#cb40-10" tabindex="-1"></a> <span class="at">caption =</span> <span class="st">&quot;Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.&quot;</span></span>
+<span id="cb40-11"><a href="crd.html#cb40-11" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nap-black">Table 2.3: </span>Naphthalene black experiment: yields (grams of standard colour) from six different batches of hydrochloric acid.</caption>
 <thead>
@@ -1192,8 +1196,8 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 </summary>
 <ol style="list-style-type: lower-alpha">
 <li><p>Two of the simplest ways of examining the data are to calculate basic descriptive statistics, e.g. the mean and standard deviation of the yield in each batch, and to plot the data in the different batches using a simple graphical display, e.g. a stripchart of the yields in each batch. Notice that in both and we use the formula . This formula splits the data into groups defined by batch.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="crd.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x), </span>
-<span id="cb41-2"><a href="crd.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                                                          <span class="at">st.dev =</span> <span class="fu">sd</span>(x)))</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="crd.html#cb41-1" tabindex="-1"></a><span class="fu">aggregate</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x), </span>
+<span id="cb41-2"><a href="crd.html#cb41-2" tabindex="-1"></a>                                                          <span class="at">st.dev =</span> <span class="fu">sd</span>(x)))</span></code></pre></div>
 <pre><code>##   batch yield.mean yield.st.dev
 ## 1     1     105.00        63.05
 ## 2     2     128.00        33.28
@@ -1201,7 +1205,7 @@ Alternatively, to test each hypothesis at the 5% level, we can compare each t.ra
 ## 4     4      98.00        68.70
 ## 5     5     200.00        50.00
 ## 6     6      70.00        31.02</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="crd.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="crd.html#cb43-1" tabindex="-1"></a><span class="fu">boxplot</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:napblack-summary"></span>
 <img src="bookdown_math3014-6027_files/figure-html/napblack-summary-1.png" alt="Naphthalene black experiment: distributions of dye yields from the six batches." width="672" />
 <p class="caption">
@@ -1217,9 +1221,9 @@ Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(Y_{ij}\)</span> is the response obtained from the <span class="math inline">\(j\)</span>th repetition of the <span class="math inline">\(i\)</span>th batch, <span class="math inline">\(\mu\)</span> is a constant term, <span class="math inline">\(\tau_i\)</span> is the expected effect due to the observation being in the <span class="math inline">\(i\)</span>th batch <span class="math inline">\((i=1,\ldots,5)\)</span> and <span class="math inline">\(\varepsilon_{ij}\)</span> are the random errors.</p>
 <p>A test of the hypothesis that the group means are all equal is equivalent to a test that the <span class="math inline">\(\tau_i\)</span> are all equal to 0 <span class="math inline">\((H_0:\, \tau_1 = \tau_2 = \cdots = \tau_6 = 0)\)</span>. We can use <code>lm</code> to fit model <a href="crd.html#eq:linmod">(2.13)</a>, and <code>anova</code> to test the hypothesis. Before we fit the linear model, we need to make sure <code>batch</code> has type <code>factor</code><a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="crd.html#cb44-1" aria-hidden="true" tabindex="-1"></a>napblack<span class="sc">$</span>batch <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(napblack<span class="sc">$</span>batch)</span>
-<span id="cb44-2"><a href="crd.html#cb44-2" aria-hidden="true" tabindex="-1"></a>napblack.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span>
-<span id="cb44-3"><a href="crd.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(napblack.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="crd.html#cb44-1" tabindex="-1"></a>napblack<span class="sc">$</span>batch <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(napblack<span class="sc">$</span>batch)</span>
+<span id="cb44-2"><a href="crd.html#cb44-2" tabindex="-1"></a>napblack.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> batch, <span class="at">data =</span> napblack)</span>
+<span id="cb44-3"><a href="crd.html#cb44-3" tabindex="-1"></a><span class="fu">anova</span>(napblack.lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: yield
@@ -1232,13 +1236,13 @@ Y_{ij} =  \mu +  \tau_i +  \varepsilon_{ij} \,,\qquad i=1,\ldots,6;~j=1,\ldots,5
 means. Therefore <span class="math inline">\(H_0\)</span> is rejected and a suitable multiple comparison test should be carried
 out.</p></li>
 <li><p>To perform our analysis, we have fitted a linear model. Therefore, we should use some plots of the residuals <span class="math inline">\(y_{ij} - \hat{y}_{ij}\)</span> to check the model assumptions, particularly that the errors are independently and identically normally distributed. The function <code>rstandard</code> which produces residuals which have been standardised to have variance equal to 1.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="crd.html#cb46-1" aria-hidden="true" tabindex="-1"></a>standres <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(napblack.lm)</span>
-<span id="cb46-2"><a href="crd.html#cb46-2" aria-hidden="true" tabindex="-1"></a>fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(napblack.lm)</span>
-<span id="cb46-3"><a href="crd.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
-<span id="cb46-4"><a href="crd.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(napblack, {</span>
-<span id="cb46-5"><a href="crd.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(batch, standres, <span class="at">xlab =</span> <span class="st">&quot;Batch&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
-<span id="cb46-6"><a href="crd.html#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(fitted, standres, <span class="at">xlab =</span> <span class="st">&quot;Fitted value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
-<span id="cb46-7"><a href="crd.html#cb46-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="crd.html#cb46-1" tabindex="-1"></a>standres <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(napblack.lm)</span>
+<span id="cb46-2"><a href="crd.html#cb46-2" tabindex="-1"></a>fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(napblack.lm)</span>
+<span id="cb46-3"><a href="crd.html#cb46-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
+<span id="cb46-4"><a href="crd.html#cb46-4" tabindex="-1"></a><span class="fu">with</span>(napblack, {</span>
+<span id="cb46-5"><a href="crd.html#cb46-5" tabindex="-1"></a>  <span class="fu">plot</span>(batch, standres, <span class="at">xlab =</span> <span class="st">&quot;Batch&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
+<span id="cb46-6"><a href="crd.html#cb46-6" tabindex="-1"></a>  <span class="fu">plot</span>(fitted, standres, <span class="at">xlab =</span> <span class="st">&quot;Fitted value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Standarised residuals&quot;</span>)</span>
+<span id="cb46-7"><a href="crd.html#cb46-7" tabindex="-1"></a>})</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:residuals"></span>
 <img src="bookdown_math3014-6027_files/figure-html/residuals-1.png" alt="Residuals against batch (left) and fitted values (right) for the linear model fit to the naphthalene black data." width="100%" />
 <p class="caption">
@@ -1247,8 +1251,8 @@ Figure 2.3: Residuals against batch (left) and fitted values (right) for the lin
 </div>
 <p>The plots (Figure <a href="crd.html#fig:residuals">2.3</a>) show no large standardised residuals (<span class="math inline">\(&gt;2\)</span> in absolute value<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>). While there is some evidence of unequal variation across batches, there is no obvious pattern with respect to fitted values (e.g. no “funnelling”).</p>
 <p>We can also plot the standardised residuals against the quantiles of a standard normal distribution to assess the assumption of normality.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="crd.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
-<span id="cb47-2"><a href="crd.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(standres, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="crd.html#cb47-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">&quot;s&quot;</span>)</span>
+<span id="cb47-2"><a href="crd.html#cb47-2" tabindex="-1"></a><span class="fu">qqnorm</span>(standres, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:normalplot"></span>
 <img src="bookdown_math3014-6027_files/figure-html/normalplot-1.png" alt="Normal probability plot for the standardised residuals for the linear model fit to the naphthalene black data." width="100%" />
 <p class="caption">
@@ -1262,8 +1266,8 @@ difference is of practical importance. A multiple comparison procedure is requir
 investigate all possible differences, which takes account of the number of possible differences
 available amongst the treatments (15 differences between the six batches here).</p>
 <p>We will use Tukey’s method for controlling the experiment-wise type I error rate, fixed here at 5%, as implemented by <code>emmeans</code>.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="crd.html#cb48-1" aria-hidden="true" tabindex="-1"></a>napblack.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(napblack.lm, <span class="st">&#39;batch&#39;</span>)</span>
-<span id="cb48-2"><a href="crd.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(napblack.emm)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="crd.html#cb48-1" tabindex="-1"></a>napblack.emm <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(napblack.lm, <span class="st">&#39;batch&#39;</span>)</span>
+<span id="cb48-2"><a href="crd.html#cb48-2" tabindex="-1"></a><span class="fu">pairs</span>(napblack.emm)</span></code></pre></div>
 <pre><code>##  contrast        estimate   SE df t.ratio p.value
 ##  batch1 - batch2      -23 31.3 24  -0.735  0.9755
 ##  batch1 - batch3      -59 31.3 24  -1.884  0.4351
@@ -1283,14 +1287,14 @@ available amongst the treatments (15 differences between the six batches here).<
 ## 
 ## P value adjustment: tukey method for comparing a family of 6 estimates</code></pre>
 <p>We have two significant differences, between batches 4-5 and 5-6.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="crd.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(<span class="fu">transform</span>(<span class="fu">pairs</span>(napblack.emm)), p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="crd.html#cb50-1" tabindex="-1"></a><span class="fu">subset</span>(<span class="fu">transform</span>(<span class="fu">pairs</span>(napblack.emm)), p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>##           contrast estimate    SE df t.ratio  p.value
 ## 13 batch4 - batch5     -102 31.31 24  -3.257 0.034820
 ## 15 batch5 - batch6      130 31.31 24   4.152 0.004295</code></pre></li>
 </ol>
 </details>
 <ol start="4" style="list-style-type: decimal">
-<li><span class="citation">(Adapted from <a href="#ref-Morris2011" role="doc-biblioref">Morris, 2011</a>)</span> Consider a completely randomised design with <span class="math inline">\(t = 5\)</span> treatments and <span class="math inline">\(n=50\)</span> units. The contrasts</li>
+<li><span class="citation">(Adapted from <a href="#ref-Morris2011">Morris, 2011</a>)</span> Consider a completely randomised design with <span class="math inline">\(t = 5\)</span> treatments and <span class="math inline">\(n=50\)</span> units. The contrasts</li>
 </ol>
 <p><span class="math display">\[
 \tau_2 - \tau_1, \quad \tau_3 - \tau_2, \quad \tau_4 - \tau_3, \tau_5 - \tau_4
@@ -1306,29 +1310,29 @@ available amongst the treatments (15 differences between the six batches here).<
 </summary>
 <ol style="list-style-type: lower-alpha">
 <li><p>We can use the function <code>opt_ni</code> given in Section <a href="crd.html#crd-opt-all">2.8.1</a>:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="crd.html#cb52-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb52-2"><a href="crd.html#cb52-2" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb52-3"><a href="crd.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb52-4"><a href="crd.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb52-5"><a href="crd.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb52-6"><a href="crd.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
-<span id="cb52-7"><a href="crd.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span></span>
-<span id="cb52-8"><a href="crd.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T</span>
-<span id="cb52-9"><a href="crd.html#cb52-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb52-10"><a href="crd.html#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="fu">opt_ni</span>(C, n) </span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="crd.html#cb52-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb52-2"><a href="crd.html#cb52-2" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb52-3"><a href="crd.html#cb52-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb52-4"><a href="crd.html#cb52-4" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb52-5"><a href="crd.html#cb52-5" tabindex="-1"></a>  <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb52-6"><a href="crd.html#cb52-6" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb52-7"><a href="crd.html#cb52-7" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span></span>
+<span id="cb52-8"><a href="crd.html#cb52-8" tabindex="-1"></a>  ), <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T</span>
+<span id="cb52-9"><a href="crd.html#cb52-9" tabindex="-1"></a>)</span>
+<span id="cb52-10"><a href="crd.html#cb52-10" tabindex="-1"></a><span class="fu">opt_ni</span>(C, n) </span></code></pre></div>
 <pre><code>## [1]  8.009 11.327 11.327 11.327  8.009</code></pre>
 <p>Rounding, we obtain a solution of the form <span class="math inline">\(n_1 = n_5 =8\)</span>, <span class="math inline">\(n_2 = n_4 = 11\)</span> and <span class="math inline">\(n_3 = 12\)</span>. Any of <span class="math inline">\(n_2, n_3, n_4\)</span> may be rounded up to 12 to form a design with the same variance.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="crd.html#cb54-1" aria-hidden="true" tabindex="-1"></a>nv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">8</span>)</span>
-<span id="cb54-2"><a href="crd.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crd_var</span>(C, nv <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb54-3"><a href="crd.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crd_var</span>(C, nv <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb54-4"><a href="crd.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crd_var</span>(C, nv <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="crd.html#cb54-1" tabindex="-1"></a>nv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">8</span>)</span>
+<span id="cb54-2"><a href="crd.html#cb54-2" tabindex="-1"></a><span class="fu">crd_var</span>(C, nv <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb54-3"><a href="crd.html#cb54-3" tabindex="-1"></a><span class="fu">crd_var</span>(C, nv <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb54-4"><a href="crd.html#cb54-4" tabindex="-1"></a><span class="fu">crd_var</span>(C, nv <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
 <pre><code>## [1] 0.7803
 ## [1] 0.7803
 ## [1] 0.7803</code></pre></li>
 <li><p>The optimal ratios for each treatment from part (a) are <span class="math inline">\(w_1 = w_5 = 0.1602\)</span> and <span class="math inline">\(w_2 = w_3 = w_4 = 0.2265\)</span>. Fixing these, we can use code from Section <a href="crd.html#crd-size">2.8.2</a> to find the required value of <span class="math inline">\(n\)</span> for each contrast.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="crd.html#cb56-1" aria-hidden="true" tabindex="-1"></a>nv <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb56-2"><a href="crd.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) nv[i] <span class="ot">&lt;-</span> <span class="fu">opt_n</span>(C[i, ], <span class="fu">opt_ni</span>(C, n) <span class="sc">/</span> n, <span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># snr = 1, target = 2</span></span>
-<span id="cb56-3"><a href="crd.html#cb56-3" aria-hidden="true" tabindex="-1"></a>nv</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="crd.html#cb56-1" tabindex="-1"></a>nv <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb56-2"><a href="crd.html#cb56-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) nv[i] <span class="ot">&lt;-</span> <span class="fu">opt_n</span>(C[i, ], <span class="fu">opt_ni</span>(C, n) <span class="sc">/</span> n, <span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># snr = 1, target = 2</span></span>
+<span id="cb56-3"><a href="crd.html#cb56-3" tabindex="-1"></a>nv</span></code></pre></div>
 <pre><code>## [1] 42.63 35.31 35.31 42.63</code></pre>
 <p>Hence, we need <span class="math inline">\(n = 43\)</span> for to achieve <span class="math inline">\(T = 2\)</span> for the first and last contrasts, and <span class="math inline">\(n = 36\)</span> for the second and third. The differences are due to the different proportions <span class="math inline">\(w_i\)</span> assumed for each treatment. To achieve <span class="math inline">\(T=2\)</span> for all contrasts, we pick the larger number, <span class="math inline">\(n = 43\)</span>.</p></li>
 </ol>
