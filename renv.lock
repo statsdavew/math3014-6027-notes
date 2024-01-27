@@ -691,7 +691,7 @@
       "Package": "igraph",
       "Version": "1.6.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "https://cloud.r-project.org/",
       "Requirements": [
         "Matrix",
         "R",
@@ -706,8 +706,7 @@
         "rlang",
         "stats",
         "utils"
-      ],
-      "Hash": "eef74fe28b747e52288ea9e1d3600034"
+      ]
     },
     "insight": {
       "Package": "insight",
