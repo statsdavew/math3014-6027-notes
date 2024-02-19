@@ -755,6 +755,7 @@ d. There is no evidence of a difference between treatments, so we would not norm
 
 </details>
 
+<!--
 3. Prove that $2k/\lambda t > 2/b$, and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size $k$ and an RCBD, both with $t$ treatments in $b$ blocks.
 
 <details><summary><b>Solution</b></summary>
@@ -789,8 +790,10 @@ $$
 and hence the variance for a BIBD is larger, i.e. incomplete blocks results in less precise treatment comparisons.
 
 </details>
+-->
 
-4. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $\lambda$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
+
+3. Construct a BIBD for $t=5$ treatments in $b=5$ blocks of size $k=4$ units. What are $r$ and $\lambda$ for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
 
 <details><summary><b>Solution</b></summary>
 Here, $b = {t \choose k} = {5 \choose 4} = 5$, and hence we can use the "naive" construction method from the notes, where we can form one block from each possible subset of $k=4$ treatments. This design will have $r = {4 \choose 3} = 4$ and $\lambda = {3 \choose 2} = 3$.
@@ -801,11 +804,11 @@ rownames(bibd) <- paste("Block", 1:5)
 knitr::kable(bibd, caption = "BIBD for $t = 5$ treatments in $b=5$ blocks of size $k=4$.")
 ```
 
-From Question 3, the efficiency of this BIBD compared to a RCBD with $b=5$ blocks of size $k=5$ is given by $\frac{\lambda t}{kb} = `r (3 * 5) / (4 * 5)`$. So variances will be 25% larger under the BIBD.
+The efficiency of this BIBD compared to a RCBD with $b=5$ blocks of size $k=5$ is given by $\frac{\lambda t}{kb} = `r (3 * 5) / (4 * 5)`$. So variances will be 25% larger under the BIBD.
 
 </details>
 
-5. Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, "Position" and "Application". For this experiment, we use a **latin square** design, as follows.
+4. Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, "Position" and "Application". For this experiment, we use a **latin square** design, as follows.
 
     ```{r rc-expt-treatments, warning = F}
 fabric <- data.frame(material = factor(c('C', 'D', 'B', 'A', 'A', 'B', 'D', 'C', 

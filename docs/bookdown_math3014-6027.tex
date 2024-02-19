@@ -120,7 +120,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2024-01-27}
+\date{2024-02-19}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -825,7 +825,7 @@ Solution
 
 \begin{verbatim}
 ## [1] "Milk first" "Tea first"  "Tea first"  "Tea first"  "Milk first"
-## [6] "Milk first" "Tea first"  "Milk first"
+## [6] "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -844,7 +844,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
+## [1] "Tea first"  "Milk first" "Milk first" "Tea first"
 \end{verbatim}
 
 \begin{Shaded}
@@ -855,7 +855,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -3067,10 +3067,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    0
+## [1,]    1    0    1    1
 ## [2,]    0    1    1    1
-## [3,]    1    0    1    1
-## [4,]    1    1    0    1
+## [3,]    1    1    0    1
+## [4,]    1    1    1    0
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3084,14 +3084,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    0    1    1    1    1    0    1    0    0     0     1     0     0     1
-## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
-## [3,]    0    1    0    1    1    0    0    1    0     1     0     1     1     0
-## [4,]    0    1    1    0    0    1    0    1    1     0     0     0     1     1
-## [5,]    1    1    1    0    0    1    0    0    0     1     1     1     0     0
-## [6,]    1    0    1    0    1    0    1    1    1     1     0     0     0     0
-## [7,]    1    0    0    1    0    1    1    1    0     0     0     1     0     1
-## [8,]    1    0    0    1    1    1    0    0    1     0     1     0     1     0
+## [1,]    1    0    0    0    1    1    1    0    1     0     1     1     0     0
+## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
+## [3,]    0    0    0    1    1    1    1    0    0     1     0     0     1     1
+## [4,]    1    0    1    1    1    0    0    1    0     0     0     1     0     1
+## [5,]    1    1    1    0    1    0    0    0    0     1     1     0     1     0
+## [6,]    1    1    0    1    0    0    1    1    1     1     0     0     0     0
+## [7,]    0    1    1    0    0    1    1    1    0     0     1     0     0     1
+## [8,]    0    1    1    1    0    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -3580,45 +3580,6 @@ Solution
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Prove that \(2k/\lambda t > 2/b\), and use this result to compare the precision of a pairwise treatment comparison from a BIBD with block size \(k\) and an RCBD, both with \(t\) treatments in \(b\) blocks.
-\end{enumerate}
-
-Solution
-
-From the notes, \(r = bk / t\) and hence \(k = rt / b\). Therefore
-
-\begin{align*}
-\frac{2k}{\lambda t} & = \frac{2rt}{\lambda b t} \\
-& = \frac{2r}{\lambda b} \\
-& = \frac{2}{b}\times\frac{r}{\lambda} \\
-& > \frac{2}{b}\,,
-\end{align*}
-
-as \(r / \lambda > 1\). The variance of the estimator of a pairwise comparison is
-
-\[
-\mbox{var}_{\mbox{RCBD}}\left(\tau_i - \tau_j\right) = \frac{2\sigma^2}{b}\,,
-\]
-
-for a RCBD with \(b\) blocks, and
-
-\[
-\mbox{var}_{\mbox{BIBD}}\left(\tau_i - \tau_j\right) = \frac{2k\sigma^2}{\lambda t}\,,
-\]
-
-for a BIBD. Hence, we can see that the ratio of these variances is
-
-\[
-\frac{kb}{\lambda t} > 1\,,
-\]
-
-and hence the variance for a BIBD is larger, i.e.~incomplete blocks results in less precise treatment comparisons.
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
-\tightlist
-\item
   Construct a BIBD for \(t=5\) treatments in \(b=5\) blocks of size \(k=4\) units. What are \(r\) and \(\lambda\) for your design? Compare your design to a RCBD via the efficiency for estimating a pairwise treatment difference.
 \end{enumerate}
 
@@ -3653,11 +3614,11 @@ Block 5 & 2 & 3 & 4 & 5\\
 \end{tabular}
 \end{table}
 
-From Question 3, the efficiency of this BIBD compared to a RCBD with \(b=5\) blocks of size \(k=5\) is given by \(\frac{\lambda t}{kb} = 0.75\). So variances will be 25\% larger under the BIBD.
+The efficiency of this BIBD compared to a RCBD with \(b=5\) blocks of size \(k=5\) is given by \(\frac{\lambda t}{kb} = 0.75\). So variances will be 25\% larger under the BIBD.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
+\setcounter{enumi}{3}
 \item
   Consider an experiment for testing the abrasion resistance of rubber-coated fabric. There are four types of material, denoted A - D. The response is the loss in weight in 0.1 milligrams (mg) over a standard period of time. The testing machine has four positions, so four samples of material can be tested at a time. Past experience suggests that there may be differences between these positions, and there may be differences between each application of the testing machine (due to changes in set-up). Therefore, we have two blocking variables, ``Position'' and ``Application''. For this experiment, we use a \textbf{latin square} design, as follows.
 
@@ -4598,35 +4559,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0004\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0002 & 0.0015\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0032 & 0.0304\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0038 & 0.0319\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0052 & 0.0487\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0055 & 0.0472\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0071 & 0.0660\\
+time & 2.5675 & 0.66 & 3.890 & 0.0076 & 0.0675\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0099 & 0.0915\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0100 & 0.0934\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0099 & 0.0915\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0100 & 0.0934\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0119 & 0.1117\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0124 & 0.1170\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3059 & 0.9970\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3067 & 0.9936\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4315 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4327 & 1.0000\\
 \hline
-time.solvent & 0.4400 & 0.66 & 0.667 & 0.5028 & 1.0000\\
+time.solvent & 0.4400 & 0.66 & 0.667 & 0.5033 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7316 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7327 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7395 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7401 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7831 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7861 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7856 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7892 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9652 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9669 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -5191,7 +5152,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6728 and 4.9447, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.6816 and 4.9673, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6097,11 +6058,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##         [,1]
-## A     4.0545
-## B     0.1111
-## C     2.9122
-## A:B:C 0.9332
+##          [,1]
+## A      4.0382
+## B     -0.0908
+## C      3.1097
+## A:B:C -0.0475
 \end{verbatim}
 
 \begin{Shaded}
@@ -6117,11 +6078,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  228.2    76.1     NaN    NaN
-## A          1  131.5   131.5     NaN    NaN
+## Block      3  213.4    71.1     NaN    NaN
+## A          1  130.5   130.5     NaN    NaN
 ## B          1    0.1     0.1     NaN    NaN
-## C          1   67.8    67.8     NaN    NaN
-## A:B:C      1    7.0     7.0     NaN    NaN
+## C          1   77.4    77.4     NaN    NaN
+## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6132,8 +6093,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 4.0545 0.1111 2.9122 0.9332
+##       A       B       C   A:B:C 
+##  4.0382 -0.0908  3.1097 -0.0475
 \end{verbatim}
 
 \begin{Shaded}
@@ -6143,8 +6104,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##      A      B      C  A:B:C 
-## 8.1091 0.2223 5.8243 1.8665
+##       A       B       C   A:B:C 
+##  8.0764 -0.1816  6.2194 -0.0950
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6161,13 +6122,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1  131.5   131.5     NaN    NaN
+## A          1  130.5   130.5     NaN    NaN
 ## B          1    0.1     0.1     NaN    NaN
-## C          1   67.8    67.8     NaN    NaN
-## A:B        1   15.5    15.5     NaN    NaN
-## A:C        1  111.9   111.9     NaN    NaN
-## B:C        1  100.8   100.8     NaN    NaN
-## A:B:C      1    7.0     7.0     NaN    NaN
+## C          1   77.4    77.4     NaN    NaN
+## A:B        1    9.5     9.5     NaN    NaN
+## A:C        1  122.3   122.3     NaN    NaN
+## B:C        1   81.5    81.5     NaN    NaN
+## A:B:C      1    0.0     0.0     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6179,9 +6140,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      4.6461      4.0545      0.1111      2.9122      1.3923      3.7403 
+##      5.2401      4.0382     -0.0908      3.1097      1.0920      3.9105 
 ##         B:C       A:B:C 
-##      3.5497      0.9332
+##      3.1926     -0.0475
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6235,14 +6196,14 @@ This same block can be found using \texttt{FrF2}.
 
 \begin{verbatim}
 ##    Blocks  A  B  C  D  E
-## 17      3 -1 -1 -1 -1 -1
-## 18      3 -1 -1  1  1 -1
-## 19      3 -1  1  1 -1  1
+## 17      3  1 -1  1 -1  1
+## 18      3 -1  1  1 -1  1
+## 19      3 -1 -1 -1 -1 -1
 ## 20      3  1  1  1  1 -1
-## 21      3  1 -1  1 -1  1
+## 21      3  1 -1 -1  1  1
 ## 22      3  1  1 -1 -1 -1
-## 23      3  1 -1 -1  1  1
-## 24      3 -1  1 -1  1  1
+## 23      3 -1  1 -1  1  1
+## 24      3 -1 -1  1  1 -1
 \end{verbatim}
 
 \begin{enumerate}
