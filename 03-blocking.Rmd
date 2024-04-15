@@ -357,7 +357,7 @@ between coatings^[These contrasts measure the difference between the coating onl
 
 ```{r blocks-bar-contrasts}
 bar.emm <- emmeans::emmeans(bar.lm, ~ coating)
-contrastv1.emmc <- function(levs)
+contrastv1.emmc <- function(levs, ...)
   data.frame('t1 v t2' = c(1, -1, 0, 0), 't1 v t3' = c(1, 0, -1, 0), 
   't1 v t4' = c(1, 0, 0, -1))
 emmeans::contrast(bar.emm, 'contrastv1')

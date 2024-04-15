@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Motivation, introduction and revision | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Motivation, introduction and revision | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2024-02-19" />
+<meta name="date" content="2024-04-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -784,17 +784,17 @@ R^{2}_{a} & = 1-\frac{\textrm{RSS}/(n-p)}{\textrm{RSS}(\textrm{null})/(n-1)}\\
 <p>We could of course also use <code>R</code>.</p></li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>)), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot; 
-## [6] &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot; 
+## [6] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot;</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Type of cup could be considered as a blocking factor. One way of incorporating it would be to split the experiment into two (blocks), each with four cups (two milk first, two tea first). We would still wish to randomise allocation of treatments to units within blocks.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" tabindex="-1"></a>    <span class="co"># block 1</span></span>
 <span id="cb4-2"><a href="intro.html#cb4-2" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" tabindex="-1"></a>    <span class="co"># block 2</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Milk first&quot;</span>, <span class="st">&quot;Tea first&quot;</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">replace =</span> F)</span></code></pre></div>
-<pre><code>## [1] &quot;Milk first&quot; &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Tea first&quot;</code></pre>
+<pre><code>## [1] &quot;Tea first&quot;  &quot;Milk first&quot; &quot;Tea first&quot;  &quot;Milk first&quot;</code></pre>
 </details>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Consider the linear model</p>

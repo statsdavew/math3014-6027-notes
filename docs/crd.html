@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments</title>
   <meta name="description" content="Lecture notes for the modules MATH3014 and MATH6027 at the University of Southampton" />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Completely randomised designs | MATH3014-6027 Design (and Analysis) of Experiments" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Dave Woods" />
 
 
-<meta name="date" content="2024-02-19" />
+<meta name="date" content="2024-04-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -629,7 +629,7 @@ s^2 = \frac{1}{n-t}\sum_{i=1}^t\sum_{j=1}^{n_i}(y_{ij} - \bar{y}_{i.})^2
 ##  operator3 - operator4    -0.06 0.206 16  -0.291  0.7748</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="crd.html#cb19-1" tabindex="-1"></a><span class="co"># estimating single contrast c = (1, -.5, -.5)</span></span>
 <span id="cb19-2"><a href="crd.html#cb19-2" tabindex="-1"></a><span class="co"># comparing operator 1 with operators 2 and 3</span></span>
-<span id="cb19-3"><a href="crd.html#cb19-3" tabindex="-1"></a>contrast1v23.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs) </span>
+<span id="cb19-3"><a href="crd.html#cb19-3" tabindex="-1"></a>contrast1v23.emmc <span class="ot">&lt;-</span> <span class="cf">function</span>(levs, ...) </span>
 <span id="cb19-4"><a href="crd.html#cb19-4" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&#39;t1 v avg t2 t3&#39;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>))</span>
 <span id="cb19-5"><a href="crd.html#cb19-5" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(pulp.emm, <span class="st">&#39;contrast1v23&#39;</span>)</span></code></pre></div>
 <pre><code>##  contrast       estimate    SE df t.ratio p.value
