@@ -21,14 +21,14 @@ anova(desilylation.lm)
 
 ## ----desilylation-lm
 desilylation.emm <- emmeans::emmeans(desilylation.lm, ~ trt)
-reagent_me.emmc <- function(levs) data.frame('reagent m.e.' = rep(c(-1, 1), rep(8, 2)) / 8)
+reagent_me.emmc <- function(levs, ...) data.frame('reagent m.e.' = rep(c(-1, 1), rep(8, 2)) / 8)
 emmeans::contrast(desilylation.emm, 'reagent_me')
 
 
 ## ----desilylation-all-me-contrasts
 contrast.mat <- FrF2::FrF2(nruns = 16, nfactors = 4, randomize = F,
                            factor.names = c("temp", "time", "solvent", "reagent"))
-fac.contrasts.emmc <- function(levs)
+fac.contrasts.emmc <- function(levs, ...)
   dplyr::mutate_all(data.frame(contrast.mat), function(x) scale(as.numeric(as.character(x)), scale = 8))
 main_effect_contrasts <- fac.contrasts.emmc()
 rownames(main_effect_contrasts) <- paste("Trt", 1:16)
@@ -66,13 +66,13 @@ plot(reagent_bar, pch = 16, type = "b", ylim = c(plotmin, plotmax))
 
 
 ## ----desilylation-solvent-reagent-interaction
-sol_reg_int.emmc <- function(levels)
+sol_reg_int.emmc <- function(levels, ...)
   data.frame('reagent x solvent' = .125 * c(rep(1, 4), rep(-1, 8), rep(1, 4)))
 emmeans::contrast(desilylation.emm, 'sol_reg_int')
 
 
 ## ----desilylation-2fi-interactions
-fac.contrasts.int.emmc <- function(levs) {
+fac.contrasts.int.emmc <- function(levs, ...) {
   with(sqrt(8) * main_effect_contrasts, {
     data.frame('tem_x_tim' = temp * time,
                'tem_x_sol' = temp * solvent,
@@ -129,7 +129,7 @@ factorial_contrasts <- model.matrix(~.^4, unscaled_me_contrasts)[, -1] / 8
 t(factorial_contrasts) %*% yield
 
 ## using emmeans
-factorial_contrasts.emmc <- function(levs) data.frame(factorial_contrasts)
+factorial_contrasts.emmc <- function(levs, ...) data.frame(factorial_contrasts)
 desilylation.effs <- emmeans::contrast(desilylation.emm, 'factorial_contrasts')
 desilylation.effs
 

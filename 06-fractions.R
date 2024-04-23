@@ -82,7 +82,7 @@ design.info(ff.2.6.2.a)$aliased
 ## ----spring-contrast
 spring$treatment <- factor(1:16)
 spring.ut <- lm(height ~ treatment, data = spring)
-fac.contrasts.emmc <- function(nlevs) {
+fac.contrasts.emmc <- function(nlevs, ...) {
   spring.num <- apply(spring[, c("A", "B", "C", "D", "E")], 2, fac_to_numeric)
   data.frame(model.matrix(~ . + A:B + A:C + A:D + A:E + B:C
                           + B:D + B:E, data.frame(spring.num))[, -1] / 8)

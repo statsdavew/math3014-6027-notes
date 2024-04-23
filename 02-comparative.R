@@ -40,7 +40,7 @@ pairs(pulp.emm, adjust = 'none')
 emmeans::contrast(pulp.emm, "pairwise", adjust = "none")
 # estimating single contrast c = (1, -.5, -.5)
 # comparing operator 1 with operators 2 and 3
-contrast1v23.emmc <- function(levs)
+contrast1v23.emmc <- function(levs, ...)
   data.frame('t1 v avg t2 t3' = c(1, -.5, -.5, 0))
 emmeans::contrast(pulp.emm, 'contrast1v23')
 

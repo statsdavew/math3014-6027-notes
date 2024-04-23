@@ -53,7 +53,7 @@ tyre.s2 <- summary(tyre.lm)$sigma^2
 
 ## ----blocks-bar-contrasts
 bar.emm <- emmeans::emmeans(bar.lm, ~ coating)
-contrastv1.emmc <- function(levs)
+contrastv1.emmc <- function(levs, ...)
   data.frame('t1 v t2' = c(1, -1, 0, 0), 't1 v t3' = c(1, 0, -1, 0),
   't1 v t4' = c(1, 0, 0, -1))
 emmeans::contrast(bar.emm, 'contrastv1')
