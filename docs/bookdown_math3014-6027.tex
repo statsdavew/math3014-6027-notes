@@ -120,7 +120,7 @@
 
 \title{MATH3014-6027 Design (and Analysis) of Experiments}
 \author{Dave Woods}
-\date{2024-04-15}
+\date{2024-04-23}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -836,8 +836,8 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "Tea first" 
-## [6] "Tea first"  "Milk first" "Milk first"
+## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "Tea first" 
+## [6] "Milk first" "Tea first"  "Tea first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -867,7 +867,7 @@ Solution
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Milk first" "Tea first"  "Tea first"  "Milk first"
+## [1] "Tea first"  "Tea first"  "Milk first" "Milk first"
 \end{verbatim}
 
 \begin{enumerate}
@@ -3099,10 +3099,10 @@ Sometimes, smaller BIBDs that satisfy the two conditions above can be constructe
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4]
-## [1,]    0    1    1    1
-## [2,]    1    0    1    1
-## [3,]    1    1    0    1
-## [4,]    1    1    1    0
+## [1,]    1    1    1    0
+## [2,]    0    1    1    1
+## [3,]    1    0    1    1
+## [4,]    1    1    0    1
 \end{verbatim}
 
 We can also use the package to find a design for bigger experiments, for example \(t=8\) treatments in \(b=14\) blocks of size \(k=4\). Here, \(r = 14\times 4 / 8 = 7\) and \(\lambda = 7 \times 3 / 7 = 3\).
@@ -3116,14 +3116,14 @@ We can also use the package to find a design for bigger experiments, for example
 
 \begin{verbatim}
 ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]    1    0    0    1    1    1    0    1    1     0     1     0     0     0
-## [2,]    0    0    0    0    0    0    0    1    1     1     1     1     1     1
-## [3,]    0    0    0    1    1    1    1    0    0     0     0     1     1     1
-## [4,]    1    0    1    1    0    0    1    1    0     1     0     0     0     1
-## [5,]    1    1    1    1    0    0    0    0    0     0     1     1     1     0
-## [6,]    1    1    0    0    0    1    1    0    1     1     0     1     0     0
-## [7,]    0    1    1    0    1    0    1    0    1     0     1     0     0     1
-## [8,]    0    1    1    0    1    1    0    1    0     1     0     0     1     0
+## [1,]    1    1    0    0    0    1    0    1    1     0     1     1     0     0
+## [2,]    0    0    0    0    0    0    1    0    1     1     1     1     1     1
+## [3,]    1    0    0    0    1    1    0    1    0     1     0     0     1     1
+## [4,]    1    1    0    1    1    0    1    0    0     0     0     1     0     1
+## [5,]    1    1    1    1    0    0    0    0    0     1     1     0     1     0
+## [6,]    0    1    1    0    1    0    1    1    1     1     0     0     0     0
+## [7,]    0    0    1    1    0    1    1    1    0     0     1     0     0     1
+## [8,]    0    0    1    1    1    1    0    0    1     0     0     1     1     0
 \end{verbatim}
 
 Although larger than the examples we have considered before, this design is small compared to the design that would be obtained from the naive construction above with \(b = {t \choose k} = {8 \choose 4} = 70\) blocks.
@@ -4601,35 +4601,35 @@ which mimic the usual \(t\)-statistics used when an estimate of \(\sigma^2\) is 
 \hline
   & effect & Lenth\_PSE & t.ratio & p.value & simult.pval\\
 \hline
-temp & 8.1200 & 0.66 & 12.303 & 0.0001 & 0.0007\\
+temp & 8.1200 & 0.66 & 12.303 & 0.0000 & 0.0007\\
 \hline
-reagent & 3.0875 & 0.66 & 4.678 & 0.0041 & 0.0367\\
+reagent & 3.0875 & 0.66 & 4.678 & 0.0035 & 0.0345\\
 \hline
-temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0058 & 0.0536\\
+temp.reagent & -2.7725 & 0.66 & -4.201 & 0.0056 & 0.0521\\
 \hline
-time & 2.5675 & 0.66 & 3.890 & 0.0079 & 0.0724\\
+time & 2.5675 & 0.66 & 3.890 & 0.0070 & 0.0656\\
 \hline
-temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0108 & 0.0964\\
+temp.solvent & 2.3575 & 0.66 & 3.572 & 0.0098 & 0.0889\\
 \hline
-temp.time & -2.3575 & 0.66 & -3.572 & 0.0108 & 0.0964\\
+temp.time & -2.3575 & 0.66 & -3.572 & 0.0098 & 0.0889\\
 \hline
-solvent & -2.2175 & 0.66 & -3.360 & 0.0132 & 0.1196\\
+solvent & -2.2175 & 0.66 & -3.360 & 0.0125 & 0.1110\\
 \hline
-time.reagent & -0.6450 & 0.66 & -0.977 & 0.3044 & 0.9974\\
+time.reagent & -0.6450 & 0.66 & -0.977 & 0.3062 & 0.9955\\
 \hline
-solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4304 & 1.0000\\
+solvent.reagent & 0.4900 & 0.66 & 0.742 & 0.4311 & 1.0000\\
 \hline
 time.solvent & 0.4400 & 0.66 & 0.667 & 0.5394 & 1.0000\\
 \hline
-temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7320 & 1.0000\\
+temp.time.solvent & 0.2450 & 0.66 & 0.371 & 0.7307 & 1.0000\\
 \hline
-time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7396 & 1.0000\\
+time.solvent.reagent & -0.2375 & 0.66 & -0.360 & 0.7384 & 1.0000\\
 \hline
-temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7844 & 1.0000\\
+temp.time.reagent & 0.1950 & 0.66 & 0.295 & 0.7828 & 1.0000\\
 \hline
-temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7871 & 1.0000\\
+temp.time.solvent.reagent & 0.1925 & 0.66 & 0.292 & 0.7855 & 1.0000\\
 \hline
-temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9666 & 1.0000\\
+temp.solvent.reagent & -0.0300 & 0.66 & -0.045 & 0.9654 & 1.0000\\
 \hline
 \end{tabular}
 \end{table}
@@ -4801,18 +4801,6 @@ A regression modelling approach is usually more straightforward to apply than de
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{temp\_x\_time }\OtherTok{\textless{}{-}}\NormalTok{ effects}\SpecialCharTok{::}\FunctionTok{Effect}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"temp"}\NormalTok{, }\StringTok{"time"}\NormalTok{), desilylation\_reg.lm, }\AttributeTok{xlevels =} \FunctionTok{list}\NormalTok{(}\AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)), }\AttributeTok{se =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in check_dep_version(): ABI version mismatch: 
-## lme4 was built with Matrix ABI version 1
-## Current Matrix ABI version is 0
-## Please re-install lme4 from source or restore original 'Matrix' package
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(temp\_x\_time, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{rug =}\NormalTok{ F, }\AttributeTok{x.var =} \StringTok{"temp"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{100}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -5209,7 +5197,7 @@ There are several large factorial effects, including the main effects of Catalys
 
 \includegraphics{bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf}
 
-We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.7079 and 5.1658, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
+We see that PSE = 1.3125, giving individual and simultaneous margins of error of 2.683 and 5.156, respectively (where the latter is adjusted for multiple testing). There is a very clear distinction between the five effects which are largest in absolute value and the other factorial effects, which form a very clear line. The five of the largest effects are given in Table \ref{tab:reactor-largest}, are all greater than both margins of error and can be declared as significant.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6119,11 +6107,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]
-## A      3.4363
-## B      0.1748
-## C      2.5418
-## A:B:C -0.2818
+##         [,1]
+## A     4.1833
+## B     0.6245
+## C     3.8361
+## A:B:C 0.3070
 \end{verbatim}
 
 \begin{Shaded}
@@ -6139,11 +6127,11 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## Block      3  211.2    70.4     NaN    NaN
-## A          1   94.5    94.5     NaN    NaN
-## B          1    0.2     0.2     NaN    NaN
-## C          1   51.7    51.7     NaN    NaN
-## A:B:C      1    0.6     0.6     NaN    NaN
+## Block      3  203.8    67.9     NaN    NaN
+## A          1  140.0   140.0     NaN    NaN
+## B          1    3.1     3.1     NaN    NaN
+## C          1  117.7   117.7     NaN    NaN
+## A:B:C      1    0.8     0.8     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6154,8 +6142,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-##  3.4363  0.1748  2.5418 -0.2818
+##      A      B      C  A:B:C 
+## 4.1833 0.6245 3.8361 0.3070
 \end{verbatim}
 
 \begin{Shaded}
@@ -6165,8 +6153,8 @@ For a simulated response in Example \ref{exm:block-frac-2}, we can perform this 
 \end{Shaded}
 
 \begin{verbatim}
-##       A       B       C   A:B:C 
-##  6.8726  0.3496  5.0836 -0.5636
+##      A      B      C  A:B:C 
+## 8.3666 1.2491 7.6723 0.6141
 \end{verbatim}
 
 As the two-factor interactions are confounded with blocks, we can get an equivalent analysis by including these factorial effects but excluding blocks.
@@ -6183,13 +6171,13 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 ## 
 ## Response: y
 ##           Df Sum Sq Mean Sq F value Pr(>F)
-## A          1   94.5    94.5     NaN    NaN
-## B          1    0.2     0.2     NaN    NaN
-## C          1   51.7    51.7     NaN    NaN
-## A:B        1    5.2     5.2     NaN    NaN
-## A:C        1  108.1   108.1     NaN    NaN
-## B:C        1   98.0    98.0     NaN    NaN
-## A:B:C      1    0.6     0.6     NaN    NaN
+## A          1  140.0   140.0     NaN    NaN
+## B          1    3.1     3.1     NaN    NaN
+## C          1  117.7   117.7     NaN    NaN
+## A:B        1    6.1     6.1     NaN    NaN
+## A:C        1  119.4   119.4     NaN    NaN
+## B:C        1   78.2    78.2     NaN    NaN
+## A:B:C      1    0.8     0.8     NaN    NaN
 ## Residuals  0    0.0     NaN
 \end{verbatim}
 
@@ -6201,9 +6189,9 @@ As the two-factor interactions are confounded with blocks, we can get an equival
 
 \begin{verbatim}
 ## (Intercept)           A           B           C         A:B         A:C 
-##      4.8773      3.4363      0.1748      2.5418      0.8032      3.6754 
+##      5.1179      4.1833      0.6245      3.8361      0.8764      3.8633 
 ##         B:C       A:B:C 
-##      3.5001     -0.2818
+##      3.1269      0.3070
 \end{verbatim}
 
 But we must keep in mind that the degrees of freedom and coefficient estimates for the two-factor interactions are actually associated with blocks.
@@ -6260,11 +6248,11 @@ This same block can be found using \texttt{FrF2}.
 ##    Blocks  A  B  C  D  E
 ## 17      3  1 -1 -1  1  1
 ## 18      3  1  1 -1 -1 -1
-## 19      3 -1 -1  1  1 -1
+## 19      3 -1  1  1 -1  1
 ## 20      3  1  1  1  1 -1
-## 21      3 -1  1 -1  1  1
-## 22      3  1 -1  1 -1  1
-## 23      3 -1  1  1 -1  1
+## 21      3 -1 -1  1  1 -1
+## 22      3 -1  1 -1  1  1
+## 23      3  1 -1  1 -1  1
 ## 24      3 -1 -1 -1 -1 -1
 \end{verbatim}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.24)  15 APR 2024 14:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.24)  23 APR 2024 09:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -610,7 +610,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.1.5.
 l.750 \end{align}
                   [16] [17] [18]
 Overfull \hbox (22.49893pt too wide) in paragraph at lines 841--841
-[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Milk first" "Tea first"  "Tea first"  "T
+[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Milk first" "Tea first"  "Milk first" "T
 ea first"[] 
  []
 
@@ -886,50 +886,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [1,]    1    0    0    1    1    1    0    1    1     0   
-  1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [1,]    1    1    0    0    0    1    0    1    1     0   
+  1     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    0    1    1     1   
+[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    1    0    1     1   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    1    1    1    1    0    0     0   
-  0     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    0    1    1    0    1    0     1   
+  0     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    0    0    1    1    0     1   
-  0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [4,]    1    1    0    1    1    0    1    0    0     0   
+  0     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    1    0    0    0    0    0     0   
-  1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    1    0    0    0    0    0     1   
+  1     0     1     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [6,]    1    1    0    0    0    1    1    0    1     1   
-  0     1     0     0[] 
+[]\T1/lmtt/m/n/10 ## [6,]    0    1    1    0    1    0    1    1    1     1   
+  0     0     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [7,]    0    1    1    0    1    0    1    0    1     0   
+[]\T1/lmtt/m/n/10 ## [7,]    0    0    1    1    0    1    1    1    0     0   
   1     0     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3127--3127
-[]\T1/lmtt/m/n/10 ## [8,]    0    1    1    0    1    1    0    1    0     1   
-  0     0     1     0[] 
+[]\T1/lmtt/m/n/10 ## [8,]    0    0    1    1    1    1    0    0    1     0   
+  0     1     1     0[] 
  []
 
 
@@ -1241,258 +1241,251 @@ Overfull \hbox (32.33025pt too wide) has occurred while \output is active
 
 [103 <./bookdown_math3014-6027_files/figure-latex/desilylation-lenth-plot-1.pdf
 >] [104] [105]
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 4812--4812
-[]\T1/lmtt/m/n/10 ## Please re-install lme4 from source or restore original \TS
-1/lmtt/m/n/10 '\T1/lmtt/m/n/10 Matrix\TS1/lmtt/m/n/10 ' \T1/lmtt/m/n/10 package
-[] 
- []
-
-[106]
-<bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf, id=1304,
+<bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf, id=1299,
  436.63126pt x 294.09875pt>
 File: bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf Grap
 hic file (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf>
 Package pdftex.def Info: bookdown_math3014-6027_files/figure-latex/desilylation
--effects-1.pdf  used on input line 4822.
+-effects-1.pdf  used on input line 4810.
 (pdftex.def)             Requested size: 345.00154pt x 232.38033pt.
-[107 <./bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.pdf>]
-Overfull \hbox (53.99884pt too wide) in paragraph at lines 4939--4939
+[106] [107 <./bookdown_math3014-6027_files/figure-latex/desilylation-effects-1.
+pdf>]
+Overfull \hbox (53.99884pt too wide) in paragraph at lines 4927--4927
 []\T1/lmtt/m/n/10 ## Warning in anova.lm(desilylation_reg.lm): ANOVA F-tests on
  an essentially[] 
  []
 
-[108] [109]
-<bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf, id=1342, 461.72
+[108]
+Overfull \vbox (247.4498pt too high) has occurred while \output is active []
+
+[109] [110] [111]
+<bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf, id=1355, 461.72
 5pt x 268.00125pt>
 File: bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf Graphic fil
 e (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf>
 Package pdftex.def Info: bookdown_math3014-6027_files/figure-latex/reactor-lent
-h-1.pdf  used on input line 5210.
+h-1.pdf  used on input line 5198.
 (pdftex.def)             Requested size: 345.0036pt x 200.25208pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[110] [111] [112] [113 <./bookdown_math3014-6027_files/figure-latex/reactor-len
-th-1.pdf>]
-<bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf, id=1374, 435.62
+[112 <./bookdown_math3014-6027_files/figure-latex/reactor-lenth-1.pdf>]
+<bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf, id=1370, 435.62
 75pt x 292.09125pt>
 File: bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf Graphic fil
 e (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf>
 Package pdftex.def Info: bookdown_math3014-6027_files/figure-latex/reactor-plot
-s-1.pdf  used on input line 5266.
+s-1.pdf  used on input line 5254.
 (pdftex.def)             Requested size: 344.99944pt x 231.32448pt.
-<bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf, id=1375, 435.62
+<bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf, id=1371, 435.62
 75pt x 292.09125pt>
 File: bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf Graphic fil
 e (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf>
 Package pdftex.def Info: bookdown_math3014-6027_files/figure-latex/reactor-plot
-s-2.pdf  used on input line 5266.
+s-2.pdf  used on input line 5254.
 (pdftex.def)             Requested size: 344.99944pt x 231.32448pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 5266--5268
+Underfull \hbox (badness 10000) in paragraph at lines 5254--5256
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5266--5268
+Underfull \hbox (badness 10000) in paragraph at lines 5254--5256
 []
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[114 <./bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf>]
+[113 <./bookdown_math3014-6027_files/figure-latex/reactor-plots-1.pdf>]
 Underfull \vbox (badness 1365) has occurred while \output is active []
 
-[115 <./bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf>] [116] [
-117] [118] [119] [120
-
-]
+[114 <./bookdown_math3014-6027_files/figure-latex/reactor-plots-2.pdf>] [115] [
+116] [117] [118]
 Chapter 5.
-[121] [122] [123] [124]
+[119
+
+] [120] [121] [122]
 Underfull \vbox (badness 1496) has occurred while \output is active []
 
-[125] [126] [127] [128]
-Overfull \hbox (29.63661pt too wide) in paragraph at lines 6007--6028
+[123] [124] [125] [126]
+Overfull \hbox (29.63661pt too wide) in paragraph at lines 5995--6016
  [][] 
  []
 
 
 Overfull \hbox (57.32936pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10 5.2.  GENERAL METHOD OF CONSTRUCTING A CONFOUNDED BLOCK DESIGN 
-\T1/lmr/m/n/10 129
+\T1/lmr/m/n/10 127
  []
 
-[129] [130] [131] [132]
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 6207--6207
+[127] [128] [129] [130]
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 6195--6195
 []\T1/lmtt/m/n/10 ## (Intercept)           A           B           C         A:
 B         A:C[] 
  []
 
 
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 6207--6207
-[]\T1/lmtt/m/n/10 ##      4.8773      3.4363      0.1748      2.5418      0.803
-2      3.6754[] 
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 6195--6195
+[]\T1/lmtt/m/n/10 ##      5.1179      4.1833      0.6245      3.8361      0.876
+4      3.8633[] 
  []
 
-[133]
-Underfull \hbox (badness 1688) in paragraph at lines 6291--6293
+[131]
+Underfull \hbox (badness 1688) in paragraph at lines 6279--6281
 []$[][] \OT1/lmr/m/n/10 (+20) = \OML/lmm/m/it/10 ABC$\T1/lmr/m/n/10 (+20) , $[]
 [] \OT1/lmr/m/n/10 (+20) = \OML/lmm/m/it/10 DEF$\T1/lmr/m/n/10 (+20) , $[][][][
 ] \OT1/lmr/m/n/10 (+20) = \OML/lmm/m/it/10 ABCDEF$\T1/lmr/m/n/10 (+20) ,
  []
 
-[134] [135] [136] [137] [138] [139]
-<bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf, id=1606, 461.72
+[132] [133] [134] [135] [136] [137]
+<bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf, id=1597, 461.72
 5pt x 268.00125pt>
 File: bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf Graphic fil
 e (type pdf)
 <use bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf>
 Package pdftex.def Info: bookdown_math3014-6027_files/figure-latex/block-4-lent
-h-1.pdf  used on input line 6715.
+h-1.pdf  used on input line 6703.
 (pdftex.def)             Requested size: 345.0036pt x 200.25208pt.
-[140 <./bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf>] [141] [
-142
+[138 <./bookdown_math3014-6027_files/figure-latex/block-4-lenth-1.pdf>] [139] [
+140
 
 ]
 Chapter 6.
-[143] [144] [145]
+[141] [142] [143]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[146] [147]
+[144] [145]
 Underfull \vbox (badness 3536) has occurred while \output is active []
 
-[148]
-Overfull \hbox (59.24883pt too wide) in paragraph at lines 7110--7110
+[146]
+Overfull \hbox (59.24883pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ##             A1:C1:D1 A1:C1:E1 A1:D1:E1 B1:C1:D1 B1:C1:E1 B
 1:D1:E1 C1:D1:E1[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## (Intercept) 0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1          0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## B1          0        0        0        0        0        0
         1[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## C1          0        0        0        0        0        1
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## D1          0        0        0        0        1        0
         0[] 
  []
 
-[149]
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+[147]
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## E1          0        0        0        1        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:B1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:C1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:D1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:E1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## B1:C1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## B1:D1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## B1:E1       0        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:B1:C1    0        0        1        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:B1:D1    0        1        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ## A1:B1:E1    1        0        0        0        0        0
         0[] 
  []
 
 
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 7110--7110
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 7098--7098
 []\T1/lmtt/m/n/10 ##             A1:B1:C1:D1 A1:B1:C1:E1 A1:B1:D1:E1 A1:C1:D1:E
 1 B1:C1:D1:E1[] 
  []
 
-[150]
-Overfull \hbox (44.61638pt too wide) detected at line 7156
+[148]
+Overfull \hbox (44.61638pt too wide) detected at line 7144
 []
  []
 
 
 Overfull \hbox (53.99591pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10 6.2.  GENERAL METHOD FOR CHOOSING A FRACTIONAL FACTORIAL DESIGN
- \T1/lmr/m/n/10 151
+ \T1/lmr/m/n/10 149
  []
 
-[151] [152]
-Overfull \hbox (64.49881pt too wide) in paragraph at lines 7235--7235
+[149] [150]
+Overfull \hbox (64.49881pt too wide) in paragraph at lines 7223--7223
 []\T1/lmtt/m/n/10 ## [1] "A=BCE=DEF" "B=ACE=CDF" "C=ABE=BDF" "D=AEF=BCF" "E=ABC
 =ADF" "F=ADE=BCD"[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 7235--7235
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 7223--7223
 []\T1/lmtt/m/n/10 ## [1] "AB=CE"    "AC=BE"    "AD=EF"    "AE=BC=DF" "AF=DE"   
  "BD=CF"    "BF=CD"[] 
  []
@@ -1503,77 +1496,77 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Overfull \hbox (53.99591pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10 6.2.  GENERAL METHOD FOR CHOOSING A FRACTIONAL FACTORIAL DESIGN
- \T1/lmr/m/n/10 153
+ \T1/lmr/m/n/10 151
  []
 
-[153] [154]
-Overfull \hbox (64.49881pt too wide) in paragraph at lines 7399--7399
+[151] [152]
+Overfull \hbox (64.49881pt too wide) in paragraph at lines 7387--7387
 []\T1/lmtt/m/n/10 ## [1] "A=BCE=BDF" "B=ACE=ADF" "C=ABE=DEF" "D=ABF=CEF" "E=ABC
 =CDF" "F=ABD=CDE"[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 7399--7399
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 7387--7387
 []\T1/lmtt/m/n/10 ## [1] "AB=CE=DF" "AC=BE"    "AD=BF"    "AE=BC"    "AF=BD"   
  "CD=EF"    "CF=DE"[] 
  []
 
 
-Overfull \hbox (64.49881pt too wide) in paragraph at lines 7423--7423
+Overfull \hbox (64.49881pt too wide) in paragraph at lines 7411--7411
 []\T1/lmtt/m/n/10 ## [1] "A=BCE=BDF" "B=ACE=ADF" "C=ABE=DEF" "D=ABF=CEF" "E=ABC
 =CDF" "F=ABD=CDE"[] 
  []
 
 
-Overfull \hbox (74.99878pt too wide) in paragraph at lines 7423--7423
+Overfull \hbox (74.99878pt too wide) in paragraph at lines 7411--7411
 []\T1/lmtt/m/n/10 ## [1] "AB=CE=DF" "AC=BE"    "AD=BF"    "AE=BC"    "AF=BD"   
  "CD=EF"    "CF=DE"[] 
  []
 
-[155]
-Overfull \vbox (0.61649pt too high) detected at line 7471
+[153]
+Overfull \vbox (0.61649pt too high) detected at line 7459
  []
 
-[156]
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 7478--7478
+[154]
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 7466--7466
 []\T1/lmtt/m/n/10 ##       A1       B1       C1       D1       E1    A1:B1    A
 1:C1    A1:D1[] 
  []
 
 
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 7478--7478
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 7466--7466
 []\T1/lmtt/m/n/10 ## -0.26125  0.22125  0.17625  0.02875  0.10375  0.08375 -0.1
 6625  0.05625[] 
  []
 
-[157]
-Overfull \hbox (64.49881pt too wide) in paragraph at lines 7566--7566
+[155]
+Overfull \hbox (64.49881pt too wide) in paragraph at lines 7554--7554
 []\T1/lmtt/m/n/10 ## [1] "A=BCE=BDF" "B=ACE=ADF" "C=ABE=DEF" "D=ABF=CEF" "E=ABC
 =CDF" "F=ABD=CDE"[] 
  []
 
 
-Overfull \hbox (38.24889pt too wide) in paragraph at lines 7576--7576
+Overfull \hbox (38.24889pt too wide) in paragraph at lines 7564--7564
 []\T1/lmtt/m/n/10 ##  [1] "AB"  "CE"  "DF"  "ACD" "ACF" "ADE" "AEF" "BCD" "BCF"
  "BDE" "BEF"[] 
  []
 
-[158] [159] [160] [161]
-Underfull \hbox (badness 5119) in paragraph at lines 7838--7839
+[156] [157] [158] [159]
+Underfull \hbox (badness 5119) in paragraph at lines 7826--7827
 []\T1/lmr/m/n/10 (+20) The min-i-mum aber-ra-tion res-o-lu-tion V de-sign has d
 efin-ing re-la-tion
  []
 
-[162] (./bookdown_math3014-6027.bbl [163] [164
+[160] (./bookdown_math3014-6027.bbl [161] [162
 
-]) [165] (./bookdown_math3014-6027.aux)
+]) [163] (./bookdown_math3014-6027.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 15859 strings out of 478268
- 256155 string characters out of 5846347
+ 15857 strings out of 478268
+ 256139 string characters out of 5846347
  595566 words of memory out of 5000000
  32633 multiletter control sequences out of 15000+600000
  598935 words of font info for 309 fonts, out of 8000000 for 9000
@@ -1616,10 +1609,10 @@ e1/public/lm/lmtko10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public
 /lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt8.
 pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr
 /local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on bookdown_math3014-6027.pdf (165 pages, 3888190 bytes).
+Output written on bookdown_math3014-6027.pdf (163 pages, 3886846 bytes).
 PDF statistics:
- 2284 PDF objects out of 2487 (max. 8388607)
- 1951 compressed objects within 20 object streams
- 724 named destinations out of 1000 (max. 500000)
+ 2276 PDF objects out of 2487 (max. 8388607)
+ 1945 compressed objects within 20 object streams
+ 722 named destinations out of 1000 (max. 500000)
  68062 words of extra memory for PDF output out of 74296 (max. 10000000)
 
