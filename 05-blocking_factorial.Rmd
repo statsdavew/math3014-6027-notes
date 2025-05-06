@@ -272,7 +272,7 @@ The normal equations take the form
 \begin{align}
 n\hat{\beta}_0 + \boldsymbol{1}_n^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + \boldsymbol{1}_n^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = \boldsymbol{1}_n^{\mathrm{T}}\bY\,, (\#eq:fact-blocks-normal-1)\\
 X^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta}_0 + X^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + X^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = X^{\mathrm{T}}\bY\,, (\#eq:fact-blocks-normal-2)\\
-Z^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta_0} + Z^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + Z^{\mathrm{T}}Z\hat{\boldsymbol{\tau}} & = Z^{\mathrm{T}}\bY\,. (\#eq:fact-blocks-normal-3)\\
+Z^{\mathrm{T}}\boldsymbol{1}_n\hat{\beta_0} + Z^{\mathrm{T}}X\hat{\boldsymbol{\beta}} + Z^{\mathrm{T}}Z\hat{\boldsymbol{\gamma}} & = Z^{\mathrm{T}}\bY\,. (\#eq:fact-blocks-normal-3)\\
 \end{align}
 
 However, we have that $X^{\mathrm{T}}\boldsymbol{1}_n = \boldsymbol{0}_{d}$, as all factorial contrasts are orthogonal to the constant vector. Also, $X^{\mathrm{T}}Z = \boldsymbol{0}_{d\times b}$, as each factorial contrasts takes values -1 and +1 an equal number of times in each block. Also, $X^{\mathrm{T}}X = nI_{d}$, as all the vectors of factorial contrast coefficients are orthogonal. Hence, the regression coefficients $\boldsymbol{\beta}$ can be estimated independently of the intercept and block effects, with reduced normal equations

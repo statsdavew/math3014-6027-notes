@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.24)  6 JAN 2025 20:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.24)  6 MAY 2025 10:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,9 +609,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.1.5.
                    \relax 
 l.739 \end{align}
                   [16] [17] [18]
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 829--829
-[]\T1/lmtt/m/n/10 ## [1] "Milk first" "Tea first"  "Milk first" "Tea first"  "T
-ea first"[] 
+Overfull \hbox (27.74892pt too wide) in paragraph at lines 829--829
+[]\T1/lmtt/m/n/10 ## [1] "Tea first"  "Tea first"  "Milk first" "Milk first" "M
+ilk first"[] 
  []
 
 [19]
@@ -891,50 +891,50 @@ Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [1,]    1    0    0    0    1    1    0    1    1     1   
-  1     0     0     0[] 
+[]\T1/lmtt/m/n/10 ## [1,]    1    0    1    0    0    0    1    1    0     1   
+  0     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [2,]    0    0    0    0    0    0    1    0    1     1   
+[]\T1/lmtt/m/n/10 ## [2,]    0    1    0    0    0    0    0    0    1     1   
   1     1     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [3,]    0    0    0    1    1    1    0    1    0     0   
-  0     1     1     1[] 
+[]\T1/lmtt/m/n/10 ## [3,]    1    0    0    0    0    1    1    1    1     0   
+  1     1     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [4,]    1    0    1    1    1    0    1    0    1     0   
-  0     0     0     1[] 
+[]\T1/lmtt/m/n/10 ## [4,]    1    1    1    0    1    1    0    0    0     0   
+  0     1     0     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [5,]    1    1    1    0    1    0    0    0    0     0   
-  1     1     1     0[] 
+[]\T1/lmtt/m/n/10 ## [5,]    0    0    0    1    1    1    0    1    0     0   
+  1     0     1     1[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [6,]    1    1    0    1    0    0    1    1    0     1   
-  0     1     0     0[] 
+[]\T1/lmtt/m/n/10 ## [6,]    1    0    1    1    1    0    0    0    1     1   
+  1     0     0     0[] 
  []
 
 
 Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [7,]    0    1    1    0    0    1    1    1    0     0   
-  1     0     0     1[] 
- []
-
-
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
-[]\T1/lmtt/m/n/10 ## [8,]    0    1    1    1    0    1    0    0    1     1   
+[]\T1/lmtt/m/n/10 ## [7,]    0    1    1    1    0    1    1    0    1     0   
   0     0     1     0[] 
+ []
+
+
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 3095--3095
+[]\T1/lmtt/m/n/10 ## [8,]    0    1    0    1    1    0    1    1    0     1   
+  0     1     0     0[] 
  []
 
 
@@ -1333,8 +1333,8 @@ B         A:C[]
 
 
 Overfull \hbox (43.49887pt too wide) in paragraph at lines 6146--6146
-[]\T1/lmtt/m/n/10 ##     4.42842     3.77007    -0.35886     3.26932     0.9364
-1     3.66949[] 
+[]\T1/lmtt/m/n/10 ##      5.1020      3.6063      0.2393      2.9209      1.487
+1      3.4100[] 
  []
 
 [131]
@@ -1611,7 +1611,7 @@ ic/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt
 8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></u
 sr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on bookdown_math3014-6027.pdf (163 pages, 3885313 bytes).
+Output written on bookdown_math3014-6027.pdf (163 pages, 3885291 bytes).
 PDF statistics:
  2204 PDF objects out of 2487 (max. 8388607)
  1874 compressed objects within 19 object streams
